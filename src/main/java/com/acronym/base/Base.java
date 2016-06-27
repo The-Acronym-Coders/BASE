@@ -25,6 +25,11 @@ public class Base {
     public static final LanguageHelper languageHelper = new LanguageHelper(Reference.MODID);
     public static long totalTime = 0;
 
+    int i = 0235;
+
+
+    
+
     @Mod.Instance(Reference.MODID)
     public static Base instance;
 
