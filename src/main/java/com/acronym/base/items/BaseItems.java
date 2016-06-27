@@ -22,7 +22,6 @@ public class BaseItems {
     public static Map<String, Item> renderMap = new HashMap<String, Item>();
 
 
-
     public static void preInit() {
 
     }
@@ -73,10 +72,7 @@ public class BaseItems {
 
     public static void writeFile(String key, String texture) {
         try {
-            File f = new File(System.getProperty("user.home") + "/getFluxed/" + key + ".json");
-            if (System.getProperty("user.home").endsWith("Jared")) {
-                f = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.modid + "/models/item/" + key + ".json");
-            }
+            File f = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.modid + "/models/item/" + key + ".json");
             if (!f.exists()) {
                 f.createNewFile();
                 File base = new File(System.getProperty("user.home") + "/getFluxed/baseItem.json");
