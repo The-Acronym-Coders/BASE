@@ -27,6 +27,7 @@ public class BaseItems {
     public static Map<String, Item> renderMap = new HashMap<String, Item>();
     public static Map<Item, int[]> colourMap = new HashMap<>();
 
+    public static Item wrench = new ItemWrench();
 
     public static final ItemGear GEAR = new ItemGear();
 
