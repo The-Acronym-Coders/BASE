@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.*;
 
-import static com.acronym.base.Base.isDevEnv;
+import static com.acronym.base.Base.generateTextures;
 import static com.acronym.base.Reference.tab;
 
 /**
@@ -35,7 +35,7 @@ public class BaseItems {
 
 
     public static void registerItem(Item item, String name, String key) {
-        if (isDevEnv)
+        if (generateTextures)
             writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         renderMap.put(key, item);
@@ -44,7 +44,7 @@ public class BaseItems {
     }
 
     public static void registerItemColour(Item item, String name, String key, int[] layers) {
-        if (isDevEnv)
+        if (generateTextures)
             writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         renderMap.put(key, item);
@@ -54,7 +54,7 @@ public class BaseItems {
     }
 
     public static void registerItemMeta(Item item, String name, String key) {
-        if (isDevEnv)
+        if (generateTextures)
             writeFile(key, key);
         item.setCreativeTab(tab);
         renderMap.put(key, item);
@@ -63,7 +63,7 @@ public class BaseItems {
     }
 
     public static void registerItem(Item item, String name, String key, String texture) {
-        if (isDevEnv)
+        if (generateTextures)
             writeFile(key, texture);
         item.setUnlocalizedName(key).setCreativeTab(tab);
 

@@ -46,4 +46,18 @@ public class Resource<T> {
         return (T) stack;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Resource)) return false;
+        Resource<?> resource = (Resource<?>) o;
+        return getStack() != null ? getStack().equals(resource.getStack()) : resource.getStack() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getStack() != null ? getStack().hashCode() : 0;
+    }
 }
