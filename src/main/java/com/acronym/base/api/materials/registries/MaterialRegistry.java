@@ -1,38 +1,40 @@
 package com.acronym.base.api.materials.registries;
 
-import com.acronym.base.api.materials.Resource;
+import com.acronym.base.api.materials.Material;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Jared on 6/27/2016.
  */
 public class MaterialRegistry {
 
-    private static List<Resource> materials = new ArrayList<>();
+    private static Map<String, Material> materials = new HashMap<>();
 
-    public static boolean addMaterial(Resource resource) {
-        if (getMaterials().contains(resource)) {
+    public static boolean addMaterial(String key, Material material) {
+        if (getMaterials().keySet().contains(key)) {
             return false;
         }
 
-        return getMaterials().add(resource);
+        getMaterials().put(key, material);
+        return true;
     }
 
-    public static boolean removeMaterial(Resource resource) {
-        if (!getMaterials().contains(resource)) {
+    public static boolean removeMaterial(String key) {
+        if (!getMaterials().keySet().contains(key)){
             return false;
         }
 
-        return getMaterials().remove(resource);
+        getMaterials().remove(key);
+        return true;
     }
 
-    public static boolean isRegistered(Resource resource) {
-        return getMaterials().contains(resource);
+    public static boolean isRegistered(String key) {
+        return getMaterials().keySet().contains(key);
     }
 
-    public static List<Resource> getMaterials() {
+    public static Map<String, Material> getMaterials() {
         return materials;
     }
 }
