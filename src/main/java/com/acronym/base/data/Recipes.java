@@ -1,6 +1,5 @@
 package com.acronym.base.data;
 
-import com.acronym.base.api.materials.Resource;
 import com.acronym.base.api.materials.registries.MaterialRegistry;
 
 /**
@@ -9,7 +8,8 @@ import com.acronym.base.api.materials.registries.MaterialRegistry;
 public class Recipes {
 
     public static void preInit() {
-
+        MaterialRegistry.addMaterial("Copper", Materials.copper);
+        MaterialRegistry.addMaterial("Tin", Materials.tin);
     }
 
     public static void init() {
@@ -17,7 +17,6 @@ public class Recipes {
     }
 
     public static void postInit() {
-        MaterialRegistry.addMaterial(new Resource("copper"));
 
     }
 }

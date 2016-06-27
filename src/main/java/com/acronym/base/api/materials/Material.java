@@ -8,12 +8,12 @@ import java.util.List;
 public class Material {
 
     private String name;
-    private int color;
+    private int colour;
     private List<Resource> resources;
 
-    public Material(String name, int color, List<Resource> resources) {
+    public Material(String name, int colour, List<Resource> resources) {
         this.name = name;
-        this.color = color;
+        this.colour = colour;
         this.resources = resources;
     }
 
@@ -25,12 +25,12 @@ public class Material {
         this.name = name;
     }
 
-    public int getColor() {
-        return color;
+    public int getColour() {
+        return colour;
     }
 
-    public void setColor(int color) {
-        this.color = color;
+    public void setColour(int colour) {
+        this.colour = colour;
     }
 
     public List<Resource> getResources() {
@@ -48,7 +48,7 @@ public class Material {
 
         Material material = (Material) o;
 
-        if (getColor() != material.getColor()) return false;
+        if (getColour() != material.getColour()) return false;
         if (getName() != null ? !getName().equals(material.getName()) : material.getName() != null) return false;
         return getResources() != null ? getResources().equals(material.getResources()) : material.getResources() == null;
 
@@ -57,7 +57,7 @@ public class Material {
     @Override
     public int hashCode() {
         int result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + getColor();
+        result = 31 * result + getColour();
         result = 31 * result + (getResources() != null ? getResources().hashCode() : 0);
         return result;
     }

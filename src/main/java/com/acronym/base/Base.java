@@ -1,6 +1,9 @@
 package com.acronym.base;
 
+import com.acronym.base.data.Recipes;
+import com.acronym.base.items.BaseItems;
 import com.acronym.base.proxy.CommonProxy;
+import com.acronym.base.reference.Reference;
 import com.acronym.base.util.LanguageHelper;
 import com.acronym.base.util.LogHelper;
 import net.minecraft.launchwrapper.Launch;
@@ -13,7 +16,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
 public class Base {
@@ -40,9 +42,9 @@ public class Base {
     public void preInit(FMLPreInitializationEvent e) {
         logger.info("Starting PreInit");
         long time = System.currentTimeMillis();
-        for (Map.Entry<String, Object> ent : Launch.blackboard.entrySet())
-            System.out.println(ent.getKey() + ":" + ent.getValue());
         time = (System.currentTimeMillis() - time);
+        BaseItems.preInit();
+        Recipes.preInit();
         totalTime += time;
         logger.info("Completed PreInit in: " + time + "ms");
     }
@@ -51,6 +53,8 @@ public class Base {
     public void init(FMLInitializationEvent e) {
         logger.info("Starting Init");
         long time = System.currentTimeMillis();
+        BaseItems.init();
+        Recipes.init();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info("Completed Init in: " + time + "ms");
@@ -60,6 +64,7 @@ public class Base {
     public void postInit(FMLPostInitializationEvent e) {
         logger.info("Starting PostInit");
         long time = System.currentTimeMillis();
+        Recipes.postInit();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info("Completed PostInit in: " + time + "ms");

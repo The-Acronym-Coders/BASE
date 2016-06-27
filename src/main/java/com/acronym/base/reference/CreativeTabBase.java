@@ -1,12 +1,12 @@
 package com.acronym.base.reference;
 
 import com.acronym.base.Base;
+import com.acronym.base.api.materials.registries.MaterialRegistry;
 import com.google.common.base.Stopwatch;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -18,27 +18,26 @@ import java.util.concurrent.TimeUnit;
  */
 public class CreativeTabBase extends CreativeTabs {
 
-    Stopwatch watch = Stopwatch.createStarted();
+    Stopwatch watch = Stopwatch.createUnstarted();
 
     int iconIndex = -1;
 
     public CreativeTabBase() {
-        super(1, "B.A.S.E");
+        super(12, "B.A.S.E");
     }
 
 
     private void updateIcon() {
+        if (!watch.isRunning()) {
+            watch.reset();
+            watch.start();
+        }
 
-        World var1 = Base.proxy.getClientWorld();
-        System.out.println(this.watch.elapsed(TimeUnit.MILLISECONDS));
-        if (Base.proxy.isClient() && this.watch.elapsed(TimeUnit.MILLISECONDS) == 80) {
-
+        if (Base.proxy.isClient() && this.watch.elapsed(TimeUnit.MILLISECONDS) >= 300L) {
             Random random = new Random();
-
-//            List<Integer> keys = new ArrayList<Integer>(SeedRegistry.getInstance().keySet());
-
-//            iconIndex = keys.get(random.nextInt(keys.size()));
-
+            this.watch.reset();
+            this.watch.start();
+            iconIndex = random.nextInt(MaterialRegistry.getMaterials().size());
         }
 
     }
