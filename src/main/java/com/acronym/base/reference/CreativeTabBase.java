@@ -2,9 +2,9 @@ package com.acronym.base.reference;
 
 import com.acronym.base.Base;
 import com.acronym.base.api.materials.registries.MaterialRegistry;
+import com.acronym.base.items.BaseItems;
 import com.google.common.base.Stopwatch;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -49,11 +49,11 @@ public class CreativeTabBase extends CreativeTabs {
 
         if (iconIndex != -1) {
 
-            return new ItemStack(Items.DIAMOND, 1, iconIndex);
+            return new ItemStack(BaseItems.GEAR, 1, iconIndex);
 
         } else {
 
-            return new ItemStack(Items.DIAMOND, 1);
+            return new ItemStack(BaseItems.GEAR, 1);
 
         }
 
