@@ -2,6 +2,7 @@ package com.acronym.base.api.materials;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Created by Jared on 4/30/2016.
@@ -15,6 +16,7 @@ public class Resource<T> {
             this.stack = stack;
         } else {
             //NO-OP
+            OreDictionary
         }
     }
 
@@ -25,11 +27,13 @@ public class Resource<T> {
     public boolean isFluidStack() {
         return stack instanceof FluidStack;
     }
-    public ItemStack getItemStack(){
-        return ((ItemStack)stack).copy();
+
+    public ItemStack getItemStack() {
+        return ((ItemStack) stack).copy();
     }
-    public FluidStack getFluidStack(){
-        return (FluidStack)stack;
+
+    public FluidStack getFluidStack() {
+        return (FluidStack) stack;
     }
 
     public <T> T getStack() {
