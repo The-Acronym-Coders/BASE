@@ -13,6 +13,9 @@ buildscript {
     }
 }
 
+apply plugin: "maven"
+apply plugin: 'net.minecraftforge.gradle.forge'
+
 configurations {
     deployerJars
 }
@@ -21,7 +24,14 @@ dependencies {
     deployerJars 'org.apache.maven.wagon:wagon-ftp:2.2'
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file:///var/www/html/maven")
+        }
+    }
+}
+
 
 repositories {
     mavenLocal()
