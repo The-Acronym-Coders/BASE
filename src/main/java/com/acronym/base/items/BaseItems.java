@@ -33,14 +33,12 @@ public class BaseItems {
     public static final ItemGear GEAR = new ItemGear();
 
     public static void preInit() {
-        registerItemColour(GEAR, "gear", "gear", new int[]{0});
+        registerItemColour(GEAR, "gears", "gear", new int[]{0});
     }
 
     public static void init() {
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
         for (Map.Entry<String, Item> ent : renderMap.entrySet()) {
-            System.out.println((ent.getValue() instanceof IMetaItem));
-            System.out.println(ent.getValue());
             if (ent.getValue() instanceof IMetaItem) {
                 IMetaItem metaItem = (IMetaItem) ent.getValue();
                 for (int i : metaItem.getMetaData()) {
@@ -109,7 +107,6 @@ public class BaseItems {
     public static void writeFile(String key, String texture) {
         try {
             File f = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
-            System.out.println(f.getAbsolutePath());
             if (!f.exists()) {
                 f.createNewFile();
                 File base = new File(System.getProperty("user.home") + "/getFluxed/baseItem.json");
