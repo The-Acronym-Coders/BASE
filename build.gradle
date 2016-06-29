@@ -75,7 +75,7 @@ minecraft {
     mappings = "snapshot_20160520"
 
     replace "@VERSION@", project.version
-    replaceIn "AKUtils.java"
+    replaceIn "Reference.java"
 }
 
 processResources
