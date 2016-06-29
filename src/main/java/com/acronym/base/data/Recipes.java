@@ -31,7 +31,6 @@ public class Recipes {
                     try {
                         int colour = ColourHelper.getColour(ResourceUtils.getResourceFromItem(item).getInputStream());
                         MaterialRegistry.addMaterial(name, new Material(name, colour, Arrays.asList(new Resource[]{new Resource(String.format("ingot%s", name)), new Resource(String.format("dust%s", name)), new Resource(String.format("ore%s", name))})));
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

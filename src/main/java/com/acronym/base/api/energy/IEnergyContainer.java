@@ -1,5 +1,7 @@
 package com.acronym.base.api.energy;
 
+import net.minecraft.util.EnumFacing;
+
 public interface IEnergyContainer {
-	BaseEnergyContainer getContainer();
+	BaseEnergyContainer getEnergyContainer(EnumFacing side);
 }

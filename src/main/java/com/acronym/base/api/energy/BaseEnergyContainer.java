@@ -74,7 +74,5 @@ public class BaseEnergyContainer {
 		return addedPower;
 	}
 
-	public static void transferPower(BaseEnergyContainer from,BaseEnergyContainer to,long amount) {
 
-	}
 }

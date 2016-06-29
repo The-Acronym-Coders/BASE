@@ -1,5 +1,6 @@
 package com.acronym.base;
 
+import com.acronym.base.config.Config;
 import com.acronym.base.data.Recipes;
 import com.acronym.base.items.BaseItems;
 import com.acronym.base.proxy.CommonProxy;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import java.io.File;
 import java.util.ArrayList;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
@@ -45,6 +47,13 @@ public class Base {
         BaseItems.preInit();
         Recipes.preInit();
         totalTime += time;
+
+
+        final File folder = new File(e.getModConfigurationDirectory(), "B.A.S.E/");
+        if (!folder.exists())
+            folder.mkdir();
+        Config.initConfig(new File(folder, "General.cfg"));
+
         logger.info("Completed PreInit in: " + time + "ms");
     }
 
