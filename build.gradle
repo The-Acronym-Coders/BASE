@@ -22,7 +22,6 @@ dependencies {
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'maven'
 
 repositories {
     mavenLocal()
@@ -97,32 +96,3 @@ processResources
                 exclude 'mcmod.info'
             }
         }
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            configuration = configurations.deployerJars
-            repository(url: "ftp://maven2.aktheknight.co.uk/public_html/maven2") {
-                authentication(userName: mavenUser, password: mavenPass)
-            }
-            pom {
-                groupId = "base"
-                version = project.version
-                artifactId = project.archivesBaseName
-                project {
-                    name project.archivesBaseName
-                    packaging 'jar'
-                    description 'base'
-                    url 'https://github.com/The-Acronym-Coders/B.A.S.E'
-                    developers {
-                        developer {
-                            id 'aktheknight'
-                            name 'aktheknight'
-                            roles { role 'developer' }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
