@@ -1,5 +1,7 @@
+// For those who want the bleeding edge
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
         maven {
             name = "forge"
@@ -10,52 +12,117 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: "maven"
-uploadArchives {
 
-    repositories {
-
-        mavenDeployer {
-
-            repository(url: "file:///var/www/html/maven")
-        }
-    }
-}
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-version = "1.0.0"
-group= "com.acronym.base"
-archivesBaseName = "base"
-
-minecraft {
-    version = "1.9.4-12.17.0.1987"
-    runDir = "run"
-
-    mappings = "snapshot_20160518"
+configurations {
+    deployerJars
 }
 
 dependencies {
+    deployerJars 'org.apache.maven.wagon:wagon-ftp:2.2'
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'maven'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+
+    maven {
+        name 'Dankhax'
+        url 'http://maven.epoxide.xyz'
+    }
+    maven {
+        name = "Amadornes"
+        url "http://maven.amadornes.com/"
+    }
+    maven {
+        name 'Mobius'
+        url 'http://mobiusstrip.eu/maven'
+    }
+    maven {
+        name 'JEI'
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+}
+dependencies {
+    compile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
+    compile "net.darkhax.tesla:Tesla:1.9.4-1.1.0.24"
+    deobfCompile "mezz.jei:jei_1.10:3.7.0.218"
+    testCompile 'junit:junit:4.12'
 
 }
 
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+def minecraft_version = "1.10"
+def forge_version = "12.18.0.1999-1.10.0"
+def cibasename="base"
+
+def cibuild = System.getenv("BUILD_NUMBER")
+def jenkinsBuild = cibuild != null ? cibuild : "0"
+
+version = minecraft_version + "-" + cibuild + "-univeral"
+
+group= "com.acronym.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "base"
+
+minecraft {
+    version = minecraft_version + "-" + forge_version
+    runDir = "run"
+
+    mappings = "snapshot_20160520"
+
+    replace "@VERSION@", project.version
+    replaceIn "AKUtils.java"
+}
+
+processResources
+        {
+            // this will ensure that this task is redone when the versions change.
+            inputs.property "version", project.version
+            inputs.property "mcversion", project.minecraft.version
+
+            // replace stuff in mcmod.info, nothing else
+            from(sourceSets.main.resources.srcDirs) {
+                include 'mcmod.info'
+
+                // replace version and mcversion
+                expand 'version':project.version, 'mcversion':project.minecraft.version
+            }
+
+            // copy everything else, thats not the mcmod.info
+            from(sourceSets.main.resources.srcDirs) {
+                exclude 'mcmod.info'
+            }
+        }
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            configuration = configurations.deployerJars
+            repository(url: "ftp://maven2.aktheknight.co.uk/public_html/maven2") {
+                authentication(userName: mavenUser, password: mavenPass)
+            }
+            pom {
+                groupId = "base"
+                version = project.version
+                artifactId = project.archivesBaseName
+                project {
+                    name project.archivesBaseName
+                    packaging 'jar'
+                    description 'base'
+                    url 'https://github.com/The-Acronym-Coders/B.A.S.E'
+                    developers {
+                        developer {
+                            id 'aktheknight'
+                            name 'aktheknight'
+                            roles { role 'developer' }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
