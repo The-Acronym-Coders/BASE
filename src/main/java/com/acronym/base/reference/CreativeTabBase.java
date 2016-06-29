@@ -33,7 +33,7 @@ public class CreativeTabBase extends CreativeTabs {
             watch.start();
         }
 
-        if (Base.proxy.isClient() && this.watch.elapsed(TimeUnit.MILLISECONDS) >= 300L) {
+        if (Base.proxy.isClient() && this.watch.elapsed(TimeUnit.MILLISECONDS) >= 3000L) {
             Random random = new Random();
             this.watch.reset();
             this.watch.start();
@@ -48,21 +48,15 @@ public class CreativeTabBase extends CreativeTabs {
         updateIcon();
 
         if (iconIndex != -1) {
-
             return new ItemStack(BaseItems.GEAR, 1, iconIndex);
-
         } else {
-
             return new ItemStack(BaseItems.GEAR, 1);
-
         }
 
     }
 
     @SideOnly(Side.CLIENT)
     public Item getTabIconItem() {
-
         return this.getIconItemStack().getItem();
-
     }
 }

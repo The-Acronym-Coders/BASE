@@ -42,9 +42,6 @@ public class BaseItems {
             if (ent.getValue() instanceof IMetaItem) {
                 IMetaItem metaItem = (IMetaItem) ent.getValue();
                 for (int i : metaItem.getMetaData()) {
-                    System.out.println(i);
-                    System.out.println(ent.getValue());
-                    System.out.println(ent.getKey());
                     renderItem.getItemModelMesher().register(ent.getValue(), i, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
                 }
             } else

@@ -24,7 +24,6 @@ public class Base {
     public static final LogHelper logger = new LogHelper(Reference.MODID);
     public static final LanguageHelper languageHelper = new LanguageHelper(Reference.MODID);
     public static long totalTime = 0;
-
     @Mod.Instance(Reference.MODID)
     public static Base instance;
 
@@ -53,8 +52,8 @@ public class Base {
     public void init(FMLInitializationEvent e) {
         logger.info("Starting Init");
         long time = System.currentTimeMillis();
-        BaseItems.init();
         Recipes.init();
+        BaseItems.init();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info("Completed Init in: " + time + "ms");
