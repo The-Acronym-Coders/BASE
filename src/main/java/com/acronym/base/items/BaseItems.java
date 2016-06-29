@@ -2,6 +2,7 @@ package com.acronym.base.items;
 
 import com.acronym.base.api.materials.Material;
 import com.acronym.base.api.materials.registries.MaterialRegistry;
+import com.acronym.base.items.tools.ItemWrench;
 import com.acronym.base.reference.Reference;
 import com.acronym.base.util.IMetaItem;
 import net.minecraft.client.Minecraft;
@@ -27,6 +28,7 @@ public class BaseItems {
     public static Map<String, Item> renderMap = new HashMap<String, Item>();
     public static Map<Item, int[]> colourMap = new HashMap<>();
 
+    public static Item wrench = new ItemWrench();
 
     public static final ItemGear GEAR = new ItemGear();
 

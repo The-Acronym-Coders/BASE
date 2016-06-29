@@ -1,0 +1,14 @@
+language: java
+jdk:
+  - oraclejdk8
+os:
+  - linux
+addons:
+    code_climate:
+        repo_token: f00624e07837ac7e2c1d08745cc8255d0cfc71079fe2354b913fc670af796d23
+branches:
+  only:
+    - master
+cache:
+  directories:
+  - $HOME/.gradle
