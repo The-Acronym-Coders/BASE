@@ -59,7 +59,7 @@ public class BaseItems {
                     for (int i : ent.getValue()) {
                         if (tintIndex == i)
                             if (mat != null) {
-                                return mat.getColour();
+                                return mat.getColour().getRGB();
                             }
                     }
                     return 0xFFFFFF;
