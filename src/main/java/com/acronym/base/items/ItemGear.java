@@ -23,7 +23,6 @@ public class ItemGear extends Item implements IMetaItem {
 
     @Override
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
-        int id = 0;
         for (Map.Entry<MutablePair<String, Integer>, Material> ent : MaterialRegistry.getMaterials().entrySet()) {
             subItems.add(new ItemStack(itemIn, 1, ent.getKey().getRight()));
         }
@@ -31,7 +30,9 @@ public class ItemGear extends Item implements IMetaItem {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return String.format("%s_gear", MaterialRegistry.getFromID(stack.getItemDamage()).getName());
+        if (stack.getItemDamage() >= 0 && stack.getItemDamage() < MaterialRegistry.getMaterials().size())
+            return String.format("%s_gear", MaterialRegistry.getFromID(stack.getItemDamage()).getName());
+        return "null_gear";
     }
 
     @Override
