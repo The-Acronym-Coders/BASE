@@ -30,7 +30,7 @@ public class Material {
         return name;
     }
 
-    public Color getColor() {
+    public Color getColour() {
         return colour;
     }
 
