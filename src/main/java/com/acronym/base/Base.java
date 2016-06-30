@@ -29,11 +29,6 @@ public class Base {
     @Mod.Instance(Reference.MODID)
     public static Base instance;
 
-    @Deprecated
-    /*
-     * Use com.acronym.base.util.Platform.isDevEnv()
-     */
-    public static boolean isDevEnv = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
     public static boolean generateTextures = ((ArrayList) Launch.blackboard.get("ArgumentList")).contains("generateBaseTextures");
 
     @SidedProxy(clientSide = "com.acronym.base.proxy.ClientProxy", serverSide = "com.acronym.base.proxy.CommonProxy")
