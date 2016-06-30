@@ -30,10 +30,18 @@ public class BaseItems {
 
     public static Item wrench = new ItemWrench();
 
-    public static final ItemGear GEAR = new ItemGear();
+    public static final ItemPart GEAR = new ItemPart(Material.EnumPartType.GEAR);
+    public static final ItemPart DUST = new ItemPart(Material.EnumPartType.DUST);
+    public static final ItemPart PLATE = new ItemPart(Material.EnumPartType.PLATE);
+    public static final ItemPart NUGGET = new ItemPart(Material.EnumPartType.NUGGET);
+
 
     public static void preInit() {
-        registerItemColour(GEAR, "gears", "gear", new int[]{0});
+        registerItemColour(GEAR, "gear", "gear", new int[]{0});
+        registerItemColour(DUST, "dust", "dust", new int[]{0});
+        registerItemColour(PLATE, "plate", "plate", new int[]{0});
+        registerItemColour(NUGGET, "nugget", "nugget", new int[]{0});
+
     }
 
     public static void init() {
