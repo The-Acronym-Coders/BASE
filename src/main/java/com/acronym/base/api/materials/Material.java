@@ -2,18 +2,24 @@ package com.acronym.base.api.materials;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Material {
 
     private String name;
-    private Color color;
+    private Color colour;
     private EnumPartType[] types;
     private List<EnumPartType> typeList = new ArrayList<>();
 
-    public Material(String name, Color color, EnumPartType... types) {
+
+    public Material() {
+        this("null", Color.white, null);
+    }
+
+    public Material(String name, Color colour, EnumPartType... types) {
         this.name = name;
-        this.color = color;
+        this.colour = colour;
         this.types = types;
         if (types != null)
             for (EnumPartType type : types)
@@ -25,11 +31,15 @@ public class Material {
     }
 
     public Color getColor() {
-        return color;
+        return colour;
     }
 
     public EnumPartType[] getTypes() {
         return types;
+    }
+
+    public void setColour(Color colour) {
+        this.colour = colour;
     }
 
     public boolean isTypeSet(EnumPartType type) {
@@ -45,5 +55,16 @@ public class Material {
         GEAR,
         FLUID,
         PLATE
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Material{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", colour=").append(colour);
+        sb.append(", types=").append(Arrays.toString(types));
+        sb.append(", typeList=").append(typeList);
+        sb.append('}');
+        return sb.toString();
     }
 }
