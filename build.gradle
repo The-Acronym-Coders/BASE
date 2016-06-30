@@ -15,6 +15,71 @@ buildscript {
 apply plugin: "maven"
 apply plugin: 'net.minecraftforge.gradle.forge'
 
+repositories {
+    mavenLocal()
+    mavenCentral()
+
+    maven {
+        name 'Dankhax'
+        url 'http://maven.epoxide.xyz'
+    }
+    maven {
+        name 'CCL'
+        url 'http://chickenbones.net/maven'
+    }
+    maven {
+        name = "Amadornes"
+        url "http://maven.amadornes.com/"
+    }
+    maven {
+        name 'Mobius'
+        url 'http://mobiusstrip.eu/maven'
+    }
+    maven {
+        name 'JEI'
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+}
+
+dependencies {
+    compile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
+    compile "net.darkhax.tesla:Tesla:1.9.4-1.1.0.24"
+    deobfCompile "mezz.jei:jei_1.10:3.7.0.218"
+    compile "codechicken:CodeChickenLib:1.9.4-2.0.2.39:deobf"
+
+    // test
+    testCompile 'junit:junit:4.12'
+
+}
+
+def commonManifest = {
+    attributes 'Main-Class': 'com.acronym.base.Base'
+    attributes 'FMLCorePlugin': 'codechicken.core.launch.DepLoader'
+    attributes 'FMLAT': 'base_at.cfg'
+}
+
+jar {
+    classifier = 'universal'
+    manifest commonManifest
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+    manifest commonManifest
+}
+
+task srcJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+    manifest commonManifest
+}
+
+artifacts {
+    archives deobfJar
+    archives srcJar
+}
+
 configurations {
     deployerJars
 }
