@@ -3,13 +3,11 @@ package com.acronym.base.items;
 import com.acronym.base.Base;
 import com.acronym.base.api.materials.Material;
 import com.acronym.base.api.registries.MaterialRegistry;
-import com.acronym.base.reference.Reference;
 import com.acronym.base.util.IMetaItem;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.List;

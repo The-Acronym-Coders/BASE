@@ -6,15 +6,12 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Created by Jared on 6/27/2016.
- */
 public class MaterialRegistry {
 
-    private static Map<MutablePair<String, Integer>, Material> materials = new LinkedHashMap<>();
+    private static Map<MutablePair<String, Integer>, Material> MATERIALS = new LinkedHashMap<>();
     private static int lastID = 0;
 
-    public static boolean addMaterial(String key, Material material) {
+    public static boolean registerMaterial(String key, Material material) {
         if (getMaterials().keySet().contains(key)) {
             return false;
         }
@@ -23,7 +20,7 @@ public class MaterialRegistry {
         return true;
     }
 
-    public static boolean removeMaterial(String key) {
+    public static boolean unregisterMaterial(String key) {
         if (!getMaterials().keySet().contains(key)) {
             return false;
         }
@@ -37,7 +34,7 @@ public class MaterialRegistry {
     }
 
     public static Map<MutablePair<String, Integer>, Material> getMaterials() {
-        return materials;
+        return MATERIALS;
     }
 
     public static Material getFromID(int id) {

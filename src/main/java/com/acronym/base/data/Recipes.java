@@ -5,9 +5,6 @@ import com.acronym.base.api.registries.MaterialRegistry;
 
 import java.lang.reflect.Field;
 
-/**
- * Created by Jared on 6/27/2016.
- */
 public class Recipes {
 
     public static void preInit() {
@@ -19,7 +16,7 @@ public class Recipes {
             try {
                 Material mat = new Material();
                 mat = (Material) f.get(mat);
-                MaterialRegistry.addMaterial(mat.getName().toLowerCase(), mat);
+                MaterialRegistry.registerMaterial(mat.getName().toLowerCase(), mat);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }

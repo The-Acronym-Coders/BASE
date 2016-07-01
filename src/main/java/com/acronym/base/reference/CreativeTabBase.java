@@ -13,9 +13,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Jared on 6/27/2016.
- */
 public class CreativeTabBase extends CreativeTabs {
 
     Stopwatch watch = Stopwatch.createUnstarted();
@@ -44,9 +41,7 @@ public class CreativeTabBase extends CreativeTabs {
 
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack() {
-
         updateIcon();
-
         if (iconIndex != -1) {
             return new ItemStack(BaseItems.GEAR, 1, iconIndex);
         } else {

@@ -4,9 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
-/**
- * Created by Jared on 6/27/2016.
- */
 public class ClientProxy extends CommonProxy {
 
     public void registerRenderers() {

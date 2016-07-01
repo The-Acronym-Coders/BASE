@@ -3,11 +3,11 @@ itemGroup.BASE=B.A.S.E
 #Errors
 error.base.null_part=Null Part
 
-#Materials
+#Material Types
 material.base.gear=Gear
 material.base.plate=Plate
 material.base.dust=Dust
 material.base.nugget=Nugget
-----
+#Material Elements
 material.base.gold=Gold
 material.base.iron=Iron
