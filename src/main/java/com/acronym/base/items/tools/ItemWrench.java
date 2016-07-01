@@ -1,6 +1,6 @@
 package com.acronym.base.items.tools;
 
-import com.acronym.base.api.materials.registries.WrenchRegistry;
+import com.acronym.base.api.registries.WrenchRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

@@ -1,4 +1,4 @@
-package com.acronym.base.api.materials.registries;
+package com.acronym.base.api.registries;
 
 import com.acronym.base.api.materials.Material;
 import org.apache.commons.lang3.tuple.MutablePair;

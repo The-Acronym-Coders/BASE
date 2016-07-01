@@ -1,8 +1,11 @@
 package com.acronym.base.items;
 
+import com.acronym.base.Base;
 import com.acronym.base.api.materials.Material;
-import com.acronym.base.api.materials.registries.MaterialRegistry;
+import com.acronym.base.api.registries.MaterialRegistry;
+import com.acronym.base.reference.Reference;
 import com.acronym.base.util.IMetaItem;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -35,8 +38,15 @@ public class ItemPart extends Item implements IMetaItem {
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         if (stack.getItemDamage() >= 0 && stack.getItemDamage() < MaterialRegistry.getMaterials().size())
-            return String.format("%s_%s", MaterialRegistry.getFromID(stack.getItemDamage()).getName(), StringUtils.capitalize(this.type.name().toLowerCase()));
-        return "null_part";
+            return String.format("item.base.%s.%s", this.type.name().toLowerCase(), MaterialRegistry.getFromID(stack.getItemDamage()).getName().toLowerCase());
+        return "item.base.null_part";
+    }
+
+    @Override
+    public String getItemStackDisplayName(ItemStack stack) {
+        if (stack.getItemDamage() >= 0 && stack.getItemDamage() < MaterialRegistry.getMaterials().size())
+            return String.format("%s %s", MaterialRegistry.getFromID(stack.getItemDamage()).getLocalizedName(), this.type.getLocalizedName());
+        return ChatFormatting.RED+Base.languageHelper.error("null_part");
     }
 
     @Override

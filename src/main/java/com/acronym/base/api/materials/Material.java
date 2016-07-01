@@ -1,5 +1,8 @@
 package com.acronym.base.api.materials;
 
+import com.acronym.base.Base;
+import net.minecraft.util.IStringSerializable;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +14,6 @@ public class Material {
     private Color colour;
     private EnumPartType[] types;
     private List<EnumPartType> typeList = new ArrayList<>();
-
 
     public Material() {
         this("null", Color.white, null);
@@ -28,6 +30,14 @@ public class Material {
 
     public String getName() {
         return name;
+    }
+
+    public String getUnlocalizedName() {
+        return "material.base."+this.name.toLowerCase();
+    }
+
+    public String getLocalizedName() {
+        return Base.languageHelper.none(getUnlocalizedName());
     }
 
     public Color getColour() {
@@ -54,7 +64,19 @@ public class Material {
         ORE,
         GEAR,
         FLUID,
-        PLATE
+        PLATE;
+
+        public String getUnlocalizedName() {
+            return "material.base."+this.getName().toLowerCase();
+        }
+
+        public String getLocalizedName() {
+            return Base.languageHelper.none(getUnlocalizedName());
+        }
+
+        public String getName() {
+            return this.name();
+        }
     }
 
     @Override

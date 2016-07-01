@@ -5,51 +5,66 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class LogHelper {
-	public String modid;
-	Logger logger;
-	public LogHelper(String modid) {
-		this.modid = modid;
-		logger = LogManager.getLogger(modid);
+
+	private final String name;
+	private final Logger logger;
+
+	/**
+	 * LogHelper to make logging easier
+	 *
+	 * @param name name of current mod using it.
+	 */
+	public LogHelper(String name) {
+		this.name = name;
+		logger = LogManager.getLogger(name);
 	}
 
+	/**
+	 * Log with level
+	 * @param logLevel Level of logging
+	 * @param message
+	 */
 	public void log(Level logLevel, String message) {
-		logger.log(logLevel, message);
+		switch (logLevel) {
+			case DEBUG:
+				if(Platform.isDevEnv())
+					logger.log(logLevel,message);
+				break;
+			default:
+				logger.log(logLevel,message);
+				break;
+		}
 	}
 
 	public void all(String message) {
 		log(Level.ALL, message);
 	}
 
-	public  void debug(String message) {
+	public void debug(String message) {
 		log(Level.DEBUG, message);
 	}
 
-	public  void trace(String message) {
+	public void trace(String message) {
 		log(Level.TRACE, message);
 	}
 
-	public  void fatal(String message) {
+	public void fatal(String message) {
 		log(Level.FATAL, message);
 	}
 
-	public  void error(String message) {
+	public void error(String message) {
 		log(Level.ERROR, message);
 	}
 
-	public  void warn(String message) {
+	public void warn(String message) {
 		log(Level.WARN, message);
 	}
 
-	public  void info(String message) {
+	public void info(String message) {
 		log(Level.INFO, message);
 	}
 
-	public  void off(String message) {
+	public void off(String message) {
 		log(Level.OFF, message);
-	}
-
-	public  void internal(String message) {
-		if (Platform.isDevEnv())
-			log(Level.INFO, message);
 	}
 }

@@ -14,20 +14,24 @@ public class LanguageHelper {
         return I18n.format(String.format("%s.%s.%s", label, modid, message));
     }
 
-    public void none(String message) { translateMessage("",message); }
+    public String none(String message) { return translateMessage("",message); }
 
-    public void message(String message) { translateMessage("message",message); }
+    public String message(String message) { return translateMessage("message",message); }
 
-    public void label(String message) { translateMessage("label",message); }
+    public String label(String message) { return translateMessage("label",message); }
 
-    public void block(String message) { translateMessage("block",message); }
+    public String block(String message) { return translateMessage("block",message); }
 
-    public void item(String message) { translateMessage("item",message); }
+    public String item(String message) { return translateMessage("item",message); }
 
-    public void itemgroup(String message) { translateMessage("itemGroup",message); }
+    public String itemgroup(String message) { return translateMessage("itemGroup",message); }
 
-    public void description(String message) { translateMessage("description",message); }
+    public String description(String message) { return translateMessage("description",message); }
 
-    public void jei(String message) { translateMessage("jei",message); }
+    public String jei(String message) { return translateMessage("jei",message); }
+
+    public String material(String message) { return translateMessage("material",message); }
+
+    public String error(String message) { return translateMessage("error",message); }
 
 }

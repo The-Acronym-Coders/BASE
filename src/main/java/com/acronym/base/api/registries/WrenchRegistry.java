@@ -1,6 +1,6 @@
-package com.acronym.base.api.materials.registries;
+package com.acronym.base.api.registries;
 
-import com.acronym.base.api.materials.registries.helpers.Wrenchable;
+import com.acronym.base.api.registries.helpers.Wrenchable;
 import net.minecraft.block.Block;
 
 import java.util.ArrayList;

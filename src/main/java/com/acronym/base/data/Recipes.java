@@ -1,7 +1,7 @@
 package com.acronym.base.data;
 
 import com.acronym.base.api.materials.Material;
-import com.acronym.base.api.materials.registries.MaterialRegistry;
+import com.acronym.base.api.registries.MaterialRegistry;
 
 import java.lang.reflect.Field;
 

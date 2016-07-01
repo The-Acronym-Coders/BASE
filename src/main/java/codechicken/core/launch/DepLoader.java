@@ -1,4 +1,4 @@
-package launch;
+package codechicken.core.launch;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

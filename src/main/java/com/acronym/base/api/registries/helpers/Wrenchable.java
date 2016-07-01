@@ -1,4 +1,4 @@
-package com.acronym.base.api.materials.registries.helpers;
+package com.acronym.base.api.registries.helpers;
 
 import net.minecraft.block.Block;
 

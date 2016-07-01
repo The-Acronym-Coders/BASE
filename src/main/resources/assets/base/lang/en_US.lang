@@ -1,0 +1,13 @@
+itemGroup.BASE=B.A.S.E
+
+#Errors
+error.base.null_part=Null Part
+
+#Materials
+material.base.gear=Gear
+material.base.plate=Plate
+material.base.dust=Dust
+material.base.nugget=Nugget
+----
+material.base.gold=Gold
+material.base.iron=Iron

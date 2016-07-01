@@ -9,5 +9,4 @@ public class ItemGear extends ItemPart {
     public ItemGear() {
         super(Material.EnumPartType.GEAR);
     }
-
 }
