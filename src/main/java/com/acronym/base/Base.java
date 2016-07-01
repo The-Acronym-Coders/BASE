@@ -1,5 +1,6 @@
 package com.acronym.base;
 
+import com.acronym.base.blocks.BaseBlocks;
 import com.acronym.base.config.Config;
 import com.acronym.base.data.Recipes;
 import com.acronym.base.items.BaseItems;
@@ -7,17 +8,16 @@ import com.acronym.base.proxy.CommonProxy;
 import com.acronym.base.reference.Reference;
 import com.acronym.base.util.LanguageHelper;
 import com.acronym.base.util.LogHelper;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.*;
-import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
-import java.util.ArrayList;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
 public class Base {
@@ -29,11 +29,6 @@ public class Base {
     @Instance(Reference.MODID)
     public static Base instance;
 
-    @Deprecated
-	/**
-     * Use Platform.generateBaseTextures()
-     */
-    public static boolean generateTextures = ((ArrayList) Launch.blackboard.get("ArgumentList")).contains("generateBaseTextures");
 
     @SidedProxy(clientSide = "com.acronym.base.proxy.ClientProxy", serverSide = "com.acronym.base.proxy.CommonProxy")
     public static CommonProxy proxy;
@@ -44,6 +39,7 @@ public class Base {
         long time = System.currentTimeMillis();
         time = (System.currentTimeMillis() - time);
         BaseItems.preInit();
+        BaseBlocks.preInit();
         Recipes.preInit();
         totalTime += time;
 
@@ -62,6 +58,8 @@ public class Base {
         long time = System.currentTimeMillis();
         Recipes.init();
         BaseItems.init();
+        BaseBlocks.init();
+        proxy.registerRenderers();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info("Completed Init in: " + time + "ms");

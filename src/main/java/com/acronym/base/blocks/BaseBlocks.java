@@ -26,8 +26,10 @@ public class BaseBlocks {
 
     public static Map<String, Block> renderMap = new HashMap<>();
 
+    public static BlockTest test = new BlockTest();
 
     public static void preInit() {
+        registerBlock(test, "test", BlockTest.TileEntityTest.class);
     }
 
 
