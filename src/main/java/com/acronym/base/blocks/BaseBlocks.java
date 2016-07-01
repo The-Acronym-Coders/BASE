@@ -1,0 +1,162 @@
+package com.acronym.base.blocks;
+
+import com.acronym.base.reference.Reference;
+import com.acronym.base.util.Platform;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.util.*;
+
+import static com.acronym.base.reference.Reference.tab;
+
+/**
+ * Created by Jared on 7/1/2016.
+ */
+public class BaseBlocks {
+
+
+    public static Map<String, Block> renderMap = new HashMap<>();
+
+
+    public static void preInit() {
+    }
+
+
+    public static void init() {
+        RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+        for (Map.Entry<String, Block> ent : renderMap.entrySet()) {
+            renderItem.getItemModelMesher().register(Item.getItemFromBlock(ent.getValue()), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
+        }
+    }
+
+    public static void postInit() {
+    }
+
+
+    private static void registerBlock(Block block, String key) {
+        registerBlock(block, key, key, null, tab);
+    }
+
+    private static void registerBlock(Block block, String key, String texture) {
+        registerBlock(block, key, texture, null, tab);
+    }
+
+    private static void registerBlock(Block block, String key, String texture, Class tile) {
+        registerBlock(block, key, texture, tile, tab);
+    }
+
+    private static void registerBlock(Block block, String key, Class tile) {
+        registerBlock(block, key, key, tile, tab);
+    }
+
+    private static void registerBlock(Block block, String key, Class tile, CreativeTabs tab) {
+        registerBlock(block, key, key, tile, tab);
+    }
+
+    private static void registerBlock(Block block, String key, String texture, Class tile, CreativeTabs tab) {
+        block.setUnlocalizedName(key).setCreativeTab(tab);
+        if (Platform.generateBaseTextures())
+            writeFile(key, texture);
+        renderMap.put(texture, block);
+        GameRegistry.register(block, new ResourceLocation(Reference.MODID + ":" + key));
+        GameRegistry.register(new ItemBlock(block), new ResourceLocation(Reference.MODID + ":" + key));
+        if (tile != null) {
+            GameRegistry.registerTileEntity(tile, key);
+        }
+    }
+
+    public static void writeFile(String key, String texture) {
+        try {
+            File baseBlockState = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/blockstates/" + key + ".json");
+            File baseBlockModel = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/block/" + key + ".json");
+            File baseItem = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
+            if (!baseBlockState.exists()) {
+                baseBlockState.createNewFile();
+                File base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json");
+                Scanner scan = new Scanner(base);
+                List<String> content = new ArrayList<>();
+                while (scan.hasNextLine()) {
+                    String line = scan.nextLine();
+                    if (line.contains("%modid%")) {
+                        line = line.replace("%modid%", Reference.MODID);
+                    }
+                    if (line.contains("%key%")) {
+                        line = line.replace("%key%", key);
+                    }
+                    if (line.contains("%texture%")) {
+                        line = line.replace("%texture%", texture);
+                    }
+                    content.add(line);
+                }
+                scan.close();
+                FileWriter write = new FileWriter(baseBlockState);
+                for (String s : content) {
+                    write.write(s + "\n");
+                }
+                write.close();
+            }
+            if (!baseBlockModel.exists()) {
+                baseBlockModel.createNewFile();
+                File base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockModel.json");
+                Scanner scan = new Scanner(base);
+                List<String> content = new ArrayList<>();
+                while (scan.hasNextLine()) {
+                    String line = scan.nextLine();
+                    if (line.contains("%modid%")) {
+                        line = line.replace("%modid%", Reference.MODID);
+                    }
+                    if (line.contains("%key%")) {
+                        line = line.replace("%key%", key);
+                    }
+                    if (line.contains("%texture%")) {
+                        line = line.replace("%texture%", texture);
+                    }
+                    content.add(line);
+                }
+                scan.close();
+                FileWriter write = new FileWriter(baseBlockModel);
+                for (String s : content) {
+                    write.write(s + "\n");
+                }
+                write.close();
+            }
+
+            if (!baseItem.exists()) {
+                baseItem.createNewFile();
+                File base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockItem.json");
+                Scanner scan = new Scanner(base);
+                List<String> content = new ArrayList<>();
+                while (scan.hasNextLine()) {
+                    String line = scan.nextLine();
+                    if (line.contains("%modid%")) {
+                        line = line.replace("%modid%", Reference.MODID);
+                    }
+                    if (line.contains("%key%")) {
+                        line = line.replace("%key%", key);
+                    }
+                    if (line.contains("%texture%")) {
+                        line = line.replace("%texture%", texture);
+                    }
+                    content.add(line);
+                }
+                scan.close();
+                FileWriter write = new FileWriter(baseItem);
+                for (String s : content) {
+                    write.write(s + "\n");
+                }
+                write.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
