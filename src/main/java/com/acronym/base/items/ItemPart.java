@@ -29,7 +29,8 @@ public class ItemPart extends Item implements IMetaItem {
     @Override
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
         for (Map.Entry<MutablePair<String, Integer>, Material> ent : MaterialRegistry.getMaterials().entrySet()) {
-            subItems.add(new ItemStack(itemIn, 1, ent.getKey().getRight()));
+            if(ent.getValue().isTypeSet(this.type))
+                subItems.add(new ItemStack(itemIn, 1, ent.getKey().getRight()));
         }
     }
 
