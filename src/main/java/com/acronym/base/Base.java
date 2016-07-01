@@ -9,8 +9,8 @@ import com.acronym.base.util.LanguageHelper;
 import com.acronym.base.util.LogHelper;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.Mod.*;
+import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -23,12 +23,16 @@ import java.util.ArrayList;
 public class Base {
 
 
-    public static final LogHelper logger = new LogHelper(Reference.MODID);
+    public static final LogHelper logger = new LogHelper(Reference.NAME);
     public static final LanguageHelper languageHelper = new LanguageHelper(Reference.MODID);
     public static long totalTime = 0;
-    @Mod.Instance(Reference.MODID)
+    @Instance(Reference.MODID)
     public static Base instance;
 
+    @Deprecated
+	/**
+     * Use Platform.generateBaseTextures()
+     */
     public static boolean generateTextures = ((ArrayList) Launch.blackboard.get("ArgumentList")).contains("generateBaseTextures");
 
     @SidedProxy(clientSide = "com.acronym.base.proxy.ClientProxy", serverSide = "com.acronym.base.proxy.CommonProxy")

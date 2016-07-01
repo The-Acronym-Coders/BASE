@@ -7,6 +7,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Platform {
@@ -99,5 +100,13 @@ public class Platform {
 
     public static boolean isDevEnv() {
         return (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+    }
+
+    public static boolean generateBaseTextures() {
+        return getArgumentList().contains("generateBaseTextures");
+    }
+
+    public static ArrayList getArgumentList() {
+        return (ArrayList) Launch.blackboard.get("ArgumentList");
     }
 }

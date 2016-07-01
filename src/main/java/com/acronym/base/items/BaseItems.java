@@ -5,6 +5,7 @@ import com.acronym.base.api.registries.MaterialRegistry;
 import com.acronym.base.items.tools.ItemWrench;
 import com.acronym.base.reference.Reference;
 import com.acronym.base.util.IMetaItem;
+import com.acronym.base.util.Platform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -18,7 +19,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.*;
 
-import static com.acronym.base.Base.generateTextures;
 import static com.acronym.base.reference.Reference.tab;
 
 public class BaseItems {
@@ -77,7 +77,7 @@ public class BaseItems {
 
 
     public static void registerItem(Item item, String name, String key) {
-        if (generateTextures)
+        if (Platform.generateBaseTextures())
             writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         renderMap.put(key, item);
@@ -86,7 +86,7 @@ public class BaseItems {
     }
 
     public static void registerItemColour(Item item, String name, String key, int[] layers) {
-        if (generateTextures)
+        if (Platform.generateBaseTextures())
             writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         renderMap.put(key, item);
@@ -95,7 +95,7 @@ public class BaseItems {
     }
 
     public static void registerItemMeta(Item item, String name, String key) {
-        if (generateTextures)
+        if (Platform.generateBaseTextures())
             writeFile(key, key);
         item.setCreativeTab(tab);
         renderMap.put(key, item);
@@ -103,7 +103,7 @@ public class BaseItems {
     }
 
     public static void registerItem(Item item, String name, String key, String texture) {
-        if (generateTextures)
+        if (Platform.generateBaseTextures())
             writeFile(key, texture);
         item.setUnlocalizedName(key).setCreativeTab(tab);
 
