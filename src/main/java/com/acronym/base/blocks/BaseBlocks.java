@@ -92,10 +92,10 @@ public class BaseBlocks {
     private static void registerBlock(Block block, String key, String name, String texture, Class tile, CreativeTabs tab) {
         block.setUnlocalizedName(key).setCreativeTab(tab);
         if (Platform.generateBaseTextures()) {
-            writeFile(texture, texture);
+            writeFile(key, texture);
             writeLangFile(key, name);
         }
-        renderMap.put(texture, block);
+        renderMap.put(key, block);
         GameRegistry.register(block, new ResourceLocation(Reference.MODID + ":" + key));
         GameRegistry.register(new ItemBlock(block), new ResourceLocation(Reference.MODID + ":" + key));
         if (tile != null) {
