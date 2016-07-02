@@ -14,11 +14,17 @@ import net.minecraft.item.ItemStack;
 import java.awt.*;
 
 public enum Materials {
-    IRON("Iron", Items.IRON_INGOT, EnumPartType.NUGGET, EnumPartType.DUST, EnumPartType.PLATE, EnumPartType.GEAR, EnumPartType.FLUID),
-    GOLD("Gold", Items.GOLD_INGOT, EnumPartType.DUST, EnumPartType.PLATE, EnumPartType.GEAR, EnumPartType.FLUID),
-    DIAMOND("Diamond", Items.DIAMOND, EnumPartType.DUST, EnumPartType.PLATE, EnumPartType.NUGGET, EnumPartType.GEAR),
-    WOOD("Wooden", Blocks.PLANKS, EnumPartType.GEAR);
-
+    IRON("Iron", Items.IRON_INGOT, EnumPartType.DUST, EnumPartType.FLUID, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
+    GOLD("Gold", Items.GOLD_INGOT, EnumPartType.DUST, EnumPartType.FLUID, EnumPartType.GEAR, EnumPartType.NUGGET),
+    DIAMOND("Diamond", Items.DIAMOND, EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
+    WOOD("Wooden", Blocks.PLANKS, EnumPartType.GEAR),
+    COPPER("Copper", new Color(0x8e5d47), EnumPartType.DUST, EnumPartType.FLUID, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
+    SILVER("Silver", new Color(0x8f9a9f), EnumPartType.DUST, EnumPartType.FLUID, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
+    TIN("Tin", new Color(0xa3a3a3), EnumPartType.DUST, EnumPartType.FLUID, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
+    LEAD("Lead", new Color(0x54575c), EnumPartType.DUST, EnumPartType.FLUID, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
+    PLATINUM("Platinum", new Color(0x919ea5), EnumPartType.DUST, EnumPartType.FLUID, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
+    BRONZE("Bronze", new Color(0xae7748), EnumPartType.DUST, EnumPartType.FLUID, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
+    STEEL("Steel", new Color(0x8c8c8c), EnumPartType.DUST, EnumPartType.FLUID, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE);
 
     private String name;
     private EnumPartType[] types;
@@ -37,6 +43,7 @@ public enum Materials {
     Materials(String name, Item item, EnumPartType... types) {
         this(name, new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(item)).getInputStream())), types);
     }
+
     Materials(String name, Block block, EnumPartType... types) {
         this(name, new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(block)).getInputStream())), types);
     }
