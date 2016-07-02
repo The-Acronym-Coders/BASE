@@ -26,6 +26,10 @@ public class ResourceUtils {
      */
     public static IResource getResourceFromItem(ItemStack item) {
         try {
+            System.out.println(Minecraft.getMinecraft());
+            System.out.println(Minecraft.getMinecraft().getResourceManager());
+            System.out.println(getResourceLocationFromItem(item));
+            System.out.println(Minecraft.getMinecraft().getResourceManager().getResource(getResourceLocationFromItem(item)));
             return Minecraft.getMinecraft().getResourceManager().getResource(getResourceLocationFromItem(item));
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,15 +42,15 @@ public class ResourceUtils {
         //TODO replace reflection with an AT
         Map<String, TextureAtlasSprite> map = ReflectionHelper.getPrivateValue(TextureMap.class, getMinecraft().getTextureMapBlocks(), "mapRegisteredSprites");
         for (Map.Entry<String, TextureAtlasSprite> entry : map.entrySet()) {
-            if (entry.getKey().endsWith(item.getItem().getRegistryName().getResourcePath())) {
+            if (entry.getValue().getIconName().split("/").length > 1 && entry.getValue().getIconName().split("/")[1].startsWith(item.getItem().getRegistryName().getResourcePath()))
                 try {
                     ResourceLocation res = new ResourceLocation(entry.getKey().split(":")[0], "textures/" + entry.getValue().getIconName().split(":")[1] + ".png");
                     return res;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
         }
+
         return null;
     }
 }

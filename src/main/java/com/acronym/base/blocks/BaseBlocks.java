@@ -30,6 +30,7 @@ public class BaseBlocks {
 
     public static BlockTest test = new BlockTest();
 
+
     public static void preInit() {
         registerBlock(test, "test", "Test", BlockTest.TileEntityTest.class);
     }

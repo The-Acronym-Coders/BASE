@@ -3,8 +3,6 @@ package com.acronym.base.data;
 import com.acronym.base.api.materials.Material;
 import com.acronym.base.api.registries.MaterialRegistry;
 
-import java.lang.reflect.Field;
-
 public class Recipes {
 
     public static void preInit() {

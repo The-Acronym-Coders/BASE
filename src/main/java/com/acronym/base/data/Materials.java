@@ -5,6 +5,8 @@ import com.acronym.base.api.materials.Material.EnumPartType;
 import com.acronym.base.api.registries.MaterialRegistry;
 import com.acronym.base.util.ColourHelper;
 import com.acronym.base.util.ResourceUtils;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,7 +16,9 @@ import java.awt.*;
 public enum Materials {
     IRON("Iron", Items.IRON_INGOT, EnumPartType.NUGGET, EnumPartType.DUST, EnumPartType.PLATE, EnumPartType.GEAR, EnumPartType.FLUID),
     GOLD("Gold", Items.GOLD_INGOT, EnumPartType.DUST, EnumPartType.PLATE, EnumPartType.GEAR, EnumPartType.FLUID),
-    DIAMOND("Diamond", Items.DIAMOND, EnumPartType.DUST, EnumPartType.PLATE, EnumPartType.NUGGET, EnumPartType.GEAR),;
+    DIAMOND("Diamond", Items.DIAMOND, EnumPartType.DUST, EnumPartType.PLATE, EnumPartType.NUGGET, EnumPartType.GEAR),
+    WOOD("Wooden", Blocks.PLANKS, EnumPartType.GEAR);
+
 
     private String name;
     private EnumPartType[] types;
@@ -32,6 +36,9 @@ public enum Materials {
 
     Materials(String name, Item item, EnumPartType... types) {
         this(name, new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(item)).getInputStream())), types);
+    }
+    Materials(String name, Block block, EnumPartType... types) {
+        this(name, new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(block)).getInputStream())), types);
     }
 
     public static final Material iron = new Material("Iron", new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(Items.IRON_INGOT)).getInputStream())), EnumPartType.values());
