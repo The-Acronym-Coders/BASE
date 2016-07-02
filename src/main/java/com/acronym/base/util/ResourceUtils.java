@@ -15,7 +15,6 @@ import static net.minecraft.client.Minecraft.getMinecraft;
  * Created by Jared on 6/29/2016.
  */
 public class ResourceUtils {
-
     /**
      * Gets the IResource from an item
      *
@@ -24,10 +23,6 @@ public class ResourceUtils {
      */
     public static IResource getResourceFromItem(ItemStack item) {
         try {
-            System.out.println(Minecraft.getMinecraft());
-            System.out.println(Minecraft.getMinecraft().getResourceManager());
-            System.out.println(getResourceLocationFromItem(item));
-            System.out.println(Minecraft.getMinecraft().getResourceManager().getResource(getResourceLocationFromItem(item)));
             return Minecraft.getMinecraft().getResourceManager().getResource(getResourceLocationFromItem(item));
         } catch (IOException e) {
             e.printStackTrace();
