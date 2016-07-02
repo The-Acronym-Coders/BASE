@@ -48,7 +48,7 @@ public class MaterialRegistry {
 
     public static Material getFromName(String name) {
         for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
-            if (ent.getKey().getLeft().equals(name)) {
+            if (ent.getKey().getLeft().equalsIgnoreCase(name)) {
                 return ent.getValue();
             }
         }
@@ -57,7 +57,7 @@ public class MaterialRegistry {
 
     public static int getIDFromName(String name) {
         for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
-            if (ent.getKey().getLeft().equals(name)) {
+            if (ent.getKey().getLeft().equalsIgnoreCase(name)) {
                 return ent.getKey().getRight();
             }
         }
