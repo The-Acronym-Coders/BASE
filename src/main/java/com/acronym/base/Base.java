@@ -49,7 +49,7 @@ public class Base {
             folder.mkdir();
         Config.initConfig(new File(folder, "General.cfg"));
 
-        logger.info("Completed PreInit in: " + time + "ms");
+        logger.info(String.format("Completed PreInit in: %d ms",time));
     }
 
     @EventHandler
@@ -62,7 +62,7 @@ public class Base {
         proxy.registerRenderers();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
-        logger.info("Completed Init in: " + time + "ms");
+        logger.info(String.format("Completed Init in: %d ms",time));
     }
 
     @EventHandler
@@ -72,7 +72,7 @@ public class Base {
         Recipes.postInit();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
-        logger.info("Completed PostInit in: " + time + "ms");
+        logger.info(String.format("Completed PostInit in: %d ms",time));
     }
 
 
@@ -82,8 +82,8 @@ public class Base {
         long time = System.currentTimeMillis();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
-        logger.info("Completed LoadComplete in: " + time + "ms");
-        logger.info("Loaded in: " + totalTime + "ms");
+        logger.info(String.format("Completed LoadComplete in: %d ms",time));
+        logger.info(String.format("Loaded In: %d ms",totalTime));
     }
 
 }
