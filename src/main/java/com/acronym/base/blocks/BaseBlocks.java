@@ -13,7 +13,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 import static com.acronym.base.reference.Reference.tab;
@@ -29,7 +31,7 @@ public class BaseBlocks {
     public static BlockTest test = new BlockTest();
 
     public static void preInit() {
-        registerBlock(test, "test", BlockTest.TileEntityTest.class);
+        registerBlock(test, "test", "Test", BlockTest.TileEntityTest.class);
     }
 
 
@@ -44,30 +46,32 @@ public class BaseBlocks {
     }
 
 
-    private static void registerBlock(Block block, String key) {
-        registerBlock(block, key, key, null, tab);
+    private static void registerBlock(Block block, String key, String name) {
+        registerBlock(block, key, name, key, null, tab);
     }
 
-    private static void registerBlock(Block block, String key, String texture) {
-        registerBlock(block, key, texture, null, tab);
+    private static void registerBlock(Block block, String key, String name, String texture) {
+        registerBlock(block, key, name, texture, null, tab);
     }
 
-    private static void registerBlock(Block block, String key, String texture, Class tile) {
-        registerBlock(block, key, texture, tile, tab);
+    private static void registerBlock(Block block, String key, String name, String texture, Class tile) {
+        registerBlock(block, key, name, texture, tile, tab);
     }
 
-    private static void registerBlock(Block block, String key, Class tile) {
-        registerBlock(block, key, key, tile, tab);
+    private static void registerBlock(Block block, String key, String name, Class tile) {
+        registerBlock(block, key, name, key, tile, tab);
     }
 
-    private static void registerBlock(Block block, String key, Class tile, CreativeTabs tab) {
-        registerBlock(block, key, key, tile, tab);
+    private static void registerBlock(Block block, String key, String name, Class tile, CreativeTabs tab) {
+        registerBlock(block, key, name, key, tile, tab);
     }
 
-    private static void registerBlock(Block block, String key, String texture, Class tile, CreativeTabs tab) {
+    private static void registerBlock(Block block, String key, String name, String texture, Class tile, CreativeTabs tab) {
         block.setUnlocalizedName(key).setCreativeTab(tab);
-        if (Platform.generateBaseTextures())
+        if (Platform.generateBaseTextures()) {
             writeFile(key, texture);
+            writeLangFile(key, name);
+        }
         renderMap.put(texture, block);
         GameRegistry.register(block, new ResourceLocation(Reference.MODID + ":" + key));
         GameRegistry.register(new ItemBlock(block), new ResourceLocation(Reference.MODID + ":" + key));
@@ -76,11 +80,42 @@ public class BaseBlocks {
         }
     }
 
+    public static void writeLangFile(String key, String name) {
+        {
+            try {
+                File lang = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/lang/en_US.lang");
+
+                if (!lang.exists()) {
+                    lang.createNewFile();
+                }
+                Scanner scan = new Scanner(lang);
+                List<String> content = new ArrayList<>();
+                while (scan.hasNextLine()) {
+                    String line = scan.nextLine();
+                    content.add(line);
+                }
+                scan.close();
+                if (!content.contains((String.format("tile.%s.name=%s", key, name))))
+                    content.add(String.format("tile.%s.name=%s", key, name));
+                FileWriter write = new FileWriter(lang);
+                for (String s : content) {
+                    write.write(s + "\n");
+                }
+                write.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void writeFile(String key, String texture) {
         try {
             File baseBlockState = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/blockstates/" + key + ".json");
             File baseBlockModel = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/block/" + key + ".json");
             File baseItem = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
+
             if (!baseBlockState.exists()) {
                 baseBlockState.createNewFile();
                 File base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json");

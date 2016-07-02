@@ -11,3 +11,4 @@ material.base.nugget=Nugget
 #Material Elements
 material.base.gold=Gold
 material.base.iron=Iron
+tile.test.name=Test
