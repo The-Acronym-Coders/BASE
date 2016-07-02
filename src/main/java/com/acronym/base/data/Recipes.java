@@ -16,13 +16,15 @@ import java.util.List;
 public class Recipes {
 
     public static void preInit() {
-
+        for (Materials material : Materials.values()) {
+            Material mat = material.getMaterial();
+            MaterialRegistry.registerMaterial(material.getName().toLowerCase(), mat);
+        }
     }
 
     public static void init() {
         for (Materials material : Materials.values()) {
             Material mat = material.getMaterial();
-            MaterialRegistry.registerMaterial(material.getName().toLowerCase(), mat);
             int matID = MaterialRegistry.getIDFromName(mat.getName());
             List<Material.EnumPartType> types = Arrays.asList(material.getTypes());
             if (types.contains(Material.EnumPartType.INGOT)) {
@@ -79,6 +81,5 @@ public class Recipes {
     }
 
     public static void postInit() {
-
     }
 }

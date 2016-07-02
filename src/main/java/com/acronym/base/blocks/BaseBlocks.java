@@ -1,16 +1,21 @@
 package com.acronym.base.blocks;
 
+import com.acronym.base.api.materials.Material;
+import com.acronym.base.api.registries.MaterialRegistry;
 import com.acronym.base.reference.Reference;
 import com.acronym.base.util.Platform;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,9 +35,17 @@ public class BaseBlocks {
 
     public static BlockTest test = new BlockTest();
 
+    public static Map<Material, Block> oreBlockMap = new LinkedHashMap<>();
 
     public static void preInit() {
         registerBlock(test, "test", "Test", BlockTest.TileEntityTest.class);
+        for (Map.Entry<MutablePair<String, Integer>, Material> entry : MaterialRegistry.getMaterials().entrySet()) {
+            if (entry.getValue().isTypeSet(Material.EnumPartType.ORE)) {
+                BlockOre ore = new BlockOre(entry.getValue());
+                registerBlock(ore, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab);
+                oreBlockMap.put(entry.getValue(), ore);
+            }
+        }
     }
 
 
@@ -40,6 +53,15 @@ public class BaseBlocks {
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
         for (Map.Entry<String, Block> ent : renderMap.entrySet()) {
             renderItem.getItemModelMesher().register(Item.getItemFromBlock(ent.getValue()), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
+        }
+        for (Map.Entry<Material, Block> entry : oreBlockMap.entrySet()) {
+            Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
+                @Override
+                public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+                    return entry.getKey().getColour().getRGB();
+                }
+
+            }, entry.getValue());
         }
     }
 
@@ -70,7 +92,7 @@ public class BaseBlocks {
     private static void registerBlock(Block block, String key, String name, String texture, Class tile, CreativeTabs tab) {
         block.setUnlocalizedName(key).setCreativeTab(tab);
         if (Platform.generateBaseTextures()) {
-            writeFile(key, texture);
+            writeFile(texture, texture);
             writeLangFile(key, name);
         }
         renderMap.put(texture, block);

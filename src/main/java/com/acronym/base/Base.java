@@ -37,9 +37,10 @@ public class Base {
         logger.info("Starting PreInit");
         long time = System.currentTimeMillis();
         time = (System.currentTimeMillis() - time);
+        Recipes.preInit();
         BaseItems.preInit();
         BaseBlocks.preInit();
-        Recipes.preInit();
+
         totalTime += time;
 
 

@@ -19,6 +19,7 @@ public class ColourHelper {
 
     /**
      * Gets the main Colour of an InputStream
+     * Has to be called after PreInit
      *
      * @param stream
      * @return The main Colour of the InputStream
