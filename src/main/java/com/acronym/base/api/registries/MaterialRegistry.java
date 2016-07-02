@@ -21,11 +21,11 @@ public class MaterialRegistry {
     }
 
     public static boolean unregisterMaterial(String key) {
-        if (!getMaterials().keySet().contains(key)) {
+        MutablePair<String, Integer> pair = new MutablePair<>(key, getIDFromName(key));
+        if (!getMaterials().keySet().contains(pair)) {
             return false;
         }
-
-        getMaterials().remove(key);
+        getMaterials().remove(pair);
         return true;
     }
 
@@ -50,6 +50,25 @@ public class MaterialRegistry {
         for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
             if (ent.getKey().getLeft().equals(name)) {
                 return ent.getValue();
+            }
+        }
+        return null;
+    }
+
+    public static int getIDFromName(String name) {
+        for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
+            if (ent.getKey().getLeft().equals(name)) {
+                return ent.getKey().getRight();
+            }
+        }
+        return -1;
+    }
+
+
+    public static String getNameFromID(int id) {
+        for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
+            if (ent.getKey().getRight() == id) {
+                return ent.getKey().getLeft();
             }
         }
         return null;
