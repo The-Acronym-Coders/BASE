@@ -58,7 +58,6 @@ public class Material {
     public enum EnumPartType {
         BLOCK,
         DUST,
-        FLUID,
         GEAR,
         INGOT,
         NUGGET,
