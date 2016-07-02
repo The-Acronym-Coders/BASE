@@ -1,7 +1,6 @@
 package com.acronym.base.api.materials;
 
 import com.acronym.base.Base;
-import net.minecraft.util.IStringSerializable;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -57,13 +56,13 @@ public class Material {
     }
 
     public enum EnumPartType {
-        NUGGET,
-        DUST,
-        INGOT,
         BLOCK,
-        ORE,
-        GEAR,
+        DUST,
         FLUID,
+        GEAR,
+        INGOT,
+        NUGGET,
+        ORE,
         PLATE;
 
         public String getUnlocalizedName() {
