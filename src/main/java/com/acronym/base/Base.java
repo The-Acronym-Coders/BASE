@@ -25,9 +25,9 @@ public class Base {
     public static final LogHelper logger = new LogHelper(Reference.NAME);
     public static final LanguageHelper languageHelper = new LanguageHelper(Reference.MODID);
     public static long totalTime = 0;
+
     @Instance(Reference.MODID)
     public static Base instance;
-
 
     @SidedProxy(clientSide = "com.acronym.base.proxy.ClientProxy", serverSide = "com.acronym.base.proxy.CommonProxy")
     public static CommonProxy proxy;
@@ -48,7 +48,7 @@ public class Base {
             folder.mkdir();
         Config.initConfig(new File(folder, "General.cfg"));
 
-        logger.info(String.format("Completed PreInit in: %d ms",time));
+        logger.info(String.format("Completed PreInit in: %d ms", time));
     }
 
     @EventHandler
@@ -61,7 +61,7 @@ public class Base {
         proxy.registerRenderers();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
-        logger.info(String.format("Completed Init in: %d ms",time));
+        logger.info(String.format("Completed Init in: %d ms", time));
     }
 
     @EventHandler
@@ -71,7 +71,7 @@ public class Base {
         Recipes.postInit();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
-        logger.info(String.format("Completed PostInit in: %d ms",time));
+        logger.info(String.format("Completed PostInit in: %d ms", time));
     }
 
 
@@ -81,8 +81,8 @@ public class Base {
         long time = System.currentTimeMillis();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
-        logger.info(String.format("Completed LoadComplete in: %d ms",time));
-        logger.info(String.format("Loaded In: %d ms",totalTime));
+        logger.info(String.format("Completed LoadComplete in: %d ms", time));
+        logger.info(String.format("Loaded In: %d ms", totalTime));
     }
 
 }

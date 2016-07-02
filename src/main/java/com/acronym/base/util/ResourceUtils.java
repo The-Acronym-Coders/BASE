@@ -2,11 +2,9 @@ package com.acronym.base.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.io.IOException;
 import java.util.Map;
@@ -39,8 +37,7 @@ public class ResourceUtils {
 
 
     public static ResourceLocation getResourceLocationFromItem(ItemStack item) {
-        //TODO replace reflection with an AT
-        Map<String, TextureAtlasSprite> map = ReflectionHelper.getPrivateValue(TextureMap.class, getMinecraft().getTextureMapBlocks(), "mapRegisteredSprites");
+        Map<String, TextureAtlasSprite> map = getMinecraft().getTextureMapBlocks().mapRegisteredSprites;
         for (Map.Entry<String, TextureAtlasSprite> entry : map.entrySet()) {
             if (entry.getValue().getIconName().split("/").length > 1 && entry.getValue().getIconName().split("/")[1].startsWith(item.getItem().getRegistryName().getResourcePath()))
                 try {
