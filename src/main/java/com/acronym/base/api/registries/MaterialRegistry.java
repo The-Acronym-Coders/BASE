@@ -45,4 +45,13 @@ public class MaterialRegistry {
         }
         return null;
     }
+
+    public static Material getFromName(String name) {
+        for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
+            if (ent.getKey().getLeft().equals(name)) {
+                return ent.getValue();
+            }
+        }
+        return null;
+    }
 }
