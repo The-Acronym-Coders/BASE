@@ -135,7 +135,7 @@ def cibasename="base"
 def cibuild = System.getenv("BUILD_NUMBER")
 def jenkinsBuild = cibuild != null ? cibuild : "0"
 
-version = minecraft_version + "-" + cibuild + "-universal"
+version = minecraft_version + "-" + cibuild
 
 group= "com.acronym.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "base"

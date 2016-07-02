@@ -5,18 +5,48 @@ import com.acronym.base.api.materials.Material.EnumPartType;
 import com.acronym.base.util.ColourHelper;
 import com.acronym.base.util.ResourceUtils;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.awt.*;
 
-public class Materials {
+public enum  Materials {
+    IRON("Iron",Items.IRON_INGOT,EnumPartType.NUGGET,EnumPartType.DUST,EnumPartType.PLATE,EnumPartType.GEAR,EnumPartType.FLUID),
+    GOLD("Gold",Items.GOLD_INGOT,EnumPartType.DUST,EnumPartType.PLATE,EnumPartType.GEAR,EnumPartType.FLUID),
+    DIAMOND("Diamond",Items.DIAMOND,EnumPartType.DUST,EnumPartType.PLATE,EnumPartType.NUGGET,EnumPartType.GEAR),
+    ;
 
-//    public static final Material copper = new Material("Copper", 0xFF44FF, Arrays.asList(new Resource[]{new Resource("ingotCopper"), new Resource("dustCopper"), new Resource("oreCopper")}));
-//    public static final Material tin = new Material("Tin", 0x44FF44, Arrays.asList(new Resource[]{new Resource("ingotTin"), new Resource("dustTin"), new Resource("oreTin")}));
+    private String name;
+    private EnumPartType[] types;
+    private Color color;
 
+    Materials(String name, Color color, EnumPartType... types) {
+        this.name=name;
+        this.types=types;
+        this.color=color;
+    }
+    Materials(String name, ItemStack stack, EnumPartType... types) {
+        this(name,new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(stack).getInputStream())),types);
+    }
+    Materials(String name, Item item, EnumPartType... types) {
+        this(name,new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(item)).getInputStream())),types);
+    }
     public static final Material iron = new Material("Iron", new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(Items.IRON_INGOT)).getInputStream())), EnumPartType.values());
-    public static final Material gold = new Material("Gold", new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(Items.GOLD_INGOT)).getInputStream())), EnumPartType.values());
-    public static final Material diamond = new Material("Diamond", new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(Items.DIAMOND)).getInputStream())),EnumPartType.NUGGET,EnumPartType.PLATE);
-    /* TEST */public static final Material copper = new Material("Copper", new Color(255, 128, 61),EnumPartType.values());
-    
-} 
+
+
+    public Material getMaterial() {
+        return new Material(this.name,this.color,this.types);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public EnumPartType[] getTypes() {
+        return types;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+}
