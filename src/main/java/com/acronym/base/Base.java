@@ -22,7 +22,6 @@ import java.io.File;
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
 public class Base {
 
-
     public static final LogHelper logger = new LogHelper(Reference.NAME);
     public static final LanguageHelper languageHelper = new LanguageHelper(Reference.MODID);
     public static long totalTime = 0;

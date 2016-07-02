@@ -13,13 +13,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class CreativeTabBase extends CreativeTabs {
+public class TabBase extends CreativeTabs {
 
     Stopwatch watch = Stopwatch.createUnstarted();
 
     int iconIndex = -1;
 
-    public CreativeTabBase() {
+    public TabBase() {
         super(12, "BASE");
     }
 
