@@ -65,7 +65,7 @@ public class Material {
         PLATE;
 
         public String getUnlocalizedName() {
-            return "material.base."+this.getName().toLowerCase();
+            return "part.base."+this.getName().toLowerCase();
         }
 
         public String getLocalizedName() {

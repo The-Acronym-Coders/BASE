@@ -15,13 +15,13 @@ error.base.null_part=Null Part
 ###          MATERIAL TYPES           ###
 #########################################
 
-material.base.gear=Gear
-material.base.plate=Plate
-material.base.dust=Dust
-material.base.ingot=Ingot
-material.base.nugget=Nugget
-material.base.block=Block
-material.base.ore=Ore
+part.base.gear=Gear
+part.base.plate=Plate
+part.base.dust=Dust
+part.base.ingot=Ingot
+part.base.nugget=Nugget
+part.base.block=Block
+part.base.ore=Ore
 
 #########################################
 ###          MATERIAL ELEMENTS        ###
@@ -32,6 +32,8 @@ material.base.iron=Iron
 material.base.diamond=Diamond
 material.base.emerald=Emerald
 material.base.redstone=Redstone
+material.base.copper=Copper
+material.base.lead=Lead
 material.base.coal=Coal
 
 #########################################

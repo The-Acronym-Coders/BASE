@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.BUILD_VERSION, acceptedMinecraftVersions = Reference.MINECRAFT_VERSION)
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.BUILD_VERSION, acceptedMinecraftVersions = "["+Reference.MINECRAFT_VERSION+"]")
 public class Base {
 
     public static final LogHelper logger = new LogHelper(Reference.NAME);
@@ -37,6 +37,7 @@ public class Base {
         logger.info("Starting PreInit");
         long time = System.currentTimeMillis();
         time = (System.currentTimeMillis() - time);
+        instance=this;
         Recipes.preInit();
         BaseItems.preInit();
         BaseBlocks.preInit();
@@ -47,7 +48,6 @@ public class Base {
         if (!folder.exists())
             folder.mkdir();
         Config.initConfig(new File(folder, "General.cfg"));
-        logger.info("Generated new config file at " + e.getModConfigurationDirectory() + "\\B.A.S.E\\General.cfg");
 
         logger.info(String.format("Completed PreInit in: %d ms", time));
     }

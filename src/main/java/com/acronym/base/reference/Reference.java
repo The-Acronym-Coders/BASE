@@ -4,7 +4,7 @@ public class Reference {
  
     public final static String MODID = "base";
     public final static String NAME = "B.A.S.E";
-    public static final String MINECRAFT_VERSION = "[1.9.4]";
+    public static final String MINECRAFT_VERSION = "1.10";
 
     static final String VERSION_MAJOR = "0";
     static final String VERSION_MINOR = "0";
