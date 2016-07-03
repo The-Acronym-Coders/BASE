@@ -37,7 +37,6 @@ public class Base {
         logger.info("Starting PreInit");
         long time = System.currentTimeMillis();
         time = (System.currentTimeMillis() - time);
-        instance=this;
         Recipes.preInit();
         BaseItems.preInit();
         BaseBlocks.preInit();
