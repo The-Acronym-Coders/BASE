@@ -1,10 +1,20 @@
+#########################################
+###             B.A.S.E               ###
+#########################################
+
 tile.test.name=Test
 itemGroup.BASE=B.A.S.E
 
-#Errors
+#########################################
+###             ERRORS                ###
+#########################################
+
 error.base.null_part=Null Part
 
-#Material Types
+#########################################
+###          MATERIAL TYPES           ###
+#########################################
+
 material.base.gear=Gear
 material.base.plate=Plate
 material.base.dust=Dust
@@ -12,13 +22,22 @@ material.base.ingot=Ingot
 material.base.nugget=Nugget
 material.base.block=Block
 material.base.ore=Ore
-#Material Elements
+
+#########################################
+###          MATERIAL ELEMENTS        ###
+#########################################
+
 material.base.gold=Gold
 material.base.iron=Iron
 material.base.diamond=Diamond
 material.base.emerald=Emerald
 material.base.redstone=Redstone
 material.base.coal=Coal
+
+#########################################
+###           ORES  MATERIALS         ###
+#########################################
+
 tile.ore.name=%s Ore
 tile.ore_material.base.iron.name=%s Ore
 tile.ore_material.base.gold.name=%s Ore
@@ -31,6 +50,11 @@ tile.ore_material.base.lead.name=%s Ore
 tile.ore_material.base.platinum.name=%s Ore
 tile.ore_material.base.bronze.name=%s Ore
 tile.ore_material.base.steel.name=%s Ore
+
+#########################################
+###           ORES  NAMES             ###
+#########################################
+
 tile.ore_iron.name=%s Ore
 tile.ore_gold.name=%s Ore
 tile.ore_diamond.name=%s Ore
