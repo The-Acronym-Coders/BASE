@@ -43,11 +43,11 @@ public class Base {
 
         totalTime += time;
 
-
         final File folder = new File(e.getModConfigurationDirectory(), "B.A.S.E/");
         if (!folder.exists())
             folder.mkdir();
         Config.initConfig(new File(folder, "General.cfg"));
+        logger.info("Generated new config file at " + e.getModConfigurationDirectory() + "\\B.A.S.E\\General.cfg");
 
         logger.info(String.format("Completed PreInit in: %d ms", time));
     }
