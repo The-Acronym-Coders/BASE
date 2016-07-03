@@ -18,14 +18,11 @@ public enum Materials {
     GOLD(new Color(0xb5a62c), EnumPartType.DUST, EnumPartType.GEAR),
     DIAMOND(new Color(0x58ad9e), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
     WOOD(new Color(0x9d804f), EnumPartType.GEAR),
-    STONE(new Color(0x514B4F), EnumPartType.DUST,EnumPartType.GEAR),
+    STONE(new Color(0x514B4F), EnumPartType.DUST, EnumPartType.GEAR),
     COPPER(new Color(0x8e5d47), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
     SILVER(new Color(0x8f9a9f), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
     TIN(new Color(0xa3a3a3), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
-    LEAD(new Color(0x54575c), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
-    PLATINUM(new Color(0x919ea5), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE),
-    BRONZE(new Color(0xae7748), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE),
-    STEEL(new Color(0x8c8c8c), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE);
+    LEAD(new Color(0x54575c), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
 
     private String name;
     private EnumPartType[] types;
