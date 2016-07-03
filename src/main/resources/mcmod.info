@@ -1,16 +1,21 @@
 [
-{
-  "modid": "base",
-  "name": "B.A.S.E",
-  "description": "Example placeholder mod.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["The Acronym Coders"],
-  "credits": "",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
-}
+    {
+      "modid": "base",
+      "name": "B.A.S.E",
+      "description": "Placeholder Text",
+      "version": "${version}",
+      "mcversion": "${mcversion}",
+      "url": "http://minecraft.curseforge.com/projects/b-a-s-e",
+      "updateUrl": "http://minecraft.curseforge.com/projects/b-a-s-e/files",
+      "authorList": ["
+          Lanse505,
+          Jared,
+          TheCodedOne,
+          EwyBoy
+      "],
+      "credits": "Placeholder Credits",
+      "logoFile": "",
+      "screenshots": [],
+      "dependencies": []
+    }
 ]
