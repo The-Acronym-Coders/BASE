@@ -5,47 +5,48 @@ import com.acronym.base.api.materials.Material.EnumPartType;
 import com.acronym.base.api.registries.MaterialRegistry;
 import com.acronym.base.util.ColourHelper;
 import com.acronym.base.util.ResourceUtils;
+import io.netty.util.internal.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
 
 public enum Materials {
-    IRON("Iron", new Color(0x878787), "Iron", EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
-    GOLD("Gold", new Color(0xb5a62c), "Gold", EnumPartType.DUST, EnumPartType.GEAR),
-    DIAMOND("Diamond", new Color(0x58ad9e), "Diamond", EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
-    WOOD("Wooden", new Color(0x9d804f), "Wood", EnumPartType.GEAR),
-    COPPER("Copper", new Color(0x8e5d47), "Copper", EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
-    SILVER("Silver", new Color(0x8f9a9f), "Silver", EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
-    TIN("Tin", new Color(0xa3a3a3), "Tin", EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
-    LEAD("Lead", new Color(0x54575c), "Lead", EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
-    PLATINUM("Platinum", new Color(0x919ea5), "Platinum", EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE),
-    BRONZE("Bronze", new Color(0xae7748), "Bronze", EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE),
-    STEEL("Steel", new Color(0x8c8c8c), "Steel", EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE);
+    IRON(new Color(0x878787), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
+    GOLD(new Color(0xb5a62c), EnumPartType.DUST, EnumPartType.GEAR),
+    DIAMOND(new Color(0x58ad9e), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE),
+    WOOD(new Color(0x9d804f), EnumPartType.GEAR),
+    STONE(new Color(0x514B4F), EnumPartType.DUST,EnumPartType.GEAR),
+    COPPER(new Color(0x8e5d47), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
+    SILVER(new Color(0x8f9a9f), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
+    TIN(new Color(0xa3a3a3), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
+    LEAD(new Color(0x54575c), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE),
+    PLATINUM(new Color(0x919ea5), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE),
+    BRONZE(new Color(0xae7748), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE),
+    STEEL(new Color(0x8c8c8c), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE);
 
     private String name;
-    private String oreDictSuffix;
     private EnumPartType[] types;
     private Color color;
 
-    Materials(String name, Color color, String oreDictSuffix, EnumPartType... types) {
-        this.name = name;
+    Materials(Color color, EnumPartType... types) {
+        this.name = StringUtils.capitalize(name().toLowerCase());
         this.types = types;
         this.color = color;
-        this.oreDictSuffix = oreDictSuffix;
     }
 
-    Materials(String name, ItemStack stack, String oreDictSuffix, EnumPartType... types) {
-        this(name, new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(stack).getInputStream())), oreDictSuffix, types);
+    Materials(ItemStack stack, EnumPartType... types) {
+        this(new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(stack).getInputStream())), types);
     }
 
-    Materials(String name, Item item, String oreDictSuffix, EnumPartType... types) {
-        this(name, new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(item)).getInputStream())), oreDictSuffix, types);
+    Materials(Item item, String oreDictSuffix, EnumPartType... types) {
+        this(new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(item)).getInputStream())), types);
     }
 
     Materials(String name, Block block, String oreDictSuffix, EnumPartType... types) {
-        this(name, new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(block)).getInputStream())), oreDictSuffix, types);
+        this(new Color(ColourHelper.getColour(ResourceUtils.getResourceFromItem(new ItemStack(block)).getInputStream())), types);
     }
 
     public Material getMaterial() {
@@ -68,6 +69,6 @@ public enum Materials {
     }
 
     public String getOreDictSuffix() {
-        return oreDictSuffix;
+        return name;
     }
 }
