@@ -38,7 +38,6 @@ public class BaseBlocks {
     public static Map<Material, Block> oreBlockMap = new LinkedHashMap<>();
 
     public static void preInit() {
-        registerBlock(test, "test", "Test", BlockTest.TileEntityTest.class);
         for (Map.Entry<MutablePair<String, Integer>, Material> entry : MaterialRegistry.getMaterials().entrySet()) {
             if (entry.getValue().isTypeSet(Material.EnumPartType.ORE)) {
                 BlockOre ore = new BlockOre(entry.getValue());
