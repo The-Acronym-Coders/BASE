@@ -2,10 +2,9 @@ package com.acronym.base.data;
 
 import com.acronym.base.api.materials.Material;
 import com.acronym.base.api.materials.Material.EnumPartType;
-import com.acronym.base.api.registries.MaterialRegistry;
+import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.util.ColourHelper;
 import com.acronym.base.util.ResourceUtils;
-import io.netty.util.internal.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

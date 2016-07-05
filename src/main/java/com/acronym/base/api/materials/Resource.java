@@ -3,9 +3,7 @@ package com.acronym.base.api.materials;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-/**
- * Created by Jared on 4/30/2016.
- */
+/** Created by Jared on 4/30/2016 */
 public class Resource<T> {
 
     private T stack;

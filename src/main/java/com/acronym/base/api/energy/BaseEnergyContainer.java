@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public class BaseEnergyContainer implements INBTSerializable<NBTTagCompound> {
+	
 	private long stored;
 	private long capacity;
 	private long input;
@@ -16,7 +17,7 @@ public class BaseEnergyContainer implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public BaseEnergyContainer() {
-		this(5000,50,50);
+		this(5000,500,50);
 	}
 
 	public BaseEnergyContainer(NBTTagCompound tag) {
@@ -86,8 +87,8 @@ public class BaseEnergyContainer implements INBTSerializable<NBTTagCompound> {
 
 	@Override
 	public NBTTagCompound serializeNBT () {
-
 		final NBTTagCompound dataTag = new NBTTagCompound();
+
 		dataTag.setLong("StoredPower", this.stored);
 		dataTag.setLong("Capacity", this.capacity);
 		dataTag.setLong("Input", this.input);
@@ -101,18 +102,13 @@ public class BaseEnergyContainer implements INBTSerializable<NBTTagCompound> {
 
 		this.stored = nbt.getLong("StoredPower");
 
-		if (nbt.hasKey("Capacity"))
-			this.capacity = nbt.getLong("Capacity");
+		if (nbt.hasKey("Capacity")) this.capacity = nbt.getLong("Capacity");
 
-		if (nbt.hasKey("Input"))
-			this.input = nbt.getLong("Input");
+		if (nbt.hasKey("Input")) this.input = nbt.getLong("Input");
 
-		if (nbt.hasKey("Output"))
-			this.output = nbt.getLong("Output");
+		if (nbt.hasKey("Output")) this.output = nbt.getLong("Output");
 
-		if (this.stored > this.capacity)
-			this.stored = this.capacity;
+		if (this.stored > this.capacity) this.stored = this.capacity;
 	}
-
 
 }

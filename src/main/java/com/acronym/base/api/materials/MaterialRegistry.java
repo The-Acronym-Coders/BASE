@@ -1,10 +1,11 @@
-package com.acronym.base.api.registries;
+package com.acronym.base.api.materials;
 
-import com.acronym.base.api.materials.Material;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+//TODO why the fuck is stuff like this not documented at all!?!?!?!
 
 public class MaterialRegistry {
 

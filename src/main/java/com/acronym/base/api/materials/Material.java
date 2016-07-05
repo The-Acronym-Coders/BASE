@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//TODO why the fuck is stuff like this not documented at all!?!?!?!
+
 public class Material {
 
     private String name;

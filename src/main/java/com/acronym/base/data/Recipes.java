@@ -1,7 +1,7 @@
 package com.acronym.base.data;
 
 import com.acronym.base.api.materials.Material;
-import com.acronym.base.api.registries.MaterialRegistry;
+import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.items.BaseItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

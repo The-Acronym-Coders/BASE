@@ -2,7 +2,7 @@ package com.acronym.base.items;
 
 import com.acronym.base.Base;
 import com.acronym.base.api.materials.Material;
-import com.acronym.base.api.registries.MaterialRegistry;
+import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.util.IMetaItem;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.creativetab.CreativeTabs;

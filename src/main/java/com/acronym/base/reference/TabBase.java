@@ -1,7 +1,7 @@
 package com.acronym.base.reference;
 
 import com.acronym.base.Base;
-import com.acronym.base.api.registries.MaterialRegistry;
+import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.items.BaseItems;
 import com.google.common.base.Stopwatch;
 import net.minecraft.creativetab.CreativeTabs;
