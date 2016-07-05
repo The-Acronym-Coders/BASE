@@ -6,19 +6,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
 public class TileHelper {
-    @Nullable
-    public static <T> T getTileEntity(IBlockAccess world, BlockPos blockPos, Class<T> tClass) {
-        TileEntity tileEntity = world.getTileEntity(blockPos);
-        return !tClass.isInstance(tileEntity) ? null : (T) tileEntity;
-    }
-
+    /**
+     * Drops the items in the tile
+     *
+     * @param tileEntity tileEntityIn
+     */
     public static void DropItems(TileEntity tileEntity) {
         if (!(tileEntity instanceof IInventory))
             return;
@@ -29,6 +26,12 @@ public class TileHelper {
             DropItems(tileEntity, 0, inventory.getSizeInventory() - 1);
     }
 
+    /**
+     * Drops items from a tile
+     * @param tileEntity tileEntityIn
+     * @param min minItemDrop
+     * @param max maxItemDrop
+     */
     public static void DropItems(TileEntity tileEntity, int min, int max) {
         if (!(tileEntity instanceof IInventory)) {
             return;
