@@ -34,7 +34,7 @@ public class BaseItems {
     public static final ItemPart INGOT  = new ItemPart(Material.EnumPartType.INGOT);
 
 
-    public static void preInit() {
+    public static void preInit() throws Exception {
         registerItemColour(GEAR,   "gear",   "gear",   new int[]{0});
         registerItemColour(DUST,   "dust",   "dust",   new int[]{0});
         registerItemColour(PLATE,  "plate",  "plate",  new int[]{0});
@@ -54,7 +54,7 @@ public class BaseItems {
                 renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
         }
         for (Map.Entry<Item, int[]> ent : colourMap.entrySet()) {
-            //noinspection Convert2Lambda
+            //TODO Convert to Lambda
             Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
                 @Override
                 public int getColorFromItemstack(ItemStack stack, int tintIndex) {
@@ -63,10 +63,9 @@ public class BaseItems {
                         return 0xFFFFFF;
                     }
                     for (int i : ent.getValue()) {
-                        if (tintIndex == i)
-                            if (mat != null) {
-                                return mat.getColour().getRGB();
-                            }
+                        if (tintIndex == i) {
+                            return mat.getColour().getRGB();
+                        }
                     }
                     return 0xFFFFFF;
                 }
@@ -76,7 +75,7 @@ public class BaseItems {
     }
 
 
-    public static void registerItem(Item item, String name, String key) {
+    public static void registerItem(Item item, String name, String key) throws Exception {
         if (Platform.generateBaseTextures())
             writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
@@ -85,7 +84,7 @@ public class BaseItems {
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
-    public static void registerItemColour(Item item, String name, String key, int[] layers) {
+    public static void registerItemColour(Item item, String name, String key, int[] layers) throws Exception {
         if (Platform.generateBaseTextures())
             writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
@@ -94,7 +93,7 @@ public class BaseItems {
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
-    public static void registerItemMeta(Item item, String name, String key) {
+    public static void registerItemMeta(Item item, String name, String key) throws Exception {
         if (Platform.generateBaseTextures())
             writeFile(key, key);
         item.setCreativeTab(tab);
@@ -102,7 +101,7 @@ public class BaseItems {
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
-    public static void registerItem(Item item, String name, String key, String texture) {
+    public static void registerItem(Item item, String name, String key, String texture) throws Exception {
         if (Platform.generateBaseTextures())
             writeFile(key, texture);
         item.setUnlocalizedName(key).setCreativeTab(tab);
@@ -110,37 +109,36 @@ public class BaseItems {
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
-    public static void writeFile(String key, String texture) {
-        try {
-            File f = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
-            if (!f.exists()) {
-                f.createNewFile();
-                File base = new File(System.getProperty("user.home") + "/getFluxed/baseItem.json");
-                Scanner scan = new Scanner(base);
-                List<String> content = new ArrayList<>();
-                while (scan.hasNextLine()) {
-                    String line = scan.nextLine();
-                    if (line.contains("%modid%")) {
-                        line = line.replace("%modid%", Reference.MODID);
-                    }
-                    if (line.contains("%key%")) {
-                        line = line.replace("%key%", key);
-                    }
-                    if (line.contains("%texture%")) {
-                        line = line.replace("%texture%", texture);
-                    }
-                    content.add(line);
+    public static void writeFile(String key, String texture) throws Exception {
+        File file = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
+        if (!file.exists()) {
+            file.createNewFile();
+
+            //TODO Use file scanner from BaseBlock or make the file scanner a common util class, so this can call it.
+            File base = new File(System.getProperty("user.home") + "/getFluxed/baseItem.json");
+            Scanner scan = new Scanner(base);
+            List<String> content = new ArrayList<>();
+            while (scan.hasNextLine()) {
+                String line = scan.nextLine();
+                if (line.contains("%modid%")) {
+                    line = line.replace("%modid%", Reference.MODID);
                 }
-                scan.close();
-                FileWriter write = new FileWriter(f);
-                for (String s : content) {
-                    write.write(s + "\n");
+                if (line.contains("%key%")) {
+                    line = line.replace("%key%", key);
                 }
-                write.close();
+                if (line.contains("%texture%")) {
+                    line = line.replace("%texture%", texture);
+                }
+                content.add(line);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            scan.close();
+
+            //TODO Use file writer from BaseBlock or make the file writer a common util class, so this can call it.
+            FileWriter write = new FileWriter(file);
+            for (String s : content) {
+                write.write(s + "\n");
+            }
+            write.close();
         }
     }
-
 }

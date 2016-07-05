@@ -8,9 +8,11 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.commons.lang3.tuple.MutablePair;
@@ -45,15 +47,18 @@ public class BaseBlocks {
         for (Map.Entry<String, Block> ent : renderMap.entrySet()) {
             renderItem.getItemModelMesher().register(Item.getItemFromBlock(ent.getValue()), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
         }
+        //TODO Convert to Lambda
         for (Map.Entry<Material, Block> entry : oreBlockMap.entrySet()) {
             Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
                 @Override
                 public int getColorFromItemstack(ItemStack stack, int tintIndex) {
                     return entry.getKey().getColour().getRGB();
                 }
-            }
+
+            }, entry.getValue());
         }
     }
+
 
     public static void postInit() {
     }
@@ -114,7 +119,7 @@ public class BaseBlocks {
         write.close();
     }
 
-    private static void scanFile(String key, String texture, File base) throws FileNotFoundException {
+    public static void scanFile(String key, String texture, File base) throws FileNotFoundException {
         Scanner scan = new Scanner(base);
         List<String> content = new ArrayList<>();
 
