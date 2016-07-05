@@ -5,6 +5,12 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class CompressionHelper {
+
+    /**
+     * Converts a string into a byte[]
+     * @param uncompressedString String to be compressed
+     * @return byte[] of compressed String
+     */
     public static byte[] compressStringToByteArray(String uncompressedString) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         GZIPOutputStream gzipOutputStream;
@@ -19,6 +25,11 @@ public class CompressionHelper {
         return byteArrayOutputStream.toByteArray();
     }
 
+    /**
+     * Decompresses a String from a byte[]
+     * @param compressedString Byte[] to be decompressed
+     * @return String of decompressed byte[]
+     */
     public static String decompressStringFromByteArray(byte[] compressedString) {
         StringBuilder stringBuilder = new StringBuilder();
         try {
