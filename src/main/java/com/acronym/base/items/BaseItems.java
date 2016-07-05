@@ -23,7 +23,7 @@ import java.util.Map;
 import static com.acronym.base.reference.Reference.tab;
 
 public class BaseItems {
-    public static Map<String, Item> renderMap = new HashMap<String, Item>();
+    public static Map<String, Item> renderMap = new HashMap<>();
     public static Map<Item, int[]> colourMap = new HashMap<>();
 
     public static Item wrench = new ItemWrench();

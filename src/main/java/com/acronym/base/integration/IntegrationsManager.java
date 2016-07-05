@@ -9,7 +9,7 @@ import java.util.List;
 
 public class IntegrationsManager {
     private static IntegrationsManager INSTANCE = new IntegrationsManager();
-    private final List<IIntegration> integrationMods = new ArrayList<IIntegration>();
+    private final List<IIntegration> integrationMods = new ArrayList<>();
 
     public static IntegrationsManager instance() {
         return INSTANCE;
