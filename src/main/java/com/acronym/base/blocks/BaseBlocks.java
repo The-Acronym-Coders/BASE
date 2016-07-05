@@ -25,8 +25,13 @@ import java.util.*;
 
 import static com.acronym.base.reference.Reference.tab;
 
-/** Created by Jared on 7/1/2016 */
-/** Remastered by EwyBoy on 7/5/2016 */
+/**
+ * Created by Jared on 7/1/2016
+ */
+
+/**
+ * Remastered by EwyBoy on 7/5/2016
+ */
 public class BaseBlocks {
 
     public static Map<String, Block> renderMap = new HashMap<>();
@@ -125,25 +130,21 @@ public class BaseBlocks {
         File baseItem = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
 
         FileHelper fileHelper = new FileHelper();
-
-        File base = null;
-
         if (!baseBlockState.exists()) {
             baseBlockState.createNewFile();
-            base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json");
+            fileHelper.writeFile(baseBlockState, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json")));
         }
 
         if (!baseBlockModel.exists()) {
-            baseBlockState.createNewFile();
-            base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json");
+            baseBlockModel.createNewFile();
+            fileHelper.writeFile(baseBlockModel, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockModel.json")));
+
         }
 
         if (!baseItem.exists()) {
-            baseBlockState.createNewFile();
-            base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json");
+            baseItem.createNewFile();
+            fileHelper.writeFile(baseItem, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockItem.json")));
         }
 
-        fileHelper.scanFile(key, texture, base);
-        fileHelper.writeBaseFile(baseBlockState);
     }
 }

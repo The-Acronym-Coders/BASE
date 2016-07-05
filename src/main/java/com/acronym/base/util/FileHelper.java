@@ -10,31 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/** Created by EwyBoy **/
+/**
+ * Created by EwyBoy
+ **/
 public class FileHelper {
 
-    public void scanFile(String key, String texture, File base) throws FileNotFoundException {
+    public List<String> scanFile(String key, String texture, File base) throws FileNotFoundException {
         Scanner scan = new Scanner(base);
         List<String> content = new ArrayList<>();
 
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
-            if (line.contains("%modid%")) {
-                line = line.replace("%modid%", Reference.MODID);
-            }
-            if (line.contains("%key%")) {
-                line = line.replace("%key%", key);
-            }
-            if (line.contains("%texture%")) {
-                line = line.replace("%texture%", texture);
-            }
-            content.add(line);
+            content.add(line.replaceAll("%modid%", Reference.MODID).replaceAll("%key%", key).replaceAll("%texture%", texture));
         }
         scan.close();
+        return content;
     }
 
-    public void writeBaseFile(File base) throws IOException {
-        List<String> content = new ArrayList<>();
+    public void writeFile(File base, List<String> content) throws IOException {
         FileWriter write = new FileWriter(base);
 
         for (String s : content) {
