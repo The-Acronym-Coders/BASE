@@ -15,7 +15,15 @@ import java.util.List;
  */
 public class PlayerUtils {
 
-    public static RayTraceResult getTargetBlock(World world, Entity entity, boolean par3) {
+    /**
+     * Gets the block that an entity is looking at
+     *
+     * @param world                          Current world
+     * @param entity                         Entity
+     * @param ignoreBlocksWithoutBoundingBox ignoreBlocksWithoutBoundingBox
+     * @return current block that player is looking at
+     */
+    public static RayTraceResult getTargetBlock(World world, Entity entity, boolean ignoreBlocksWithoutBoundingBox) {
         float var4 = 1.0F;
         float var5 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * var4;
         float var6 = entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * var4;
@@ -31,10 +39,23 @@ public class PlayerUtils {
         float var20 = var14 * var16;
         double var21 = 10.0D;
         Vec3d var23 = var13.addVector(var18 * var21, var17 * var21, var20 * var21);
-        return world.rayTraceBlocks(var13, var23, par3, !par3, false);
+        return world.rayTraceBlocks(var13, var23, ignoreBlocksWithoutBoundingBox, !ignoreBlocksWithoutBoundingBox, false);
     }
 
-    public static RayTraceResult getTargetBlock(World world, double x, double y, double z, float yaw, float pitch, boolean par3, double range) {
+    /**
+     * Gets the target block without an entity
+     *
+     * @param world                          Current World
+     * @param x                              x
+     * @param y                              y
+     * @param z                              z
+     * @param yaw                            current yaw
+     * @param pitch                          current pitch
+     * @param ignoreBlocksWithoutBoundingBox ignoreBlocksWithoutBoundingBox
+     * @param range                          range
+     * @return current block that is being targeted
+     */
+    public static RayTraceResult getTargetBlock(World world, double x, double y, double z, float yaw, float pitch, boolean ignoreBlocksWithoutBoundingBox, double range) {
         Vec3d vec = new Vec3d(x, y, z);
         float var14 = MathHelper.cos(-yaw * 0.01745329F - 3.141593F);
         float var15 = MathHelper.sin(-yaw * 0.01745329F - 3.141593F);
@@ -44,10 +65,19 @@ public class PlayerUtils {
         float var20 = var14 * var16;
         Vec3d var23 = vec.addVector(var18 * range, var17 * range, var20 * range);
 
-        return world.rayTraceBlocks(vec, var23, par3, !par3, false);
+        return world.rayTraceBlocks(vec, var23, ignoreBlocksWithoutBoundingBox, !ignoreBlocksWithoutBoundingBox, false);
     }
 
-    @SuppressWarnings("rawtypes")
+    /**
+     * Gets the current entity being pointed at
+     *
+     * @param world         Current World
+     * @param entityplayer  playerIn
+     * @param range         range
+     * @param collideRadius collision radiius
+     * @param nonCollide    should non collidable entities be caught?
+     * @return Entity being targeted
+     */
     public static Entity getPointedEntity(World world, EntityLivingBase entityplayer, double range, double collideRadius, boolean nonCollide) {
         Entity pointedEntity = null;
         double d = range;
