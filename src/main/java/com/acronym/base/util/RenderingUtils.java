@@ -31,6 +31,9 @@ public class RenderingUtils {
         GL11.glPopMatrix();
     }
 
+    /**
+     * Sets the GL environment
+     */
     private static void setupGlTranslucent() {
         glDisable(GL_TEXTURE_2D);
         glEnable(GL_BLEND);
@@ -43,7 +46,21 @@ public class RenderingUtils {
         OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
     }
 
-    private static void renderAllTranslucent(VertexBuffer tessellator, double startX, double startY, double startZ, double endX, double endY, double endZ, double rotationX, double rotationY, double rotationZ) {
+    /**
+     * Renders a Translucent
+     *
+     * @param vertex    vertexBuffer
+     * @param startX    startX
+     * @param startY    startY
+     * @param startZ    startZ
+     * @param endX      endX
+     * @param endY      endY
+     * @param endZ      endZ
+     * @param rotationX rotationx
+     * @param rotationY rotationY
+     * @param rotationZ rotationZ
+     */
+    private static void renderTranslucent(VertexBuffer vertex, double startX, double startY, double startZ, double endX, double endY, double endZ, double rotationX, double rotationY, double rotationZ) {
         glPushMatrix();
         glRotated(rotationX, 1, 0, 0);
         glRotated(rotationY, 0, 1, 0);
@@ -51,7 +68,7 @@ public class RenderingUtils {
 
         glPushMatrix();
         for (int j = 0; j < 4; j++) {
-            drawPowerTranslucent(tessellator, startX, startY, startZ, endX, endY, endZ);
+            drawTranslucent(vertex, startX, startY, startZ, endX, endY, endZ);
             glRotatef(-90, 0, 1, 0);
         }
         glPopMatrix();
@@ -59,7 +76,18 @@ public class RenderingUtils {
         glPopMatrix();
     }
 
-    private static void drawPowerTranslucent(VertexBuffer vertex, double startX, double startY, double startZ, double endX, double endY, double endZ) {
+    /**
+     * draws a translucent
+     *
+     * @param vertex vertexBuffer
+     * @param startX startX
+     * @param startY startY
+     * @param startZ startZ
+     * @param endX   endX
+     * @param endY   endY
+     * @param endZ   endZ
+     */
+    private static void drawTranslucent(VertexBuffer vertex, double startX, double startY, double startZ, double endX, double endY, double endZ) {
         vertex.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
         vertex.pos(-startX, startY, -startZ).color(100, 0, 0, 255).endVertex();
         vertex.pos(startX, startY, -startZ).color(0, 100, 0, 255).endVertex();
@@ -68,6 +96,20 @@ public class RenderingUtils {
         Tessellator.getInstance().draw();
     }
 
+    /**
+     * Renders a beam
+     *
+     * @param entity    entity
+     * @param startX    startX
+     * @param startY    startY
+     * @param startZ    startZ
+     * @param endX      endX
+     * @param endY      endY
+     * @param endZ      endZ
+     * @param rotationX rotationX
+     * @param rotationY rotationY
+     * @param rotationZ rotationZ
+     */
     public static void renderBeamAt(Entity entity, double startX, double startY, double startZ, double endX, double endY, double endZ, double rotationX, double rotationY, double rotationZ) {
         glPushMatrix();
         glTranslated(startX, startY, startZ);
@@ -76,12 +118,23 @@ public class RenderingUtils {
         glTranslatef(0.5f, 0, 0.5f);
         Tessellator tessellator = Tessellator.getInstance();
         VertexBuffer vertex = tessellator.getBuffer();
-        renderAllTranslucent(vertex, startX, startY, startZ, endX, endY, endZ, rotationX, rotationY, rotationZ);
+        renderTranslucent(vertex, startX, startY, startZ, endX, endY, endZ, rotationX, rotationY, rotationZ);
         glPopAttrib();
         glPopMatrix();
     }
 
-
+    /**
+     * Draws a 2D line
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param x2        endX
+     * @param y2        endY
+     * @param red       redColour
+     * @param green     greenColour
+     * @param blue      blueColour
+     * @param lineWidth lineWidth;
+     */
     public static void drawLine(double x, double y, double x2, double y2, float red, float green, float blue, float lineWidth) {
         int existed = FMLClientHandler.instance().getClient().thePlayer.ticksExisted;
         float alpha = 0.3F + MathHelper.sin((float) (existed + x)) * 0.3F + 0.3F;
@@ -105,6 +158,20 @@ public class RenderingUtils {
 
     }
 
+    /**
+     * draws a 3D line
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param z         startZ
+     * @param x2        endX
+     * @param y2        endY
+     * @param z2        endZ
+     * @param red       redColour
+     * @param green     greenColour
+     * @param blue      blueColour
+     * @param lineWidth lineWidth
+     */
     public static void drawLine(double x, double y, double z, double x2, double y2, double z2, float red, float green, float blue, float lineWidth) {
 
         int count = FMLClientHandler.instance().getClient().thePlayer.ticksExisted;
@@ -129,6 +196,19 @@ public class RenderingUtils {
         GL11.glPopMatrix();
     }
 
+    /**
+     * draws a non-fading 2D line
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param x2        endX
+     * @param y2        endY
+     * @param red       redColour
+     * @param green     greenColour
+     * @param blue      blueColour
+     * @param lineWidth lineWidth
+     * @param alpha     alpha
+     */
     public static void drawLineNoFade(double x, double y, double x2, double y2, float red, float green, float blue, float lineWidth, float alpha) {
         Tessellator tess = Tessellator.getInstance();
         VertexBuffer buff = tess.getBuffer();
@@ -147,6 +227,21 @@ public class RenderingUtils {
         GL11.glPopMatrix();
     }
 
+    /**
+     * Draws a non-fading 3D line
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param z         startZ
+     * @param x2        endX
+     * @param y2        endY
+     * @param z2        endZ
+     * @param red       redColour
+     * @param green     greenColour
+     * @param blue      blueColour
+     * @param lineWidth lineWidth
+     * @param alpha     alpha
+     */
     public static void drawLineNoFade(double x, double y, double z, double x2, double y2, double z2, float red, float green, float blue, float lineWidth, float alpha) {
         Tessellator tess = Tessellator.getInstance();
         VertexBuffer buff = tess.getBuffer();
@@ -165,6 +260,19 @@ public class RenderingUtils {
         GL11.glPopMatrix();
     }
 
+    /**
+     * Draws a fading 2D line
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param x2        endX
+     * @param y2        endY
+     * @param red       redColour
+     * @param green     greenColour
+     * @param blue      blueColour
+     * @param lineWidth lineWidth
+     * @param fadeSpeed fadeSpeed
+     */
     public static void drawLine(double x, double y, double x2, double y2, float red, float green, float blue, float lineWidth, float fadeSpeed) {
         int count = FMLClientHandler.instance().getClient().thePlayer.ticksExisted;
         float alpha = fadeSpeed + MathHelper.sin((float) (count + x)) * 0.3F + 0.3F;
@@ -185,6 +293,21 @@ public class RenderingUtils {
         GL11.glPopMatrix();
     }
 
+    /**
+     * Draws a fading 3D line
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param z         startZ
+     * @param x2        endX
+     * @param y2        endY
+     * @param z2        endZ
+     * @param red       redColour
+     * @param green     greenColour
+     * @param blue      blueColour
+     * @param lineWidth lineWidth
+     * @param fadeSpeed fadeSpeed
+     */
     public static void drawLine(double x, double y, double z, double x2, double y2, double z2, float red, float green, float blue, float lineWidth, float fadeSpeed) {
         int existed = FMLClientHandler.instance().getClient().thePlayer.ticksExisted;
         float alpha = 0.3F + MathHelper.sin((float) (existed + x)) * 0.3F + 0.3F;
@@ -205,6 +328,18 @@ public class RenderingUtils {
         GL11.glPopMatrix();
     }
 
+    /**
+     * Draws a 2D rectangle
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param width     width
+     * @param height    height
+     * @param red       redColour
+     * @param green     greenColour
+     * @param blue      blueColour
+     * @param lineWidth lineWidth
+     */
     public static void drawRect(double x, double y, double width, double height, float red, float green, float blue, float lineWidth) {
         drawLine(x, y, x + width, y, red, green, blue, lineWidth, 0);
         drawLine(x + width, y, x + width, y + width, red, green, blue, lineWidth, 0);
@@ -212,6 +347,19 @@ public class RenderingUtils {
         drawLine(x, y + width, x, y, red, green, blue, lineWidth, 0);
     }
 
+    /**
+     * Drawsa non-fading 2D rectangle
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param width     width
+     * @param height    height
+     * @param red       redcolour
+     * @param green     greenColour
+     * @param blue      blueColour
+     * @param lineWidth lineWidth
+     * @param alpha     alpha
+     */
     public static void drawRectFadeless(double x, double y, double width, double height, float red, float green, float blue, float lineWidth, float alpha) {
         drawLineNoFade(x, y, x + width, y, red, green, blue, lineWidth, alpha);
         drawLineNoFade(x + width, y, x + width, y + width, red, green, blue, lineWidth, alpha);
@@ -219,6 +367,19 @@ public class RenderingUtils {
         drawLineNoFade(x, y + width, x, y, red, green, blue, lineWidth, alpha);
     }
 
+    /**
+     * Draws a fading 2D rectangle
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param width     width
+     * @param height    height
+     * @param red       redColour
+     * @param green     greenColour
+     * @param blue      blueColour
+     * @param lineWidth lineWidth
+     * @param fadeSpeed fadeSpeed
+     */
     public static void drawRect(double x, double y, double width, double height, float red, float green, float blue, float lineWidth, float fadeSpeed) {
         drawLine(x, y, x + width, y, red, green, blue, lineWidth, fadeSpeed);
         drawLine(x + width, y, x + width, y + width, red, green, blue, lineWidth, fadeSpeed);
@@ -226,6 +387,18 @@ public class RenderingUtils {
         drawLine(x, y + width, x, y, red, green, blue, lineWidth, fadeSpeed);
     }
 
+    /**
+     * Draws a 3D rectange
+     * @param x startX
+     * @param y startY
+     * @param z startZ
+     * @param width width
+     * @param height height
+     * @param red redColour
+     * @param green greenColour
+     * @param blue blueColour
+     * @param lineWidth lineWidth
+     */
     public static void drawRect(double x, double y, double z, double width, double height, float red, float green, float blue, float lineWidth) {
         drawLine(x, y, z, x + width, y, z, red, green, blue, lineWidth);
         drawLine(x + width, y, z, x + width, y + width, z, red, green, blue, lineWidth);
@@ -233,15 +406,24 @@ public class RenderingUtils {
         drawLine(x, y + width, z, x, y, z, red, green, blue, lineWidth);
     }
 
+    /**
+     * Draws a non-fading 3D rectangle
+     * @param x startX
+     * @param y startY
+     * @param z startZ
+     * @param width width
+     * @param height height
+     * @param red redColour
+     * @param green greenColour
+     * @param blue blueColour
+     * @param lineWidth lineWidth
+     * @param alpha alpha
+     */
     public static void drawRectNoFade(double x, double y, double z, double width, double height, float red, float green, float blue, float lineWidth, float alpha) {
         drawLineNoFade(x, y, z, x + width, y, z, red, green, blue, lineWidth, alpha);
         drawLineNoFade(x + width, y, z, x + width, y + width, z, red, green, blue, lineWidth, alpha);
         drawLineNoFade(x + width, y + width, z, x, y + width, z, red, green, blue, lineWidth, alpha);
         drawLineNoFade(x, y + width, z, x, y, z, red, green, blue, lineWidth, alpha);
-    }
-
-    public static void drawSquare(double x, double y, double size, float red, float green, float blue, float lineWidth) {
-        drawRect(x, y, size, size, red, green, blue, lineWidth);
     }
 
 }
