@@ -46,9 +46,12 @@ public class BaseBlocks {
             renderItem.getItemModelMesher().register(Item.getItemFromBlock(ent.getValue()), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
         }
         for (Map.Entry<Material, Block> entry : oreBlockMap.entrySet()) {
-            Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> {
-                return entry.getKey().getColour().getRGB();
-            }, entry.getValue());
+            Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
+                @Override
+                public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+                    return entry.getKey().getColour().getRGB();
+                }
+            }
         }
     }
 
