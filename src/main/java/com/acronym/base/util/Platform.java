@@ -1,6 +1,5 @@
 package com.acronym.base.util;
 
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.EnumFacing;
@@ -8,7 +7,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Platform {
     /**
@@ -49,9 +47,15 @@ public class Platform {
      */
     public static boolean isSameItemWithNBT(@Nullable ItemStack itemStack1, @Nullable ItemStack itemStack2) {
         return itemStack1 != null && itemStack2 != null && itemStack1.isItemEqual(itemStack2) &&
-                ItemStack.areItemStackTagsEqual(itemStack1,itemStack2);
+                ItemStack.areItemStackTagsEqual(itemStack1, itemStack2);
     }
 
+    /**
+     * Rotates an EnumFacing
+     *
+     * @param forward EnumFacing to rotate
+     * @return
+     */
     public static EnumFacing rotateAround(final EnumFacing forward) {
         switch (forward) {
             case NORTH:
@@ -67,45 +71,28 @@ public class Platform {
         }
     }
 
-    public static String getPropertyString(Map<IProperty<?>, Comparable<?>> values, String... extrasArgs) {
-        StringBuilder stringbuilder = new StringBuilder();
-
-        for (Map.Entry<IProperty<?>, Comparable<?>> entry : values.entrySet()) {
-            if (stringbuilder.length() != 0) {
-                stringbuilder.append(",");
-            }
-
-            IProperty<?> iproperty = (IProperty) entry.getKey();
-            stringbuilder.append(iproperty.getName());
-            stringbuilder.append("=");
-            stringbuilder.append(getPropertyName(iproperty, (Comparable) entry.getValue()));
-        }
-
-        if (stringbuilder.length() == 0) {
-            stringbuilder.append("inventory");
-        }
-
-        for (String args : extrasArgs) {
-            if (stringbuilder.length() != 0)
-                stringbuilder.append(",");
-            stringbuilder.append(args);
-        }
-
-        return stringbuilder.toString();
-    }
-
-    private static <T extends Comparable<T>> String getPropertyName(IProperty<T> p_187489_1_, Comparable<?> p_187489_2_) {
-        return p_187489_1_.getName((T) p_187489_2_);
-    }
-
+    /**
+     * Is this a development environment?
+     *
+     * @return boolean showing if the game is currently in dev
+     */
     public static boolean isDevEnv() {
         return (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
     }
 
+    /**
+     * Should we generate jsons?
+     *
+     * @return boolean showing if we should generate jsons
+     */
     public static boolean generateBaseTextures() {
         return getArgumentList().contains("generateBaseTextures");
     }
 
+    /**
+     * Gets the program args used to run the game
+     * @return ArrayList containing the programs args used to run the game
+     */
     public static ArrayList getArgumentList() {
         return (ArrayList) Launch.blackboard.get("ArgumentList");
     }
