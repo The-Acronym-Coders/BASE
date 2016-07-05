@@ -7,9 +7,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.text.TextComponentString;
 import org.lwjgl.opengl.GL11;
 
-/**
- * Created by Jared on 7/1/2016.
- */
+/** Created by Jared on 7/1/2016 */
 public class RenderTileEntityTest extends TileEntitySpecialRenderer<BlockTest.TileEntityTest> {
 
     @Override

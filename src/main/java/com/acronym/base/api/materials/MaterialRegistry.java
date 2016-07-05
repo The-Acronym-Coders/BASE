@@ -13,9 +13,7 @@ public class MaterialRegistry {
     private static int lastID = 0;
 
     public static boolean registerMaterial(String key, Material material) {
-        if (getMaterials().keySet().contains(key)) {
-            return false;
-        }
+        if (getMaterials().keySet().contains(key)) return false;
 
         getMaterials().put(new MutablePair<>(key, lastID++), material);
         return true;
@@ -64,7 +62,6 @@ public class MaterialRegistry {
         }
         return -1;
     }
-
 
     public static String getNameFromID(int id) {
         for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
