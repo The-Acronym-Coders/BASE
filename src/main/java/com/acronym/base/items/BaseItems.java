@@ -4,6 +4,7 @@ import com.acronym.base.api.materials.Material;
 import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.items.tools.ItemWrench;
 import com.acronym.base.reference.Reference;
+import com.acronym.base.util.FileHelper;
 import com.acronym.base.util.IMetaItem;
 import com.acronym.base.util.Platform;
 import net.minecraft.client.Minecraft;
@@ -16,8 +17,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.acronym.base.reference.Reference.tab;
 
@@ -113,32 +114,10 @@ public class BaseItems {
         File file = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
         if (!file.exists()) {
             file.createNewFile();
-
-            //TODO Use file scanner from BaseBlock or make the file scanner a common util class, so this can call it.
+            FileHelper fileHelper = new FileHelper();
             File base = new File(System.getProperty("user.home") + "/getFluxed/baseItem.json");
-            Scanner scan = new Scanner(base);
-            List<String> content = new ArrayList<>();
-            while (scan.hasNextLine()) {
-                String line = scan.nextLine();
-                if (line.contains("%modid%")) {
-                    line = line.replace("%modid%", Reference.MODID);
-                }
-                if (line.contains("%key%")) {
-                    line = line.replace("%key%", key);
-                }
-                if (line.contains("%texture%")) {
-                    line = line.replace("%texture%", texture);
-                }
-                content.add(line);
-            }
-            scan.close();
-
-            //TODO Use file writer from BaseBlock or make the file writer a common util class, so this can call it.
-            FileWriter write = new FileWriter(file);
-            for (String s : content) {
-                write.write(s + "\n");
-            }
-            write.close();
+            fileHelper.scanFile(key, texture, base);
+            fileHelper.writeBaseFile(file);
         }
     }
 }

@@ -3,6 +3,7 @@ package com.acronym.base.blocks;
 import com.acronym.base.api.materials.Material;
 import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.reference.Reference;
+import com.acronym.base.util.FileHelper;
 import com.acronym.base.util.Platform;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -18,7 +19,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -119,41 +119,12 @@ public class BaseBlocks {
         write.close();
     }
 
-    public static void scanFile(String key, String texture, File base) throws FileNotFoundException {
-        Scanner scan = new Scanner(base);
-        List<String> content = new ArrayList<>();
-
-        while (scan.hasNextLine()) {
-            String line = scan.nextLine();
-            if (line.contains("%modid%")) {
-                line = line.replace("%modid%", Reference.MODID);
-            }
-            if (line.contains("%key%")) {
-                line = line.replace("%key%", key);
-            }
-            if (line.contains("%texture%")) {
-                line = line.replace("%texture%", texture);
-            }
-            content.add(line);
-        }
-        scan.close();
-    }
-
-    private static void writeBaseFile(File base) throws IOException {
-        List<String> content = new ArrayList<>();
-        FileWriter write = new FileWriter(base);
-
-        for (String s : content) {
-            write.write(s + "\n");
-        }
-        write.close();
-    }
-
-
     private static void writeFile(String key, String texture) throws Exception {
         File baseBlockState = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/blockstates/" + key + ".json");
         File baseBlockModel = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/block/" + key + ".json");
         File baseItem = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
+
+        FileHelper fileHelper = new FileHelper();
 
         File base = null;
 
@@ -172,7 +143,7 @@ public class BaseBlocks {
             base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json");
         }
 
-        scanFile(key, texture, base);
-        writeBaseFile(baseBlockState);
+        fileHelper.scanFile(key, texture, base);
+        fileHelper.writeBaseFile(baseBlockState);
     }
 }
