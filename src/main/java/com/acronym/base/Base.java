@@ -33,7 +33,7 @@ public class Base {
     public static CommonProxy proxy;
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent e) {
+    public void preInit(FMLPreInitializationEvent e) throws Exception {
         logger.info("Starting PreInit");
         long time = System.currentTimeMillis();
         time = (System.currentTimeMillis() - time);
