@@ -69,29 +69,29 @@ public class BaseBlocks {
     }
 
     private static void registerBlock(Block block, String key, String name) throws Exception {
-        registerBlock(block, key, name, key, null, tab);
+        registerBlock(block, Reference.MODID, key, name, key, null, tab);
     }
 
     private static void registerBlock(Block block, String key, String name, String texture) throws Exception {
-        registerBlock(block, key, name, texture, null, tab);
+        registerBlock(block, Reference.MODID, key, name, texture, null, tab);
     }
 
     private static void registerBlock(Block block, String key, String name, String texture, Class tile) throws Exception {
-        registerBlock(block, key, name, texture, tile, tab);
+        registerBlock(block, Reference.MODID, key, name, texture, tile, tab);
     }
 
     private static void registerBlock(Block block, String key, String name, Class tile) throws Exception {
-        registerBlock(block, key, name, key, tile, tab);
+        registerBlock(block, Reference.MODID, key, name, tile, tab);
     }
 
-    private static void registerBlock(Block block, String key, String name, Class tile, CreativeTabs tab) throws Exception {
-        registerBlock(block, key, name, key, tile, tab);
+    private static void registerBlock(Block block, String modid, String key, String name, Class tile, CreativeTabs tab) throws Exception {
+        registerBlock(block, modid, key, name, key, tile, tab);
     }
 
-    private static void registerBlock(Block block, String key, String name, String texture, Class tile, CreativeTabs tab) throws Exception {
+    private static void registerBlock(Block block, String modid, String key, String name, String texture, Class tile, CreativeTabs tab) throws Exception {
         block.setUnlocalizedName(key).setCreativeTab(tab);
         if (Platform.generateBaseTextures()) {
-            writeFile(key, texture);
+            writeFile(modid, key, texture);
             writeLangFile(key, name);
         }
         renderMap.put(key, block);
@@ -124,7 +124,7 @@ public class BaseBlocks {
         write.close();
     }
 
-    private static void writeFile(String key, String texture) throws Exception {
+    private static void writeFile(String modid, String key, String texture) throws Exception {
         File baseBlockState = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/blockstates/" + key + ".json");
         File baseBlockModel = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/block/" + key + ".json");
         File baseItem = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
@@ -132,18 +132,18 @@ public class BaseBlocks {
         FileHelper fileHelper = new FileHelper();
         if (!baseBlockState.exists()) {
             baseBlockState.createNewFile();
-            fileHelper.writeFile(baseBlockState, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json")));
+            fileHelper.writeFile(baseBlockState, fileHelper.scanFile(modid, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json")));
         }
 
         if (!baseBlockModel.exists()) {
             baseBlockModel.createNewFile();
-            fileHelper.writeFile(baseBlockModel, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockModel.json")));
+            fileHelper.writeFile(baseBlockModel, fileHelper.scanFile(modid, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockModel.json")));
 
         }
 
         if (!baseItem.exists()) {
             baseItem.createNewFile();
-            fileHelper.writeFile(baseItem, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockItem.json")));
+            fileHelper.writeFile(baseItem, fileHelper.scanFile(modid, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockItem.json")));
         }
 
     }
