@@ -3,28 +3,35 @@ package com.acronym.base.blocks;
 import com.acronym.base.api.materials.Material;
 import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.reference.Reference;
+import com.acronym.base.util.FileHelper;
 import com.acronym.base.util.Platform;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
 import static com.acronym.base.reference.Reference.tab;
 
-/** Created by Jared on 7/1/2016 */
-/** Remastered by EwyBoy on 7/5/2016 */
+/**
+ * Created by Jared on 7/1/2016
+ */
+
+/**
+ * Remastered by EwyBoy on 7/5/2016
+ */
 public class BaseBlocks {
 
     public static Map<String, Block> renderMap = new HashMap<>();
@@ -45,15 +52,18 @@ public class BaseBlocks {
         for (Map.Entry<String, Block> ent : renderMap.entrySet()) {
             renderItem.getItemModelMesher().register(Item.getItemFromBlock(ent.getValue()), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
         }
+        //TODO Convert to Lambda
         for (Map.Entry<Material, Block> entry : oreBlockMap.entrySet()) {
             Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
                 @Override
                 public int getColorFromItemstack(ItemStack stack, int tintIndex) {
                     return entry.getKey().getColour().getRGB();
                 }
-            }
+
+            }, entry.getValue());
         }
     }
+
 
     public static void postInit() {
     }
@@ -114,60 +124,27 @@ public class BaseBlocks {
         write.close();
     }
 
-    private static void scanFile(String key, String texture, File base) throws FileNotFoundException {
-        Scanner scan = new Scanner(base);
-        List<String> content = new ArrayList<>();
-
-        while (scan.hasNextLine()) {
-            String line = scan.nextLine();
-            if (line.contains("%modid%")) {
-                line = line.replace("%modid%", Reference.MODID);
-            }
-            if (line.contains("%key%")) {
-                line = line.replace("%key%", key);
-            }
-            if (line.contains("%texture%")) {
-                line = line.replace("%texture%", texture);
-            }
-            content.add(line);
-        }
-        scan.close();
-    }
-
-    private static void writeBaseFile(File base) throws IOException {
-        List<String> content = new ArrayList<>();
-        FileWriter write = new FileWriter(base);
-
-        for (String s : content) {
-            write.write(s + "\n");
-        }
-        write.close();
-    }
-
-
     private static void writeFile(String key, String texture) throws Exception {
         File baseBlockState = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/blockstates/" + key + ".json");
         File baseBlockModel = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/block/" + key + ".json");
         File baseItem = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
 
-        File base = null;
-
+        FileHelper fileHelper = new FileHelper();
         if (!baseBlockState.exists()) {
             baseBlockState.createNewFile();
-            base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json");
+            fileHelper.writeFile(baseBlockState, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json")));
         }
 
         if (!baseBlockModel.exists()) {
-            baseBlockState.createNewFile();
-            base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json");
+            baseBlockModel.createNewFile();
+            fileHelper.writeFile(baseBlockModel, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockModel.json")));
+
         }
 
         if (!baseItem.exists()) {
-            baseBlockState.createNewFile();
-            base = new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json");
+            baseItem.createNewFile();
+            fileHelper.writeFile(baseItem, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockItem.json")));
         }
 
-        scanFile(key, texture, base);
-        writeBaseFile(baseBlockState);
     }
 }

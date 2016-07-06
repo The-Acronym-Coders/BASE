@@ -8,15 +8,11 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Created by Jared on 6/30/2016.
- */
+/** Created by Jared on 6/30/2016 */
 public class ItemPart extends Item implements IMetaItem {
     Material.EnumPartType type;
 
@@ -25,13 +21,9 @@ public class ItemPart extends Item implements IMetaItem {
         setHasSubtypes(true);
     }
 
-
     @Override
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
-        for (Map.Entry<MutablePair<String, Integer>, Material> ent : MaterialRegistry.getMaterials().entrySet()) {
-            if(ent.getValue().isTypeSet(this.type))
-                subItems.add(new ItemStack(itemIn, 1, ent.getKey().getRight()));
-        }
+        subItems.addAll(MaterialRegistry.getMaterials().entrySet().stream().filter(ent -> ent.getValue().isTypeSet(this.type)).map(ent -> new ItemStack(itemIn, 1, ent.getKey().getRight())).collect(Collectors.toList()));
     }
 
     @Override
@@ -50,7 +42,6 @@ public class ItemPart extends Item implements IMetaItem {
 
     @Override
     public List<Integer> getMetaData() {
-        List<Integer> retList = MaterialRegistry.getMaterials().entrySet().stream().map(ent -> ent.getKey().getRight()).collect(Collectors.toList());
-        return retList;
+        return MaterialRegistry.getMaterials().entrySet().stream().map(ent -> ent.getKey().getRight()).collect(Collectors.toList());
     }
 }
