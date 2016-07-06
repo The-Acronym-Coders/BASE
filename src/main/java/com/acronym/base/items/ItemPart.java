@@ -12,7 +12,9 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/** Created by Jared on 6/30/2016 */
+/**
+ * Created by Jared on 6/30/2016
+ */
 public class ItemPart extends Item implements IMetaItem {
     Material.EnumPartType type;
 
@@ -37,7 +39,7 @@ public class ItemPart extends Item implements IMetaItem {
     public String getItemStackDisplayName(ItemStack stack) {
         if (stack.getItemDamage() >= 0 && stack.getItemDamage() < MaterialRegistry.getMaterials().size())
             return String.format("%s %s", MaterialRegistry.getFromID(stack.getItemDamage()).getLocalizedName(), this.type.getLocalizedName());
-        return ChatFormatting.RED+Base.languageHelper.error("null_part");
+        return ChatFormatting.RED + Base.languageHelper.error("null_part");
     }
 
     @Override

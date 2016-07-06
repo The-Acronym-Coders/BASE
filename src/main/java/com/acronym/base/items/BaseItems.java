@@ -70,7 +70,6 @@ public class BaseItems {
                     }
                     return 0xFFFFFF;
                 }
-
             }, ent.getKey());
         }
     }
