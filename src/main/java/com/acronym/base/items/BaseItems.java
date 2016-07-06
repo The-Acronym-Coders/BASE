@@ -28,19 +28,19 @@ public class BaseItems {
 
     public static Item wrench = new ItemWrench();
 
-    public static final ItemPart GEAR   = new ItemPart(Material.EnumPartType.GEAR);
-    public static final ItemPart DUST   = new ItemPart(Material.EnumPartType.DUST);
-    public static final ItemPart PLATE  = new ItemPart(Material.EnumPartType.PLATE);
+    public static final ItemPart GEAR = new ItemPart(Material.EnumPartType.GEAR);
+    public static final ItemPart DUST = new ItemPart(Material.EnumPartType.DUST);
+    public static final ItemPart PLATE = new ItemPart(Material.EnumPartType.PLATE);
     public static final ItemPart NUGGET = new ItemPart(Material.EnumPartType.NUGGET);
-    public static final ItemPart INGOT  = new ItemPart(Material.EnumPartType.INGOT);
+    public static final ItemPart INGOT = new ItemPart(Material.EnumPartType.INGOT);
 
 
     public static void preInit() throws Exception {
-        registerItemColour(GEAR,   "gear",   "gear",   new int[]{0});
-        registerItemColour(DUST,   "dust",   "dust",   new int[]{0});
-        registerItemColour(PLATE,  "plate",  "plate",  new int[]{0});
+        registerItemColour(GEAR, "gear", "gear", new int[]{0});
+        registerItemColour(DUST, "dust", "dust", new int[]{0});
+        registerItemColour(PLATE, "plate", "plate", new int[]{0});
         registerItemColour(NUGGET, "nugget", "nugget", new int[]{0});
-        registerItemColour(INGOT,  "ingot",  "ingot",  new int[]{0});
+        registerItemColour(INGOT, "ingot", "ingot", new int[]{0});
     }
 
     public static void init() {
@@ -106,7 +106,6 @@ public class BaseItems {
         if (Platform.generateBaseTextures())
             writeFile(key, texture);
         item.setUnlocalizedName(key).setCreativeTab(tab);
-
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
@@ -115,9 +114,7 @@ public class BaseItems {
         if (!file.exists()) {
             file.createNewFile();
             FileHelper fileHelper = new FileHelper();
-            File base = new File(System.getProperty("user.home") + "/getFluxed/baseItem.json");
-            fileHelper.scanFile(key, texture, base);
-            fileHelper.writeBaseFile(file);
+            fileHelper.writeFile(file, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseItem.json")));
         }
     }
 }
