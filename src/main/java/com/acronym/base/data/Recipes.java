@@ -9,24 +9,33 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import org.apache.commons.lang3.tuple.MutablePair;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Recipes {
 
     public static void preInit() {
-        for (Materials material : Materials.values()) {
-            Material mat = material.getMaterial();
-            MaterialRegistry.registerMaterial(material.getName().toLowerCase(), mat);
+        for (Field f : Materials.class.getDeclaredFields()) {
+            try {
+                Material mat = new Material();
+                mat = (Material) f.get(mat);
+                MaterialRegistry.registerMaterial(mat.getName().toLowerCase(), mat);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public static void init() {
-        for (Materials material : Materials.values()) {
-            Material mat = material.getMaterial();
+        for (Map.Entry<MutablePair<String, Integer>, Material> ent : MaterialRegistry.getMaterials().entrySet()) {
+
+            Material mat = ent.getValue();
             int matID = MaterialRegistry.getIDFromName(mat.getName());
-            List<Material.EnumPartType> types = Arrays.asList(material.getTypes());
+            List<Material.EnumPartType> types = Arrays.asList(mat.getTypes());
             if (types.contains(Material.EnumPartType.INGOT)) {
                 ItemStack ingot = new ItemStack(BaseItems.INGOT, 1, matID);
                 if (types.contains(Material.EnumPartType.GEAR)) {
@@ -43,7 +52,7 @@ public class Recipes {
                     GameRegistry.addRecipe(new ShapelessOreRecipe(ingot, nugget, nugget, nugget, nugget, nugget, nugget, nugget, nugget, nugget));
                 }
             } else {
-                String ingot = "ingot" + material.getOreDictSuffix();
+                String ingot = "ingot" + mat.getName();
                 if (!OreDictionary.getOres(ingot).isEmpty()) {
                     if (types.contains(Material.EnumPartType.GEAR)) {
                         ItemStack gear = new ItemStack(BaseItems.GEAR, 1, matID);
@@ -59,7 +68,7 @@ public class Recipes {
                         GameRegistry.addRecipe(new ShapelessOreRecipe(OreDictionary.getOres(ingot).get(0), nugget, nugget, nugget, nugget, nugget, nugget, nugget, nugget, nugget));
                     }
                 } else {
-                    String planks = "plank" + material.getOreDictSuffix();
+                    String planks = "plank" + mat.getName();
                     if (!OreDictionary.getOres(planks).isEmpty()) {
                         if (types.contains(Material.EnumPartType.GEAR)) {
                             ItemStack gear = new ItemStack(BaseItems.GEAR, 1, matID);

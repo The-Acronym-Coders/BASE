@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.BUILD_VERSION, acceptedMinecraftVersions = "["+Reference.MINECRAFT_VERSION+"]")
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.BUILD_VERSION, acceptedMinecraftVersions = "[" + Reference.MINECRAFT_VERSION + "]")
 public class Base {
 
     public static final LogHelper logger = new LogHelper(Reference.NAME);
