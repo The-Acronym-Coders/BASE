@@ -21,7 +21,9 @@ public class FileHelper {
             String line = scan.nextLine();
             content.add(line.replaceAll("%modid%", modid).replaceAll("%key%", key).replaceAll("%texture%", texture));
         }
+
         scan.close();
+
         return content;
     }
 
@@ -31,6 +33,7 @@ public class FileHelper {
         for (String s : content) {
             write.write(s + "\n");
         }
+
         write.close();
     }
 }

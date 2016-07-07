@@ -113,7 +113,7 @@ public class BaseItems {
         if (!file.exists()) {
             file.createNewFile();
             FileHelper fileHelper = new FileHelper();
-            fileHelper.writeFile(file, fileHelper.scanFile(key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseItem.json")));
+            fileHelper.writeFile(file, fileHelper.scanFile(Reference.MODID, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseItem.json")));
         }
     }
 }
