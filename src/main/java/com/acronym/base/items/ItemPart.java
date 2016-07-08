@@ -1,7 +1,7 @@
 package com.acronym.base.items;
 
 import com.acronym.base.Base;
-import com.acronym.base.api.materials.Material;
+import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.util.IMetaItem;
 import com.mojang.realmsclient.gui.ChatFormatting;
@@ -16,9 +16,10 @@ import java.util.stream.Collectors;
  * Created by Jared on 6/30/2016
  */
 public class ItemPart extends Item implements IMetaItem {
-    Material.EnumPartType type;
 
-    public ItemPart(Material.EnumPartType type) {
+    MaterialType.EnumPartType type;
+
+    public ItemPart(MaterialType.EnumPartType type) {
         this.type = type;
         setHasSubtypes(true);
     }
@@ -32,6 +33,7 @@ public class ItemPart extends Item implements IMetaItem {
     public String getUnlocalizedName(ItemStack stack) {
         if (stack.getItemDamage() >= 0 && stack.getItemDamage() < MaterialRegistry.getMaterials().size())
             return String.format("item.base.%s.%s", this.type.name().toLowerCase(), MaterialRegistry.getFromID(stack.getItemDamage()).getName().toLowerCase());
+
         return "item.base.null_part";
     }
 
@@ -39,6 +41,7 @@ public class ItemPart extends Item implements IMetaItem {
     public String getItemStackDisplayName(ItemStack stack) {
         if (stack.getItemDamage() >= 0 && stack.getItemDamage() < MaterialRegistry.getMaterials().size())
             return String.format("%s %s", MaterialRegistry.getFromID(stack.getItemDamage()).getLocalizedName(), this.type.getLocalizedName());
+
         return ChatFormatting.RED + Base.languageHelper.error("null_part");
     }
 

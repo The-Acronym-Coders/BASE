@@ -313,6 +313,7 @@ public class GuiHelper extends GuiScreen {
      */
     public void renderSplitString(String str, int x, int y, int wrapWidth, int textColour) {
         int posY = y;
+
         for (String s : fontRenderer.listFormattedStringToWidth(str, wrapWidth)) {
             drawStringWithShadow(x, posY, s, textColour);
             posY += fontRenderer.FONT_HEIGHT;

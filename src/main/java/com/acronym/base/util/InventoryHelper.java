@@ -4,6 +4,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 public class InventoryHelper {
+
     /**
      * Adds an ItemStack to an inventory
      *
@@ -27,6 +28,7 @@ public class InventoryHelper {
      */
     public static boolean isOutputFull(IInventory inventory, int slotStart, int slotEnd) {
         boolean full = true;
+
         for (int i = slotStart; i < slotEnd; i++) {
             full = !(inventory.getStackInSlot(i) == null && full);
         }
@@ -49,6 +51,7 @@ public class InventoryHelper {
 
         for (int i = slotStart; i <= slotEnd; i++) {
             ItemStack slotItemStack = inventory.getStackInSlot(i) == null ? null : inventory.getStackInSlot(i).copy();
+
             if (itemOut == null) return null;
             if (slotItemStack == null) {
                 if (!simulate) inventory.setInventorySlotContents(i, itemOut);
@@ -70,6 +73,7 @@ public class InventoryHelper {
 
             slotItemStack.stackSize = slotItemStack.stackSize + itemOut.stackSize;
             itemOut = null;
+
             if (!simulate) inventory.setInventorySlotContents(i, slotItemStack);
             break;
         }

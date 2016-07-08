@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class Platform {
+
     /**
      * Check if the code is running on the server instance
      *

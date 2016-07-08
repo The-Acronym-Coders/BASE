@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class MaterialRegistry {
 
-    private static Map<MutablePair<String, Integer>, Material> MATERIALS = new LinkedHashMap<>();
+    private static Map<MutablePair<String, Integer>, MaterialType> MATERIALS = new LinkedHashMap<>();
     private static int lastID = 0;
 
-    public static boolean registerMaterial(String key, Material material) {
+    public static boolean registerMaterial(String key, MaterialType materialType) {
         if (getMaterials().keySet().contains(key)) return false;
 
-        getMaterials().put(new MutablePair<>(key, lastID++), material);
+        getMaterials().put(new MutablePair<>(key, lastID++), materialType);
         return true;
     }
 
@@ -32,12 +32,12 @@ public class MaterialRegistry {
         return getMaterials().keySet().contains(key);
     }
 
-    public static Map<MutablePair<String, Integer>, Material> getMaterials() {
+    public static Map<MutablePair<String, Integer>, MaterialType> getMaterials() {
         return MATERIALS;
     }
 
-    public static Material getFromID(int id) {
-        for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
+    public static MaterialType getFromID(int id) {
+        for (Map.Entry<MutablePair<String, Integer>, MaterialType> ent : getMaterials().entrySet()) {
             if (ent.getKey().getRight() == id) {
                 return ent.getValue();
             }
@@ -45,8 +45,8 @@ public class MaterialRegistry {
         return null;
     }
 
-    public static Material getFromName(String name) {
-        for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
+    public static MaterialType getFromName(String name) {
+        for (Map.Entry<MutablePair<String, Integer>, MaterialType> ent : getMaterials().entrySet()) {
             if (ent.getKey().getLeft().equalsIgnoreCase(name)) {
                 return ent.getValue();
             }
@@ -55,7 +55,7 @@ public class MaterialRegistry {
     }
 
     public static int getIDFromName(String name) {
-        for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
+        for (Map.Entry<MutablePair<String, Integer>, MaterialType> ent : getMaterials().entrySet()) {
             if (ent.getKey().getLeft().equalsIgnoreCase(name)) {
                 return ent.getKey().getRight();
             }
@@ -64,7 +64,7 @@ public class MaterialRegistry {
     }
 
     public static String getNameFromID(int id) {
-        for (Map.Entry<MutablePair<String, Integer>, Material> ent : getMaterials().entrySet()) {
+        for (Map.Entry<MutablePair<String, Integer>, MaterialType> ent : getMaterials().entrySet()) {
             if (ent.getKey().getRight() == id) {
                 return ent.getKey().getLeft();
             }

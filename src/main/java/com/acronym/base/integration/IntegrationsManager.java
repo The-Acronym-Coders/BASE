@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IntegrationsManager {
+
     private static IntegrationsManager INSTANCE = new IntegrationsManager();
     private final List<IIntegration> integrationMods = new ArrayList<>();
 
@@ -16,7 +17,8 @@ public class IntegrationsManager {
     }
 
     public void index() {
-        List<IntegrationIDs> integrationClasses = new ArrayList<IntegrationIDs>();
+        List<IntegrationIDs> integrationClasses = new ArrayList<>();
+
         for(IntegrationIDs id : IntegrationIDs.values()) {
             try {
                 integrationClasses.add(id);

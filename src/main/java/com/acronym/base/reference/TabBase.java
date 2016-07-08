@@ -23,7 +23,6 @@ public class TabBase extends CreativeTabs {
         super(12, "BASE");
     }
 
-
     private void updateIcon() {
         if (!watch.isRunning()) {
             watch.reset();
@@ -42,6 +41,7 @@ public class TabBase extends CreativeTabs {
     @SideOnly(Side.CLIENT)
     public ItemStack getIconItemStack() {
         updateIcon();
+
         if (iconIndex != -1) {
             return new ItemStack(BaseItems.GEAR, 1, iconIndex);
         } else {

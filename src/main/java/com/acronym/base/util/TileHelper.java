@@ -3,7 +3,6 @@ package com.acronym.base.util;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -11,6 +10,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class TileHelper {
+
     /**
      * Drops the items in the tile
      *
@@ -21,9 +21,7 @@ public class TileHelper {
             return;
 
         IInventory inventory = (IInventory) tileEntity;
-
-        if (inventory != null)
-            DropItems(tileEntity, 0, inventory.getSizeInventory() - 1);
+        DropItems(tileEntity, 0, inventory.getSizeInventory() - 1);
     }
 
     /**
@@ -54,7 +52,7 @@ public class TileHelper {
                 EntityItem entityItem = new EntityItem(world, blockPos.getX() + dX, blockPos.getY() + dY, blockPos.getZ() + dZ, itemStack.copy());
 
                 if (itemStack.hasTagCompound()) {
-                    entityItem.getEntityItem().setTagCompound((NBTTagCompound) itemStack.getTagCompound().copy());
+                    entityItem.getEntityItem().setTagCompound(itemStack.getTagCompound().copy());
                 }
 
                 float factor = 0.05F;
@@ -66,7 +64,6 @@ public class TileHelper {
                 inventory.setInventorySlotContents(i, null);
             }
         }
-
         inventory.markDirty();
     }
 }

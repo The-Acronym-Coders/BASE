@@ -1,6 +1,6 @@
 package com.acronym.base.items;
 
-import com.acronym.base.api.materials.Material;
+import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.items.tools.ItemWrench;
 import com.acronym.base.reference.Reference;
@@ -28,11 +28,11 @@ public class BaseItems {
 
     public static Item wrench = new ItemWrench();
 
-    public static final ItemPart GEAR = new ItemPart(Material.EnumPartType.GEAR);
-    public static final ItemPart DUST = new ItemPart(Material.EnumPartType.DUST);
-    public static final ItemPart PLATE = new ItemPart(Material.EnumPartType.PLATE);
-    public static final ItemPart NUGGET = new ItemPart(Material.EnumPartType.NUGGET);
-    public static final ItemPart INGOT = new ItemPart(Material.EnumPartType.INGOT);
+    public static final ItemPart GEAR = new ItemPart(MaterialType.EnumPartType.GEAR);
+    public static final ItemPart DUST = new ItemPart(MaterialType.EnumPartType.DUST);
+    public static final ItemPart PLATE = new ItemPart(MaterialType.EnumPartType.PLATE);
+    public static final ItemPart NUGGET = new ItemPart(MaterialType.EnumPartType.NUGGET);
+    public static final ItemPart INGOT = new ItemPart(MaterialType.EnumPartType.INGOT);
 
 
     public static void preInit() throws Exception {
@@ -45,21 +45,21 @@ public class BaseItems {
 
     public static void init() {
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+
         for (Map.Entry<String, Item> ent : renderMap.entrySet()) {
             if (ent.getValue() instanceof IMetaItem) {
                 IMetaItem metaItem = (IMetaItem) ent.getValue();
                 for (int i : metaItem.getMetaData()) {
                     renderItem.getItemModelMesher().register(ent.getValue(), i, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
                 }
-            } else
-                renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
+            } else renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
         }
         for (Map.Entry<Item, int[]> ent : colourMap.entrySet()) {
             //TODO Convert to Lambda
             Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
                 @Override
                 public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-                    Material mat = MaterialRegistry.getFromID(stack.getItemDamage());
+                    MaterialType mat = MaterialRegistry.getFromID(stack.getItemDamage());
                     if (mat == null) {
                         return 0xFFFFFF;
                     }
@@ -74,10 +74,8 @@ public class BaseItems {
         }
     }
 
-
     public static void registerItem(Item item, String name, String key) throws Exception {
-        if (Platform.generateBaseTextures())
-            writeFile(key, key);
+        if (Platform.generateBaseTextures()) writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         renderMap.put(key, item);
 
@@ -85,8 +83,7 @@ public class BaseItems {
     }
 
     public static void registerItemColour(Item item, String name, String key, int[] layers) throws Exception {
-        if (Platform.generateBaseTextures())
-            writeFile(key, key);
+        if (Platform.generateBaseTextures()) writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         renderMap.put(key, item);
         colourMap.put(item, layers);
@@ -94,22 +91,21 @@ public class BaseItems {
     }
 
     public static void registerItemMeta(Item item, String name, String key) throws Exception {
-        if (Platform.generateBaseTextures())
-            writeFile(key, key);
+        if (Platform.generateBaseTextures()) writeFile(key, key);
         item.setCreativeTab(tab);
         renderMap.put(key, item);
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
     public static void registerItem(Item item, String name, String key, String texture) throws Exception {
-        if (Platform.generateBaseTextures())
-            writeFile(key, texture);
+        if (Platform.generateBaseTextures()) writeFile(key, texture);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
     public static void writeFile(String key, String texture) throws Exception {
         File file = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
+
         if (!file.exists()) {
             file.createNewFile();
             FileHelper fileHelper = new FileHelper();

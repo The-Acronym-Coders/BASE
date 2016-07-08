@@ -1,6 +1,6 @@
 package com.acronym.base.blocks;
 
-import com.acronym.base.api.materials.Material;
+import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.reference.Reference;
 import com.acronym.base.util.FileHelper;
@@ -35,11 +35,11 @@ import static com.acronym.base.reference.Reference.tab;
 public class BaseBlocks {
 
     public static Map<String, Block> renderMap = new HashMap<>();
-    public static Map<Material, Block> oreBlockMap = new LinkedHashMap<>();
+    public static Map<MaterialType, Block> oreBlockMap = new LinkedHashMap<>();
 
     public static void preInit() throws Exception {
-        for (Map.Entry<MutablePair<String, Integer>, Material> entry : MaterialRegistry.getMaterials().entrySet()) {
-            if (entry.getValue().isTypeSet(Material.EnumPartType.ORE)) {
+        for (Map.Entry<MutablePair<String, Integer>, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
+            if (entry.getValue().isTypeSet(MaterialType.EnumPartType.ORE)) {
                 BlockOre ore = new BlockOre(entry.getValue());
                 registerBlock(ore, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab);
                 oreBlockMap.put(entry.getValue(), ore);
@@ -49,11 +49,13 @@ public class BaseBlocks {
 
     public static void init() {
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+
         for (Map.Entry<String, Block> ent : renderMap.entrySet()) {
             renderItem.getItemModelMesher().register(Item.getItemFromBlock(ent.getValue()), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
         }
+
         //TODO Convert to Lambda
-        for (Map.Entry<Material, Block> entry : oreBlockMap.entrySet()) {
+        for (Map.Entry<MaterialType, Block> entry : oreBlockMap.entrySet()) {
             Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
                 @Override
                 public int getColorFromItemstack(ItemStack stack, int tintIndex) {
@@ -90,13 +92,16 @@ public class BaseBlocks {
 
     private static void registerBlock(Block block, String modid, String key, String name, String texture, Class tile, CreativeTabs tab) throws Exception {
         block.setUnlocalizedName(key).setCreativeTab(tab);
+
         if (Platform.generateBaseTextures()) {
             writeFile(modid, key, texture);
             writeLangFile(key, name);
         }
+
         renderMap.put(key, block);
         GameRegistry.register(block, new ResourceLocation(Reference.MODID + ":" + key));
         GameRegistry.register(new ItemBlock(block), new ResourceLocation(Reference.MODID + ":" + key));
+
         if (tile != null) {
             GameRegistry.registerTileEntity(tile, key);
         }
@@ -130,6 +135,7 @@ public class BaseBlocks {
         File baseItem = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
 
         FileHelper fileHelper = new FileHelper();
+
         if (!baseBlockState.exists()) {
             baseBlockState.createNewFile();
             fileHelper.writeFile(baseBlockState, fileHelper.scanFile(modid, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json")));
@@ -145,6 +151,5 @@ public class BaseBlocks {
             baseItem.createNewFile();
             fileHelper.writeFile(baseItem, fileHelper.scanFile(modid, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockItem.json")));
         }
-
     }
 }

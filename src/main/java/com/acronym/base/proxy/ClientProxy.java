@@ -13,7 +13,6 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.registerTileEntity(BlockTest.TileEntityTest.class, "testRender", new RenderTileEntityTest());
     }
 
-
     public World getClientWorld() {
         return FMLClientHandler.instance().getClient().theWorld;
     }

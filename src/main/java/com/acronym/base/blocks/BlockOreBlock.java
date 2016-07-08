@@ -1,27 +1,30 @@
 package com.acronym.base.blocks;
 
-import com.acronym.base.api.materials.Material.EnumPartType;
+import com.acronym.base.api.materials.MaterialType.EnumPartType;
+import com.acronym.base.api.materials.MaterialType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockRenderLayer;
 
 public class BlockOreBlock extends Block {
-	com.acronym.base.api.materials.Material material;
-	public BlockOreBlock(com.acronym.base.api.materials.Material material) {
+
+	MaterialType materialType;
+
+	public BlockOreBlock(MaterialType materialType) {
 		super(Material.IRON);
-		this.material=material;
+		this.materialType = materialType;
 		this.setHardness(3F);
 		this.setResistance(5F);
 	}
 
 	@Override
 	public String getUnlocalizedName() {
-		return "block.base.block."+material.getName().toLowerCase();
+		return "block.base.block."+ materialType.getName().toLowerCase();
 	}
 
 	@Override
 	public String getLocalizedName() {
-		return String.format("%s %s", EnumPartType.BLOCK.getLocalizedName(), this.material.getLocalizedName());
+		return String.format("%s %s", EnumPartType.BLOCK.getLocalizedName(), this.materialType.getLocalizedName());
 	}
 
 	@Override

@@ -2,7 +2,10 @@ package com.acronym.base.util;
 
 import net.minecraft.client.resources.I18n;
 
+import java.util.Objects;
+
 public class LanguageHelper {
+
     private String modid;
 
     /**
@@ -22,12 +25,13 @@ public class LanguageHelper {
      * @return Translated String
      */
     public String translateMessage(String label, String message) {
-        if (label == "") return I18n.format(message);
+        if (Objects.equals(label, "")) return I18n.format(message);
+
         return I18n.format(String.format("%s.%s.%s", label, modid, message));
     }
 
     /**
-     * Returns an emptry translated string
+     * Returns an empty translated string
      *
      * @param message message
      * @return Translated String

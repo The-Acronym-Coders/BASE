@@ -5,6 +5,7 @@ import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 
 public class Config {
+
     public static Configuration configuration;
 
     public static Configuration initConfig(File configFile) {

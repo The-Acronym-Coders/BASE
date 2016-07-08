@@ -50,8 +50,8 @@ public class Resource<T> {
         if (this == o) return true;
         if (!(o instanceof Resource)) return false;
         Resource<?> resource = (Resource<?>) o;
-        return getStack() != null ? getStack().equals(resource.getStack()) : resource.getStack() == null;
 
+        return getStack() != null ? getStack().equals(resource.getStack()) : resource.getStack() == null;
     }
 
     @Override

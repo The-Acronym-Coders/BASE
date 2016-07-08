@@ -27,14 +27,14 @@ part.base.ore=Ore
 ###          MATERIAL ELEMENTS        ###
 #########################################
 
-material.base.gold=Gold
-material.base.iron=Iron
-material.base.diamond=Diamond
-material.base.emerald=Emerald
-material.base.redstone=Redstone
-material.base.copper=Copper
-material.base.lead=Lead
-material.base.coal=Coal
+materialType.base.gold=Gold
+materialType.base.iron=Iron
+materialType.base.diamond=Diamond
+materialType.base.emerald=Emerald
+materialType.base.redstone=Redstone
+materialType.base.copper=Copper
+materialType.base.lead=Lead
+materialType.base.coal=Coal
 
 #########################################
 ###           ORES  MATERIALS         ###

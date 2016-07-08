@@ -20,12 +20,13 @@ import javax.annotation.Nonnull;
  * You do not have to comply with the license for elements of the material in the public domain or where your use is permitted by an applicable exception or limitation.
  * No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
  */
+
 @JEIPlugin
 public class JeiPlugin extends BlankModPlugin {
+
     @Override
     public void register(@Nonnull IModRegistry registry) {
         IJeiHelpers jeiHelpers = registry.getJeiHelpers();
         IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
-
     }
 }

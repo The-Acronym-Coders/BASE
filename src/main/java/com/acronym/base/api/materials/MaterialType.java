@@ -9,21 +9,22 @@ import java.util.List;
 
 //TODO why the fuck is stuff like this not documented at all!?!?!?!
 
-public class Material {
+public class MaterialType {
 
     private String name;
     private Color colour;
     private EnumPartType[] types;
     private List<EnumPartType> typeList = new ArrayList<>();
 
-    public Material() {
+    public MaterialType() {
         this("null", Color.white, null);
     }
 
-    public Material(String name, Color colour, EnumPartType... types) {
+    public MaterialType(String name, Color colour, EnumPartType... types) {
         this.name = name;
         this.colour = colour;
         this.types = types;
+
         if (types != null)
             for (EnumPartType type : types)
                 this.typeList.add(type);
@@ -81,12 +82,14 @@ public class Material {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Material{");
+        final StringBuilder sb = new StringBuilder("MaterialType{");
+
         sb.append("name='").append(name).append('\'');
         sb.append(", colour=").append(colour);
         sb.append(", types=").append(Arrays.toString(types));
         sb.append(", typeList=").append(typeList);
         sb.append('}');
+
         return sb.toString();
     }
 }

@@ -6,6 +6,7 @@ import com.acronym.base.integration.tesla.Tesla;
 import net.minecraftforge.fml.common.Loader;
 
 public enum IntegrationIDs {
+
 	TESLA("Tesla",Tesla.class,EnumModType.INTEGRATION),
 	BASE("base",Base.class,EnumModType.REQUIRED),
 	CHISEL("chisel", Chisel.class,EnumModType.INTEGRATION),

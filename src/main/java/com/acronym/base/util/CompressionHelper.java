@@ -11,16 +11,12 @@ public class CompressionHelper {
      * @param uncompressedString String to be compressed
      * @return byte[] of compressed String
      */
-    public static byte[] compressStringToByteArray(String uncompressedString) {
+    public static byte[] compressStringToByteArray(String uncompressedString) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         GZIPOutputStream gzipOutputStream;
-        try {
-            gzipOutputStream = new GZIPOutputStream(byteArrayOutputStream);
-            gzipOutputStream.write(uncompressedString.getBytes("UTF-8"));
-            gzipOutputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        gzipOutputStream = new GZIPOutputStream(byteArrayOutputStream);
+        gzipOutputStream.write(uncompressedString.getBytes("UTF-8"));
+        gzipOutputStream.close();
 
         return byteArrayOutputStream.toByteArray();
     }
@@ -30,19 +26,17 @@ public class CompressionHelper {
      * @param compressedString Byte[] to be decompressed
      * @return String of decompressed byte[]
      */
-    public static String decompressStringFromByteArray(byte[] compressedString) {
+    public static String decompressStringFromByteArray(byte[] compressedString) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
-        try {
-            GZIPInputStream gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(compressedString));
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(gzipInputStream, "UTF-8"));
+        GZIPInputStream gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(compressedString));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(gzipInputStream, "UTF-8"));
 
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        String line;
+
+        while ((line = bufferedReader.readLine()) != null) {
+            stringBuilder.append(line);
         }
+
         return stringBuilder.toString();
     }
 }
