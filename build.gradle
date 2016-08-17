@@ -96,14 +96,14 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 def minecraft_version = "1.10"
 def forge_version = "12.18.0.1999-1.10.0"
-def cibasename="base"
+def cibasename = "base"
 
 def cibuild = System.getenv("BUILD_NUMBER")
 def jenkinsBuild = cibuild != null ? cibuild : "0"
 
 version = minecraft_version + "-" + cibuild
 
-group= "com.acronym.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "com.acronym.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "base"
 
 minecraft {
@@ -124,7 +124,7 @@ processResources
             from(sourceSets.main.resources.srcDirs) {
                 include 'mcmod.info'
 
-                expand 'version':project.version, 'mcversion':project.minecraft.version
+                expand 'version': project.version, 'mcversion': project.minecraft.version
             }
 
             from(sourceSets.main.resources.srcDirs) {

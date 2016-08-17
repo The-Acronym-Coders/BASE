@@ -10,6 +10,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class ClientProxy extends CommonProxy {
 
     public void registerRenderers() {
+        super.registerRenderers();
         ClientRegistry.registerTileEntity(BlockTest.TileEntityTest.class, "testRender", new RenderTileEntityTest());
     }
 

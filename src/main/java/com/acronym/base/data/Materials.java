@@ -15,7 +15,6 @@ public class Materials {
     public static final MaterialType COPPER = new MaterialType("Copper", new Color(0x8e5d47), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
     public static final MaterialType SILVER = new MaterialType("Silver", new Color(0x8f9a9f), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
     public static final MaterialType TIN = new MaterialType("Tin", new Color(0xa3a3a3), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
-    public static final MaterialType LEAD = new MaterialType("Lead", new Color(0x54575c), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
-    public static final MaterialType ELECTRUM= new MaterialType("Lead", new Color(0xD4D32E), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
-
+    public static final MaterialType LEAD = new MaterialType("Lead", new Color(0x616D7E), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
+    public static final MaterialType ELECTRUM = new MaterialType("Electrum", new Color(0xD4D32E), EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE);
 }
