@@ -55,10 +55,10 @@ public class Base {
     public void init(FMLInitializationEvent e) {
         logger.info("Starting Init");
         long time = System.currentTimeMillis();
-            Recipes.init();
-            BaseItems.init();
-            BaseBlocks.init();
-            proxy.registerRenderers();
+        Recipes.init();
+        proxy.initBlockRenders();
+        proxy.initItemRenders();
+        proxy.registerRenderers();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info(String.format("Completed Init in: %d ms", time));
@@ -68,7 +68,7 @@ public class Base {
     public void postInit(FMLPostInitializationEvent e) {
         logger.info("Starting PostInit");
         long time = System.currentTimeMillis();
-            Recipes.postInit();
+        Recipes.postInit();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info(String.format("Completed PostInit in: %d ms", time));

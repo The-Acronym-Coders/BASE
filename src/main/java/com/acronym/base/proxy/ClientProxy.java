@@ -1,7 +1,9 @@
 package com.acronym.base.proxy;
 
+import com.acronym.base.blocks.BaseBlocks;
 import com.acronym.base.blocks.BlockTest;
 import com.acronym.base.client.render.RenderTileEntityTest;
+import com.acronym.base.items.BaseItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -30,4 +32,15 @@ public class ClientProxy extends CommonProxy {
         return FMLClientHandler.instance().getClient().thePlayer;
     }
 
+    @Override
+    public void initBlockRenders() {
+        super.initBlockRenders();
+        BaseBlocks.init();
+    }
+
+    @Override
+    public void initItemRenders() {
+        super.initItemRenders();
+        BaseItems.init();
+    }
 }

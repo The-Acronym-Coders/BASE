@@ -20,7 +20,7 @@ public class TabBase extends CreativeTabs {
     int iconIndex = -1;
 
     public TabBase() {
-        super(12, "BASE");
+        super("BASE");
     }
 
     private void updateIcon() {

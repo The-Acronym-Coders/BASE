@@ -3,10 +3,12 @@
 "textures": {
     "particle": "blocks/stone",
     "texture": "blocks/stone",
-    "ore": "base:blocks/ore"
+    "ore": "base:blocks/ore",
+    "ore_shadow": "base:blocks/ore_shadow"
 },
 "elements": [ 
 {
+    "__comment": "Stone",
     "from": [ 0, 0, 0 ],
     "to": [ 16, 16, 16 ],
     "faces": {
@@ -15,13 +17,26 @@
         "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" },
         "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" },
         "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" },
-        "east":  { "uv": [ 0, 0, 16,16 ], "texture": "#texture" }
+        "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" }
     }
 },
 {
+    "__comment": "ore_shadow",
     "from": [ 0, 0, 0 ],
     "to": [ 16, 16, 16 ],
-	"shade":false,
+    "faces": {
+        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#ore_shadow" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#ore_shadow" },
+        "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#ore_shadow" },
+        "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#ore_shadow" },
+        "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#ore_shadow" },
+        "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#ore_shadow" }
+    }
+},
+{
+    "__comment": "ore",
+    "from": [ 0, 0, 0 ],
+    "to": [ 16, 16, 16 ],
     "faces": {
         "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#ore", "tintindex": 0 },
         "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#ore", "tintindex": 0 },

@@ -23,4 +23,10 @@ public abstract class CommonProxy {
         return null;
     }
 
+    public void initBlockRenders(){
+        //NO-OP
+    }
+    public void initItemRenders(){
+        //NO-OP
+    }
 }
