@@ -15,14 +15,16 @@ public class MaterialType {
     private Color colour;
     private EnumPartType[] types;
     private List<EnumPartType> typeList = new ArrayList<>();
+    private boolean hasEffect;
 
     public MaterialType() {
-        this("null", Color.white, null);
+        this("null", Color.white, false, null);
     }
 
-    public MaterialType(String name, Color colour, EnumPartType... types) {
+    public MaterialType(String name, Color colour, boolean hasEffect, EnumPartType... types) {
         this.name = name;
         this.colour = colour;
+        this.hasEffect = hasEffect;
         this.types = types;
 
         if (types != null)

@@ -1,6 +1,7 @@
 package com.acronym.base;
 
 import com.acronym.base.blocks.BaseBlocks;
+import com.acronym.base.compat.CompatHandler;
 import com.acronym.base.config.Config;
 import com.acronym.base.data.Recipes;
 import com.acronym.base.items.BaseItems;
@@ -59,6 +60,7 @@ public class Base {
         proxy.initBlockRenders();
         proxy.initItemRenders();
         proxy.registerRenderers();
+        new CompatHandler();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info(String.format("Completed Init in: %d ms", time));

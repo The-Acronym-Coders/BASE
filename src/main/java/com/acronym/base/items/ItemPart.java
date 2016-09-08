@@ -1,8 +1,8 @@
 package com.acronym.base.items;
 
 import com.acronym.base.Base;
-import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.api.materials.MaterialRegistry;
+import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.util.IMetaItem;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.creativetab.CreativeTabs;
@@ -48,5 +48,10 @@ public class ItemPart extends Item implements IMetaItem {
     @Override
     public List<Integer> getMetaData() {
         return MaterialRegistry.getMaterials().entrySet().stream().map(ent -> ent.getKey().getRight()).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean hasEffect(ItemStack stack) {
+        return super.hasEffect(stack);
     }
 }

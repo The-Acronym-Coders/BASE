@@ -1,7 +1,7 @@
 package com.acronym.base.items;
 
-import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.api.materials.MaterialRegistry;
+import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.items.tools.ItemWrench;
 import com.acronym.base.reference.Reference;
 import com.acronym.base.util.FileHelper;
@@ -55,7 +55,6 @@ public class BaseItems {
             } else renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
         }
         for (Map.Entry<Item, int[]> ent : colourMap.entrySet()) {
-            //TODO Convert to Lambda
             Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
                 @Override
                 public int getColorFromItemstack(ItemStack stack, int tintIndex) {
