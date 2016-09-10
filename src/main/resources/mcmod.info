@@ -7,11 +7,11 @@
       "mcversion": "${mcversion}",
       "url": "http://minecraft.curseforge.com/projects/b-a-s-e",
       "updateUrl": "http://minecraft.curseforge.com/projects/b-a-s-e/files",
-      "authorList": ["
-          Lanse505,
-          Jared,
-          EwyBoy
-      "],
+      "authorList": [
+          "Lanse505",
+          "Jared",
+          "EwyBoy"
+      ],
       "credits": "Placeholder Credits",
       "logoFile": "",
       "screenshots": [],

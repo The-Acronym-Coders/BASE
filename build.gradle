@@ -49,7 +49,6 @@ dependencies {
 
 def commonManifest = {
     attributes 'Main-Class': 'com.acronym.base.Base'
-    attributes 'FMLCorePlugin': 'codechicken.core.launch.DepLoader'
     attributes 'FMLAT': 'base_at.cfg'
 }
 
