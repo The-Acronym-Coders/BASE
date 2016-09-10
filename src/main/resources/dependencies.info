@@ -1,8 +1,0 @@
-{
-	"repo": "http://chickenbones.net/maven/codechicken/CodeChickenLib/1.9.4-2.0.2.39/",
-	"packed": "lib/",
-	"file": "CodeChickenLib-1.9.4-2.0.2.39-universal.jar",
-	"dev": "CodeChickenLib-1.9.4-2.0.2.39-dev.jar",
-	"class": "codechicken.lib.asm.ASMHelper",
-	"coreLib": true
-}
