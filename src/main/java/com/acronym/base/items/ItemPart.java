@@ -9,6 +9,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import java.io.InputStream;
+import java.io.StringReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,16 +33,18 @@ public class ItemPart extends Item implements IMetaItem {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        if (stack.getItemDamage() >= 0 && stack.getItemDamage() < MaterialRegistry.getMaterials().size())
-            return String.format("item.base.%s.%s", this.type.name().toLowerCase(), MaterialRegistry.getFromID(stack.getItemDamage()).getName().toLowerCase());
+        MaterialType mat = MaterialRegistry.getFromID(stack.getItemDamage());
+        if (mat != null)
+            return String.format("item.base.%s.%s", this.type.name().toLowerCase(), mat.getName().toLowerCase());
 
         return "item.base.null_part";
     }
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        if (stack.getItemDamage() >= 0 && stack.getItemDamage() < MaterialRegistry.getMaterials().size())
-            return String.format("%s %s", MaterialRegistry.getFromID(stack.getItemDamage()).getLocalizedName(), this.type.getLocalizedName());
+        MaterialType mat = MaterialRegistry.getFromID(stack.getItemDamage());
+        if (mat != null)
+            return String.format("%s %s", mat.getLocalizedName(), this.type.getLocalizedName());
 
         return ChatFormatting.RED + Base.languageHelper.error("null_part");
     }
@@ -52,9 +56,10 @@ public class ItemPart extends Item implements IMetaItem {
 
     @Override
     public boolean hasEffect(ItemStack stack) {
-        if (stack.getItemDamage() >= 0 && stack.getItemDamage() < MaterialRegistry.getMaterials().size())
-            return MaterialRegistry.getFromID(stack.getItemDamage()).isHasEffect();
-
+        MaterialType mat = MaterialRegistry.getFromID(stack.getItemDamage());
+        if (mat != null) {
+            return mat.isHasEffect();
+        }
         return super.hasEffect(stack);
     }
 }
