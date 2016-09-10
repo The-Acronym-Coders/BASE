@@ -43,7 +43,6 @@ public class Base {
         BaseBlocks.preInit();
 
         totalTime += time;
-
         final File folder = new File(e.getModConfigurationDirectory(), "B.A.S.E/");
         if (!folder.exists())
             folder.mkdir();

@@ -25,31 +25,33 @@ import static com.acronym.base.items.BaseItems.renderMap;
 public class Materials {
 
     @ZenMethod
-    public static void add(String name, int colour, String[] types) {
+    public static void add(String name, int colour, boolean hasEffect, String[] types) {
         MaterialType.EnumPartType[] partTypes = new MaterialType.EnumPartType[types.length];
         for (int i = 0; i < types.length; i++) {
             partTypes[i] = MaterialType.EnumPartType.valueOf(types[i]);
         }
         Color col = new Color(colour);
-        MineTweakerAPI.apply(new Add(name, col, partTypes));
+        MineTweakerAPI.apply(new Add(name, col, hasEffect, partTypes));
     }
 
 
     private static class Add implements IUndoableAction {
         private String name;
         private Color colour;
+        private boolean hasEffect;
         private MaterialType.EnumPartType[] types;
 
-        public Add(String name, Color colour, MaterialType.EnumPartType[] types) {
+        public Add(String name, Color colour, boolean hasEffect, MaterialType.EnumPartType[] types) {
             this.name = name;
             this.colour = colour;
+            this.hasEffect=hasEffect;
             this.types = types;
         }
 
         @Override
         public void apply() {
             RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-            MaterialRegistry.registerMaterial(name, new MaterialType(name, colour, types));
+            MaterialRegistry.registerMaterial(name, new MaterialType(name, colour,hasEffect, types));
             for (Map.Entry<String, Item> ent : renderMap.entrySet()) {
                 if (ent.getValue() instanceof IMetaItem) {
                     IMetaItem metaItem = (IMetaItem) ent.getValue();

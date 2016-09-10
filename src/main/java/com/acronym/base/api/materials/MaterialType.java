@@ -60,6 +60,14 @@ public class MaterialType {
         return this.typeList.contains(type);
     }
 
+    public boolean isHasEffect() {
+        return hasEffect;
+    }
+
+    public void setHasEffect(boolean hasEffect) {
+        this.hasEffect = hasEffect;
+    }
+
     public enum EnumPartType {
         BLOCK,
         DUST,

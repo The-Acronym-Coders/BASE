@@ -52,6 +52,9 @@ public class ItemPart extends Item implements IMetaItem {
 
     @Override
     public boolean hasEffect(ItemStack stack) {
+        if (stack.getItemDamage() >= 0 && stack.getItemDamage() < MaterialRegistry.getMaterials().size())
+            return MaterialRegistry.getFromID(stack.getItemDamage()).isHasEffect();
+
         return super.hasEffect(stack);
     }
 }
