@@ -1,8 +1,6 @@
 package com.acronym.base.util;
 
-import net.minecraft.client.resources.I18n;
-
-import java.util.Objects;
+import com.acronym.base.Base;
 
 public class LanguageHelper {
 
@@ -17,18 +15,7 @@ public class LanguageHelper {
         this.modid = modid;
     }
 
-    /**
-     * Translates a message
-     *
-     * @param label   prefix
-     * @param message message
-     * @return Translated String
-     */
-    public String translateMessage(String label, String message) {
-        if (Objects.equals(label, "")) return I18n.format(message);
 
-        return I18n.format(String.format("%s.%s.%s", label, modid, message));
-    }
 
     /**
      * Returns an empty translated string
@@ -37,7 +24,7 @@ public class LanguageHelper {
      * @return Translated String
      */
     public String none(String message) {
-        return translateMessage("", message);
+        return Base.PROXY.translateMessage("", message);
     }
 
     /**
@@ -47,7 +34,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String message(String message) {
-        return translateMessage("message", message);
+        return Base.PROXY.translateMessage("message", message);
     }
 
     /**
@@ -57,7 +44,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String label(String message) {
-        return translateMessage("label", message);
+        return Base.PROXY.translateMessage("label", message);
     }
 
     /**
@@ -67,7 +54,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String block(String message) {
-        return translateMessage("block", message);
+        return Base.PROXY.translateMessage("block", message);
     }
 
     /**
@@ -77,7 +64,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String item(String message) {
-        return translateMessage("item", message);
+        return Base.PROXY.translateMessage("item", message);
     }
 
     /**
@@ -87,7 +74,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String itemgroup(String message) {
-        return translateMessage("itemGroup", message);
+        return Base.PROXY.translateMessage("itemGroup", message);
     }
 
     /**
@@ -97,7 +84,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String description(String message) {
-        return translateMessage("description", message);
+        return Base.PROXY.translateMessage("description", message);
     }
 
     /**
@@ -107,7 +94,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String jei(String message) {
-        return translateMessage("jei", message);
+        return Base.PROXY.translateMessage("jei", message);
     }
 
     /**
@@ -117,7 +104,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String material(String message) {
-        return translateMessage("material", message);
+        return Base.PROXY.translateMessage("material", message);
     }
 
     /**
@@ -127,7 +114,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String error(String message) {
-        return translateMessage("error", message);
+        return Base.PROXY.translateMessage("error", message);
     }
 
 }

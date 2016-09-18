@@ -1,11 +1,13 @@
 package com.acronym.base.proxy;
 
+import com.acronym.base.reference.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-public abstract class CommonProxy {
+public class CommonProxy {
 
-    public void registerRenderers() {}
+    public void registerRenderers() {
+    }
 
     public World getClientWorld() {
         return null;
@@ -23,10 +25,21 @@ public abstract class CommonProxy {
         return null;
     }
 
-    public void initBlockRenders(){
-        //NO-OP
+    public void initBlockRenders() {
     }
-    public void initItemRenders(){
-        //NO-OP
+
+    public void initItemRenders() {
+    }
+
+
+    /**
+     * Translates a message
+     *
+     * @param label   prefix
+     * @param message message
+     * @return Translated String
+     */
+    public String translateMessage(String label, String message) {
+      return String.format("%s.%s.%s", label, Reference.MODID, message);
     }
 }

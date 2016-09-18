@@ -1,18 +1,11 @@
 package com.acronym.base.items;
 
-import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.items.tools.ItemWrench;
 import com.acronym.base.reference.Reference;
 import com.acronym.base.util.FileHelper;
-import com.acronym.base.util.IMetaItem;
 import com.acronym.base.util.Platform;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -44,33 +37,6 @@ public class BaseItems {
     }
 
     public static void init() {
-        RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-
-        for (Map.Entry<String, Item> ent : renderMap.entrySet()) {
-            if (ent.getValue() instanceof IMetaItem) {
-                IMetaItem metaItem = (IMetaItem) ent.getValue();
-                for (int i : metaItem.getMetaData()) {
-                    renderItem.getItemModelMesher().register(ent.getValue(), i, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
-                }
-            } else renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
-        }
-        for (Map.Entry<Item, int[]> ent : colourMap.entrySet()) {
-            Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
-                @Override
-                public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-                    MaterialType mat = MaterialRegistry.getFromID(stack.getItemDamage());
-                    if (mat == null) {
-                        return 0xFFFFFF;
-                    }
-                    for (int i : ent.getValue()) {
-                        if (tintIndex == i) {
-                            return mat.getColour().getRGB();
-                        }
-                    }
-                    return 0xFFFFFF;
-                }
-            }, ent.getKey());
-        }
     }
 
     public static void registerItem(Item item, String name, String key) throws Exception {

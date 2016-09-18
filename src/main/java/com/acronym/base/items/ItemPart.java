@@ -9,8 +9,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import java.io.InputStream;
-import java.io.StringReader;
 import java.util.List;
 import java.util.stream.Collectors;
 

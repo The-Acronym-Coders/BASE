@@ -1,5 +1,7 @@
 package com.acronym.base.reference;
 
+import java.io.File;
+
 public class Reference {
  
     public final static String MODID = "base";
@@ -13,4 +15,6 @@ public class Reference {
     public static final String BUILD_VERSION = VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_PATCH + "-" + MINECRAFT_VERSION;
 
     public final static TabBase tab = new TabBase();
+
+    public static File CONFIG_DIR;
 } 

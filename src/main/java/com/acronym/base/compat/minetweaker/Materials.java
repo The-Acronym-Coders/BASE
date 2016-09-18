@@ -3,20 +3,12 @@ package com.acronym.base.compat.minetweaker;
 import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.reference.Reference;
-import com.acronym.base.util.IMetaItem;
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.awt.*;
-import java.util.Map;
-
-import static com.acronym.base.items.BaseItems.renderMap;
 
 /**
  * Created by Jared.
@@ -44,22 +36,28 @@ public class Materials {
         public Add(String name, Color colour, boolean hasEffect, MaterialType.EnumPartType[] types) {
             this.name = name;
             this.colour = colour;
-            this.hasEffect=hasEffect;
+            this.hasEffect = hasEffect;
             this.types = types;
         }
 
         @Override
         public void apply() {
-            RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-            MaterialRegistry.registerMaterial(name, new MaterialType(name, colour,hasEffect, types));
-            for (Map.Entry<String, Item> ent : renderMap.entrySet()) {
-                if (ent.getValue() instanceof IMetaItem) {
-                    IMetaItem metaItem = (IMetaItem) ent.getValue();
-                    for (int i : metaItem.getMetaData()) {
-                        renderItem.getItemModelMesher().register(ent.getValue(), i, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
-                    }
-                } else renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
+            if (!MaterialRegistry.isRegistered(name)) {
+                MaterialRegistry.registerMaterial(name, new MaterialType(name, colour, hasEffect, types));
             }
+//            RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+
+//            for (Map.Entry<String, Item> ent : renderMap.entrySet()) {
+//                if (ent.getValue() instanceof IMetaItem) {
+//                    IMetaItem metaItem = (IMetaItem) ent.getValue();
+//                    for (int i : metaItem.getMetaData()) {
+//                        renderItem.getItemModelMesher().register(ent.getValue(), i, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
+//                    }
+//                } else renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
+//            }
+//            if(Arrays.asList(types).contains(MaterialType.EnumPartType.BLOCK) || Arrays.asList(types).contains(MaterialType.EnumPartType.BLOCK)){
+//
+//            }
         }
 
         @Override
@@ -69,7 +67,7 @@ public class Materials {
 
         @Override
         public void undo() {
-            MaterialRegistry.unregisterMaterial(name);
+//            MaterialRegistry.unregisterMaterial(name);
         }
 
         @Override

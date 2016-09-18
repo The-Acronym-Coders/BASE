@@ -1,71 +1,12 @@
-#########################################
-###             B.A.S.E               ###
-#########################################
-
 tile.test.name=Test
 itemGroup.BASE=B.A.S.E
-
-#########################################
-###             ERRORS                ###
-#########################################
-
 error.base.null_part=Null Part
 
-#########################################
-###          MATERIAL TYPES           ###
-#########################################
+base.part.gear=Gear
+base.part.plate=Plate
+base.part.dust=Dust
+base.part.ingot=Ingot
+base.part.nugget=Nugget
+base.part.block=Block
+base.part.ore=Ore
 
-part.base.gear=Gear
-part.base.plate=Plate
-part.base.dust=Dust
-part.base.ingot=Ingot
-part.base.nugget=Nugget
-part.base.block=Block
-part.base.ore=Ore
-
-#########################################
-###          MATERIAL ELEMENTS        ###
-#########################################
-
-materialType.base.gold=Gold
-materialType.base.iron=Iron
-materialType.base.diamond=Diamond
-materialType.base.emerald=Emerald
-materialType.base.redstone=Redstone
-materialType.base.copper=Copper
-materialType.base.lead=Lead
-materialType.base.coal=Coal
-
-#########################################
-###           ORES  MATERIALS         ###
-#########################################
-
-tile.ore.name=%s Ore
-tile.ore_material.base.iron.name=%s Ore
-tile.ore_material.base.gold.name=%s Ore
-tile.ore_material.base.diamond.name=%s Ore
-tile.ore_material.base.wooden.name=%s Ore
-tile.ore_material.base.copper.name=%s Ore
-tile.ore_material.base.silver.name=%s Ore
-tile.ore_material.base.tin.name=%s Ore
-tile.ore_material.base.lead.name=%s Ore
-tile.ore_material.base.platinum.name=%s Ore
-tile.ore_material.base.bronze.name=%s Ore
-tile.ore_material.base.steel.name=%s Ore
-
-#########################################
-###           ORES  NAMES             ###
-#########################################
-
-tile.ore_iron.name=%s Ore
-tile.ore_gold.name=%s Ore
-tile.ore_diamond.name=%s Ore
-tile.ore_wooden.name=%s Ore
-tile.ore_copper.name=%s Ore
-tile.ore_silver.name=%s Ore
-tile.ore_tin.name=%s Ore
-tile.ore_lead.name=%s Ore
-tile.ore_platinum.name=%s Ore
-tile.ore_bronze.name=%s Ore
-tile.ore_steel.name=%s Ore
-tile.ore_electrum.name=%s Ore

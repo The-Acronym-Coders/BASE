@@ -20,7 +20,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.BUILD_VERSION, acceptedMinecraftVersions = "[" + Reference.MINECRAFT_VERSION + "]")
+import static com.acronym.base.reference.Reference.CONFIG_DIR;
+
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.BUILD_VERSION, acceptedMinecraftVersions = "[" + Reference.MINECRAFT_VERSION + "]", dependencies = "after:MineTweaker3;")
 public class Base {
 
     public static final LogHelper logger = new LogHelper(Reference.NAME);
@@ -28,25 +30,27 @@ public class Base {
     public static long totalTime = 0;
 
     @Instance(Reference.MODID)
-    public static Base instance;
+    public static Base INSTANCE;
 
     @SidedProxy(clientSide = "com.acronym.base.proxy.ClientProxy", serverSide = "com.acronym.base.proxy.CommonProxy")
-    public static CommonProxy proxy;
+    public static CommonProxy PROXY;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) throws Exception {
         logger.info("Starting PreInit");
         long time = System.currentTimeMillis();
         time = (System.currentTimeMillis() - time);
+        CONFIG_DIR = new File(e.getModConfigurationDirectory(), "B.A.S.E/");
+        new CompatHandler();
         Recipes.preInit();
         BaseItems.preInit();
         BaseBlocks.preInit();
 
         totalTime += time;
-        final File folder = new File(e.getModConfigurationDirectory(), "B.A.S.E/");
-        if (!folder.exists())
-            folder.mkdir();
-        Config.initConfig(new File(folder, "General.cfg"));
+
+        if (!CONFIG_DIR.exists())
+            CONFIG_DIR.mkdir();
+        Config.initConfig(new File(CONFIG_DIR, "General.cfg"));
 
         logger.info(String.format("Completed PreInit in: %d ms", time));
     }
@@ -55,11 +59,12 @@ public class Base {
     public void init(FMLInitializationEvent e) {
         logger.info("Starting Init");
         long time = System.currentTimeMillis();
+        PROXY.initBlockRenders();
+        PROXY.initItemRenders();
+        PROXY.registerRenderers();
         Recipes.init();
-        proxy.initBlockRenders();
-        proxy.initItemRenders();
-        proxy.registerRenderers();
-        new CompatHandler();
+
+
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info(String.format("Completed Init in: %d ms", time));

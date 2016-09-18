@@ -41,7 +41,7 @@ public class MaterialType {
     }
 
     public String getLocalizedName() {
-        return Base.languageHelper.none(getUnlocalizedName());
+        return Base.languageHelper.none(getName());
     }
 
     public Color getColour() {
@@ -78,7 +78,7 @@ public class MaterialType {
         PLATE;
 
         public String getUnlocalizedName() {
-            return "part.base." + this.getName().toLowerCase();
+            return "base.part." + this.getName().toLowerCase();
         }
 
         public String getLocalizedName() {

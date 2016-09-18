@@ -17,7 +17,7 @@ public class RenderTileEntityTest extends TileEntitySpecialRenderer<BlockTest.Ti
         this.func_190052_a(te, new TextComponentString("test").getText(), x, y, z, 12);
         this.func_190053_a(false);
         GL11.glTranslated(x-0.04, y + 1, z+0.04);
-        RenderingUtils.renderBeamAt(Base.proxy.getClientPlayer(), 0.08, 0, 0.08, 0.08, 5, 0.08, 0, 0, 0);
+        RenderingUtils.renderBeamAt(Base.PROXY.getClientPlayer(), 0.08, 0, 0.08, 0.08, 5, 0.08, 0, 0, 0);
         GL11.glTranslated(-x, -y - 1, -z);
     }
 }

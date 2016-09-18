@@ -40,7 +40,7 @@ repositories {
 dependencies {
     compile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
     deobfCompile "mezz.jei:jei_1.10:3.7.0.218"
-    compile "codechicken:CodeChickenLib:1.9.4-2.0.2.39:deobf"
+
 
     // test
     testCompile 'junit:junit:4.12'

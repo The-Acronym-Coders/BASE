@@ -1,30 +1,17 @@
 package com.acronym.base.blocks;
 
-import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.reference.Reference;
 import com.acronym.base.util.FileHelper;
 import com.acronym.base.util.Platform;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import org.apache.commons.lang3.tuple.MutablePair;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -41,43 +28,21 @@ import static com.acronym.base.reference.Reference.tab;
  */
 public class BaseBlocks {
 
-    public static Map<String, Block> renderMap = new HashMap<>();
+    public static Multimap<String, Block> renderMap = ArrayListMultimap.create();
     public static Map<MaterialType, Block> oreBlockMap = new LinkedHashMap<>();
 
     public static void preInit() throws Exception {
-        for (Map.Entry<MutablePair<String, Integer>, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
-            if (entry.getValue().isTypeSet(MaterialType.EnumPartType.ORE)) {
-                BlockOre ore = new BlockOre(entry.getValue());
-                registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab);
-                oreBlockMap.put(entry.getValue(), ore);
-            }
-        }
+//        for (Map.Entry<MutablePair<String, Integer>, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
+//            if (entry.getValue().isTypeSet(MaterialType.EnumPartType.ORE)) {
+//                BlockOre ore = new BlockOre(entry.getValue());
+//                registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab);
+//                oreBlockMap.put(entry.getValue(), ore);
+//            }
+//        }
     }
 
     public static void init() {
-        RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 
-        for (Map.Entry<String, Block> ent : renderMap.entrySet()) {
-            renderItem.getItemModelMesher().register(Item.getItemFromBlock(ent.getValue()), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
-        }
-
-        BlockColors bc = Minecraft.getMinecraft().getBlockColors();
-        ItemColors ic = Minecraft.getMinecraft().getItemColors();
-        for (Map.Entry<MaterialType, Block> entry : oreBlockMap.entrySet()) {
-            bc.registerBlockColorHandler(new IBlockColor() {
-                @Override
-                public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex) {
-                    return entry.getKey().getColour().getRGB();
-                }
-            }, entry.getValue());
-            ic.registerItemColorHandler(new IItemColor() {
-                @Override
-                public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-                    return entry.getKey().getColour().getRGB();
-                }
-
-            }, entry.getValue());
-        }
     }
 
 
@@ -105,14 +70,14 @@ public class BaseBlocks {
     }
 
     private static void registerBlock(Block block, String modid, String key, String name, String texture, Class tile, CreativeTabs tab) throws Exception {
-        block.setUnlocalizedName(key).setCreativeTab(tab);
+        block.setUnlocalizedName(modid + ":"+key).setCreativeTab(tab);
 
         if (Platform.generateBaseTextures()) {
             writeFile(modid, key, texture);
             writeLangFile(key, name);
         }
 
-        renderMap.put(key, block);
+        renderMap.put(texture, block);
         GameRegistry.register(block, new ResourceLocation(Reference.MODID + ":" + key));
         GameRegistry.register(new ItemBlock(block), new ResourceLocation(Reference.MODID + ":" + key));
 
