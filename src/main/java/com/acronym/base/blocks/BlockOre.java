@@ -9,7 +9,7 @@ import net.minecraft.util.BlockRenderLayer;
 
 public class BlockOre extends Block {
 
-    MaterialType materialType;
+    public MaterialType materialType;
 
     public BlockOre(MaterialType materialType) {
         super(Material.ROCK);

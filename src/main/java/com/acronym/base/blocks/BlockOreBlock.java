@@ -13,7 +13,7 @@ public class BlockOreBlock extends Block {
 	public BlockOreBlock(MaterialType materialType) {
 		super(Material.IRON);
 		this.materialType = materialType;
-		this.setHardness(3F);
+		this.setHardness(2F);
 		this.setResistance(5F);
 	}
 
