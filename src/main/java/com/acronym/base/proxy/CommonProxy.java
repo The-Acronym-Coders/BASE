@@ -25,6 +25,10 @@ public class CommonProxy {
         return null;
     }
 
+    public void preInitBlocks(){
+
+    }
+
     public void initBlockRenders() {
     }
 

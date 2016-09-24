@@ -29,6 +29,7 @@ public class Base {
     public static final LanguageHelper languageHelper = new LanguageHelper(Reference.MODID);
     public static long totalTime = 0;
 
+
     @Instance(Reference.MODID)
     public static Base INSTANCE;
 
@@ -39,20 +40,24 @@ public class Base {
     public void preInit(FMLPreInitializationEvent e) throws Exception {
         logger.info("Starting PreInit");
         long time = System.currentTimeMillis();
-        time = (System.currentTimeMillis() - time);
-        CONFIG_DIR = new File(e.getModConfigurationDirectory(), "B.A.S.E/");
+
+        CONFIG_DIR = new File(e.getModConfigurationDirectory(), "ACRONYM");
+        CONFIG_DIR = new File(CONFIG_DIR, "BASE");
+
+        if (!CONFIG_DIR.exists())
+            CONFIG_DIR.mkdir();
+
         new CompatHandler();
         Recipes.preInit();
         BaseItems.preInit();
         BaseBlocks.preInit();
-
+        PROXY.preInitBlocks();
+        Recipes.preInitLate();
         totalTime += time;
 
-        if (!CONFIG_DIR.exists())
-            CONFIG_DIR.mkdir();
         Config.initConfig(new File(CONFIG_DIR, "General.cfg"));
-
-        logger.info(String.format("Completed PreInit in: %d ms", time));
+        time = (System.currentTimeMillis() - time);
+        logger.info(String.format("Completed PreInit in: %d ms",time));
     }
 
     @EventHandler
@@ -63,8 +68,6 @@ public class Base {
         PROXY.initItemRenders();
         PROXY.registerRenderers();
         Recipes.init();
-
-
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info(String.format("Completed Init in: %d ms", time));
@@ -79,7 +82,6 @@ public class Base {
         totalTime += time;
         logger.info(String.format("Completed PostInit in: %d ms", time));
     }
-
 
     @EventHandler
     public void loadComplete(FMLLoadCompleteEvent e) {

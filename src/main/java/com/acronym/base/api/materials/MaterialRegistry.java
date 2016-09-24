@@ -5,17 +5,15 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-//TODO why the fuck is stuff like this not documented at all!?!?!?!
 
 public class MaterialRegistry {
 
     private static Map<MutablePair<String, Integer>, MaterialType> MATERIALS = new LinkedHashMap<>();
-    private static int lastID = 0;
 
-    public static boolean registerMaterial(String key, MaterialType materialType) {
-        if (getMaterials().keySet().contains(key)) return false;
+    public static boolean registerMaterial(int ID, MaterialType materialType) {
+        if (getMaterials().containsKey(materialType.getName())) return false;
 
-        getMaterials().put(new MutablePair<>(key, lastID++), materialType);
+        getMaterials().put(new MutablePair<>(materialType.getName(), ID), materialType);
         return true;
     }
 
@@ -29,7 +27,7 @@ public class MaterialRegistry {
     }
 
     public static boolean isRegistered(String key) {
-        return getMaterials().keySet().contains(key);
+        return getMaterials().containsKey(key);
     }
 
     public static Map<MutablePair<String, Integer>, MaterialType> getMaterials() {
@@ -58,6 +56,15 @@ public class MaterialRegistry {
         for (Map.Entry<MutablePair<String, Integer>, MaterialType> ent : getMaterials().entrySet()) {
             if (ent.getKey().getLeft().equalsIgnoreCase(name)) {
                 return ent.getKey().getRight();
+            }
+        }
+        return -1;
+    }
+
+    public static int getIDFromMaterial(MaterialType mat) {
+        for (Map.Entry<MutablePair<String, Integer>, MaterialType> ent : getMaterials().entrySet()) {
+            if(ent.getValue().equals(mat)){
+                return ent.getKey().getValue();
             }
         }
         return -1;

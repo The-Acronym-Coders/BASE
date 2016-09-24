@@ -17,4 +17,5 @@ public class Reference {
     public final static TabBase tab = new TabBase();
 
     public static File CONFIG_DIR;
+
 } 

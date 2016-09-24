@@ -3,16 +3,14 @@ package com.acronym.base.proxy;
 import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.blocks.BaseBlocks;
-import com.acronym.base.blocks.BlockTest;
-import com.acronym.base.client.render.RenderTileEntityTest;
 import com.acronym.base.items.BaseItems;
-import com.acronym.base.reference.Reference;
 import com.acronym.base.util.IMetaItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
@@ -21,21 +19,23 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.acronym.base.reference.Reference.MODID;
+
 public class ClientProxy extends CommonProxy {
 
     public void registerRenderers() {
         super.registerRenderers();
-        ClientRegistry.registerTileEntity(BlockTest.TileEntityTest.class, "testRender", new RenderTileEntityTest());
     }
 
     public World getClientWorld() {
@@ -54,12 +54,23 @@ public class ClientProxy extends CommonProxy {
         return FMLClientHandler.instance().getClient().thePlayer;
     }
 
+
+    public void preInitBlocks(){
+        BaseBlocks.oreBlockMap.values().forEach(block -> {
+            ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+                @Override
+                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                    return new ModelResourceLocation(new ResourceLocation(MODID, "ore"), "normal");
+                }
+            });
+        });
+    }
     @Override
     public void initBlockRenders() {
         super.initBlockRenders();
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
         for (Map.Entry<String, Block> ent : BaseBlocks.renderMap.entries()) {
-            renderItem.getItemModelMesher().register(Item.getItemFromBlock(ent.getValue()), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
+            renderItem.getItemModelMesher().register(Item.getItemFromBlock(ent.getValue()), 0, new ModelResourceLocation(MODID + ":" + ent.getKey(), "normal"));
         }
 
         BlockColors bc = Minecraft.getMinecraft().getBlockColors();
@@ -91,9 +102,10 @@ public class ClientProxy extends CommonProxy {
             if (ent.getValue() instanceof IMetaItem) {
                 IMetaItem metaItem = (IMetaItem) ent.getValue();
                 for (int i : metaItem.getMetaData()) {
-                    renderItem.getItemModelMesher().register(ent.getValue(), i, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
+                    renderItem.getItemModelMesher().register(ent.getValue(), i, new ModelResourceLocation(MODID + ":" + ent.getKey(), "inventory"));
                 }
-            } else renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
+            } else
+                renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(MODID + ":" + ent.getKey(), "inventory"));
         }
         for (Map.Entry<Item, int[]> ent : BaseItems.colourMap.entrySet()) {
             Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
@@ -113,6 +125,7 @@ public class ClientProxy extends CommonProxy {
             }, ent.getKey());
         }
     }
+
     /**
      * Translates a message
      *
@@ -123,6 +136,6 @@ public class ClientProxy extends CommonProxy {
     public String translateMessage(String label, String message) {
         if (Objects.equals(label, "")) return I18n.format(message);
 
-        return I18n.format(String.format("%s.%s.%s", label, Reference.MODID, message));
+        return I18n.format(String.format("%s.%s.%s", label, MODID, message));
     }
 }

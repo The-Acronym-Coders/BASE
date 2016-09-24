@@ -17,24 +17,26 @@ import java.awt.*;
 public class Materials {
 
     @ZenMethod
-    public static void add(String name, int colour, boolean hasEffect, String[] types) {
+    public static void add(String name, int ID, int colour, boolean hasEffect, String[] types) {
         MaterialType.EnumPartType[] partTypes = new MaterialType.EnumPartType[types.length];
         for (int i = 0; i < types.length; i++) {
             partTypes[i] = MaterialType.EnumPartType.valueOf(types[i]);
         }
         Color col = new Color(colour);
-        MineTweakerAPI.apply(new Add(name, col, hasEffect, partTypes));
+        MineTweakerAPI.apply(new Add(name, ID, col, hasEffect, partTypes));
     }
 
 
     private static class Add implements IUndoableAction {
         private String name;
+        private int ID;
         private Color colour;
         private boolean hasEffect;
         private MaterialType.EnumPartType[] types;
 
-        public Add(String name, Color colour, boolean hasEffect, MaterialType.EnumPartType[] types) {
+        public Add(String name, int ID, Color colour, boolean hasEffect, MaterialType.EnumPartType[] types) {
             this.name = name;
+            this.ID = ID;
             this.colour = colour;
             this.hasEffect = hasEffect;
             this.types = types;
@@ -43,21 +45,8 @@ public class Materials {
         @Override
         public void apply() {
             if (!MaterialRegistry.isRegistered(name)) {
-                MaterialRegistry.registerMaterial(name, new MaterialType(name, colour, hasEffect, types));
+                MaterialRegistry.registerMaterial(ID, new MaterialType(name, colour, hasEffect, types));
             }
-//            RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-
-//            for (Map.Entry<String, Item> ent : renderMap.entrySet()) {
-//                if (ent.getValue() instanceof IMetaItem) {
-//                    IMetaItem metaItem = (IMetaItem) ent.getValue();
-//                    for (int i : metaItem.getMetaData()) {
-//                        renderItem.getItemModelMesher().register(ent.getValue(), i, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
-//                    }
-//                } else renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(Reference.MODID + ":" + ent.getKey(), "inventory"));
-//            }
-//            if(Arrays.asList(types).contains(MaterialType.EnumPartType.BLOCK) || Arrays.asList(types).contains(MaterialType.EnumPartType.BLOCK)){
-//
-//            }
         }
 
         @Override

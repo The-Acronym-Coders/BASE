@@ -1,5 +1,6 @@
 package com.acronym.base.blocks;
 
+import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.reference.Reference;
 import com.acronym.base.util.FileHelper;
@@ -11,6 +12,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -32,13 +34,13 @@ public class BaseBlocks {
     public static Map<MaterialType, Block> oreBlockMap = new LinkedHashMap<>();
 
     public static void preInit() throws Exception {
-//        for (Map.Entry<MutablePair<String, Integer>, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
-//            if (entry.getValue().isTypeSet(MaterialType.EnumPartType.ORE)) {
-//                BlockOre ore = new BlockOre(entry.getValue());
-//                registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab);
-//                oreBlockMap.put(entry.getValue(), ore);
-//            }
-//        }
+        for (Map.Entry<MutablePair<String, Integer>, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
+            if (entry.getValue().isTypeSet(MaterialType.EnumPartType.ORE)) {
+                BlockOre ore = new BlockOre(entry.getValue());
+                registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab);
+                oreBlockMap.put(entry.getValue(), ore);
+            }
+        }
     }
 
     public static void init() {
@@ -70,7 +72,7 @@ public class BaseBlocks {
     }
 
     private static void registerBlock(Block block, String modid, String key, String name, String texture, Class tile, CreativeTabs tab) throws Exception {
-        block.setUnlocalizedName(modid + ":"+key).setCreativeTab(tab);
+        block.setUnlocalizedName(modid + ":" + key).setCreativeTab(tab);
 
         if (Platform.generateBaseTextures()) {
             writeFile(modid, key, texture);

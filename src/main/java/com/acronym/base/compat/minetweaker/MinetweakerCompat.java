@@ -18,7 +18,6 @@ public class MinetweakerCompat {
             global.mkdirs();
             global.mkdir();
         }
-        System.out.println(global.getAbsolutePath());
 
         MineTweakerAPI.registerBracketHandler(new ItemBracketHandler());
         ItemBracketHandler.rebuildItemRegistry();
