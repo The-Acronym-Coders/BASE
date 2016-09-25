@@ -1,7 +1,8 @@
 package com.acronym.base.blocks;
 
+import com.acronym.base.Base;
 import com.acronym.base.api.materials.MaterialType;
-import com.acronym.base.api.materials.MaterialType.EnumPartType;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -23,9 +24,13 @@ public class BlockOre extends Block {
         return "block.base.ore." + materialType.getName().toLowerCase();
     }
 
+
     @Override
     public String getLocalizedName() {
-        return String.format("%s %s", EnumPartType.ORE.getLocalizedName(), this.materialType.getLocalizedName());
+        if (materialType != null)
+            return String.format("%s %s", materialType.getLocalizedName(), Base.languageHelper.none("base.part.ore"));
+
+        return ChatFormatting.RED + Base.languageHelper.error("null_part");
     }
 
     @Override
