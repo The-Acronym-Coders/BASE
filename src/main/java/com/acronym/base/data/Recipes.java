@@ -16,17 +16,17 @@ import java.util.Map;
 public class Recipes {
 
     public static void preInit() {
-        MaterialRegistry.registerMaterial(0, Materials.WOOD);
-        MaterialRegistry.registerMaterial(1, Materials.STONE);
-        MaterialRegistry.registerMaterial(2, Materials.IRON);
-        MaterialRegistry.registerMaterial(3, Materials.GOLD);
-        MaterialRegistry.registerMaterial(4, Materials.DIAMOND);
+        MaterialRegistry.registerNativeMaterial(0, Materials.WOOD);
+        MaterialRegistry.registerNativeMaterial(1, Materials.STONE);
+        MaterialRegistry.registerNativeMaterial(2, Materials.IRON);
+        MaterialRegistry.registerNativeMaterial(3, Materials.GOLD);
+        MaterialRegistry.registerNativeMaterial(4, Materials.DIAMOND);
 
-        MaterialRegistry.registerMaterial(5, Materials.COPPER);
-        MaterialRegistry.registerMaterial(6, Materials.TIN);
-        MaterialRegistry.registerMaterial(7, Materials.LEAD);
-        MaterialRegistry.registerMaterial(8, Materials.SILVER);
-        MaterialRegistry.registerMaterial(9, Materials.ELECTRUM);
+        MaterialRegistry.registerNativeMaterial(5, Materials.COPPER);
+        MaterialRegistry.registerNativeMaterial(6, Materials.TIN);
+        MaterialRegistry.registerNativeMaterial(7, Materials.LEAD);
+        MaterialRegistry.registerNativeMaterial(8, Materials.SILVER);
+        MaterialRegistry.registerNativeMaterial(9, Materials.ELECTRUM);
     }
 
     public static void preInitLate(){

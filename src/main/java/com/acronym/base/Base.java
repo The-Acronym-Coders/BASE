@@ -46,7 +46,9 @@ public class Base {
 
         if (!CONFIG_DIR.exists())
             CONFIG_DIR.mkdir();
+        Config.initConfig(new File(CONFIG_DIR, "General.cfg"));
 
+        
         new CompatHandler();
         Recipes.preInit();
         BaseItems.preInit();
@@ -55,7 +57,7 @@ public class Base {
         Recipes.preInitLate();
         totalTime += time;
 
-        Config.initConfig(new File(CONFIG_DIR, "General.cfg"));
+
         time = (System.currentTimeMillis() - time);
         logger.info(String.format("Completed PreInit in: %d ms",time));
     }

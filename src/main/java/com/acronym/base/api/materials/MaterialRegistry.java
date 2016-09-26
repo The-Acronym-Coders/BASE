@@ -1,8 +1,10 @@
 package com.acronym.base.api.materials;
 
+import com.acronym.base.config.ConfigMaterials;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 
@@ -12,7 +14,15 @@ public class MaterialRegistry {
 
     public static boolean registerMaterial(int ID, MaterialType materialType) {
         if (getMaterials().containsKey(materialType.getName())) return false;
+        getMaterials().put(new MutablePair<>(materialType.getName(), ID), materialType);
+        return true;
+    }
 
+    public static boolean registerNativeMaterial(int ID, MaterialType materialType) {
+        if(!ConfigMaterials.materialMap.get(materialType)){
+            return false;
+        }
+        if (getMaterials().containsKey(materialType.getName())) return false;
         getMaterials().put(new MutablePair<>(materialType.getName(), ID), materialType);
         return true;
     }
@@ -78,4 +88,13 @@ public class MaterialRegistry {
         }
         return null;
     }
+
+    public static LinkedList<Integer> getIDList(){
+        LinkedList<Integer> retList = new LinkedList();
+        getMaterials().keySet().forEach(ent ->{
+            retList.add(ent.getRight());
+        });
+        return retList;
+    }
+
 }

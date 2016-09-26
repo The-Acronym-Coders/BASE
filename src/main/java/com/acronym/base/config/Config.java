@@ -17,7 +17,7 @@ public class Config {
     }
 
     public static void loadConfiguration() {
-        ConfigSample.init(configuration);
+        ConfigMaterials.init(configuration);
 
         configuration.save();
     }

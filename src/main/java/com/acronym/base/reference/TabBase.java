@@ -33,7 +33,7 @@ public class TabBase extends CreativeTabs {
             Random random = new Random();
             this.watch.reset();
             this.watch.start();
-            iconIndex = random.nextInt(MaterialRegistry.getMaterials().size());
+            iconIndex = MaterialRegistry.getIDList().get(random.nextInt(MaterialRegistry.getIDList().size()));
         }
 
     }
