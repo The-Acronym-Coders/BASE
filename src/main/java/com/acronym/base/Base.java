@@ -23,7 +23,7 @@ import java.io.File;
 import static com.acronym.base.reference.Reference.CONFIG_DIR;
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.BUILD_VERSION, acceptedMinecraftVersions = "[" + Reference.MINECRAFT_VERSION + "]", dependencies = "after:MineTweaker3;")
-public class Base {
+public class    Base {
 
     public static final LogHelper logger = new LogHelper(Reference.NAME);
     public static final LanguageHelper languageHelper = new LanguageHelper(Reference.MODID);
@@ -48,7 +48,7 @@ public class Base {
             CONFIG_DIR.mkdir();
         Config.initConfig(new File(CONFIG_DIR, "General.cfg"));
 
-        
+
         new CompatHandler();
         Recipes.preInit();
         BaseItems.preInit();
@@ -56,7 +56,6 @@ public class Base {
         PROXY.preInitBlocks();
         Recipes.preInitLate();
         totalTime += time;
-
 
         time = (System.currentTimeMillis() - time);
         logger.info(String.format("Completed PreInit in: %d ms",time));

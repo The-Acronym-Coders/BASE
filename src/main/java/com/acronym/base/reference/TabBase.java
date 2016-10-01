@@ -28,14 +28,12 @@ public class TabBase extends CreativeTabs {
             watch.reset();
             watch.start();
         }
-
         if (Base.PROXY.isClient() && this.watch.elapsed(TimeUnit.MILLISECONDS) >= 1500L) {
             Random random = new Random();
             this.watch.reset();
             this.watch.start();
             iconIndex = MaterialRegistry.getIDList().get(random.nextInt(MaterialRegistry.getIDList().size()));
         }
-
     }
 
     @SideOnly(Side.CLIENT)

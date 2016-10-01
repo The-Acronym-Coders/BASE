@@ -2,7 +2,9 @@ package com.acronym.base.blocks;
 
 import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.api.materials.MaterialType;
+import com.acronym.base.blocks.sets.wood.BlockStorage;
 import com.acronym.base.items.ItemBlockOre;
+import com.acronym.base.items.ItemBlockStorage;
 import com.acronym.base.reference.Reference;
 import com.acronym.base.util.FileHelper;
 import com.acronym.base.util.Platform;
@@ -33,13 +35,18 @@ public class BaseBlocks {
 
     public static Multimap<String, Block> renderMap = ArrayListMultimap.create();
     public static Map<MaterialType, Block> oreBlockMap = new LinkedHashMap<>();
+    public static Map<MaterialType, Block> storageBlockMap = new LinkedHashMap<>();
+
 
     public static void preInit() throws Exception {
         for (Map.Entry<MutablePair<String, Integer>, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
             if (entry.getValue().isTypeSet(MaterialType.EnumPartType.ORE)) {
                 BlockOre ore = new BlockOre(entry.getValue());
-                registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab, ItemBlockOre.class);
-                oreBlockMap.put(entry.getValue(), ore);
+                oreBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab, ItemBlockOre.class));
+            }
+            if (entry.getValue().isTypeSet(MaterialType.EnumPartType.BLOCK)) {
+                BlockStorage ore = new BlockStorage(entry.getValue());
+                storageBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "storage_" + entry.getValue().getName().toLowerCase(), "%s Block", "storage", null, tab, ItemBlockStorage.class));
             }
         }
     }
@@ -52,27 +59,27 @@ public class BaseBlocks {
     public static void postInit() {
     }
 
-    private static void registerBlock(Block block, String key, String name) throws Exception {
-        registerBlock(block, Reference.MODID, key, name, key, null, tab,ItemBlock.class);
+    public static Block registerBlock(Block block, String key, String name) throws Exception {
+        return registerBlock(block, Reference.MODID, key, name, key, null, tab, ItemBlock.class);
     }
 
-    private static void registerBlock(Block block, String key, String name, String texture) throws Exception {
-        registerBlock(block, Reference.MODID, key, name, texture, null, tab,ItemBlock.class);
+    public static Block registerBlock(Block block, String key, String name, String texture) throws Exception {
+        return registerBlock(block, Reference.MODID, key, name, texture, null, tab, ItemBlock.class);
     }
 
-    private static void registerBlock(Block block, String key, String name, String texture, Class tile) throws Exception {
-        registerBlock(block, Reference.MODID, key, name, texture, tile, tab,ItemBlock.class);
+    public static Block registerBlock(Block block, String key, String name, String texture, Class tile) throws Exception {
+        return registerBlock(block, Reference.MODID, key, name, texture, tile, tab, ItemBlock.class);
     }
 
-    private static void registerBlock(Block block, String key, String name, Class tile) throws Exception {
-        registerBlock(block, Reference.MODID, key, name, tile, tab);
+    public static Block registerBlock(Block block, String key, String name, Class tile) throws Exception {
+        return registerBlock(block, Reference.MODID, key, name, tile, tab);
     }
 
-    private static void registerBlock(Block block, String modid, String key, String name, Class tile, CreativeTabs tab) throws Exception {
-        registerBlock(block, modid, key, name, key, tile, tab,ItemBlock.class);
+    public static Block registerBlock(Block block, String modid, String key, String name, Class tile, CreativeTabs tab) throws Exception {
+        return registerBlock(block, modid, key, name, key, tile, tab, ItemBlock.class);
     }
 
-    private static void registerBlock(Block block, String modid, String key, String name, String texture, Class tile, CreativeTabs tab, Class<? extends ItemBlock> itemBlock) throws Exception {
+    public static Block registerBlock(Block block, String modid, String key, String name, String texture, Class tile, CreativeTabs tab, Class<? extends ItemBlock> itemBlock) throws Exception {
         block.setUnlocalizedName(modid + ":" + key).setCreativeTab(tab);
 
         if (Platform.generateBaseTextures()) {
@@ -81,12 +88,13 @@ public class BaseBlocks {
         }
 
         renderMap.put(texture, block);
-        GameRegistry.register(block, new ResourceLocation(Reference.MODID + ":" + key));
+        Block b = GameRegistry.register(block, new ResourceLocation(Reference.MODID + ":" + key));
         GameRegistry.register(itemBlock.getConstructor(Block.class).newInstance(block), new ResourceLocation(Reference.MODID + ":" + key));
 
         if (tile != null) {
             GameRegistry.registerTileEntity(tile, key);
         }
+        return b;
     }
 
     private static void writeLangFile(String key, String name) throws IOException {

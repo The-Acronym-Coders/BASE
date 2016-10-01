@@ -5,7 +5,7 @@ import java.io.File;
 public class Reference {
  
     public final static String MODID = "base";
-    public final static String NAME = "B.A.S.E";
+    public final static String NAME = "BASE";
     public static final String MINECRAFT_VERSION = "1.10";
 
     static final String VERSION_MAJOR = "0";
