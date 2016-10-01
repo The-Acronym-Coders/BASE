@@ -7,6 +7,6 @@ base.part.plate=Plate
 base.part.dust=Dust
 base.part.ingot=Ingot
 base.part.nugget=Nugget
-base.part.block=Block
+base.part.storage=Block
 base.part.ore=Ore
 

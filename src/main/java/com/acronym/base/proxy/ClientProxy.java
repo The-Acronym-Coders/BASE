@@ -64,6 +64,14 @@ public class ClientProxy extends CommonProxy {
                 }
             });
         });
+        BaseBlocks.storageBlockMap.values().forEach(block -> {
+            ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+                @Override
+                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                    return new ModelResourceLocation(new ResourceLocation(MODID, "storage"), "normal");
+                }
+            });
+        });
     }
     @Override
     public void initBlockRenders() {
@@ -76,6 +84,22 @@ public class ClientProxy extends CommonProxy {
         BlockColors bc = Minecraft.getMinecraft().getBlockColors();
         ItemColors ic = Minecraft.getMinecraft().getItemColors();
         for (Map.Entry<MaterialType, Block> entry : BaseBlocks.oreBlockMap.entrySet()) {
+            bc.registerBlockColorHandler(new IBlockColor() {
+                @Override
+                public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex) {
+                    return entry.getKey().getColour().getRGB();
+                }
+            }, entry.getValue());
+            ic.registerItemColorHandler(new IItemColor() {
+                @Override
+                public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+                    return entry.getKey().getColour().getRGB();
+                }
+
+            }, entry.getValue());
+        }
+
+        for (Map.Entry<MaterialType, Block> entry : BaseBlocks.storageBlockMap.entrySet()) {
             bc.registerBlockColorHandler(new IBlockColor() {
                 @Override
                 public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex) {

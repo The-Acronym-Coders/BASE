@@ -2,6 +2,7 @@ package com.acronym.base.data;
 
 import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.api.materials.MaterialType;
+import com.acronym.base.blocks.BaseBlocks;
 import com.acronym.base.items.BaseItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -62,6 +63,13 @@ public class Recipes {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.GEAR, 1, MaterialRegistry.getIDFromMaterial(Materials.GOLD)), " x ", "xsx", " x ", 'x', "ingotGold", 's', "gearIron"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.GEAR, 1, MaterialRegistry.getIDFromMaterial(Materials.DIAMOND)), " x ", "xsx", " x ", 'x', "gemDiamond", 's', "gearGold"));
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.GEAR, 1, MaterialRegistry.getIDFromMaterial(Materials.COPPER)), " x ", "xsx", " x ", 'x', "gearIron", 's', "gearGold"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.GEAR, 1, MaterialRegistry.getIDFromMaterial(Materials.TIN)), " x ", "xsx", " x ", 'x', "gearIron", 's', "gearGold"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.GEAR, 1, MaterialRegistry.getIDFromMaterial(Materials.LEAD)), " x ", "xsx", " x ", 'x', "gearIron", 's', "gearGold"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.GEAR, 1, MaterialRegistry.getIDFromMaterial(Materials.SILVER)), " x ", "xsx", " x ", 'x', "gearIron", 's', "gearGold"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.GEAR, 1, MaterialRegistry.getIDFromMaterial(Materials.ELECTRUM)), " x ", "xsx", " x ", 'x', "gearIron", 's', "gearGold"));
+
+
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BaseItems.NUGGET, 9, MaterialRegistry.getIDFromMaterial(Materials.IRON)), "ingotIron"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BaseItems.NUGGET, 9, MaterialRegistry.getIDFromMaterial(Materials.DIAMOND)), "gemDiamond"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BaseItems.NUGGET, 9, MaterialRegistry.getIDFromMaterial(Materials.COPPER)), "ingotCopper"));
@@ -79,6 +87,17 @@ public class Recipes {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.SILVER)), "xxx", "xxx", "xxx", 'x', "nuggetSilver"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.ELECTRUM)), "xxx", "xxx", "xxx", 'x', "nuggetElectrum"));
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.COPPER)), "xxx", "xxx", "xxx", 'x', "ingotCopper"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.TIN)), "xxx", "xxx", "xxx", 'x', "ingotTin"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.LEAD)), "xxx", "xxx", "xxx", 'x', "ingotLead"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.SILVER)), "xxx", "xxx", "xxx", 'x', "ingotSilver"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.ELECTRUM)), "xxx", "xxx", "xxx", 'x', "ingotElectrum"));
+
+        GameRegistry.addSmelting(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.COPPER)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.COPPER)), 50);
+        GameRegistry.addSmelting(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.TIN)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.TIN)), 50);
+        GameRegistry.addSmelting(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.LEAD)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.LEAD)), 50);
+        GameRegistry.addSmelting(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.SILVER)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.SILVER)), 50);
+        GameRegistry.addSmelting(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.ELECTRUM)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.ELECTRUM)), 50);
 
         GameRegistry.addSmelting(new ItemStack(BaseItems.DUST, 1, MaterialRegistry.getIDFromMaterial(Materials.IRON)), new ItemStack(Items.IRON_INGOT), 50);
         GameRegistry.addSmelting(new ItemStack(BaseItems.DUST, 1, MaterialRegistry.getIDFromMaterial(Materials.GOLD)), new ItemStack(Items.GOLD_INGOT), 50);
