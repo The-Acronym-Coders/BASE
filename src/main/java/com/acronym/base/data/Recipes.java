@@ -53,7 +53,12 @@ public class Recipes {
                     case PLATE:
                         OreDictionary.registerOre("plate" + mat.getName(), new ItemStack(BaseItems.PLATE, 1, ent.getKey().getRight()));
                         break;
-                    //TODO add ORES and BLOCKS
+                    case BLOCK:
+                        OreDictionary.registerOre("block" + mat.getName(), new ItemStack(BaseBlocks.oreBlockMap.get(ent.getValue())));
+                        break;
+                    case ORE:
+                        OreDictionary.registerOre("ore" + mat.getName(), new ItemStack(BaseBlocks.oreBlockMap.get(ent.getValue())));
+                        break;
                 }
             }
         }
