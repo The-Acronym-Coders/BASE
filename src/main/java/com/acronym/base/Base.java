@@ -1,5 +1,6 @@
 package com.acronym.base;
 
+import com.acronym.base.api.materials.MaterialRegistry;
 import com.acronym.base.blocks.BaseBlocks;
 import com.acronym.base.compat.CompatHandler;
 import com.acronym.base.config.Config;
@@ -7,6 +8,7 @@ import com.acronym.base.data.Recipes;
 import com.acronym.base.items.BaseItems;
 import com.acronym.base.proxy.CommonProxy;
 import com.acronym.base.reference.Reference;
+import com.acronym.base.reference.TabBase;
 import com.acronym.base.util.LanguageHelper;
 import com.acronym.base.util.LogHelper;
 import net.minecraftforge.fml.common.Mod;
@@ -70,6 +72,9 @@ public class Base {
         PROXY.initItemRenders();
         PROXY.registerRenderers();
         Recipes.init();
+        if (!MaterialRegistry.getMaterials().isEmpty()) {
+            Reference.tab = new TabBase();
+        }
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info(String.format("Completed Init in: %d ms", time));
