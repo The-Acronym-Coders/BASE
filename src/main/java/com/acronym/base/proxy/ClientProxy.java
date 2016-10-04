@@ -25,6 +25,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -32,6 +34,7 @@ import java.util.Objects;
 
 import static com.acronym.base.reference.Reference.MODID;
 
+@SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
     public void registerRenderers() {
@@ -55,7 +58,7 @@ public class ClientProxy extends CommonProxy {
     }
 
 
-    public void preInitBlocks(){
+    public void preInitBlocks() {
         BaseBlocks.oreBlockMap.values().forEach(block -> {
             ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
                 @Override
@@ -73,6 +76,7 @@ public class ClientProxy extends CommonProxy {
             });
         });
     }
+
     @Override
     public void initBlockRenders() {
         super.initBlockRenders();
@@ -159,7 +163,13 @@ public class ClientProxy extends CommonProxy {
      */
     public String translateMessage(String label, String message) {
         if (Objects.equals(label, "")) return I18n.format(message);
-
         return I18n.format(String.format("%s.%s.%s", label, MODID, message));
     }
+
+    @Override
+    public void initEvents() {
+        super.initEvents();
+    }
+
+
 }

@@ -25,7 +25,7 @@ public class CommonProxy {
         return null;
     }
 
-    public void preInitBlocks(){
+    public void preInitBlocks() {
 
     }
 
@@ -44,6 +44,10 @@ public class CommonProxy {
      * @return Translated String
      */
     public String translateMessage(String label, String message) {
-      return String.format("%s.%s.%s", label, Reference.MODID, message);
+        return String.format("%s.%s.%s", label, Reference.MODID, message);
+    }
+
+    public void initEvents() {
+
     }
 }
