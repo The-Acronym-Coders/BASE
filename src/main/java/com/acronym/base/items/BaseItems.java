@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,17 +30,17 @@ public class BaseItems {
 
 
     public static void preInit() throws Exception {
-        registerItemColour(GEAR, "gear", "gear", new int[]{0});
-        registerItemColour(DUST, "dust", "dust", new int[]{0});
-        registerItemColour(PLATE, "plate", "plate", new int[]{0});
-        registerItemColour(NUGGET, "nugget", "nugget", new int[]{0});
-        registerItemColour(INGOT, "ingot", "ingot", new int[]{0});
+        registerItemColour(GEAR, "gear", new int[]{0});
+        registerItemColour(DUST, "dust", new int[]{0});
+        registerItemColour(PLATE, "plate", new int[]{0});
+        registerItemColour(NUGGET, "nugget", new int[]{0});
+        registerItemColour(INGOT, "ingot", new int[]{0});
     }
 
     public static void init() {
     }
 
-    public static void registerItem(Item item, String name, String key) throws Exception {
+    public static void registerItem(Item item, String key) throws Exception {
         if (Platform.generateBaseTextures()) writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         renderMap.put(key, item);
@@ -47,7 +48,21 @@ public class BaseItems {
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
-    public static void registerItemColour(Item item, String name, String key, int[] layers) throws Exception {
+    public static void registerItem(Item item, String key, String modid, String texture) throws Exception {
+        if (Platform.generateBaseTextures()) writeFile(key, texture);
+        item.setUnlocalizedName(key).setCreativeTab(tab);
+        GameRegistry.register(item, new ResourceLocation(modid + ":" + key));
+    }
+
+    public static void registerItem(Item item, String modid, String key) {
+        if (Platform.generateBaseTextures()) writeFile(key, key);
+        item.setUnlocalizedName(key).setCreativeTab(tab);
+        renderMap.put(key, item);
+
+        GameRegistry.register(item, new ResourceLocation(modid + ":" + key));
+    }
+
+    public static void registerItemColour(Item item, String key, int[] layers) throws Exception {
         if (Platform.generateBaseTextures()) writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         renderMap.put(key, item);
@@ -62,19 +77,17 @@ public class BaseItems {
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
-    public static void registerItem(Item item, String name, String key, String texture) throws Exception {
-        if (Platform.generateBaseTextures()) writeFile(key, texture);
-        item.setUnlocalizedName(key).setCreativeTab(tab);
-        GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
-    }
-
-    public static void writeFile(String key, String texture) throws Exception {
+    public static void writeFile(String key, String texture) {
         File file = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
 
         if (!file.exists()) {
-            file.createNewFile();
-            FileHelper fileHelper = new FileHelper();
-            fileHelper.writeFile(file, fileHelper.scanFile(Reference.MODID, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseItem.json")));
+            try {
+                file.createNewFile();
+                FileHelper fileHelper = new FileHelper();
+                fileHelper.writeFile(file, fileHelper.scanFile(Reference.MODID, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseItem.json")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

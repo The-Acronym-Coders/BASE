@@ -55,9 +55,9 @@ public class Base {
         BaseItems.preInit();
         BaseBlocks.preInit();
         PROXY.preInitBlocks();
-        Recipes.preInitLate();
 
         PROXY.initEvents();
+        Recipes.preInitLate();
 
         time = (System.currentTimeMillis() - time);
         totalTime += time;

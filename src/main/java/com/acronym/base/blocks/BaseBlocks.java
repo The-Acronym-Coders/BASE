@@ -88,8 +88,8 @@ public class BaseBlocks {
         }
 
         renderMap.put(texture, block);
-        Block b = GameRegistry.register(block, new ResourceLocation(Reference.MODID + ":" + key));
-        GameRegistry.register(itemBlock.getConstructor(Block.class).newInstance(block), new ResourceLocation(Reference.MODID + ":" + key));
+        Block b = GameRegistry.register(block, new ResourceLocation(modid + ":" + key));
+        GameRegistry.register(itemBlock.getConstructor(Block.class).newInstance(block), new ResourceLocation(modid + ":" + key));
 
         if (tile != null) {
             GameRegistry.registerTileEntity(tile, key);

@@ -92,6 +92,7 @@ public class Platform {
 
     /**
      * Gets the program args used to run the game
+     *
      * @return ArrayList containing the programs args used to run the game
      */
     public static ArrayList getArgumentList() {
