@@ -31,6 +31,9 @@ public class Recipes {
         MaterialRegistry.registerNativeMaterial(7, Materials.LEAD);
         MaterialRegistry.registerNativeMaterial(8, Materials.SILVER);
         MaterialRegistry.registerNativeMaterial(9, Materials.ELECTRUM);
+        MaterialRegistry.registerNativeMaterial(10, Materials.NICKEL);
+        MaterialRegistry.registerNativeMaterial(11, Materials.ALUMINUM);
+
     }
 
     public static void preInitLate() {
@@ -121,13 +124,29 @@ public class Recipes {
             GameRegistry.addSmelting(new ItemStack(BaseItems.DUST, 1, MaterialRegistry.getIDFromMaterial(Materials.SILVER)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.SILVER)), 50);
         }
 
-        if (ConfigMaterials.materialMap.get(SILVER)) {
+        if (ConfigMaterials.materialMap.get(ELECTRUM)) {
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.GEAR, 1, MaterialRegistry.getIDFromMaterial(Materials.ELECTRUM)), " x ", "xsx", " x ", 'x', "ingotElectrum", 's', "gearIron"));
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BaseItems.NUGGET, 9, MaterialRegistry.getIDFromMaterial(Materials.ELECTRUM)), "ingotElectrum"));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.ELECTRUM)), "xxx", "xxx", "xxx", 'x', "nuggetElectrum"));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseBlocks.storageBlockMap.get(Materials.ELECTRUM)), "xxx", "xxx", "xxx", 'x', "ingotElectrum"));
             GameRegistry.addSmelting(new ItemStack(BaseBlocks.oreBlockMap.get(Materials.ELECTRUM)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.ELECTRUM)), 50);
             GameRegistry.addSmelting(new ItemStack(BaseItems.DUST, 1, MaterialRegistry.getIDFromMaterial(Materials.ELECTRUM)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(Materials.ELECTRUM)), 50);
+        }
+        if (ConfigMaterials.materialMap.get(NICKEL)) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.GEAR, 1, MaterialRegistry.getIDFromMaterial(NICKEL)), " x ", "xsx", " x ", 'x', "ingotNickel", 's', "gearIron"));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BaseItems.NUGGET, 9, MaterialRegistry.getIDFromMaterial(NICKEL)), "ingotNickel"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(NICKEL)), "xxx", "xxx", "xxx", 'x', "nuggetNickel"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseBlocks.storageBlockMap.get(NICKEL)), "xxx", "xxx", "xxx", 'x', "ingotNickel"));
+            GameRegistry.addSmelting(new ItemStack(BaseBlocks.oreBlockMap.get(NICKEL)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(NICKEL)), 50);
+            GameRegistry.addSmelting(new ItemStack(BaseItems.DUST, 1, MaterialRegistry.getIDFromMaterial(NICKEL)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(NICKEL)), 50);
+        }
+        if (ConfigMaterials.materialMap.get(ALUMINUM)) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.GEAR, 1, MaterialRegistry.getIDFromMaterial(ALUMINUM)), " x ", "xsx", " x ", 'x', "ingotAluminum", 's', "gearIron"));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BaseItems.NUGGET, 9, MaterialRegistry.getIDFromMaterial(ALUMINUM)), "ingotAluminum"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(ALUMINUM)), "xxx", "xxx", "xxx", 'x', "nuggetAluminum"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BaseBlocks.storageBlockMap.get(ALUMINUM)), "xxx", "xxx", "xxx", 'x', "ingotAluminum"));
+            GameRegistry.addSmelting(new ItemStack(BaseBlocks.oreBlockMap.get(ALUMINUM)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(NICKEL)), 50);
+            GameRegistry.addSmelting(new ItemStack(BaseItems.DUST, 1, MaterialRegistry.getIDFromMaterial(ALUMINUM)), new ItemStack(BaseItems.INGOT, 1, MaterialRegistry.getIDFromMaterial(NICKEL)), 50);
         }
     }
 

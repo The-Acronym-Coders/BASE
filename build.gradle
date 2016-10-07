@@ -52,7 +52,6 @@ def commonManifest = {
 }
 
 jar {
-    classifier = 'universal'
     manifest commonManifest
 }
 

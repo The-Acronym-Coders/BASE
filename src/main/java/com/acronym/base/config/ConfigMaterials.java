@@ -26,6 +26,9 @@ public class ConfigMaterials {
         materialMap.put(Materials.LEAD, false);
         materialMap.put(Materials.SILVER, false);
         materialMap.put(Materials.ELECTRUM, false);
+        materialMap.put(Materials.NICKEL, false);
+        materialMap.put(Materials.ALUMINUM, false);
+
     }
 
     public static void init(Configuration configuration) {

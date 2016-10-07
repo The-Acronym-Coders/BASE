@@ -18,4 +18,7 @@ public class Materials {
     public static final MaterialType LEAD = new MaterialType("Lead", new Color(0x616D7E), false, EnumPartType.BLOCK, EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
     public static final MaterialType SILVER = new MaterialType("Silver", new Color(0xDDDDDD), false, EnumPartType.BLOCK, EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
     public static final MaterialType ELECTRUM = new MaterialType("Electrum", new Color(0xD4D32E), false, EnumPartType.BLOCK, EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE);
+    public static final MaterialType NICKEL = new MaterialType("Nickel", new Color(0xA2A497), false, EnumPartType.BLOCK, EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
+    public static final MaterialType ALUMINUM= new MaterialType("Aluminum", new Color(0xCBD2D8), false, EnumPartType.BLOCK, EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.INGOT, EnumPartType.NUGGET, EnumPartType.PLATE, EnumPartType.ORE);
+
 }
