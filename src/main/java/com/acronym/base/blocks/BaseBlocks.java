@@ -83,7 +83,7 @@ public class BaseBlocks {
 
         if (Platform.generateBaseTextures()) {
             writeFile(modid, key, texture);
-            writeLangFile(key, name);
+            writeLangFile(key, modid, name);
         }
 
         renderMap.put(texture, block);
@@ -96,9 +96,9 @@ public class BaseBlocks {
         return b;
     }
 
-    private static void writeLangFile(String key, String name) {
+    private static void writeLangFile(String key, String modid, String name) {
         try {
-            File lang = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/lang/en_US.lang");
+            File lang = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + modid + "/lang/en_US.lang");
 
             if (!lang.exists()) {
                 lang.createNewFile();
@@ -124,9 +124,9 @@ public class BaseBlocks {
 
     private static void writeFile(String modid, String key, String texture) {
         try {
-            File baseBlockState = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/blockstates/" + key + ".json");
-            File baseBlockModel = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/block/" + key + ".json");
-            File baseItem = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + Reference.MODID + "/models/item/" + key + ".json");
+            File baseBlockState = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + modid + "/blockstates/" + key + ".json");
+            File baseBlockModel = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + modid + "/models/block/" + key + ".json");
+            File baseItem = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + modid + "/models/item/" + key + ".json");
 
             FileHelper fileHelper = new FileHelper();
 
