@@ -22,39 +22,43 @@ public class ColourHelper {
      *
      * @param stream
      * @return The main Colour of the InputStream
-     * @throws Exception
      */
-    public static int getColour(InputStream stream) throws Exception {
-        ImageInputStream is = ImageIO.createImageInputStream(stream);
-        Iterator<ImageReader> iter = ImageIO.getImageReaders(is);
+    public static int getColour(InputStream stream) {
+        try {
+            ImageInputStream is = ImageIO.createImageInputStream(stream);
+            Iterator<ImageReader> iter = ImageIO.getImageReaders(is);
 
-        if (!iter.hasNext()) {
-            Base.logger.error("Cannot load the specified stream: " + stream);
-        }
-
-        ImageReader imageReader = iter.next();
-        imageReader.setInput(is);
-        Image img = imageReader.read(0).getScaledInstance(1, 1, Image.SCALE_AREA_AVERAGING);
-        BufferedImage image = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D bGr = image.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        int height = image.getHeight();
-        int width = image.getWidth();
-
-        HashMap m = new HashMap();
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                int rgb = image.getRGB(i, j);
-                Integer counter = (Integer) m.get(rgb);
-                if (counter == null)
-                    counter = 0;
-                m.put(rgb, ++counter);
+            if (!iter.hasNext()) {
+                Base.logger.error("Cannot load the specified stream: " + stream);
             }
+
+            ImageReader imageReader = iter.next();
+            imageReader.setInput(is);
+            Image img = imageReader.read(0).getScaledInstance(1, 1, Image.SCALE_AREA_AVERAGING);
+            BufferedImage image = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D bGr = image.createGraphics();
+            bGr.drawImage(img, 0, 0, null);
+            bGr.dispose();
+
+            int height = image.getHeight();
+            int width = image.getWidth();
+
+            HashMap m = new HashMap();
+
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    int rgb = image.getRGB(i, j);
+                    Integer counter = (Integer) m.get(rgb);
+                    if (counter == null)
+                        counter = 0;
+                    m.put(rgb, ++counter);
+                }
+            }
+            return Integer.decode("0x" + getMostCommonColour(m));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return Integer.decode("0x" + getMostCommonColour(m));
+        return 0xFFFFFF;
     }
 
     /**

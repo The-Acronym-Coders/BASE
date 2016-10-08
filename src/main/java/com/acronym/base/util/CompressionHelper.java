@@ -8,35 +8,48 @@ public class CompressionHelper {
 
     /**
      * Converts a string into a byte[]
+     *
      * @param uncompressedString String to be compressed
      * @return byte[] of compressed String
      */
-    public static byte[] compressStringToByteArray(String uncompressedString) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        GZIPOutputStream gzipOutputStream;
-        gzipOutputStream = new GZIPOutputStream(byteArrayOutputStream);
-        gzipOutputStream.write(uncompressedString.getBytes("UTF-8"));
-        gzipOutputStream.close();
+    public static byte[] compressStringToByteArray(String uncompressedString) {
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            GZIPOutputStream gzipOutputStream = new GZIPOutputStream(byteArrayOutputStream);
 
-        return byteArrayOutputStream.toByteArray();
+
+            gzipOutputStream.write(uncompressedString.getBytes("UTF-8"));
+            gzipOutputStream.close();
+
+            return byteArrayOutputStream.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new byte[]{};
     }
 
     /**
      * Decompresses a String from a byte[]
+     *
      * @param compressedString Byte[] to be decompressed
      * @return String of decompressed byte[]
      */
-    public static String decompressStringFromByteArray(byte[] compressedString) throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        GZIPInputStream gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(compressedString));
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(gzipInputStream, "UTF-8"));
+    public static String decompressStringFromByteArray(byte[] compressedString) {
+        try {
+            StringBuilder stringBuilder = new StringBuilder();
+            GZIPInputStream gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(compressedString));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(gzipInputStream, "UTF-8"));
 
-        String line;
+            String line;
 
-        while ((line = bufferedReader.readLine()) != null) {
-            stringBuilder.append(line);
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+
+            return stringBuilder.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return stringBuilder.toString();
+        return "";
     }
 }

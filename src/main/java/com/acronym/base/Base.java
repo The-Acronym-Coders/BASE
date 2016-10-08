@@ -39,7 +39,7 @@ public class Base {
     public static CommonProxy PROXY;
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent e) throws Exception {
+    public void preInit(FMLPreInitializationEvent e) {
         logger.info("Starting PreInit");
         long time = System.currentTimeMillis();
 

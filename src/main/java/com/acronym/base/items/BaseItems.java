@@ -29,7 +29,7 @@ public class BaseItems {
     public static final ItemPart INGOT = new ItemPart(MaterialType.EnumPartType.INGOT);
 
 
-    public static void preInit() throws Exception {
+    public static void preInit() {
         registerItemColour(GEAR, "gear", new int[]{0});
         registerItemColour(DUST, "dust", new int[]{0});
         registerItemColour(PLATE, "plate", new int[]{0});
@@ -40,7 +40,7 @@ public class BaseItems {
     public static void init() {
     }
 
-    public static void registerItem(Item item, String key) throws Exception {
+    public static void registerItem(Item item, String key) {
         if (Platform.generateBaseTextures()) writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         renderMap.put(key, item);
@@ -48,7 +48,7 @@ public class BaseItems {
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
-    public static void registerItem(Item item, String key, String modid, String texture) throws Exception {
+    public static void registerItem(Item item, String key, String modid, String texture) {
         if (Platform.generateBaseTextures()) writeFile(key, texture);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         GameRegistry.register(item, new ResourceLocation(modid + ":" + key));
@@ -62,7 +62,7 @@ public class BaseItems {
         GameRegistry.register(item, new ResourceLocation(modid + ":" + key));
     }
 
-    public static void registerItemColour(Item item, String key, int[] layers) throws Exception {
+    public static void registerItemColour(Item item, String key, int[] layers) {
         if (Platform.generateBaseTextures()) writeFile(key, key);
         item.setUnlocalizedName(key).setCreativeTab(tab);
         renderMap.put(key, item);
@@ -70,7 +70,7 @@ public class BaseItems {
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }
 
-    public static void registerItemMeta(Item item, String name, String key) throws Exception {
+    public static void registerItemMeta(Item item, String name, String key) {
         if (Platform.generateBaseTextures()) writeFile(key, key);
         item.setCreativeTab(tab);
         renderMap.put(key, item);
