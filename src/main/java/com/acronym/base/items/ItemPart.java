@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.acronym.base.reference.Reference.tab;
+
 /**
  * Created by Jared on 6/30/2016
  */
@@ -22,6 +24,7 @@ public class ItemPart extends Item implements IMetaItem {
     public ItemPart(MaterialType.EnumPartType type) {
         this.type = type;
         setHasSubtypes(true);
+        setCreativeTab(tab);
     }
 
     @Override
