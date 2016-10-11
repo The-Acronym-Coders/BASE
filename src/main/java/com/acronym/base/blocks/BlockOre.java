@@ -12,11 +12,12 @@ public class BlockOre extends Block {
 
     public MaterialType materialType;
 
-    public BlockOre(MaterialType materialType) {
+    public BlockOre(MaterialType materialType, float hardness, float resistance, String toolClass, int toolTier) {
         super(Material.ROCK);
         this.materialType = materialType;
-        this.setHardness(3F);
-        this.setResistance(5F);
+        this.setHardness(hardness);
+        this.setResistance(resistance);
+        this.setHarvestLevel(toolClass, toolTier);
     }
 
     @Override

@@ -5,31 +5,29 @@ import com.acronym.base.Base;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-//TODO why the fuck is stuff like this not documented at all!?!?!?!
 
 public class MaterialType {
 
     private String name;
     private Color colour;
-    private EnumPartType[] types;
-    private List<EnumPartType> typeList = new ArrayList<>();
+    private ArrayList<EnumPartType> types;
     private boolean hasEffect;
 
+
     public MaterialType() {
-        this("null", Color.white, false, null);
+        this("null", Color.white, false, new ArrayList<EnumPartType>());
     }
 
-    public MaterialType(String name, Color colour, boolean hasEffect, EnumPartType... types) {
+    public MaterialType(String name, Color colour, boolean hasEffect, ArrayList<EnumPartType> types) {
         this.name = name;
         this.colour = colour;
         this.hasEffect = hasEffect;
         this.types = types;
+    }
 
-        if (types != null)
-            for (EnumPartType type : types)
-                this.typeList.add(type);
+    public MaterialType(String name, Color colour, boolean hasEffect, EnumPartType... types) {
+        this(name, colour, hasEffect, new ArrayList<EnumPartType>(Arrays.asList(types)));
     }
 
     public String getName() {
@@ -48,7 +46,7 @@ public class MaterialType {
         return colour;
     }
 
-    public EnumPartType[] getTypes() {
+    public ArrayList<EnumPartType> getTypes() {
         return types;
     }
 
@@ -57,7 +55,7 @@ public class MaterialType {
     }
 
     public boolean isTypeSet(EnumPartType type) {
-        return this.typeList.contains(type);
+        return this.getTypes().contains(type);
     }
 
     public boolean isHasEffect() {
@@ -93,11 +91,9 @@ public class MaterialType {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("MaterialType{");
-
         sb.append("name='").append(name).append('\'');
         sb.append(", colour=").append(colour);
-        sb.append(", types=").append(Arrays.toString(types));
-        sb.append(", typeList=").append(typeList);
+        sb.append(", types=").append(types);
         sb.append('}');
 
         return sb.toString();

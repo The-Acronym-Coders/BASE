@@ -9,12 +9,26 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static com.acronym.base.api.materials.MaterialType.EnumPartType.GEAR;
+import static com.acronym.base.data.Materials.IRON;
 
 /**
  * Created by Jared.
  */
 @ZenClass("mods.base.Materials")
 public class Materials {
+
+    @ZenMethod
+    public static IMaterialType getOrRegister(String name) {
+        MineTweakerAPI.logInfo("size: " + MaterialRegistry.getMaterials().entrySet().size());
+        if (MaterialRegistry.isRegistered(name)) {
+            return new BaseMaterialType(MaterialRegistry.getFromName(name));
+        }
+        return new BaseMaterialType(IRON);
+    }
 
     @ZenMethod
     public static void add(String name, int ID, int colour, boolean hasEffect, String[] types) {
@@ -26,6 +40,48 @@ public class Materials {
         MineTweakerAPI.apply(new Add(name, ID, col, hasEffect, partTypes));
     }
 
+    public static class Change implements IUndoableAction {
+        private MaterialType type;
+
+        public Change(MaterialType type) {
+            this.type = type; //MaterialRegistry.getFromName(name);
+        }
+
+        @Override
+        public void apply() {
+            System.out.println("registering");
+            System.out.println(type);
+            System.out.println(type.getTypes());
+            MineTweakerAPI.logInfo(type.getTypes().toString());
+            type.getTypes().add(GEAR);
+            MineTweakerAPI.logInfo(type.getTypes().toString());
+        }
+
+        @Override
+        public boolean canUndo() {
+            return true;
+        }
+
+        @Override
+        public void undo() {
+//            MaterialRegistry.unregisterMaterial(name);
+        }
+
+        @Override
+        public String describe() {
+            return String.format("[%s] Registering Material, %s", Reference.MODID, type.getName());
+        }
+
+        @Override
+        public String describeUndo() {
+            return String.format("[%s] Unregistering Material, %s", Reference.MODID, type.getName());
+        }
+
+        @Override
+        public Object getOverrideKey() {
+            return null;
+        }
+    }
 
     private static class Add implements IUndoableAction {
         private String name;
@@ -45,7 +101,7 @@ public class Materials {
         @Override
         public void apply() {
             if (!MaterialRegistry.isRegistered(name)) {
-                MaterialRegistry.registerMaterial(ID, new MaterialType(name, colour, hasEffect, types));
+                MaterialRegistry.registerMaterial(ID, new MaterialType(name, colour, hasEffect, new ArrayList<MaterialType.EnumPartType>(Arrays.asList(types))));
             }
         }
 

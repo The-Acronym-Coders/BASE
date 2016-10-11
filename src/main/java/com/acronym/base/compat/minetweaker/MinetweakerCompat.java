@@ -21,6 +21,7 @@ public class MinetweakerCompat {
 
         MineTweakerAPI.registerBracketHandler(new ItemBracketHandler());
         ItemBracketHandler.rebuildItemRegistry();
+        MineTweakerAPI.registerClass(IMaterialType.class);
         MineTweakerAPI.registerClass(Materials.class);
 
         MineTweakerImplementationAPI.setScriptProvider(new ScriptProviderDirectory(global));

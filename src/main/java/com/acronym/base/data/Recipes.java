@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.Map;
 
@@ -37,24 +36,24 @@ public class Recipes {
     }
 
     public static void preInitLate() {
-        for (Map.Entry<MutablePair<String, Integer>, MaterialType> ent : MaterialRegistry.getMaterials().entrySet()) {
+        for (Map.Entry<Integer, MaterialType> ent : MaterialRegistry.getMaterials().entrySet()) {
             MaterialType mat = ent.getValue();
             for (MaterialType.EnumPartType type : mat.getTypes()) {
                 switch (type) {
                     case INGOT:
-                        OreDictionary.registerOre("ingot" + mat.getName(), new ItemStack(BaseItems.INGOT, 1, ent.getKey().getRight()));
+                        OreDictionary.registerOre("ingot" + mat.getName(), new ItemStack(BaseItems.INGOT, 1, ent.getKey()));
                         break;
                     case DUST:
-                        OreDictionary.registerOre("dust" + mat.getName(), new ItemStack(BaseItems.DUST, 1, ent.getKey().getRight()));
+                        OreDictionary.registerOre("dust" + mat.getName(), new ItemStack(BaseItems.DUST, 1, ent.getKey()));
                         break;
                     case GEAR:
-                        OreDictionary.registerOre("gear" + mat.getName(), new ItemStack(BaseItems.GEAR, 1, ent.getKey().getRight()));
+                        OreDictionary.registerOre("gear" + mat.getName(), new ItemStack(BaseItems.GEAR, 1, ent.getKey()));
                         break;
                     case NUGGET:
-                        OreDictionary.registerOre("nugget" + mat.getName(), new ItemStack(BaseItems.NUGGET, 1, ent.getKey().getRight()));
+                        OreDictionary.registerOre("nugget" + mat.getName(), new ItemStack(BaseItems.NUGGET, 1, ent.getKey()));
                         break;
                     case PLATE:
-                        OreDictionary.registerOre("plate" + mat.getName(), new ItemStack(BaseItems.PLATE, 1, ent.getKey().getRight()));
+                        OreDictionary.registerOre("plate" + mat.getName(), new ItemStack(BaseItems.PLATE, 1, ent.getKey()));
                         break;
                     case BLOCK:
                         OreDictionary.registerOre("block" + mat.getName(), new ItemStack(BaseBlocks.storageBlockMap.get(ent.getValue())));

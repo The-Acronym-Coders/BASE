@@ -15,7 +15,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -38,16 +37,19 @@ public class BaseBlocks {
 
 
     public static void preInit() {
-        for (Map.Entry<MutablePair<String, Integer>, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
+        for (Map.Entry<Integer, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
             if (entry.getValue().isTypeSet(MaterialType.EnumPartType.ORE)) {
-                BlockOre ore = new BlockOre(entry.getValue());
+                BlockOre ore = new BlockOre(entry.getValue(), 3, 5, "pickaxe", 2);
                 oreBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab, new ItemBlockOre(ore)));
             }
+        }
+        for (Map.Entry<Integer, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
             if (entry.getValue().isTypeSet(MaterialType.EnumPartType.BLOCK)) {
                 BlockStorage ore = new BlockStorage(entry.getValue());
                 storageBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "storage_" + entry.getValue().getName().toLowerCase(), "%s Block", "storage", null, tab, new ItemBlockStorage(ore)));
             }
         }
+
     }
 
     public static void init() {

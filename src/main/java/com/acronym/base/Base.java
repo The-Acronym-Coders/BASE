@@ -1,9 +1,11 @@
 package com.acronym.base;
 
 import com.acronym.base.api.materials.MaterialRegistry;
+import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.blocks.BaseBlocks;
 import com.acronym.base.compat.CompatHandler;
 import com.acronym.base.config.Config;
+import com.acronym.base.data.Materials;
 import com.acronym.base.data.Recipes;
 import com.acronym.base.items.BaseItems;
 import com.acronym.base.proxy.CommonProxy;
@@ -47,12 +49,12 @@ public class Base {
             CONFIG_DIR.mkdir();
         Config.initConfig(new File(CONFIG_DIR, "General.cfg"));
 
-        new CompatHandler();
+
         Recipes.preInit();
+        new CompatHandler();
         BaseItems.preInit();
         BaseBlocks.preInit();
         PROXY.preInitBlocks();
-
         PROXY.initEvents();
         Recipes.preInitLate();
 
@@ -72,6 +74,7 @@ public class Base {
         if (!MaterialRegistry.getMaterials().isEmpty()) {
             Reference.tab = new TabBase();
         }
+        Materials.WOOD.getTypes().add(MaterialType.EnumPartType.INGOT);
         time = (System.currentTimeMillis() - time);
         totalTime += time;
         logger.info(String.format("Completed Init in: %d ms", time));

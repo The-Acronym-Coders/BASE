@@ -9,7 +9,7 @@ public class Materials {
 
     public static final MaterialType WOOD = new MaterialType("Wood", new Color(0x9d804f), false, EnumPartType.GEAR);
     public static final MaterialType STONE = new MaterialType("Stone", new Color(0x514B4F), false, EnumPartType.GEAR);
-    public static final MaterialType IRON = new MaterialType("Iron", new Color(0x878787), false, EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE);
+    public static final MaterialType IRON = new MaterialType("Iron", new Color(0x878787), false, EnumPartType.DUST, EnumPartType.NUGGET, EnumPartType.PLATE);
     public static final MaterialType GOLD = new MaterialType("Gold", new Color(0xb5a62c), false, EnumPartType.DUST, EnumPartType.GEAR);
     public static final MaterialType DIAMOND = new MaterialType("Diamond", new Color(0x58ad9e), false, EnumPartType.DUST, EnumPartType.GEAR, EnumPartType.NUGGET, EnumPartType.PLATE);
 
