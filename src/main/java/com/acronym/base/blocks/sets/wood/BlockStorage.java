@@ -12,11 +12,12 @@ public class BlockStorage extends Block {
 
     public MaterialType materialType;
 
-    public BlockStorage(MaterialType materialType) {
+    public BlockStorage(MaterialType materialType, float hardness, float resistance, String toolClass, int toolTier) {
         super(Material.IRON);
         this.materialType = materialType;
-        this.setHardness(5F);
-        this.setResistance(10F);
+        this.setHardness(hardness);
+        this.setResistance(resistance);
+        this.setHarvestLevel(toolClass, toolTier);
     }
 
     @Override

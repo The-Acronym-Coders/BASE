@@ -8,10 +8,25 @@ import stanhebben.zenscript.annotations.ZenMethod;
 public interface IMaterialType {
 
     @ZenMethod
+    void registerBlock(float hardness, float resistance, String toolClass, int toolTier);
+
+    @ZenMethod
+    void registerDust();
+
+    @ZenMethod
     void registerGear();
 
     @ZenMethod
-    void registerOre();
+    void registerIngot();
+
+    @ZenMethod
+    void registerNugget();
+
+    @ZenMethod
+    void registerOre(float hardness, float resistance, String toolClass, int toolTier);
+
+    @ZenMethod
+    void registerPlate();
 
     Object getInternal();
 

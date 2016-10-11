@@ -91,8 +91,8 @@ uploadArchives {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-def minecraft_version = "1.10"
-def forge_version = "12.18.0.1999-1.10.0"
+def minecraft_version = "1.10.2"
+def forge_version = "12.18.1.2053"
 def cibasename = "base"
 
 def cibuild = System.getenv("BUILD_NUMBER")

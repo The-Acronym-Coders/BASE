@@ -25,6 +25,12 @@ public class MaterialType {
         this.hasEffect = hasEffect;
         this.types = types;
     }
+    public MaterialType(String name, Color colour, boolean hasEffect) {
+        this.name = name;
+        this.colour = colour;
+        this.hasEffect = hasEffect;
+        this.types = new ArrayList<>();
+    }
 
     public MaterialType(String name, Color colour, boolean hasEffect, EnumPartType... types) {
         this(name, colour, hasEffect, new ArrayList<EnumPartType>(Arrays.asList(types)));

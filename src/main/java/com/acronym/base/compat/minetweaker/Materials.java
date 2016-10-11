@@ -5,15 +5,11 @@ import com.acronym.base.api.materials.MaterialType;
 import com.acronym.base.reference.Reference;
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
+import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import static com.acronym.base.api.materials.MaterialType.EnumPartType.GEAR;
-import static com.acronym.base.data.Materials.IRON;
 
 /**
  * Created by Jared.
@@ -22,39 +18,32 @@ import static com.acronym.base.data.Materials.IRON;
 public class Materials {
 
     @ZenMethod
-    public static IMaterialType getOrRegister(String name) {
-        MineTweakerAPI.logInfo("size: " + MaterialRegistry.getMaterials().entrySet().size());
+    public static IMaterialType getOrRegister(String name, @Optional int ID, @Optional int colour, @Optional boolean hasEffect) {
         if (MaterialRegistry.isRegistered(name)) {
             return new BaseMaterialType(MaterialRegistry.getFromName(name));
         }
-        return new BaseMaterialType(IRON);
-    }
-
-    @ZenMethod
-    public static void add(String name, int ID, int colour, boolean hasEffect, String[] types) {
-        MaterialType.EnumPartType[] partTypes = new MaterialType.EnumPartType[types.length];
-        for (int i = 0; i < types.length; i++) {
-            partTypes[i] = MaterialType.EnumPartType.valueOf(types[i]);
+        if (ID == 0) {
+            MineTweakerAPI.logError("ID is either missing or is 0!");
+            return null;
         }
         Color col = new Color(colour);
-        MineTweakerAPI.apply(new Add(name, ID, col, hasEffect, partTypes));
+        MineTweakerAPI.apply(new Add(name, ID, col, hasEffect));
+        return new BaseMaterialType(MaterialRegistry.getFromName(name));
     }
 
     public static class Change implements IUndoableAction {
-        private MaterialType type;
+        private MaterialType mat;
+        private MaterialType.EnumPartType type;
 
-        public Change(MaterialType type) {
+        public Change(MaterialType mat, MaterialType.EnumPartType type) {
+            this.mat = mat;
             this.type = type; //MaterialRegistry.getFromName(name);
+
         }
 
         @Override
         public void apply() {
-            System.out.println("registering");
-            System.out.println(type);
-            System.out.println(type.getTypes());
-            MineTweakerAPI.logInfo(type.getTypes().toString());
-            type.getTypes().add(GEAR);
-            MineTweakerAPI.logInfo(type.getTypes().toString());
+            mat.getTypes().add(type);
         }
 
         @Override
@@ -64,17 +53,17 @@ public class Materials {
 
         @Override
         public void undo() {
-//            MaterialRegistry.unregisterMaterial(name);
+//            mat.getTypes().remove(type);
         }
 
         @Override
         public String describe() {
-            return String.format("[%s] Registering Material, %s", Reference.MODID, type.getName());
+            return String.format("[%s] Registering Part Type, %s, for Material, %s", Reference.MODID, type.getName(), mat.getName());
         }
 
         @Override
         public String describeUndo() {
-            return String.format("[%s] Unregistering Material, %s", Reference.MODID, type.getName());
+            return String.format("[%s] Removing Part Type, %s, for Material, %s", Reference.MODID, type.getName(), mat.getName());
         }
 
         @Override
@@ -88,20 +77,18 @@ public class Materials {
         private int ID;
         private Color colour;
         private boolean hasEffect;
-        private MaterialType.EnumPartType[] types;
 
-        public Add(String name, int ID, Color colour, boolean hasEffect, MaterialType.EnumPartType[] types) {
+        public Add(String name, int ID, Color colour, boolean hasEffect) {
             this.name = name;
             this.ID = ID;
             this.colour = colour;
             this.hasEffect = hasEffect;
-            this.types = types;
         }
 
         @Override
         public void apply() {
             if (!MaterialRegistry.isRegistered(name)) {
-                MaterialRegistry.registerMaterial(ID, new MaterialType(name, colour, hasEffect, new ArrayList<MaterialType.EnumPartType>(Arrays.asList(types))));
+                MaterialRegistry.registerMaterial(ID, new MaterialType(name, colour, hasEffect));
             }
         }
 
@@ -112,7 +99,6 @@ public class Materials {
 
         @Override
         public void undo() {
-//            MaterialRegistry.unregisterMaterial(name);
         }
 
         @Override
@@ -122,7 +108,7 @@ public class Materials {
 
         @Override
         public String describeUndo() {
-            return String.format("[%s] Unregistering Material, %s", Reference.MODID, name);
+            return String.format("[%s] Unable to remove Material, %s, while the game is running!", Reference.MODID, name);
         }
 
         @Override

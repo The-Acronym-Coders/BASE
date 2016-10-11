@@ -39,14 +39,19 @@ public class BaseBlocks {
     public static void preInit() {
         for (Map.Entry<Integer, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
             if (entry.getValue().isTypeSet(MaterialType.EnumPartType.ORE)) {
-                BlockOre ore = new BlockOre(entry.getValue(), 3, 5, "pickaxe", 2);
-                oreBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab, new ItemBlockOre(ore)));
+                if (!oreBlockMap.containsKey(entry.getValue())) {
+                    BlockOre ore = new BlockOre(entry.getValue(), 3, 5, "pickaxe", 2);
+
+                    oreBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab, new ItemBlockOre(ore)));
+                }
             }
         }
         for (Map.Entry<Integer, MaterialType> entry : MaterialRegistry.getMaterials().entrySet()) {
             if (entry.getValue().isTypeSet(MaterialType.EnumPartType.BLOCK)) {
-                BlockStorage ore = new BlockStorage(entry.getValue());
-                storageBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "storage_" + entry.getValue().getName().toLowerCase(), "%s Block", "storage", null, tab, new ItemBlockStorage(ore)));
+                if (!storageBlockMap.containsKey(entry.getValue())) {
+                    BlockStorage ore = new BlockStorage(entry.getValue(), 5, 10, "pickaxe", 2);
+                    storageBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "storage_" + entry.getValue().getName().toLowerCase(), "%s Block", "storage", null, tab, new ItemBlockStorage(ore)));
+                }
             }
         }
 
