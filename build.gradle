@@ -20,14 +20,6 @@ repositories {
     mavenCentral()
 
     maven {
-        name 'CCL'
-        url 'http://chickenbones.net/maven'
-    }
-    maven {
-        name = "Amadornes"
-        url "http://maven.amadornes.com/"
-    }
-    maven {
         name 'Mobius'
         url 'http://mobiusstrip.eu/maven'
     }
@@ -37,13 +29,28 @@ repositories {
     }
 }
 
+
+version = "${minecraft_version}-" + getVersion();
+
+group = "com.acronym.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "base"
+
+minecraft {
+    version = "${minecraft_version}-${forge_version}"
+    runDir = "run"
+
+    mappings = "${mappings_version}"
+
+    replace "@VERSION@", project.version
+    replaceIn "Reference.java"
+}
+
 dependencies {
-    compile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
-    deobfCompile "mezz.jei:jei_1.10.2:3.12.5.303"
+    compile "mcp.mobius.waila:Waila:${waila_version}"
+    deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
 
     // test
     testCompile 'junit:junit:4.12'
-
 }
 
 def commonManifest = {
@@ -91,40 +98,42 @@ uploadArchives {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-def minecraft_version = "1.10.2"
-def forge_version = "12.18.2.2104"
-def cibasename = "base"
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
 
-def cibuild = System.getenv("BUILD_NUMBER")
-def jenkinsBuild = cibuild != null ? cibuild : "0"
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
 
-version = minecraft_version + "-" + cibuild
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
 
-group = "com.acronym.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "base"
-
-minecraft {
-    version = minecraft_version + "-" + forge_version
-    runDir = "run"
-
-    mappings = "snapshot_20161011"
-
-    replace "@VERSION@", project.version
-    replaceIn "Reference.java"
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
 }
 
-processResources
-        {
-            inputs.property "version", project.version
-            inputs.property "mcversion", project.minecraft.version
+String getVersion() {
+    String version = "${base_version}"
+    String branch = System.getenv("BRANCH") != null ? System.getenv("BRANCH") : ""
 
-            from(sourceSets.main.resources.srcDirs) {
-                include 'mcmod.info'
+    if(!branch.equals("")) {
+        version += "-" + branch
 
-                expand 'version': project.version, 'mcversion': project.minecraft.version
-            }
-
-            from(sourceSets.main.resources.srcDirs) {
-                exclude 'mcmod.info'
-            }
+        String buildNumber = getBuildNumber();
+        if(buildNumber.equals("")) {
+            version += "." + buildNumber;
         }
+    }
+
+    return version;
+}
+
+static String getBuildNumber() {
+    String buildNumber = "";
+    buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
+    if(buildNumber.equals("")) {
+        buildNumber = System.getenv("bamboo_buildNumber") != null ? "." + System.getenv("bamboo_buildNumber") : "";
+    }
+    return buildNumber;
+}
