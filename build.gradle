@@ -120,8 +120,8 @@ String getVersion() {
     if(!branch.equals("")) {
         version += "-" + branch
 
-        String buildNumber = getBuildNumber();
-        if(buildNumber.equals("")) {
+        String buildNumber = getBuildNumber()
+        if(!buildNumber.equals("")) {
             version += "." + buildNumber;
         }
     }
@@ -131,7 +131,6 @@ String getVersion() {
 
 String getBuildNumber() {
     String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
-    print buildNumber;
     if(buildNumber.equals("")) {
         buildNumber = System.getenv("bamboo_buildNumber") != null ? "." + System.getenv("bamboo_buildNumber") : ""
     }
