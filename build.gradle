@@ -129,11 +129,11 @@ String getVersion() {
     return version;
 }
 
-static String getBuildNumber() {
-    String buildNumber = "";
-    buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
+String getBuildNumber() {
+    String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
+    print buildNumber;
     if(buildNumber.equals("")) {
-        buildNumber = System.getenv("bamboo_buildNumber") != null ? "." + System.getenv("bamboo_buildNumber") : "";
+        buildNumber = System.getenv("bamboo_buildNumber") != null ? "." + System.getenv("bamboo_buildNumber") : ""
     }
     return buildNumber;
 }
