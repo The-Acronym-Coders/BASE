@@ -32,7 +32,7 @@ repositories {
 
 version = "${minecraft_version}-" + getVersion();
 
-group = "com.acronym.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "com.teamacronymcoders.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "base"
 
 minecraft {
