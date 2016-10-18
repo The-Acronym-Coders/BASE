@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.compat.minetweaker;
 
+import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.blocks.BaseBlocks;
 import com.teamacronymcoders.base.blocks.BlockOre;
@@ -23,7 +24,7 @@ public class BaseMaterialType implements IMaterialType {
     public void registerBlock(float hardness, float resistance, String toolClass, int toolTier) {
         MineTweakerAPI.apply(new Materials.Change(type, MaterialType.EnumPartType.BLOCK));
         BlockStorage ore = new BlockStorage(type, hardness, resistance, toolClass, toolTier);
-        BaseBlocks.storageBlockMap.put(type, BaseBlocks.registerBlock(ore, Reference.MODID, "storage_" + type.getName().toLowerCase(), "%s Block", "storage", null, Reference.tab, new ItemBlockStorage(ore)));
+        BaseBlocks.storageBlockMap.put(type, BaseBlocks.registerBlock(ore, Reference.MODID, "storage_" + type.getName().toLowerCase(), "%s Block", "storage", null, Base.instance.getCreativeTab(), new ItemBlockStorage(ore)));
     }
 
     @Override
@@ -50,7 +51,7 @@ public class BaseMaterialType implements IMaterialType {
     public void registerOre(float hardness, float resistance, String toolClass, int toolTier) {
         MineTweakerAPI.apply(new Materials.Change(type, MaterialType.EnumPartType.ORE));
         BlockOre ore = new BlockOre(type, hardness, resistance, toolClass, toolTier);
-        BaseBlocks.oreBlockMap.put(type, BaseBlocks.registerBlock(ore, Reference.MODID, "ore_" + type.getName().toLowerCase(), "%s Ore", "ore", null, Reference.tab, new ItemBlockOre(ore)));
+        BaseBlocks.oreBlockMap.put(type, BaseBlocks.registerBlock(ore, Reference.MODID, "ore_" + type.getName().toLowerCase(), "%s Ore", "ore", null, Base.instance.getCreativeTab(), new ItemBlockOre(ore)));
     }
 
     @Override

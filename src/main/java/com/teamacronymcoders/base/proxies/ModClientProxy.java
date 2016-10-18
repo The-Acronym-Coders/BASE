@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.proxy;
+package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @SideOnly(Side.CLIENT)
-public class ClientProxy extends CommonProxy {
+public class ModClientProxy extends ModCommonProxy {
 
     public void registerRenderers() {
         super.registerRenderers();

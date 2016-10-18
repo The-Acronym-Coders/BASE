@@ -8,44 +8,50 @@ import com.teamacronymcoders.base.config.Config;
 import com.teamacronymcoders.base.data.Materials;
 import com.teamacronymcoders.base.data.Recipes;
 import com.teamacronymcoders.base.items.BaseItems;
-import com.teamacronymcoders.base.proxy.CommonProxy;
-import com.teamacronymcoders.base.reference.Reference;
+import com.teamacronymcoders.base.proxies.ModCommonProxy;
 import com.teamacronymcoders.base.reference.TabBase;
 import com.teamacronymcoders.base.util.LanguageHelper;
-import com.teamacronymcoders.base.util.LogHelper;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.BUILD_VERSION, acceptedMinecraftVersions = "[" + Reference.MINECRAFT_VERSION + "]", dependencies = "after:MineTweaker3;")
-public class Base {
+import static com.teamacronymcoders.base.reference.Reference.*;
 
-    public static final LogHelper logger = new LogHelper(Reference.NAME);
-    public static final LanguageHelper languageHelper = new LanguageHelper(Reference.MODID);
+@Mod(modid = MODID, name = NAME, version = VERSION, acceptedMinecraftVersions = "[" + MINECRAFT_VERSION + "]", dependencies = "after:MineTweaker3;")
+public class Base extends BaseModFoundation<Base> {
+    public static final LanguageHelper languageHelper = new LanguageHelper(MODID);
     private static long totalTime = 0;
 
+    @Instance(MODID)
+    public static Base instance;
 
-    @Instance(Reference.MODID)
-    public static Base INSTANCE;
+    @SidedProxy(clientSide = "com.teamacronymcoders.base.proxies.ModClientProxy", serverSide = "com.teamacronymcoders.base.proxies.ModCommonProxy")
+    public static ModCommonProxy PROXY;
 
-    @SidedProxy(clientSide = "com.teamacronymcoders.proxy.ClientProxy", serverSide = "com.teamacronymcoders.proxy.CommonProxy")
-    public static CommonProxy PROXY;
+    public Base() {
+        super(MODID, NAME, VERSION, null);
+    }
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent e) {
-        logger.info("Starting PreInit");
+    public void preInit(FMLPreInitializationEvent event) {
+        super.preInit(event);
+        getLogger().info("Starting PreInit");
         long time = System.currentTimeMillis();
 
-        Reference.CONFIG_DIR = new File(e.getModConfigurationDirectory(), "ACRONYM");
-        Reference.CONFIG_DIR = new File(Reference.CONFIG_DIR, "BASE");
+        CONFIG_DIR = new File(event.getModConfigurationDirectory(), "ACRONYM");
+        CONFIG_DIR = new File(CONFIG_DIR, "BASE");
 
-        if (!Reference.CONFIG_DIR.exists())
-            Reference.CONFIG_DIR.mkdir();
-        Config.initConfig(new File(Reference.CONFIG_DIR, "General.cfg"));
+        if (!CONFIG_DIR.exists())
+            CONFIG_DIR.mkdir();
+        Config.initConfig(new File(CONFIG_DIR, "General.cfg"));
 
 
         Recipes.preInit();
@@ -58,44 +64,46 @@ public class Base {
 
         time = (System.currentTimeMillis() - time);
         totalTime += time;
-        logger.info(String.format("Completed PreInit in: %d ms", time));
+        getLogger().info(String.format("Completed PreInit in: %d ms", time));
     }
 
     @EventHandler
     public void init(FMLInitializationEvent e) {
-        logger.info("Starting Init");
+        getLogger().info("Starting Init");
         long time = System.currentTimeMillis();
         PROXY.initBlockRenders();
         PROXY.initItemRenders();
         PROXY.registerRenderers();
         Recipes.init();
-        if (!MaterialRegistry.getMaterials().isEmpty()) {
-            Reference.tab = new TabBase();
-        }
+        this.creativeTab = MaterialRegistry.getMaterials().isEmpty() ? CreativeTabs.MISC : new TabBase();
         Materials.WOOD.getTypes().add(MaterialType.EnumPartType.INGOT);
         time = (System.currentTimeMillis() - time);
         totalTime += time;
-        logger.info(String.format("Completed Init in: %d ms", time));
+        getLogger().info(String.format("Completed Init in: %d ms", time));
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
-        logger.info("Starting PostInit");
+        getLogger().info("Starting PostInit");
         long time = System.currentTimeMillis();
         Recipes.postInit();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
-        logger.info(String.format("Completed PostInit in: %d ms", time));
+        getLogger().info(String.format("Completed PostInit in: %d ms", time));
     }
 
     @EventHandler
     public void loadComplete(FMLLoadCompleteEvent e) {
-        logger.info("Starting LoadComplete");
+        getLogger().info("Starting LoadComplete");
         long time = System.currentTimeMillis();
         time = (System.currentTimeMillis() - time);
         totalTime += time;
-        logger.info(String.format("Completed LoadComplete in: %d ms", time));
-        logger.info(String.format("Loaded In: %d ms", totalTime));
+        getLogger().info(String.format("Completed LoadComplete in: %d ms", time));
+        getLogger().info(String.format("Loaded In: %d ms", totalTime));
     }
 
+    @Override
+    public Base getInstance() {
+        return instance;
+    }
 }

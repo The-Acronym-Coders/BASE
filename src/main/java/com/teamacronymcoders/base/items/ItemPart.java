@@ -23,7 +23,7 @@ public class ItemPart extends Item implements IMetaItem {
     public ItemPart(MaterialType.EnumPartType type) {
         this.type = type;
         setHasSubtypes(true);
-        setCreativeTab(Reference.tab);
+        setCreativeTab(Base.instance.getCreativeTab());
     }
 
     @Override
