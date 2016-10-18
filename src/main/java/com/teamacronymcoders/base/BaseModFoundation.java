@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base;
 
+import com.teamacronymcoders.base.client.gui.GuiHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.logging.ILogger;
@@ -12,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T> {
     protected CreativeTabs creativeTab;
     protected ILogger logger;
-    //protected GuiHandler guiHandler;
+    protected GuiHandler guiHandler;
     //protected PacketHandler packetHandler;
     //protected ModuleHandler moduleHandler;
     //protected IRegistryHolder registryHolder;
@@ -38,7 +39,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.getLibProxy().addOBJDomain();
         }
 
-        //this.guiHandler = new GuiHandler(this);
+        this.guiHandler = new GuiHandler(this);
         //this.registryHolder = new RegistryHolder(this, event.getModConfigurationDirectory());
 
         //this.moduleHandler = new ModuleHandler(this, event.getAsmData());
@@ -95,27 +96,27 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         return this.logger;
     }
 
+    @Override
+    public GuiHandler getGuiHandler() {
+        return this.guiHandler;
+    }
+
     /*
-        @Override
-        public GuiHandler getGuiHandler() {
-            return this.guiHandler;
-        }
+            @Override
+            public PacketHandler getPacketHandler() {
+                return this.packetHandler;
+            }
 
-        @Override
-        public PacketHandler getPacketHandler() {
-            return this.packetHandler;
-        }
+            @Override
+            public IRegistryHolder getRegistryHolder() {
+                return registryHolder;
+            }
 
-        @Override
-        public IRegistryHolder getRegistryHolder() {
-            return registryHolder;
-        }
-
-        @Override
-        public ModuleHandler getModuleHandler() {
-            return this.moduleHandler;
-        }
-    */
+            @Override
+            public ModuleHandler getModuleHandler() {
+                return this.moduleHandler;
+            }
+        */
     @Override
     public LibCommonProxy getLibProxy() {
         return this.libProxy;

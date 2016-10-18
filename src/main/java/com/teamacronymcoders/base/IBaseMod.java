@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base;
 
+import com.teamacronymcoders.base.client.gui.GuiHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import net.minecraft.creativetab.CreativeTabs;
@@ -21,7 +22,7 @@ public interface IBaseMod<T> {
 
     ILogger getLogger();
 
-    //GuiHandler getGuiHandler();
+    GuiHandler getGuiHandler();
 
     //PacketHandler getPacketHandler();
 
