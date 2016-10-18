@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.client.gui.GuiHandler;
+import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.logging.ILogger;
@@ -14,7 +15,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     protected CreativeTabs creativeTab;
     protected ILogger logger;
     protected GuiHandler guiHandler;
-    //protected PacketHandler packetHandler;
+    protected PacketHandler packetHandler;
     //protected ModuleHandler moduleHandler;
     //protected IRegistryHolder registryHolder;
     protected LibCommonProxy libProxy;
@@ -28,7 +29,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.version = version;
         this.creativeTab = creativeTab;
         this.logger = new ModLogger(modid);
-        //this.packetHandler = new PacketHandler(modid);
+        this.packetHandler = new PacketHandler(modid);
     }
 
     public void preInit(FMLPreInitializationEvent event) {
@@ -101,22 +102,22 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         return this.guiHandler;
     }
 
+    @Override
+    public PacketHandler getPacketHandler() {
+        return this.packetHandler;
+    }
+
     /*
-            @Override
-            public PacketHandler getPacketHandler() {
-                return this.packetHandler;
-            }
+                @Override
+                public IRegistryHolder getRegistryHolder() {
+                    return registryHolder;
+                }
 
-            @Override
-            public IRegistryHolder getRegistryHolder() {
-                return registryHolder;
-            }
-
-            @Override
-            public ModuleHandler getModuleHandler() {
-                return this.moduleHandler;
-            }
-        */
+                @Override
+                public ModuleHandler getModuleHandler() {
+                    return this.moduleHandler;
+                }
+            */
     @Override
     public LibCommonProxy getLibProxy() {
         return this.libProxy;
