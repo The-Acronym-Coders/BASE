@@ -1,9 +1,12 @@
 package com.teamacronymcoders.base.util;
 
+import com.teamacronymcoders.base.IBaseMod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.Loader;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -97,5 +100,29 @@ public class Platform {
      */
     public static ArrayList getArgumentList() {
         return (ArrayList) Launch.blackboard.get("ArgumentList");
+    }
+
+    public static IBaseMod getCurrentMod() {
+        Object activeMod = Loader.instance().activeModContainer().getMod();
+        if (activeMod instanceof IBaseMod) {
+            return (IBaseMod) activeMod;
+        } else {
+            FMLLog.bigWarning("Mods using BASE must have their mod class extend IBaseMod!", "");
+            return null;
+        }
+    }
+
+    public static void attemptLogErrorToCurrentMod(String logString) {
+        IBaseMod mod = getCurrentMod();
+        if (mod != null) {
+            mod.getLogger().error(logString);
+        }
+    }
+
+    public static void attemptLogExceptionToCurrentMod(Throwable throwable) {
+        IBaseMod mod = getCurrentMod();
+        if (mod != null) {
+            mod.getLogger().getLogger().error(throwable);
+        }
     }
 }

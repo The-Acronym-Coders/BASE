@@ -29,7 +29,7 @@ public class ColourHelper {
             Iterator<ImageReader> iter = ImageIO.getImageReaders(is);
 
             if (!iter.hasNext()) {
-                Base.logger.error("Cannot load the specified stream: " + stream);
+                Base.instance.getLogger().error("Cannot load the specified stream: " + stream);
             }
 
             ImageReader imageReader = iter.next();

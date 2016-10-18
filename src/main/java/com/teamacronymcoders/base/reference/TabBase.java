@@ -27,6 +27,7 @@ public class TabBase extends CreativeTabs {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void displayAllRelevantItems(List<ItemStack> list) {
         for (Item item : Item.REGISTRY) {
             if (item == null) {

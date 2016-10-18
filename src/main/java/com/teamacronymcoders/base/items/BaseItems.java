@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.items;
 
+import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.items.tools.ItemWrench;
 import com.teamacronymcoders.base.reference.Reference;
@@ -13,8 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.teamacronymcoders.base.reference.Reference.tab;
 
 public class BaseItems {
     public static Map<String, Item> renderMap = new HashMap<>();
@@ -42,7 +41,7 @@ public class BaseItems {
 
     public static void registerItem(Item item, String key) {
         if (Platform.generateBaseTextures()) writeFile(key, key);
-        item.setUnlocalizedName(key).setCreativeTab(tab);
+        item.setUnlocalizedName(key).setCreativeTab(Base.instance.getCreativeTab());
         renderMap.put(key, item);
 
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
@@ -50,13 +49,13 @@ public class BaseItems {
 
     public static void registerItem(Item item, String key, String modid, String texture) {
         if (Platform.generateBaseTextures()) writeFile(key, texture);
-        item.setUnlocalizedName(key).setCreativeTab(tab);
+        item.setUnlocalizedName(key).setCreativeTab(Base.instance.getCreativeTab());
         GameRegistry.register(item, new ResourceLocation(modid + ":" + key));
     }
 
     public static void registerItem(Item item, String modid, String key) {
         if (Platform.generateBaseTextures()) writeFile(key, key);
-        item.setUnlocalizedName(key).setCreativeTab(tab);
+        item.setUnlocalizedName(key).setCreativeTab(Base.instance.getCreativeTab());
         renderMap.put(key, item);
 
         GameRegistry.register(item, new ResourceLocation(modid + ":" + key));
@@ -64,7 +63,7 @@ public class BaseItems {
 
     public static void registerItemColour(Item item, String key, int[] layers) {
         if (Platform.generateBaseTextures()) writeFile(key, key);
-        item.setUnlocalizedName(key).setCreativeTab(tab);
+        item.setUnlocalizedName(key).setCreativeTab(Base.instance.getCreativeTab());
         renderMap.put(key, item);
         colourMap.put(item, layers);
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
@@ -72,7 +71,7 @@ public class BaseItems {
 
     public static void registerItemMeta(Item item, String name, String key) {
         if (Platform.generateBaseTextures()) writeFile(key, key);
-        item.setCreativeTab(tab);
+        item.setCreativeTab(Base.instance.getCreativeTab());
         renderMap.put(key, item);
         GameRegistry.register(item, new ResourceLocation(Reference.MODID + ":" + key));
     }

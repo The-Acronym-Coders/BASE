@@ -14,22 +14,24 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.Map;
 
+import static com.teamacronymcoders.base.data.Materials.*;
+
 public class Recipes {
 
     public static void preInit() {
         MaterialRegistry.registerNativeMaterial(0, WOOD);
         MaterialRegistry.registerNativeMaterial(1, STONE);
         MaterialRegistry.registerNativeMaterial(2, IRON);
-        MaterialRegistry.registerNativeMaterial(3, Materials.GOLD);
-        MaterialRegistry.registerNativeMaterial(4, Materials.DIAMOND);
+        MaterialRegistry.registerNativeMaterial(3, GOLD);
+        MaterialRegistry.registerNativeMaterial(4, DIAMOND);
 
         MaterialRegistry.registerNativeMaterial(5, COPPER);
-        MaterialRegistry.registerNativeMaterial(6, Materials.TIN);
-        MaterialRegistry.registerNativeMaterial(7, Materials.LEAD);
-        MaterialRegistry.registerNativeMaterial(8, Materials.SILVER);
-        MaterialRegistry.registerNativeMaterial(9, Materials.ELECTRUM);
-        MaterialRegistry.registerNativeMaterial(10, Materials.NICKEL);
-        MaterialRegistry.registerNativeMaterial(11, Materials.ALUMINUM);
+        MaterialRegistry.registerNativeMaterial(6, TIN);
+        MaterialRegistry.registerNativeMaterial(7, LEAD);
+        MaterialRegistry.registerNativeMaterial(8, SILVER);
+        MaterialRegistry.registerNativeMaterial(9, ELECTRUM);
+        MaterialRegistry.registerNativeMaterial(10, NICKEL);
+        MaterialRegistry.registerNativeMaterial(11, ALUMINUM);
 
     }
 

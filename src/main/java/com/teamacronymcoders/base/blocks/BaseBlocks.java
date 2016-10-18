@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.blocks;
 
+import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.blocks.sets.wood.BlockStorage;
@@ -20,15 +21,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.*;
 
-import static com.teamacronymcoders.base.reference.Reference.tab;
-
-/**
- * Created by Jared on 7/1/2016
- */
-
-/**
- * Remastered by EwyBoy on 7/5/2016
- */
 public class BaseBlocks {
 
     public static Multimap<String, Block> renderMap = ArrayListMultimap.create();
@@ -42,7 +34,7 @@ public class BaseBlocks {
                 if (!oreBlockMap.containsKey(entry.getValue())) {
                     BlockOre ore = new BlockOre(entry.getValue(), 3, 5, "pickaxe", 2);
 
-                    oreBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, tab, new ItemBlockOre(ore)));
+                    oreBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "ore_" + entry.getValue().getName().toLowerCase(), "%s Ore", "ore", null, Base.instance.getCreativeTab(), new ItemBlockOre(ore)));
                 }
             }
         }
@@ -50,7 +42,7 @@ public class BaseBlocks {
             if (entry.getValue().isTypeSet(MaterialType.EnumPartType.BLOCK)) {
                 if (!storageBlockMap.containsKey(entry.getValue())) {
                     BlockStorage ore = new BlockStorage(entry.getValue(), 5, 10, "pickaxe", 2);
-                    storageBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "storage_" + entry.getValue().getName().toLowerCase(), "%s Block", "storage", null, tab, new ItemBlockStorage(ore)));
+                    storageBlockMap.put(entry.getValue(), registerBlock(ore, Reference.MODID, "storage_" + entry.getValue().getName().toLowerCase(), "%s Block", "storage", null, Base.instance.getCreativeTab(), new ItemBlockStorage(ore)));
                 }
             }
         }
@@ -66,23 +58,23 @@ public class BaseBlocks {
     }
 
     public static Block registerBlock(Block block, String key, String name) {
-        return registerBlock(block, Reference.MODID, key, name, key, null, tab, new ItemBlock(block));
+        return registerBlock(block, Reference.MODID, key, name, key, null, Base.instance.getCreativeTab(), new ItemBlock(block));
     }
 
     public static Block registerBlock(Block block, String key, String name, String texture) {
-        return registerBlock(block, Reference.MODID, key, name, texture, null, tab, new ItemBlock(block));
+        return registerBlock(block, Reference.MODID, key, name, texture, null, Base.instance.getCreativeTab(), new ItemBlock(block));
     }
 
     public static Block registerBlock(Block block, String key, String name, String texture, Class tile) {
-        return registerBlock(block, Reference.MODID, key, name, texture, tile, tab, new ItemBlock(block));
+        return registerBlock(block, Reference.MODID, key, name, texture, tile, Base.instance.getCreativeTab(), new ItemBlock(block));
     }
 
     public static Block registerBlock(Block block, String key, String name, Class tile) {
-        return registerBlock(block, Reference.MODID, key, name, tile, tab);
+        return registerBlock(block, Reference.MODID, key, name, tile, Base.instance.getCreativeTab());
     }
 
     public static Block registerBlock(Block block, String modid, String key, String name, Class tile, CreativeTabs tab) {
-        return registerBlock(block, modid, key, name, key, tile, tab, new ItemBlock(block));
+        return registerBlock(block, modid, key, name, key, tile, Base.instance.getCreativeTab(), new ItemBlock(block));
     }
 
     public static Block registerBlock(Block block, String modid, String key, String name, String texture, Class tile, CreativeTabs tab, ItemBlock itemBlock) {

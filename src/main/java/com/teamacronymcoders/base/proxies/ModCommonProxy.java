@@ -1,10 +1,10 @@
-package com.teamacronymcoders.base.proxy;
+package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.reference.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-public class CommonProxy {
+public class ModCommonProxy {
 
     public void registerRenderers() {
     }
