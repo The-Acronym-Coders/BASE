@@ -3,6 +3,8 @@ package com.teamacronymcoders.base;
 import com.teamacronymcoders.base.client.gui.GuiHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
+import com.teamacronymcoders.base.registry.IRegistryHolder;
+import com.teamacronymcoders.base.registry.Registry;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
@@ -11,21 +13,23 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T> {
+import java.util.Map;
+
+public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T>, IRegistryHolder {
     protected CreativeTabs creativeTab;
     protected ILogger logger;
     protected GuiHandler guiHandler;
     protected PacketHandler packetHandler;
+    protected Map<String, Registry> registries;
     //protected ModuleHandler moduleHandler;
-    //protected IRegistryHolder registryHolder;
     protected LibCommonProxy libProxy;
     private String modid;
-    private String name;
+    private String modName;
     private String version;
 
     public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab) {
         this.modid = modid;
-        this.name = name;
+        this.modName = name;
         this.version = version;
         this.creativeTab = creativeTab;
         this.logger = new ModLogger(modid);
@@ -41,16 +45,14 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         }
 
         this.guiHandler = new GuiHandler(this);
-        //this.registryHolder = new RegistryHolder(this, event.getModConfigurationDirectory());
 
         //this.moduleHandler = new ModuleHandler(this, event.getAsmData());
         //this.moduleHandler.setupModules();
         //this.moduleHandler.preInit(event);
 
-        //this.getBoilerplateProxy().registerEvents();
         this.modPreInit(event);
 
-        //this.getRegistryHolder().getAllRegistries().forEach((name, registry) -> registry.preInit());
+        this.getAllRegistries().forEach((name, registry) -> registry.preInit());
     }
 
     public void modPreInit(FMLPreInitializationEvent event) {
@@ -59,12 +61,12 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     public void init(FMLInitializationEvent event) {
         //this.moduleHandler.init(event);
-        //this.getRegistryHolder().getAllRegistries().forEach((name, registry) -> registry.init());
+        this.getAllRegistries().forEach((name, registry) -> registry.init());
     }
 
     public void postInit(FMLPostInitializationEvent event) {
         //moduleHandler.postInit(event);
-        //this.getRegistryHolder().getAllRegistries().forEach((name, registry) -> registry.postInit());
+        this.getAllRegistries().forEach((name, registry) -> registry.postInit());
     }
 
     @Override
@@ -79,7 +81,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     @Override
     public String getName() {
-        return this.name;
+        return this.modName;
     }
 
     @Override
@@ -107,19 +109,34 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         return this.packetHandler;
     }
 
-    /*
-                @Override
-                public IRegistryHolder getRegistryHolder() {
-                    return registryHolder;
-                }
+    @Override
+    public IRegistryHolder getRegistryHolder() {
+        return this;
+    }
 
-                @Override
-                public ModuleHandler getModuleHandler() {
-                    return this.moduleHandler;
-                }
-            */
     @Override
     public LibCommonProxy getLibProxy() {
         return this.libProxy;
+    }
+
+    @Override
+    public Map<String, Registry> getAllRegistries() {
+        return this.registries;
+    }
+
+    @Override
+    public void addRegistry(String name, Registry registry) {
+        this.registries.put(name, registry);
+    }
+
+    @Override
+    public <R extends Registry> R getRegistry(Class<R> clazz, String name) {
+        Registry registry = registries.get(name);
+
+        if (clazz.isInstance(registry)) {
+            return clazz.cast(registry);
+        }
+
+        return null;
     }
 }
