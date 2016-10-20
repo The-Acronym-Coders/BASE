@@ -4,9 +4,7 @@ import com.teamacronymcoders.base.client.gui.GuiHandler;
 import com.teamacronymcoders.base.client.models.SafeModelLoader;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
-import com.teamacronymcoders.base.registry.BlockRegistry;
-import com.teamacronymcoders.base.registry.IRegistryHolder;
-import com.teamacronymcoders.base.registry.Registry;
+import com.teamacronymcoders.base.registry.*;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
@@ -45,7 +43,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getLibProxy().setMod(this);
         this.modelLoader = new SafeModelLoader(this);
 
-        addRegistry("BLOCK", new BlockRegistry(this));
+        this.addRegistry("BLOCK", new BlockRegistry(this));
+        this.addRegistry("ITEM", new ItemRegistry(this));
+        this.addRegistry("ENTITY", new EntityRegistry(this));
 
         if (this.addOBJDomain()) {
             this.getLibProxy().addOBJDomain();
