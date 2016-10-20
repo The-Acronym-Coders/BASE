@@ -3,7 +3,6 @@ package com.teamacronymcoders.base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.blocks.BaseBlocks;
-import com.teamacronymcoders.base.compat.CompatHandler;
 import com.teamacronymcoders.base.config.ConfigMaterials;
 import com.teamacronymcoders.base.data.Materials;
 import com.teamacronymcoders.base.data.Recipes;
@@ -47,7 +46,6 @@ public class Base extends BaseModFoundation<Base> {
         ConfigMaterials.init(this);
 
         Recipes.preInit();
-        new CompatHandler();
         BaseItems.preInit();
         BaseBlocks.preInit();
         proxy.preInitBlocks();
@@ -60,9 +58,10 @@ public class Base extends BaseModFoundation<Base> {
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent e) {
+    public void init(FMLInitializationEvent event) {
         getLogger().info("Starting Init");
         long time = System.currentTimeMillis();
+        super.init(event);
         proxy.initBlockRenders();
         proxy.initItemRenders();
         proxy.registerRenderers();
@@ -75,8 +74,9 @@ public class Base extends BaseModFoundation<Base> {
     }
 
     @EventHandler
-    public void postInit(FMLPostInitializationEvent e) {
+    public void postInit(FMLPostInitializationEvent event) {
         getLogger().info("Starting PostInit");
+        super.postInit(event);
         long time = System.currentTimeMillis();
         Recipes.postInit();
         time = (System.currentTimeMillis() - time);

@@ -155,4 +155,8 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     public void addListener(IConfigListener listener) {
         this.listeners.add(listener);
     }
+
+    public File getConfigFolder() {
+        return this.useModFolder ? this.modFolder : this.tacFolder;
+    }
 }

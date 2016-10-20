@@ -1,9 +1,13 @@
 package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.modulesystem.IModule;
+import com.teamacronymcoders.base.modulesystem.IModuleProxy;
+import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class LibCommonProxy {
@@ -19,6 +23,21 @@ public class LibCommonProxy {
 
     public void setAllItemModels(Item item, List<ResourceLocation> locations) {
         //Only set Client Side
+    }
+
+    public IModuleProxy getModuleProxy(IModule module) {
+        return getModuleProxy(module.getServerProxyPath());
+    }
+
+    @Nullable
+    protected IModuleProxy getModuleProxy(String path) {
+        IModuleProxy moduleProxy = null;
+
+        if(path != null && !path.isEmpty()) {
+            moduleProxy = ClassLoading.createInstanceOf(IModuleProxy.class, path);
+        }
+
+        return moduleProxy;
     }
 
     public IBaseMod getMod() {
