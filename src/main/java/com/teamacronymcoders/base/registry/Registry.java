@@ -56,6 +56,9 @@ public abstract class Registry<T> {
     }
 
     public void register(String name, T entry) {
+        if(getLoadingStage() != LoadingStage.PREINIT) {
+            throw new UnsupportedOperationException("ALL REGISTERING MUST HAPPEN IN PREINIT");
+        }
         this.entries.put(name, entry);
     }
 
