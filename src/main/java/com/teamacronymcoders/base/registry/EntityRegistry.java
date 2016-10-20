@@ -40,7 +40,7 @@ public class EntityRegistry extends Registry<Class<? extends Entity>> {
         super.initiateEntry(name, entityClass);
     }
 
-    public void registerEntity(Class<? extends Entity> entityClass) {
+    public void register(Class<? extends Entity> entityClass) {
         register(entityClass.getSimpleName().toLowerCase(), entityClass);
     }
 
