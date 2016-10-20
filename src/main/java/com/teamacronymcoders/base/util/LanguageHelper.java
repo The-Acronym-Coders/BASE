@@ -24,7 +24,7 @@ public class LanguageHelper {
      * @return Translated String
      */
     public String none(String message) {
-        return Base.PROXY.translateMessage("", message);
+        return Base.proxy.translateMessage("", message);
     }
 
     /**
@@ -34,7 +34,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String message(String message) {
-        return Base.PROXY.translateMessage("message", message);
+        return Base.proxy.translateMessage("message", message);
     }
 
     /**
@@ -44,7 +44,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String label(String message) {
-        return Base.PROXY.translateMessage("label", message);
+        return Base.proxy.translateMessage("label", message);
     }
 
     /**
@@ -54,7 +54,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String block(String message) {
-        return Base.PROXY.translateMessage("block", message);
+        return Base.proxy.translateMessage("block", message);
     }
 
     /**
@@ -64,7 +64,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String item(String message) {
-        return Base.PROXY.translateMessage("item", message);
+        return Base.proxy.translateMessage("item", message);
     }
 
     /**
@@ -74,7 +74,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String itemgroup(String message) {
-        return Base.PROXY.translateMessage("itemGroup", message);
+        return Base.proxy.translateMessage("itemGroup", message);
     }
 
     /**
@@ -84,7 +84,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String description(String message) {
-        return Base.PROXY.translateMessage("description", message);
+        return Base.proxy.translateMessage("description", message);
     }
 
     /**
@@ -94,7 +94,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String jei(String message) {
-        return Base.PROXY.translateMessage("jei", message);
+        return Base.proxy.translateMessage("jei", message);
     }
 
     /**
@@ -104,7 +104,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String material(String message) {
-        return Base.PROXY.translateMessage("material", message);
+        return Base.proxy.translateMessage("material", message);
     }
 
     /**
@@ -114,7 +114,7 @@ public class LanguageHelper {
      * @returnTranslated String
      */
     public String error(String message) {
-        return Base.PROXY.translateMessage("error", message);
+        return Base.proxy.translateMessage("error", message);
     }
 
 }

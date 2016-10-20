@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.client.models.SafeModelLoader;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import com.teamacronymcoders.base.registry.*;
+import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T>, IRegistryHolder {
@@ -46,6 +48,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.addRegistry("BLOCK", new BlockRegistry(this));
         this.addRegistry("ITEM", new ItemRegistry(this));
         this.addRegistry("ENTITY", new EntityRegistry(this));
+        this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
 
         if (this.addOBJDomain()) {
             this.getLibProxy().addOBJDomain();
@@ -131,6 +134,10 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         return this.modelLoader;
     }
 
+    public boolean useModAsConfigFolder() {
+        return true;
+    }
+
     @Override
     public Map<String, Registry> getAllRegistries() {
         return this.registries;
@@ -138,6 +145,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     @Override
     public void addRegistry(String name, Registry registry) {
+        if (this.registries == null) {
+            this.registries = new HashMap<>();
+        }
         this.registries.put(name, registry);
     }
 

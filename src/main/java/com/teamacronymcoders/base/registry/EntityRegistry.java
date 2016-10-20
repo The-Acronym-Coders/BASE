@@ -51,8 +51,4 @@ public class EntityRegistry extends Registry<Class<? extends Entity>> {
     public void addSpawnInfo(String name, SpawnInfo spawnInfo) {
         this.spawnInfos.put(name, spawnInfo);
     }
-
-    public Class<? extends Entity> getEntity(String name) {
-        return this.entries.get(name);
-    }
 }
