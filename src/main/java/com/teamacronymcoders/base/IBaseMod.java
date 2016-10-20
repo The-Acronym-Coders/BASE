@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.client.gui.GuiHandler;
+import com.teamacronymcoders.base.client.models.SafeModelLoader;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import com.teamacronymcoders.base.registry.IRegistryHolder;
@@ -29,6 +30,8 @@ public interface IBaseMod<T> {
     PacketHandler getPacketHandler();
 
     IRegistryHolder getRegistryHolder();
+
+    SafeModelLoader getModelLoader();
 
     //ModuleHandler getModuleHandler();
 

@@ -1,8 +1,10 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.client.gui.GuiHandler;
+import com.teamacronymcoders.base.client.models.SafeModelLoader;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
+import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.base.registry.IRegistryHolder;
 import com.teamacronymcoders.base.registry.Registry;
 import com.teamacronymcoders.base.util.ClassLoading;
@@ -21,6 +23,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     protected GuiHandler guiHandler;
     protected PacketHandler packetHandler;
     protected Map<String, Registry> registries;
+    protected SafeModelLoader modelLoader;
     //protected ModuleHandler moduleHandler;
     protected LibCommonProxy libProxy;
     private String modid;
@@ -40,6 +43,10 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
                 "com.teamacronymcoders.base.proxies.LibCommonProxy");
         this.getLibProxy().setMod(this);
+        this.modelLoader = new SafeModelLoader(this);
+
+        addRegistry("BLOCK", new BlockRegistry(this));
+
         if (this.addOBJDomain()) {
             this.getLibProxy().addOBJDomain();
         }
@@ -117,6 +124,11 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Override
     public LibCommonProxy getLibProxy() {
         return this.libProxy;
+    }
+
+    @Override
+    public SafeModelLoader getModelLoader() {
+        return this.modelLoader;
     }
 
     @Override

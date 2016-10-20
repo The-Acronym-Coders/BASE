@@ -53,6 +53,10 @@ public abstract class Registry<T> {
         }*/
     }
 
+    public T get(String name) {
+        return this.entries.get(name);
+    }
+
     public LoadingStage getLoadingStage() {
         return loadingStage;
     }
