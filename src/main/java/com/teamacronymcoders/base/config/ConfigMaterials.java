@@ -1,8 +1,11 @@
 package com.teamacronymcoders.base.config;
 
+import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.data.Materials;
-import net.minecraftforge.common.config.Configuration;
+import com.teamacronymcoders.base.registry.config.ConfigEntry;
+import com.teamacronymcoders.base.registry.config.ConfigRegistry;
+import net.minecraftforge.common.config.Property;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,16 +31,23 @@ public class ConfigMaterials {
         materialMap.put(Materials.ELECTRUM, false);
         materialMap.put(Materials.NICKEL, false);
         materialMap.put(Materials.ALUMINUM, false);
-
     }
 
-    public static void init(Configuration configuration) {
+    public static void init(Base mod) {
         Map<MaterialType, Boolean> materials = new HashMap<>();
         materialMap.forEach((key, value) -> {
-            materials.put(key, configuration.get("Materials", key.getName(), value, String.format("Should %s be registered as a material?", key.getName())).getBoolean());
+            MaterialConfigEntry configEntry = new MaterialConfigEntry(key.getName(), value);
+            mod.getRegistry(ConfigRegistry.class, "CONFIG").addEntry(configEntry);
+            materials.put(key, configEntry.getBoolean(value));
         });
         materialMap.clear();
         materialMap.putAll(materials);
     }
 
+    public static class MaterialConfigEntry extends ConfigEntry {
+        public MaterialConfigEntry(String materialName, Boolean value) {
+            super("Materials", materialName, Property.Type.BOOLEAN, Boolean.toString(value),
+                    String.format("Should %s be registered as a material?", materialName));
+        }
+    }
 }

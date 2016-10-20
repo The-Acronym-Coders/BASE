@@ -64,7 +64,7 @@ public class TabBase extends CreativeTabs {
             watch.reset();
             watch.start();
         }
-        if (Base.PROXY.isClient() && this.watch.elapsed(TimeUnit.MILLISECONDS) >= 1500L) {
+        if (Base.proxy.isClient() && this.watch.elapsed(TimeUnit.MILLISECONDS) >= 1500L) {
             Random random = new Random();
             this.watch.reset();
             this.watch.start();

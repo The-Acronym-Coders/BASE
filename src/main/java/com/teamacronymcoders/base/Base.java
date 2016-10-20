@@ -4,7 +4,7 @@ import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.blocks.BaseBlocks;
 import com.teamacronymcoders.base.compat.CompatHandler;
-import com.teamacronymcoders.base.config.Config;
+import com.teamacronymcoders.base.config.ConfigMaterials;
 import com.teamacronymcoders.base.data.Materials;
 import com.teamacronymcoders.base.data.Recipes;
 import com.teamacronymcoders.base.items.BaseItems;
@@ -21,8 +21,6 @@ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import java.io.File;
-
 import static com.teamacronymcoders.base.reference.Reference.*;
 
 @Mod(modid = MODID, name = NAME, version = VERSION, acceptedMinecraftVersions = "[" + MINECRAFT_VERSION + "]", dependencies = "after:MineTweaker3;")
@@ -34,7 +32,7 @@ public class Base extends BaseModFoundation<Base> {
     public static Base instance;
 
     @SidedProxy(clientSide = "com.teamacronymcoders.base.proxies.ModClientProxy", serverSide = "com.teamacronymcoders.base.proxies.ModCommonProxy")
-    public static ModCommonProxy PROXY;
+    public static ModCommonProxy proxy;
 
     public Base() {
         super(MODID, NAME, VERSION, null);
@@ -46,20 +44,14 @@ public class Base extends BaseModFoundation<Base> {
         getLogger().info("Starting PreInit");
         long time = System.currentTimeMillis();
 
-        CONFIG_DIR = new File(event.getModConfigurationDirectory(), "ACRONYM");
-        CONFIG_DIR = new File(CONFIG_DIR, "BASE");
-
-        if (!CONFIG_DIR.exists())
-            CONFIG_DIR.mkdir();
-        Config.initConfig(new File(CONFIG_DIR, "General.cfg"));
-
+        ConfigMaterials.init(this);
 
         Recipes.preInit();
         new CompatHandler();
         BaseItems.preInit();
         BaseBlocks.preInit();
-        PROXY.preInitBlocks();
-        PROXY.initEvents();
+        proxy.preInitBlocks();
+        proxy.initEvents();
         Recipes.preInitLate();
 
         time = (System.currentTimeMillis() - time);
@@ -71,9 +63,9 @@ public class Base extends BaseModFoundation<Base> {
     public void init(FMLInitializationEvent e) {
         getLogger().info("Starting Init");
         long time = System.currentTimeMillis();
-        PROXY.initBlockRenders();
-        PROXY.initItemRenders();
-        PROXY.registerRenderers();
+        proxy.initBlockRenders();
+        proxy.initItemRenders();
+        proxy.registerRenderers();
         Recipes.init();
         this.creativeTab = MaterialRegistry.getMaterials().isEmpty() ? CreativeTabs.MISC : new TabBase();
         Materials.WOOD.getTypes().add(MaterialType.EnumPartType.INGOT);
