@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.compat.minetweaker;
+package com.teamacronymcoders.base.modules.minetweaker;
 
 
 import stanhebben.zenscript.annotations.ZenClass;

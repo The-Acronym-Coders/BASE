@@ -3,7 +3,6 @@ package com.teamacronymcoders.base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.blocks.BaseBlocks;
-import com.teamacronymcoders.base.compat.CompatHandler;
 import com.teamacronymcoders.base.config.ConfigMaterials;
 import com.teamacronymcoders.base.data.Materials;
 import com.teamacronymcoders.base.data.Recipes;
@@ -47,7 +46,6 @@ public class Base extends BaseModFoundation<Base> {
         ConfigMaterials.init(this);
 
         Recipes.preInit();
-        new CompatHandler();
         BaseItems.preInit();
         BaseBlocks.preInit();
         proxy.preInitBlocks();
