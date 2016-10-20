@@ -1,7 +1,10 @@
 package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.items.IHasRecipe;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Registry<T> {
@@ -26,9 +29,6 @@ public abstract class Registry<T> {
     protected void initiateEntry(String name, T entry) {
         /*if (entry instanceof IConfigListener) {
             registryHolder.getConfigRegistry().addListener((IConfigListener) entry);
-        }
-        if (entry instanceof IModAware) {
-            ((IModAware) entry).setMod(this.mod);
         }*/
     }
 
@@ -36,7 +36,7 @@ public abstract class Registry<T> {
     }
 
     public void init() {
-        this.entries.forEach(this::initiateRecipes);
+        this.entries.forEach((name, entry) -> initiateRecipes(entry));
 
         setLoadingStage(LoadingStage.POSTINIT);
     }
@@ -45,16 +45,18 @@ public abstract class Registry<T> {
         setLoadingStage(LoadingStage.DONE);
     }
 
-    public void initiateRecipes(String name, T entry) {
-        /*if (entry instanceof IHasRecipe) {
-            for (IRecipe recipe : ((IHasRecipe) entry).getRecipes()) {
-                GameRegistry.addRecipe(recipe);
-            }
-        }*/
+    public void initiateRecipes(T entry) {
+        if (entry instanceof IHasRecipe) {
+            ((IHasRecipe) entry).getRecipes(new ArrayList<>()).forEach(GameRegistry::addRecipe);
+        }
     }
 
     public T get(String name) {
         return this.entries.get(name);
+    }
+
+    public void register(String name, T entry) {
+        this.entries.put(name, entry);
     }
 
     public LoadingStage getLoadingStage() {

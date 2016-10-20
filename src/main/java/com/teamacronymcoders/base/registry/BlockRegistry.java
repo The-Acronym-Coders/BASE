@@ -21,7 +21,7 @@ public class BlockRegistry extends Registry<Block> {
         GameRegistry.register(block, blockName);
 
         if (block instanceof IHasItemBlock) {
-            GameRegistry.register(((IHasItemBlock) block).getItemBlockClass(block), blockName);
+            GameRegistry.register(((IHasItemBlock) block).getItemBlockClass(), blockName);
         }
 
         if (block instanceof IHasTileEntity) {
@@ -36,22 +36,18 @@ public class BlockRegistry extends Registry<Block> {
         Item item = Item.getItemFromBlock(entry);
 
         if (item instanceof IHasModel) {
-            mod.getModelLoader().setAllItemModels(item, (IHasModel)item);
+            mod.getModelLoader().setAllItemModels(item, (IHasModel) item);
         } else {
             mod.getModelLoader().setItemModel(item);
         }
         super.initiateModel(name, entry);
     }
 
-    public void registerBlock(Block block) {
+    public void register(Block block) {
         String name = block.getUnlocalizedName();
         if (name.startsWith("tile.")) {
             name = name.substring(5);
         }
-        registerBlock(name, block);
-    }
-
-    public void registerBlock(String name, Block block) {
-        this.entries.put(name, block);
+        register(name, block);
     }
 }
