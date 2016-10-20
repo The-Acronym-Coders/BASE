@@ -1,5 +1,7 @@
 package com.teamacronymcoders.base.proxies;
 
+import com.teamacronymcoders.base.modulesystem.IModule;
+import com.teamacronymcoders.base.modulesystem.IModuleProxy;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -36,6 +38,11 @@ public class LibClientProxy extends LibCommonProxy {
                 locationsIndex = 0;
             }
         }
+    }
+
+    @Override
+    public IModuleProxy getModuleProxy(IModule module) {
+        return getModuleProxy(module.getClientProxyPath());
     }
 
 }

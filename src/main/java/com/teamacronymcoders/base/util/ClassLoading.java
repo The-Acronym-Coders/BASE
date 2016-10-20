@@ -2,7 +2,13 @@ package com.teamacronymcoders.base.util;
 
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.relauncher.Side;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class ClassLoading {
     private ClassLoading() { }
@@ -45,5 +51,24 @@ public class ClassLoading {
             Platform.attemptLogErrorToCurrentMod(clazz.getName() + " did not initialize. Something's gonna break.");
         }
         return null;
+    }
+
+    public static <T> List<T> getInstances(@Nonnull ASMDataTable asmDataTable, Class annotationClass,
+                                           Class<T> instanceClass) {
+        String annotationClassName = annotationClass.getCanonicalName();
+        Set<ASMDataTable.ASMData> asmDatas = asmDataTable.getAll(annotationClassName);
+        List<T> instances = new ArrayList<>();
+        for(ASMDataTable.ASMData asmData : asmDatas) {
+            try {
+                Class<?> asmClass = Class.forName(asmData.getClassName());
+                Class<? extends T> asmInstanceClass = asmClass.asSubclass(instanceClass);
+                T instance = asmInstanceClass.newInstance();
+                instances.add(instance);
+            } catch(ClassNotFoundException | IllegalAccessException | InstantiationException exception) {
+                Platform.attemptLogErrorToCurrentMod("Failed to load: " + asmData.getClassName());
+                Platform.attemptLogExceptionToCurrentMod(exception);
+            }
+        }
+        return instances;
     }
 }

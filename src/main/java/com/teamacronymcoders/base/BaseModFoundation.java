@@ -2,6 +2,7 @@ package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.client.gui.GuiHandler;
 import com.teamacronymcoders.base.client.models.SafeModelLoader;
+import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import com.teamacronymcoders.base.registry.*;
@@ -24,7 +25,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     protected PacketHandler packetHandler;
     protected Map<String, Registry> registries;
     protected SafeModelLoader modelLoader;
-    //protected ModuleHandler moduleHandler;
+    protected ModuleHandler moduleHandler;
     protected LibCommonProxy libProxy;
     private String modid;
     private String modName;
@@ -56,9 +57,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.guiHandler = new GuiHandler(this);
 
-        //this.moduleHandler = new ModuleHandler(this, event.getAsmData());
-        //this.moduleHandler.setupModules();
-        //this.moduleHandler.preInit(event);
+        this.moduleHandler = new ModuleHandler(this, event.getAsmData());
+        this.getModuleHandler().setupModules();
+        this.getModuleHandler().preInit(event);
 
         this.modPreInit(event);
 
@@ -70,12 +71,12 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     }
 
     public void init(FMLInitializationEvent event) {
-        //this.moduleHandler.init(event);
+        this.getModuleHandler().init(event);
         this.getAllRegistries().forEach((name, registry) -> registry.init());
     }
 
     public void postInit(FMLPostInitializationEvent event) {
-        //moduleHandler.postInit(event);
+        this.getModuleHandler().postInit(event);
         this.getAllRegistries().forEach((name, registry) -> registry.postInit());
     }
 
@@ -132,6 +133,11 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Override
     public SafeModelLoader getModelLoader() {
         return this.modelLoader;
+    }
+
+    @Override
+    public ModuleHandler getModuleHandler() {
+        return this.moduleHandler;
     }
 
     public boolean useModAsConfigFolder() {
