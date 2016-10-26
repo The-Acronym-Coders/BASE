@@ -32,7 +32,7 @@ public class LibClientProxy extends LibCommonProxy {
         item.getSubItems(item, item.getCreativeTab(), allSubItems);
         int locationsIndex = 0;
         for (int i = 0; i < allSubItems.size(); i++) {
-            setItemModel(item, i, resourceLocations.get(i));
+            setItemModel(item, i, resourceLocations.get(locationsIndex));
             locationsIndex++;
             if (locationsIndex >= resourceLocations.size()) {
                 locationsIndex = 0;
