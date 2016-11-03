@@ -8,15 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IHasModel {
-    default List<String> getModelNames() {
-        return new ArrayList<>();
+    default List<String> getModelNames(List<String> modelNames) {
+        return modelNames;
     }
 
-    default List<ResourceLocation> getResourceLocations() {
+    default List<ResourceLocation> getResourceLocations(List<ResourceLocation> resourceLocations) {
         IBaseMod mod = Platform.getCurrentMod();
-        List<ResourceLocation> resourceLocations = new ArrayList<>();
         if (mod != null) {
-            getModelNames().forEach(modelName ->
+            getModelNames(new ArrayList<>()).forEach(modelName ->
                     resourceLocations.add(new ResourceLocation(mod.getPrefix(), modelName)));
         }
         return resourceLocations;
