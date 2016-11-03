@@ -2,7 +2,11 @@ package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.IModuleProxy;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -11,6 +15,7 @@ import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +42,23 @@ public class LibClientProxy extends LibCommonProxy {
             if (locationsIndex >= resourceLocations.size()) {
                 locationsIndex = 0;
             }
+        }
+    }
+
+    @Override
+    public void registerFluidModel(Block fluidBlock, final ResourceLocation resourceLocation) {
+        Item fluidItem = Item.getItemFromBlock(fluidBlock);
+        ModelResourceLocation modelResourceLocation = new ModelResourceLocation(resourceLocation, "normal");
+        if(fluidItem != null) {
+            ModelBakery.registerItemVariants(fluidItem);
+            ModelLoader.setCustomMeshDefinition(fluidItem, stack -> modelResourceLocation);
+            ModelLoader.setCustomStateMapper(fluidBlock, new StateMapperBase() {
+                @Override
+                @Nonnull
+                protected ModelResourceLocation getModelResourceLocation(@Nonnull IBlockState state) {
+                    return modelResourceLocation;
+                }
+            });
         }
     }
 

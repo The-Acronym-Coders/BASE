@@ -62,4 +62,8 @@ public class SafeModelLoader {
     public void setAllItemModels(Item item, IHasModel model) {
         mod.getLibProxy().setAllItemModels(item, model.getResourceLocations(new ArrayList<>()));
     }
+
+    public void registerFluidModel(Block fluidBlock, final ResourceLocation resourceLocation) {
+        mod.getLibProxy().registerFluidModel(fluidBlock, resourceLocation);
+    }
 }

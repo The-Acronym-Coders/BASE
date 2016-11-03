@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.IModuleProxy;
 import com.teamacronymcoders.base.util.ClassLoading;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
@@ -23,6 +24,10 @@ public class LibCommonProxy {
 
     public void setAllItemModels(Item item, List<ResourceLocation> locations) {
         //Only set Client Side
+    }
+
+    public void registerFluidModel(Block fluidBlock, final ResourceLocation loc) {
+        //Only done Client Side
     }
 
     public IModuleProxy getModuleProxy(IModule module) {
