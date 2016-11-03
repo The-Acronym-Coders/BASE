@@ -21,7 +21,7 @@ public class BlockRegistry extends Registry<Block> {
         GameRegistry.register(block, blockName);
 
         if (block instanceof IHasItemBlock) {
-            GameRegistry.register(((IHasItemBlock) block).getItemBlockClass(), blockName);
+            GameRegistry.register(((IHasItemBlock) block).getItemBlock(), blockName);
         }
 
         if (block instanceof IHasTileEntity) {
