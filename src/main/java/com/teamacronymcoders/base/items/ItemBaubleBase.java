@@ -15,25 +15,25 @@ public abstract class ItemBaubleBase extends ItemBase implements IBauble {
 
     @Override
     @Optional.Method(modid = "Baubles")
-    public boolean canEquip(ItemStack arg0, EntityLivingBase arg1) {
+    public boolean canEquip(ItemStack bauble, EntityLivingBase entityLivingBase) {
         return true;
     }
 
     @Override
     @Optional.Method(modid = "Baubles")
-    public boolean canUnequip(ItemStack arg0, EntityLivingBase arg1) {
+    public boolean canUnequip(ItemStack bauble, EntityLivingBase entityLivingBase) {
         return true;
     }
 
     @Override
     @Optional.Method(modid = "Baubles")
-    public void onEquipped(ItemStack arg0, EntityLivingBase arg1) {}
+    public void onEquipped(ItemStack bauble, EntityLivingBase entityLivingBase) {}
 
     @Override
     @Optional.Method(modid = "Baubles")
-    public void onUnequipped(ItemStack arg0, EntityLivingBase arg1) {}
+    public void onUnequipped(ItemStack bauble, EntityLivingBase entityLivingBase) {}
 
     @Override
     @Optional.Method(modid = "Baubles")
-    public void onWornTick(ItemStack stack, EntityLivingBase living) {}
+    public void onWornTick(ItemStack bauble, EntityLivingBase entityLivingBase) {}
 }
