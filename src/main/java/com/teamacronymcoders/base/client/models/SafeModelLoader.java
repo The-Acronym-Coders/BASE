@@ -39,7 +39,7 @@ public class SafeModelLoader {
     }
 
     public void setItemModel(Item item, int metadata, String override) {
-        setItemModel(item, metadata, new ResourceLocation(mod.getID() + override));
+        setItemModel(item, metadata, new ResourceLocation(mod.getPrefix() + override));
     }
 
     public void setItemModel(Item item, int metadata, ResourceLocation resourceLocation) {
@@ -55,7 +55,7 @@ public class SafeModelLoader {
         }
 
         if (item != null) {
-            setItemModel(item, metadata, new ResourceLocation(mod.getID() + location));
+            setItemModel(item, metadata, new ResourceLocation(mod.getPrefix() + location));
         }
     }
 

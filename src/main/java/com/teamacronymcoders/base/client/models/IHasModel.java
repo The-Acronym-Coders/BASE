@@ -16,7 +16,7 @@ public interface IHasModel {
         IBaseMod mod = Platform.getCurrentMod();
         if (mod != null) {
             getModelNames(new ArrayList<>()).forEach(modelName ->
-                    resourceLocations.add(new ResourceLocation(mod.getPrefix(), modelName)));
+                    resourceLocations.add(new ResourceLocation(mod.getID(), modelName)));
         }
         return resourceLocations;
     }
