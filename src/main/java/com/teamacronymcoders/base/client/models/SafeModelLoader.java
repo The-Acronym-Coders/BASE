@@ -19,7 +19,7 @@ public class SafeModelLoader {
     }
 
     public void setBlockModel(Block block, int metadata) {
-        setBlockModel(block, metadata, block.getUnlocalizedName().substring(5));
+        setBlockModel(block, metadata, block.getUnlocalizedName());
     }
 
     public void setBlockModel(Block block, int metadata, String override) {
@@ -31,15 +31,18 @@ public class SafeModelLoader {
     }
 
     public void setItemModel(Item item, int metadata) {
-        String name = item.getUnlocalizedName();
-        if (name.startsWith("item.")) {
-            name = name.substring(5);
+        if(item != null) {
+            String name = item.getUnlocalizedName();
+            if (name.startsWith("item.") || name.startsWith("tile.")) {
+                name = name.substring(5);
+            }
+            setItemModel(item, metadata, name);
         }
-        setItemModel(item, metadata, name);
+
     }
 
     public void setItemModel(Item item, int metadata, String override) {
-        setItemModel(item, metadata, new ResourceLocation(mod.getPrefix() + override));
+        setItemModel(item, metadata, new ResourceLocation(mod.getID(), override));
     }
 
     public void setItemModel(Item item, int metadata, ResourceLocation resourceLocation) {
@@ -55,7 +58,7 @@ public class SafeModelLoader {
         }
 
         if (item != null) {
-            setItemModel(item, metadata, new ResourceLocation(mod.getPrefix() + location));
+            setItemModel(item, metadata, new ResourceLocation(mod.getID(), location));
         }
     }
 
