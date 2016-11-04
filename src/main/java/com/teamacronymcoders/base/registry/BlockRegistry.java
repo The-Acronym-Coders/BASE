@@ -38,7 +38,9 @@ public class BlockRegistry extends Registry<Block> {
         if (item instanceof IHasModel) {
             mod.getModelLoader().setAllItemModels(item, (IHasModel) item);
         } else {
-            mod.getModelLoader().setItemModel(item);
+            if(item != null) {
+                mod.getModelLoader().setItemModel(item);
+            }
         }
         super.initiateModel(name, entry);
     }
