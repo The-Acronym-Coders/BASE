@@ -6,6 +6,8 @@ public class EnumUtils {
     private EnumUtils() { }
 
     public static String[] getNames(Class<? extends Enum<?>> enumClass) {
-        return Arrays.stream(enumClass.getEnumConstants()).map(Enum::name).toArray(String[]::new);
+        String[] enumNames = Arrays.stream(enumClass.getEnumConstants()).map(Enum::name).toArray(String[]::new);
+        Arrays.stream(enumNames).forEach(String::toLowerCase);
+        return enumNames;
     }
 }
