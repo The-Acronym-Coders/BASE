@@ -20,10 +20,6 @@ repositories {
     mavenCentral()
 
     maven {
-        name 'Mobius'
-        url 'http://mobiusstrip.eu/maven'
-    }
-    maven {
         name 'JEI'
         url "http://dvs1.progwml6.com/files/maven"
     }
@@ -46,7 +42,6 @@ minecraft {
 }
 
 dependencies {
-    compile "mcp.mobius.waila:Waila:${waila_version}"
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
 
     // test
