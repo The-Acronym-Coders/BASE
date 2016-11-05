@@ -3,11 +3,13 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.teamacronymcoders.base.util;
+package com.teamacronymcoders.base.util.logging;
+
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 
-public class FileLogger {
+public class FileLogger implements ILogger {
     private final Writer writer;
     private final PrintWriter printWriter;
 
@@ -64,5 +66,50 @@ public class FileLogger {
         } catch (IOException var4) {
             throw new RuntimeException(var4);
         }
+    }
+
+    @Override
+    public void warning(String message) {
+
+    }
+
+    @Override
+    public void info(String message) {
+
+    }
+
+    @Override
+    public void fatal(String message) {
+
+    }
+
+    @Override
+    public void error(String message) {
+
+    }
+
+    @Override
+    public void devWarning(String message) {
+
+    }
+
+    @Override
+    public void devInfo(String message) {
+
+    }
+
+    @Override
+    public void devFatal(String message) {
+
+    }
+
+    @Override
+    public void devError(String message) {
+
+    }
+
+    @Override
+    public Logger getLogger() {
+        return null;
     }
 }
