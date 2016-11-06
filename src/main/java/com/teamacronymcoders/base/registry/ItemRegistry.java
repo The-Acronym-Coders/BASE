@@ -14,6 +14,7 @@ public class ItemRegistry extends Registry<Item> {
     @Override
     public void initiateEntry(String name, Item item) {
         ResourceLocation itemRegistryName = new ResourceLocation(mod.getPrefix() + name);
+        item.setCreativeTab(mod.getCreativeTab());
         GameRegistry.register(item, itemRegistryName);
         super.initiateEntry(name, item);
     }

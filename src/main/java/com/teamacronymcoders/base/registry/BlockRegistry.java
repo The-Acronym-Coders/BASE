@@ -18,6 +18,7 @@ public class BlockRegistry extends Registry<Block> {
     @Override
     public void initiateEntry(String name, Block block) {
         ResourceLocation blockName = new ResourceLocation(mod.getID(), name);
+        block.setCreativeTab(mod.getCreativeTab());
         GameRegistry.register(block, blockName);
 
         if (block instanceof IHasItemBlock) {
@@ -38,7 +39,7 @@ public class BlockRegistry extends Registry<Block> {
         if (item instanceof IHasModel) {
             mod.getModelLoader().setAllItemModels(item, (IHasModel) item);
         } else {
-            if(item != null) {
+            if (item != null) {
                 mod.getModelLoader().setItemModel(item);
             }
         }
