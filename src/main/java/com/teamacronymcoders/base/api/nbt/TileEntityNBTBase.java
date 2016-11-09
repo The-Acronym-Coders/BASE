@@ -8,7 +8,7 @@ import java.util.Arrays;
 /**
  * Created by Jared on 7/30/2016.
  */
-public class TileEntityBase extends TileEntity {
+public class TileEntityNBTBase extends TileEntity {
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
