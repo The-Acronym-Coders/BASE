@@ -5,8 +5,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IHasGui {
+    @SideOnly(Side.CLIENT)
     Gui getClientGuiElement(int id, EntityPlayer player, World world, BlockPos blockPos);
 
     Container getServerGuiElement(int id, EntityPlayer player, World world, BlockPos blockPos);
