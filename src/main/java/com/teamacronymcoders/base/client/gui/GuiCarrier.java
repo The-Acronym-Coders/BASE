@@ -1,12 +1,12 @@
 package com.teamacronymcoders.base.client.gui;
 
-import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -20,10 +20,6 @@ public enum GuiCarrier {
                 hasGui = (IHasGui) entity;
             }
             return hasGui;
-        }
-
-        public void openGui(IBaseMod mod, Entity entity, EntityPlayer player, World world) {
-            player.openGui(mod, ENTITY.ordinal(), world, entity.getEntityId(), 0, 0);
         }
     },
     BLOCK {
@@ -43,24 +39,16 @@ public enum GuiCarrier {
 
             return hasGui;
         }
-
-        public void openGui(IBaseMod mod, EntityPlayer player, World world, BlockPos blockPos) {
-            player.openGui(mod, BLOCK.ordinal(), world, blockPos.getX(), blockPos.getY(), blockPos.getZ());
-        }
     },
     ITEMSTACK {
         @Override
         public IHasGui getHasGUI(EntityPlayer player, World world, BlockPos blockPos) {
             IHasGui hasGui = null;
-            ItemStack itemStack = player.getActiveItemStack();
+            ItemStack itemStack = player.getHeldItem(EnumHand.values()[blockPos.getX()]);
             if (ItemStackUtils.isItemInstanceOf(itemStack, IHasGui.class)) {
                 hasGui = (IHasGui) itemStack.getItem();
             }
             return hasGui;
-        }
-
-        public void openGui(IBaseMod mod, EntityPlayer player, World world, BlockPos blockPos) {
-            player.openGui(mod, ITEMSTACK.ordinal(), world, blockPos.getX(), blockPos.getY(), blockPos.getZ());
         }
     };
 
