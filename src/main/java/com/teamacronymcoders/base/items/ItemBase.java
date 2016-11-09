@@ -1,5 +1,7 @@
 package com.teamacronymcoders.base.items;
 
+import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -7,9 +9,11 @@ import net.minecraft.item.Item;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemBase extends Item implements IHasModel {
+public class ItemBase extends Item implements IHasModel, IModAware {
     protected String texturePath;
     protected String name;
+
+    private IBaseMod mod;
 
     boolean creativeTabSet = false;
 
@@ -40,5 +44,15 @@ public class ItemBase extends Item implements IHasModel {
     public List<String> getModelNames(List<String> modelNames) {
         modelNames.add(texturePath + name);
         return modelNames;
+    }
+
+    @Override
+    public IBaseMod getMod() {
+        return mod;
+    }
+
+    @Override
+    public void setMod(IBaseMod mod) {
+        this.mod = mod;
     }
 }

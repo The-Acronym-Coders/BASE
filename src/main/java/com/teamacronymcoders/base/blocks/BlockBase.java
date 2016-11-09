@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.blocks;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,7 +15,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class BlockBase extends Block implements IHasItemBlock, IHasModel {
+public abstract class BlockBase extends Block implements IHasItemBlock, IHasModel, IModAware {
     IBaseMod mod;
     boolean creativeTabSet = false;
 
@@ -74,5 +75,15 @@ public class BlockBase extends Block implements IHasItemBlock, IHasModel {
         }
         modelNames.add(name);
         return modelNames;
+    }
+
+    @Override
+    public IBaseMod getMod() {
+        return mod;
+    }
+
+    @Override
+    public void setMod(IBaseMod mod) {
+        this.mod = mod;
     }
 }

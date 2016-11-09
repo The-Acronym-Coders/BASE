@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.registry.config.IConfigListener;
@@ -31,6 +32,9 @@ public abstract class Registry<T> {
     protected void initiateEntry(String name, T entry) {
         if (entry instanceof IConfigListener) {
             mod.getRegistryHolder().getRegistry(ConfigRegistry.class, "CONFIG").addListener((IConfigListener) entry);
+        }
+        if(entry instanceof IModAware) {
+            ((IModAware) entry).setMod(mod);
         }
     }
 
