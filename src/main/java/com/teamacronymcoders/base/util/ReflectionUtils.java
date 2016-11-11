@@ -13,4 +13,15 @@ public class ReflectionUtils {
             Platform.attemptLogExceptionToCurrentMod(e);
         }
     }
+
+    public static void setField(Class clazz, String fieldName, Object instance, Object value) {
+        try {
+            Field field = clazz.getField(fieldName);
+            field.set(instance, value);
+        } catch (NoSuchFieldException e) {
+            //Nothing, it'll happen.
+        } catch (IllegalAccessException e) {
+            Platform.attemptLogExceptionToCurrentMod(e);
+        }
+    }
 }

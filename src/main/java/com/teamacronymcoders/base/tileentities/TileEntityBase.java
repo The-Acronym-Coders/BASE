@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.tileentities;
 
-import com.teamacronymcoders.base.IBaseMod;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -13,7 +12,6 @@ import javax.annotation.Nullable;
  * @author SkySom
  */
 public abstract class TileEntityBase extends TileEntity {
-    public static IBaseMod mod;
 
 	/* Orginally inspired by ZeroCore */
 
@@ -31,11 +29,9 @@ public abstract class TileEntityBase extends TileEntity {
     }
 
     protected void readFromDisk(NBTTagCompound data) {
-        mod.getLogger().devInfo("Read from Disk");
     }
 
     protected NBTTagCompound writeToDisk(NBTTagCompound data) {
-        mod.getLogger().devInfo("Written to Disk");
         return data;
     }
 

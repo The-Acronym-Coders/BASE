@@ -4,7 +4,6 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.blocks.IHasItemBlock;
 import com.teamacronymcoders.base.blocks.IHasTileEntity;
 import com.teamacronymcoders.base.client.models.IHasModel;
-import com.teamacronymcoders.base.util.ReflectionUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
@@ -28,7 +27,6 @@ public class BlockRegistry extends Registry<Block> {
 
         if (block instanceof IHasTileEntity) {
             Class<? extends TileEntity> tileEntityClass = ((IHasTileEntity) block).getTileEntityClass();
-            ReflectionUtils.setStaticField(tileEntityClass, "mod", mod);
             GameRegistry.registerTileEntity(tileEntityClass, mod.getPrefix() + name);
         }
         super.initiateEntry(name, block);
