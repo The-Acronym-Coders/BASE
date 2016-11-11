@@ -1,23 +1,19 @@
 package com.teamacronymcoders.base.tileentities;
 
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.util.Platform;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
  * @author SkySom
  */
 public abstract class TileEntityBase extends TileEntity {
-    protected IBaseMod mod;
-
-    public TileEntityBase() {
-        this.mod = Platform.getCurrentMod();
-    }
+    public static IBaseMod mod;
 
 	/* Orginally inspired by ZeroCore */
 
@@ -28,31 +24,29 @@ public abstract class TileEntityBase extends TileEntity {
     }
 
     @Override
+    @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         this.writeToDisk(data);
         return super.writeToNBT(data);
     }
 
     protected void readFromDisk(NBTTagCompound data) {
-        this.mod.getLogger().devInfo("Read from Disk");
+        mod.getLogger().devInfo("Read from Disk");
     }
 
-    ;
-
     protected NBTTagCompound writeToDisk(NBTTagCompound data) {
-        this.mod.getLogger().devInfo("Written to Disk");
+        mod.getLogger().devInfo("Written to Disk");
         return data;
     }
 
-    ;
-
     @Override
-    public void handleUpdateTag(NBTTagCompound data) {
+    public void handleUpdateTag(@Nonnull NBTTagCompound data) {
         super.readFromNBT(data);
         this.readFromUpdatePacket(data);
     }
 
     @Override
+    @Nonnull
     public NBTTagCompound getUpdateTag() {
         NBTTagCompound data = super.getUpdateTag();
         this.writeToUpdatePacket(data);
@@ -74,21 +68,16 @@ public abstract class TileEntityBase extends TileEntity {
     }
 
     protected void readFromUpdatePacket(NBTTagCompound data) {
-        // this.mod.getLogger().devInfo("Read from Packet");
     }
 
     ;
 
     protected NBTTagCompound writeToUpdatePacket(NBTTagCompound data) {
-        // this.mod.getLogger().devInfo("Written to Packet");
         return data;
     }
 
-    ;
-
     public void sendBlockUpdate() {
         if (!worldObj.isRemote)
-            // this.worldObj.notifyBlockOfStateChange(this.getPos(), worldObj.getBlockState(pos).getBlock());
             this.worldObj.notifyBlockUpdate(getPos(), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
     }
 

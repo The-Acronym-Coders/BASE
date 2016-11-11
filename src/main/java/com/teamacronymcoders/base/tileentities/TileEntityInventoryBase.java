@@ -20,8 +20,8 @@ public class TileEntityInventoryBase extends TileEntityBase {
         this.inventory = inventory;
     }
 
-
     @Override
+    @Nonnull
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         data.setTag("Items", inventory.serializeNBT());
         return super.writeToNBT(data);
