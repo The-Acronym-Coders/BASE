@@ -39,6 +39,11 @@ public abstract class BlockTEBase<T extends TileEntity> extends BlockBase implem
     }
 
     @Override
+    public boolean hasTileEntity(IBlockState blockState) {
+        return true;
+    }
+
+    @Override
     @Nonnull
     public abstract TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState blockState);
 }
