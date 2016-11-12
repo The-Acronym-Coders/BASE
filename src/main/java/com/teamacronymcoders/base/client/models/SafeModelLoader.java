@@ -5,8 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.ArrayList;
-
 public class SafeModelLoader {
     private IBaseMod mod;
 
@@ -63,10 +61,12 @@ public class SafeModelLoader {
     }
 
     public void setAllItemModels(Item item, IHasModel model) {
-        mod.getLibProxy().setAllItemModels(item, model.getResourceLocations(new ArrayList<>()));
+        mod.getLibProxy().setAllItemModels(item, model);
     }
 
     public void registerFluidModel(Block fluidBlock, final ResourceLocation resourceLocation) {
         mod.getLibProxy().registerFluidModel(fluidBlock, resourceLocation);
     }
+
+
 }
