@@ -3,7 +3,6 @@ package com.teamacronymcoders.base.registry;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.entity.SpawnEgg;
 import com.teamacronymcoders.base.entity.SpawnInfo;
-import com.teamacronymcoders.base.util.ReflectionUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 
@@ -23,7 +22,6 @@ public class EntityRegistry extends Registry<Class<? extends Entity>> {
     public void initiateEntry(String name, Class<? extends Entity> entityClass) {
         net.minecraftforge.fml.common.registry.EntityRegistry
                 .registerModEntity(entityClass, name, ++nextAvailableID, mod, 64, 1, true);
-        ReflectionUtils.setStaticField(entityClass, "mod", mod);
         if (spawnEggs.containsKey(name)) {
             SpawnEgg spawnEgg = spawnEggs.get(name);
             net.minecraftforge.fml.common.registry.EntityRegistry
