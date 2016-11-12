@@ -47,7 +47,7 @@ public class LibClientProxy extends LibCommonProxy {
                 }
             }
         } else {
-            getMod().getLogger().devInfo(item.getRegistryName() + " has no models list, but implements IHasModel");
+            getMod().getLogger().devInfo(item.getRegistryName() + " implements IHasModel, but lists no models");
         }
     }
 
