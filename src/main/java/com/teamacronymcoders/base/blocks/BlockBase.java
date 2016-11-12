@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public abstract class BlockBase extends Block implements IHasItemBlock, IHasModel, IModAware {
+public class BlockBase extends Block implements IHasItemBlock, IHasModel, IModAware {
     IBaseMod mod;
     boolean creativeTabSet = false;
 
