@@ -36,13 +36,21 @@ public class BlockRegistry extends Registry<Block> {
     public void initiateModel(String name, Block entry) {
         Item item = Item.getItemFromBlock(entry);
 
+        IHasModel hasModel = null;
         if (item instanceof IHasModel) {
-            mod.getModelLoader().setAllItemModels(item, (IHasModel) item);
-        } else {
-            if (item != null) {
+            hasModel = (IHasModel) item;
+        } else if(entry instanceof IHasModel){
+            hasModel = (IHasModel)entry;
+        }
+
+        if(item != null) {
+            if(hasModel != null) {
+                mod.getModelLoader().setAllItemModels(item, hasModel);
+            } else {
                 mod.getModelLoader().setItemModel(item);
             }
         }
+
         super.initiateModel(name, entry);
     }
 
