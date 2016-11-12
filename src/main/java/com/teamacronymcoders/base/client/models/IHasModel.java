@@ -2,7 +2,10 @@ package com.teamacronymcoders.base.client.models;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.util.Platform;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,5 +22,14 @@ public interface IHasModel {
                     resourceLocations.add(new ResourceLocation(mod.getID(), modelName)));
         }
         return resourceLocations;
+    }
+
+    @SideOnly(Side.CLIENT)
+    default List<ModelResourceLocation> getModelResourceLocations(List<ModelResourceLocation> models) {
+        List<ResourceLocation> resourceLocations = getResourceLocations(new ArrayList<>());
+        for(ResourceLocation resourceLocation : resourceLocations) {
+            models.add(new ModelResourceLocation(resourceLocation, "inventory"));
+        }
+        return models;
     }
 }

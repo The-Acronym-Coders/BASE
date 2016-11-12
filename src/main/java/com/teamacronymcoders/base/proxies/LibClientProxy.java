@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.proxies;
 
+import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.IModuleProxy;
 import net.minecraft.block.Block;
@@ -32,16 +33,21 @@ public class LibClientProxy extends LibCommonProxy {
     }
 
     @Override
-    public void setAllItemModels(Item item, List<ResourceLocation> resourceLocations) {
+    public void setAllItemModels(Item item, IHasModel model) {
         List<ItemStack> allSubItems = new ArrayList<>();
         item.getSubItems(item, item.getCreativeTab(), allSubItems);
         int locationsIndex = 0;
-        for (int i = 0; i < allSubItems.size(); i++) {
-            setItemModel(item, i, resourceLocations.get(locationsIndex));
-            locationsIndex++;
-            if (locationsIndex >= resourceLocations.size()) {
-                locationsIndex = 0;
+        List<ModelResourceLocation> modelResourceLocations = model.getModelResourceLocations(new ArrayList<>());
+        if(modelResourceLocations.size() > 0) {
+            for (int i = 0; i < allSubItems.size(); i++) {
+                setItemModel(item, i, modelResourceLocations.get(locationsIndex));
+                locationsIndex++;
+                if (locationsIndex >= modelResourceLocations.size()) {
+                    locationsIndex = 0;
+                }
             }
+        } else {
+            getMod().getLogger().devInfo(item.getRegistryName() + " implements IHasModel, but lists no models");
         }
     }
 

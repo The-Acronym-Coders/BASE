@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.IModuleProxy;
 import com.teamacronymcoders.base.util.ClassLoading;
@@ -9,7 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class LibCommonProxy {
     private IBaseMod mod;
@@ -22,7 +22,7 @@ public class LibCommonProxy {
         //Only set Client Side
     }
 
-    public void setAllItemModels(Item item, List<ResourceLocation> locations) {
+    public void setAllItemModels(Item item, IHasModel model) {
         //Only set Client Side
     }
 
