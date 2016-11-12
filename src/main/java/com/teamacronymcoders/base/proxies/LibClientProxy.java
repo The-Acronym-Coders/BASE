@@ -38,12 +38,16 @@ public class LibClientProxy extends LibCommonProxy {
         item.getSubItems(item, item.getCreativeTab(), allSubItems);
         int locationsIndex = 0;
         List<ModelResourceLocation> modelResourceLocations = model.getModelResourceLocations(new ArrayList<>());
-        for (int i = 0; i < allSubItems.size(); i++) {
-            setItemModel(item, i, modelResourceLocations.get(locationsIndex));
-            locationsIndex++;
-            if (locationsIndex >= modelResourceLocations.size()) {
-                locationsIndex = 0;
+        if(modelResourceLocations.size() > 0) {
+            for (int i = 0; i < allSubItems.size(); i++) {
+                setItemModel(item, i, modelResourceLocations.get(locationsIndex));
+                locationsIndex++;
+                if (locationsIndex >= modelResourceLocations.size()) {
+                    locationsIndex = 0;
+                }
             }
+        } else {
+            getMod().getLogger().devInfo(item.getRegistryName() + " has no models list, but implements IHasModel");
         }
     }
 
