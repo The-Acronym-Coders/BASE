@@ -3,7 +3,7 @@ package com.teamacronymcoders.base.proxies;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.modulesystem.IModule;
-import com.teamacronymcoders.base.modulesystem.IModuleProxy;
+import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

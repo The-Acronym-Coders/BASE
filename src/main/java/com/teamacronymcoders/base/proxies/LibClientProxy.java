@@ -2,7 +2,7 @@ package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.modulesystem.IModule;
-import com.teamacronymcoders.base.modulesystem.IModuleProxy;
+import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelBakery;

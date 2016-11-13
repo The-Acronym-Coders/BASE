@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.modulesystem;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
+import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -28,7 +29,7 @@ public interface IModule {
     String getServerProxyPath();
 
     @Nullable
-    IModuleProxy getModuleProxy();
+	IModuleProxy getModuleProxy();
 
     void setModuleProxy(@Nonnull IModuleProxy moduleProxy);
 

@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.modulesystem;
+package com.teamacronymcoders.base.modulesystem.proxies;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;

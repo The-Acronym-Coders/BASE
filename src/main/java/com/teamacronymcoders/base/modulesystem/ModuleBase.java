@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.modulesystem;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
+import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.base.registry.EntityRegistry;
 import com.teamacronymcoders.base.registry.IRegistryHolder;
