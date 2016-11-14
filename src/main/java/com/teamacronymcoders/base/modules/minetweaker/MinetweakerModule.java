@@ -18,7 +18,7 @@ public class MinetweakerModule extends ModuleBase {
 
     @Override
     public List<IDependency> getDependencies(List<IDependency> dependencyList) {
-        dependencyList.add(new ModDependency("minetweaker3"));
+        dependencyList.add(new ModDependency("MineTweaker3"));
         return dependencyList;
     }
 
