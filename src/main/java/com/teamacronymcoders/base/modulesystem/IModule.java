@@ -39,6 +39,8 @@ public interface IModule {
 
     boolean getActiveDefault();
 
+    boolean isConfigurable();
+
     IBaseMod getMod();
 
     void setMod(@Nonnull IBaseMod mod);

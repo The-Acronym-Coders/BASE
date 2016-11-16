@@ -35,22 +35,22 @@ public abstract class ModuleBase implements IModule {
         this.registerBlocks(this.getConfigRegistry(), this.getBlockRegistry());
         this.registerItems(this.getConfigRegistry(), this.getItemRegistry());
         this.registerEntities(this.getConfigRegistry(), this.getEntityRegistry());
-        if (this.moduleProxy != null) {
-            this.moduleProxy.preInit(event);
+        if (this.getModuleProxy() != null) {
+            this.getModuleProxy().preInit(event);
         }
     }
 
     @Override
     public void init(FMLInitializationEvent event) {
-        if (this.moduleProxy != null) {
-            this.moduleProxy.init(event);
+        if (this.getModuleProxy() != null) {
+            this.getModuleProxy().init(event);
         }
     }
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
-        if (this.moduleProxy != null) {
-            this.moduleProxy.postInit(event);
+        if (this.getModuleProxy() != null) {
+            this.getModuleProxy().postInit(event);
         }
     }
 
@@ -101,6 +101,11 @@ public abstract class ModuleBase implements IModule {
     @Override
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+
+    @Override
+    public boolean isConfigurable() {
+        return true;
     }
 
     @Override

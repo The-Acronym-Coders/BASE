@@ -50,9 +50,13 @@ public class ModuleHandler {
 
     public void setupModules() {
         for (IModule module : getModules().values()) {
-            this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(module));
-            module.setIsActive(this.getConfig().getBoolean(module.getName(), module.getActiveDefault()));
+            if(module.isConfigurable()) {
+                this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(module));
+                module.setIsActive(this.getConfig().getBoolean(module.getName(), module.getActiveDefault()));
+            }
+
             module.setMod(this.mod);
+            module.setModuleHandler(this);
         }
 
         this.modules.values().stream().filter(IModule::getIsActive).forEach(this::checkDependencies);
