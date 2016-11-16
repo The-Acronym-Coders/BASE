@@ -109,8 +109,11 @@ public class ModuleHandler {
         moduleList.sort(new ModuleComparator());
         for (IModule module : moduleList) {
             for (Annotation annotation : module.getClass().getDeclaredAnnotations()) {
-                if (annotation instanceof Module && ((Module) annotation).value().equals(this.handlerName)) {
-                    moduleMap.put(module.getName(), module);
+                if (annotation instanceof Module) {
+                    String handlerName = ((Module) annotation).value().trim();
+                    if(handlerName.equals(this.handlerName) || handlerName.equals("")) {
+                        moduleMap.put(module.getName(), module);
+                    }
                 }
             }
         }
