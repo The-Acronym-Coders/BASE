@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.util;
+package com.teamacronymcoders.base.modules.texturegenerator;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.FileResourcePack;

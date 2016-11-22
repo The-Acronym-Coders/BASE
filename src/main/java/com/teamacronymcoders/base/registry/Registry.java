@@ -9,11 +9,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Registry<T> {
     protected IBaseMod mod;
     protected Registry<T> instance;
-    protected HashMap<String, T> entries = new HashMap<>();
+    protected Map<String, T> entries = new HashMap<>();
     private LoadingStage loadingStage = LoadingStage.PREINIT;
 
     public Registry(IBaseMod mod) {
@@ -78,5 +79,9 @@ public abstract class Registry<T> {
         } else {
             this.loadingStage = stage;
         }
+    }
+
+    public Map<String, T> getEntries() {
+        return this.entries;
     }
 }

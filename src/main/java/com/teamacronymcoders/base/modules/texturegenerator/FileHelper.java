@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.util;
+package com.teamacronymcoders.base.modules.texturegenerator;
 
 import java.io.*;
 import java.net.URI;

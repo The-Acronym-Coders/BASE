@@ -50,9 +50,13 @@ public class ModuleHandler {
 
     public void setupModules() {
         for (IModule module : getModules().values()) {
-            this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(module));
-            module.setIsActive(this.getConfig().getBoolean(module.getName(), module.getActiveDefault()));
+            if(module.isConfigurable()) {
+                this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(module));
+                module.setIsActive(this.getConfig().getBoolean(module.getName(), module.getActiveDefault()));
+            }
+
             module.setMod(this.mod);
+            module.setModuleHandler(this);
         }
 
         this.modules.values().stream().filter(IModule::getIsActive).forEach(this::checkDependencies);
@@ -105,8 +109,11 @@ public class ModuleHandler {
         moduleList.sort(new ModuleComparator());
         for (IModule module : moduleList) {
             for (Annotation annotation : module.getClass().getDeclaredAnnotations()) {
-                if (annotation instanceof Module && ((Module) annotation).value().equals(this.handlerName)) {
-                    moduleMap.put(module.getName(), module);
+                if (annotation instanceof Module) {
+                    String handlerName = ((Module) annotation).value().trim();
+                    if(handlerName.equals(this.handlerName) || handlerName.equals("")) {
+                        moduleMap.put(module.getName(), module);
+                    }
                 }
             }
         }

@@ -4,7 +4,7 @@ import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.items.tools.ItemWrench;
 import com.teamacronymcoders.base.reference.Reference;
-import com.teamacronymcoders.base.util.FileHelper;
+import com.teamacronymcoders.base.modules.texturegenerator.FileHelper;
 import com.teamacronymcoders.base.util.Platform;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

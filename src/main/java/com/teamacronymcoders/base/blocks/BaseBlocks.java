@@ -1,5 +1,7 @@
 package com.teamacronymcoders.base.blocks;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
@@ -7,19 +9,14 @@ import com.teamacronymcoders.base.blocks.sets.wood.BlockStorage;
 import com.teamacronymcoders.base.items.ItemBlockOre;
 import com.teamacronymcoders.base.items.ItemBlockStorage;
 import com.teamacronymcoders.base.reference.Reference;
-import com.teamacronymcoders.base.util.FileHelper;
-import com.teamacronymcoders.base.util.Platform;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BaseBlocks {
 
@@ -80,11 +77,6 @@ public class BaseBlocks {
     public static Block registerBlock(Block block, String modid, String key, String name, String texture, Class tile, CreativeTabs tab, ItemBlock itemBlock) {
         block.setUnlocalizedName(modid + ":" + key).setCreativeTab(tab);
 
-        if (Platform.generateBaseTextures()) {
-            writeFile(modid, key, texture);
-            writeLangFile(key, modid, name);
-        }
-
         renderMap.put(texture, block);
         Block b = GameRegistry.register(block, new ResourceLocation(modid + ":" + key));
         GameRegistry.register(itemBlock, new ResourceLocation(modid + ":" + key));
@@ -93,59 +85,5 @@ public class BaseBlocks {
             GameRegistry.registerTileEntity(tile, key);
         }
         return b;
-    }
-
-    private static void writeLangFile(String key, String modid, String name) {
-        try {
-            File lang = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + modid + "/lang/en_US.lang");
-
-            if (!lang.exists()) {
-                lang.createNewFile();
-            }
-            Scanner scan = new Scanner(lang);
-            List<String> content = new ArrayList<>();
-            while (scan.hasNextLine()) {
-                String line = scan.nextLine();
-                content.add(line);
-            }
-            scan.close();
-            if (!content.contains((String.format("tile.%s.name=%s", key, name))))
-                content.add(String.format("tile.%s.name=%s", key, name));
-            FileWriter write = new FileWriter(lang);
-            for (String s : content) {
-                write.write(s + "\n");
-            }
-            write.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void writeFile(String modid, String key, String texture) {
-        try {
-            File baseBlockState = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + modid + "/blockstates/" + key + ".json");
-            File baseBlockModel = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + modid + "/models/block/" + key + ".json");
-            File baseItem = new File(new File(System.getProperty("user.dir")).getParentFile(), "src/main/resources/assets/" + modid + "/models/item/" + key + ".json");
-
-            FileHelper fileHelper = new FileHelper();
-
-            if (!baseBlockState.exists()) {
-                baseBlockState.createNewFile();
-                fileHelper.writeFile(baseBlockState, fileHelper.scanFile(modid, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json")));
-            }
-
-            if (!baseBlockModel.exists()) {
-                baseBlockModel.createNewFile();
-                fileHelper.writeFile(baseBlockModel, fileHelper.scanFile(modid, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockModel.json")));
-
-            }
-
-            if (!baseItem.exists()) {
-                baseItem.createNewFile();
-                fileHelper.writeFile(baseItem, fileHelper.scanFile(modid, key, texture, new File(System.getProperty("user.home") + "/getFluxed/baseBlockItem.json")));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
