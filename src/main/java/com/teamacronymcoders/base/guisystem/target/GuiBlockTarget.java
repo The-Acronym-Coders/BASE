@@ -1,19 +1,18 @@
 package com.teamacronymcoders.base.guisystem.target;
 
-import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.guisystem.IHasGui;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class GuiBlockTarget extends GuiTarget<Block> {
+@GuiTarget
+public class GuiBlockTarget extends GuiTargetBase<Block> {
     private BlockPos pos;
 
     public GuiBlockTarget() {
@@ -27,8 +26,8 @@ public class GuiBlockTarget extends GuiTarget<Block> {
 
     @Override
     @Nonnull
-    public ResourceLocation getTargetType() {
-        return new ResourceLocation(Base.instance.getID(), "block");
+    public String getName() {
+        return "block";
     }
 
     @Override

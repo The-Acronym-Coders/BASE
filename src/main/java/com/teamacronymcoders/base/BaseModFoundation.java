@@ -41,6 +41,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     }
 
     public void preInit(FMLPreInitializationEvent event) {
+        BaseMods.addBaseMod(this);
         this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
                 "com.teamacronymcoders.base.proxies.LibServerProxy");
         this.getLibProxy().setMod(this);
@@ -55,7 +56,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.getLibProxy().addOBJDomain();
         }
 
-        this.guiHandler = new GuiHandler(this);
+        this.guiHandler = new GuiHandler(this, event.getAsmData());
 
         this.moduleHandler = new ModuleHandler(this, event.getAsmData());
         this.getModuleHandler().setupModules();

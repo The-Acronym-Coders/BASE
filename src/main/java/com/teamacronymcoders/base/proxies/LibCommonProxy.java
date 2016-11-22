@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.guisystem.target.GuiTarget;
+import com.teamacronymcoders.base.guisystem.target.GuiTargetBase;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
@@ -48,7 +48,7 @@ public abstract class LibCommonProxy {
         return moduleProxy;
     }
 
-    public abstract void openGui(@Nonnull GuiTarget guiTarget, @Nonnull NBTTagCompound context, boolean openGuiFromServer,
+    public abstract void openGui(@Nonnull GuiTargetBase guiTarget, @Nonnull NBTTagCompound context, boolean openGuiFromServer,
                                  EntityPlayer entityPlayer, World world);
 
     public IBaseMod getMod() {

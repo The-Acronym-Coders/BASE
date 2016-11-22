@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.guisystem.IHasGui;
-import com.teamacronymcoders.base.guisystem.target.GuiTarget;
+import com.teamacronymcoders.base.guisystem.target.GuiTargetBase;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
@@ -76,14 +76,13 @@ public class LibClientProxy extends LibCommonProxy {
     }
 
     @Override
-    public void openGui(@Nonnull GuiTarget guiTarget, @Nonnull NBTTagCompound context, boolean openGuiFromServerContext,
+    public void openGui(@Nonnull GuiTargetBase guiTarget, @Nonnull NBTTagCompound context, boolean openGuiFromServerContext,
                         EntityPlayer entityPlayer, World world) {
         if(!openGuiFromServerContext) {
             if(guiTarget.getTarget() instanceof IHasGui) {
                 Gui gui = ((IHasGui) guiTarget.getTarget()).getGui(entityPlayer, world, context);
                 FMLCommonHandler.instance().showGuiScreen(gui);
             }
-
         }
     }
 

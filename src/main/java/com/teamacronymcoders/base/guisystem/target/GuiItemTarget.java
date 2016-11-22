@@ -1,19 +1,18 @@
 package com.teamacronymcoders.base.guisystem.target;
 
-import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.guisystem.IHasGui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class GuiItemTarget extends GuiTarget<Item> {
+@GuiTarget
+public class GuiItemTarget extends GuiTargetBase<Item> {
     private EnumHand hand;
 
     public GuiItemTarget() {
@@ -27,8 +26,8 @@ public class GuiItemTarget extends GuiTarget<Item> {
 
     @Nonnull
     @Override
-    public ResourceLocation getTargetType() {
-        return new ResourceLocation(Base.instance.getID(), "item");
+    public String getName() {
+        return "item";
     }
 
     @Nullable

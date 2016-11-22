@@ -1,17 +1,16 @@
 package com.teamacronymcoders.base.guisystem.target;
 
-import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.guisystem.IHasGui;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class GuiEntityTarget extends GuiTarget<Entity> {
+@GuiTarget
+public class GuiEntityTarget extends GuiTargetBase<Entity> {
     public GuiEntityTarget() {
         super();
     }
@@ -22,8 +21,8 @@ public class GuiEntityTarget extends GuiTarget<Entity> {
 
     @Override
     @Nonnull
-    public ResourceLocation getTargetType() {
-        return new ResourceLocation(Base.instance.getID(), "entity");
+    public String getName() {
+        return "entity";
     }
 
     @Override
