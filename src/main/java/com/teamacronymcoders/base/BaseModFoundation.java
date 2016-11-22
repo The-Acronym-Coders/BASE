@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.client.gui.GuiHandler;
+import com.teamacronymcoders.base.guisystem.GuiHandler;
 import com.teamacronymcoders.base.client.models.SafeModelLoader;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
@@ -41,8 +41,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     }
 
     public void preInit(FMLPreInitializationEvent event) {
+        BaseMods.addBaseMod(this);
         this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
-                "com.teamacronymcoders.base.proxies.LibCommonProxy");
+                "com.teamacronymcoders.base.proxies.LibServerProxy");
         this.getLibProxy().setMod(this);
         this.modelLoader = new SafeModelLoader(this);
 
@@ -55,7 +56,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.getLibProxy().addOBJDomain();
         }
 
-        this.guiHandler = new GuiHandler(this);
+        this.guiHandler = new GuiHandler(this, event.getAsmData());
 
         this.moduleHandler = new ModuleHandler(this, event.getAsmData());
         this.getModuleHandler().setupModules();

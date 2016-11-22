@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.network;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -31,6 +32,10 @@ public class PacketHandler {
     public void sendToAllAround(IMessage message, BlockPos blockPos, int dimensionId) {
         TargetPoint targetPoint = new TargetPoint(dimensionId, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 64);
         sendToAllAround(message, targetPoint);
+    }
+
+    public void sendToPlayer(IMessage message, EntityPlayerMP entityPlayer) {
+        networkWrapper.sendTo(message, entityPlayer);
     }
 
     public void sendToAllAround(IMessage message, TargetPoint targetPoint) {
