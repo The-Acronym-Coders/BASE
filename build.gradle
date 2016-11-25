@@ -77,7 +77,7 @@ artifacts {
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "file://" + System.getenv("local_maven") != null ? System.getenv("local_maven") : System.getenv("bamboo_local_maven"))
+            repository(url: "file://" + (System.getenv("local_maven") != null ? System.getenv("local_maven") : System.getenv("bamboo_local_maven")))
         }
     }
 }
