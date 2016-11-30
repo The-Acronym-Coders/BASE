@@ -12,11 +12,15 @@ public class ModDependency implements IDependency {
 
     @Override
     public boolean isMet(ModuleHandler moduleHandler) {
-        return Loader.isModLoaded(this.modid);
+        return Loader.isModLoaded(this.getModid());
     }
 
     @Override
     public String notMetMessage() {
-        return "Mod with modid: " + this.modid + " was not found";
+        return "Mod with modid: " + this.getModid() + " was not found";
+    }
+
+    public String getModid() {
+        return modid;
     }
 }
