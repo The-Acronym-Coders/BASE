@@ -58,16 +58,22 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.guiHandler = new GuiHandler(this, event.getAsmData());
 
+        this.beforeModuleHandlerInit(event);
+
         this.moduleHandler = new ModuleHandler(this, event.getAsmData());
         this.getModuleHandler().setupModules();
         this.getModuleHandler().preInit(event);
 
-        this.modPreInit(event);
+        this.afterModuleHandlerInit(event);
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
     }
 
-    public void modPreInit(FMLPreInitializationEvent event) {
+    public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
+
+    }
+
+    public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
 
     }
 
