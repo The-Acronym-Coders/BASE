@@ -4,11 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseMods {
-    private static HashMap<String, IBaseMod> mods;
-
-    private BaseMods() {
-        mods = new HashMap<>();
-    }
+    private static Map<String, IBaseMod> mods = new HashMap<>();
 
     public static void addBaseMod(IBaseMod mod) {
         mods.put(mod.getID(), mod);
