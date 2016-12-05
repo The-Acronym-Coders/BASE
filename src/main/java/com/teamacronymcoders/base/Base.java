@@ -3,10 +3,9 @@ package com.teamacronymcoders.base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.blocks.BaseBlocks;
-import com.teamacronymcoders.base.config.ConfigMaterials;
-import com.teamacronymcoders.base.data.Materials;
-import com.teamacronymcoders.base.data.Recipes;
+import com.teamacronymcoders.base.modules.materials.MaterialRecipes;
 import com.teamacronymcoders.base.items.BaseItems;
+import com.teamacronymcoders.base.modules.materials.Material;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
 import com.teamacronymcoders.base.reference.TabBase;
 import com.teamacronymcoders.base.util.LanguageHelper;
@@ -16,7 +15,6 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -40,58 +38,27 @@ public class Base extends BaseModFoundation<Base> {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
-        getLogger().info("Starting PreInit");
-        long time = System.currentTimeMillis();
 
-        ConfigMaterials.init(this);
-
-        Recipes.preInit();
         BaseItems.preInit();
         BaseBlocks.preInit();
         proxy.preInitBlocks();
         proxy.initEvents();
-        Recipes.preInitLate();
-
-        time = (System.currentTimeMillis() - time);
-        totalTime += time;
-        getLogger().info(String.format("Completed PreInit in: %d ms", time));
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        getLogger().info("Starting Init");
-        long time = System.currentTimeMillis();
         super.init(event);
         proxy.initBlockRenders();
         proxy.initItemRenders();
         proxy.registerRenderers();
-        Recipes.init();
+        MaterialRecipes.init();
         this.creativeTab = MaterialRegistry.getMaterials().isEmpty() ? CreativeTabs.MISC : new TabBase();
-        Materials.WOOD.getTypes().add(MaterialType.EnumPartType.INGOT);
-        time = (System.currentTimeMillis() - time);
-        totalTime += time;
-        getLogger().info(String.format("Completed Init in: %d ms", time));
+        Material.WOOD.getMaterialType().getTypes().add(MaterialType.EnumPartType.INGOT);
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        getLogger().info("Starting PostInit");
         super.postInit(event);
-        long time = System.currentTimeMillis();
-        Recipes.postInit();
-        time = (System.currentTimeMillis() - time);
-        totalTime += time;
-        getLogger().info(String.format("Completed PostInit in: %d ms", time));
-    }
-
-    @EventHandler
-    public void loadComplete(FMLLoadCompleteEvent e) {
-        getLogger().info("Starting LoadComplete");
-        long time = System.currentTimeMillis();
-        time = (System.currentTimeMillis() - time);
-        totalTime += time;
-        getLogger().info(String.format("Completed LoadComplete in: %d ms", time));
-        getLogger().info(String.format("Loaded In: %d ms", totalTime));
     }
 
     @Override

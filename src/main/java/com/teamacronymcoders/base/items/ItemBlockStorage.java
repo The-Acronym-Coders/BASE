@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by Jared.
  */
-public class ItemBlockStorage extends ItemBlock{
+public class ItemBlockStorage extends ItemBlock {
 
     public ItemBlockStorage(Block block) {
         super(block);

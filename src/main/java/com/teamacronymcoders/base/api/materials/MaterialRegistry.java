@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.api.materials;
 
-import com.teamacronymcoders.base.config.ConfigMaterials;
 import com.google.common.collect.HashBiMap;
 import org.apache.commons.lang3.tuple.MutablePair;
 
@@ -13,15 +12,6 @@ public class MaterialRegistry {
     private static HashBiMap<Integer, MaterialType> MATERIALS = HashBiMap.create();
 
     public static boolean registerMaterial(int ID, MaterialType materialType) {
-        if (getMaterials().containsKey(materialType.getName())) return false;
-        getMaterials().put(ID, materialType);
-        return true;
-    }
-
-    public static boolean registerNativeMaterial(int ID, MaterialType materialType) {
-        if (!ConfigMaterials.materialMap.get(materialType)) {
-            return false;
-        }
         if (getMaterials().containsKey(materialType.getName())) return false;
         getMaterials().put(ID, materialType);
         return true;

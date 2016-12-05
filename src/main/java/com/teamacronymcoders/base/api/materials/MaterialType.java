@@ -1,10 +1,12 @@
 package com.teamacronymcoders.base.api.materials;
 
 import com.teamacronymcoders.base.Base;
+import net.minecraft.item.crafting.IRecipe;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class MaterialType {
@@ -73,11 +75,36 @@ public class MaterialType {
     }
 
     public enum EnumPartType {
-        BLOCK,
-        DUST,
-        GEAR,
-        INGOT,
-        NUGGET,
+        BLOCK() {
+            @Override
+            public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+                return recipes;
+            }
+        },
+        DUST {
+            @Override
+            public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+                return null;
+            }
+        },
+        GEAR {
+            @Override
+            public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+                return null;
+            }
+        },
+        INGOT {
+            @Override
+            public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+                return null;
+            }
+        },
+        NUGGET {
+            @Override
+            public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+                return null;
+            }
+        },
         ORE,
         PLATE;
 
@@ -91,6 +118,10 @@ public class MaterialType {
 
         public String getName() {
             return this.name();
+        }
+
+        public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+            return recipes;
         }
     }
 
