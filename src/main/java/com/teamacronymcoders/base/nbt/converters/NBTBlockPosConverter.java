@@ -1,6 +1,6 @@
-package com.teamacronymcoders.base.api.nbt.converters;
+package com.teamacronymcoders.base.nbt.converters;
 
-import com.teamacronymcoders.base.api.nbt.INBTConverter;
+import com.teamacronymcoders.base.nbt.INBTConverter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 

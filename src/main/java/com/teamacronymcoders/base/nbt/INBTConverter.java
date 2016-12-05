@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.api.nbt;
+package com.teamacronymcoders.base.nbt;
 
 import net.minecraft.nbt.NBTTagCompound;
 

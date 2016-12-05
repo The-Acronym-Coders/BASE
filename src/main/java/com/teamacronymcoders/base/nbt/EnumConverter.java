@@ -1,7 +1,7 @@
-package com.teamacronymcoders.base.api.nbt;
+package com.teamacronymcoders.base.nbt;
 
 
-import com.teamacronymcoders.base.api.nbt.converters.*;
+import com.teamacronymcoders.base.nbt.converters.*;
 
 /**
  * Created by Jared on 7/26/2016.
