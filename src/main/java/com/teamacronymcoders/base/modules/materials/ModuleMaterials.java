@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Module(Reference.MODID)
-public class ModuleMaterials extends ModuleBase{
+public class ModuleMaterials extends ModuleBase {
     public static Map<String, MaterialType> activeBaseMaterials;
 
     public static final ItemPart GEAR = new ItemPart(MaterialType.EnumPartType.GEAR);
