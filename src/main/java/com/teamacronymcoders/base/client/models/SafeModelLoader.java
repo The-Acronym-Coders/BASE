@@ -1,6 +1,8 @@
 package com.teamacronymcoders.base.client.models;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.items.IHasItemColor;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -68,5 +70,11 @@ public class SafeModelLoader {
         mod.getLibProxy().registerFluidModel(fluidBlock, resourceLocation);
     }
 
+    public void registerItemColor(Item item, IHasItemColor itemColor) {
+        mod.getLibProxy().registerItemColor(item, itemColor);
+    }
 
+    public void registerBlockColor(IHasBlockColor blockColor) {
+        mod.getLibProxy().registerBlockColor(blockColor);
+    }
 }

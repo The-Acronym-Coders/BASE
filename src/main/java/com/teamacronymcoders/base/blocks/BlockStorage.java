@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.blocks.sets.wood;
+package com.teamacronymcoders.base.blocks;
 
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialType;
@@ -7,8 +7,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 
-public class BlockStorage extends Block {
+import javax.annotation.Nullable;
+
+public class BlockStorage extends Block implements IHasBlockColor {
 
     public MaterialType materialType;
 
@@ -54,4 +58,8 @@ public class BlockStorage extends Block {
         return false;
     }
 
+    @Override
+    public int colorMultiplier(IBlockState state, @Nullable IBlockAccess world, @Nullable BlockPos pos, int tintIndex) {
+        return materialType.getColour().getRGB();
+    }
 }

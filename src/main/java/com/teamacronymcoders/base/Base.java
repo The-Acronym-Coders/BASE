@@ -41,16 +41,11 @@ public class Base extends BaseModFoundation<Base> {
 
         BaseItems.preInit();
         BaseBlocks.preInit();
-        proxy.preInitBlocks();
-        proxy.initEvents();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
         super.init(event);
-        proxy.initBlockRenders();
-        proxy.initItemRenders();
-        proxy.registerRenderers();
         MaterialRecipes.init();
         this.creativeTab = MaterialRegistry.getMaterials().isEmpty() ? CreativeTabs.MISC : new TabBase();
         Material.WOOD.getMaterialType().getTypes().add(MaterialType.EnumPartType.INGOT);

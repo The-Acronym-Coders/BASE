@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Jared on 6/30/2016
  */
-public class ItemPart extends Item implements IMetaItem, IHasOreDict {
+public class ItemPart extends Item implements IMetaItem, IHasOreDict, IHasItemColor {
 
     MaterialType.EnumPartType type;
 
@@ -63,7 +64,8 @@ public class ItemPart extends Item implements IMetaItem, IHasOreDict {
     }
 
     @Override
-    public Map<ItemStack, String> getOreDictNames(Map<ItemStack, String> names) {
+    @Nonnull
+    public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
         for (Map.Entry<Integer, MaterialType> ent : MaterialRegistry.getMaterials().entrySet()) {
             MaterialType mat = ent.getValue();
             ItemStack itemStack = new ItemStack(this, 1, ent.getKey());
@@ -71,5 +73,14 @@ public class ItemPart extends Item implements IMetaItem, IHasOreDict {
             names.put(itemStack, oreDictName);
         }
         return names;
+    }
+
+    @Override
+    public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
+        MaterialType material = MaterialRegistry.getFromID(stack.getItemDamage());
+        if (material != null && tintIndex == 0) {
+            return material.getColour().getRGB();
+        }
+        return 0xFFFFFF;
     }
 }

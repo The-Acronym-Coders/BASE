@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.items.IHasItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -12,7 +13,7 @@ public class ItemRegistry extends Registry<Item> {
     }
 
     @Override
-    public void initiateEntry(String name, Item item) {
+    protected void initiateEntry(String name, Item item) {
         ResourceLocation itemRegistryName = new ResourceLocation(mod.getPrefix() + name);
         item.setCreativeTab(mod.getCreativeTab());
         GameRegistry.register(item, itemRegistryName);
@@ -20,11 +21,18 @@ public class ItemRegistry extends Registry<Item> {
     }
 
     @Override
-    public void initiateModel(String name, Item item) {
+    protected void initiateModel(String name, Item item) {
         if (item instanceof IHasModel) {
             mod.getModelLoader().setAllItemModels(item, (IHasModel) item);
         } else {
             mod.getModelLoader().setItemModel(item);
+        }
+    }
+
+    @Override
+    protected void initiateColor(Item entry) {
+        if(entry instanceof IHasItemColor) {
+            mod.getModelLoader().registerItemColor(entry, (IHasItemColor) entry);
         }
     }
 

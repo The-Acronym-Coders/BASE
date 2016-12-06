@@ -1,10 +1,7 @@
 package com.teamacronymcoders.base.proxies;
 
-import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.blocks.BaseBlocks;
-import com.teamacronymcoders.base.items.BaseItems;
-import com.teamacronymcoders.base.util.IMetaItem;
 import com.teamacronymcoders.base.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -35,10 +32,6 @@ import java.util.Objects;
 
 @SideOnly(Side.CLIENT)
 public class ModClientProxy extends ModCommonProxy {
-
-    public void registerRenderers() {
-        super.registerRenderers();
-    }
 
     public World getClientWorld() {
         return FMLClientHandler.instance().getClient().theWorld;
@@ -76,9 +69,7 @@ public class ModClientProxy extends ModCommonProxy {
         });
     }
 
-    @Override
     public void initBlockRenders() {
-        super.initBlockRenders();
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
         for (Map.Entry<String, Block> ent : BaseBlocks.renderMap.entries()) {
             renderItem.getItemModelMesher().register(Item.getItemFromBlock(ent.getValue()), 0, new ModelResourceLocation(
@@ -120,42 +111,6 @@ public class ModClientProxy extends ModCommonProxy {
         }
     }
 
-    @Override
-    public void initItemRenders() {
-        super.initItemRenders();
-
-        RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-
-        for (Map.Entry<String, Item> ent : BaseItems.renderMap.entrySet()) {
-            if (ent.getValue() instanceof IMetaItem) {
-                IMetaItem metaItem = (IMetaItem) ent.getValue();
-                for (int i : metaItem.getMetaData()) {
-                    renderItem.getItemModelMesher().register(ent.getValue(), i, new ModelResourceLocation(
-							Reference.MODID + ":" + ent.getKey(), "inventory"));
-                }
-            } else
-                renderItem.getItemModelMesher().register(ent.getValue(), 0, new ModelResourceLocation(
-						Reference.MODID + ":" + ent.getKey(), "inventory"));
-        }
-        for (Map.Entry<Item, int[]> ent : BaseItems.colourMap.entrySet()) {
-            Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
-                @Override
-                public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-                    MaterialType mat = MaterialRegistry.getFromID(stack.getItemDamage());
-                    if (mat == null) {
-                        return 0xFFFFFF;
-                    }
-                    for (int i : ent.getValue()) {
-                        if (tintIndex == i) {
-                            return mat.getColour().getRGB();
-                        }
-                    }
-                    return 0xFFFFFF;
-                }
-            }, ent.getKey());
-        }
-    }
-
     /**
      * Translates a message
      *
@@ -167,11 +122,4 @@ public class ModClientProxy extends ModCommonProxy {
         if (Objects.equals(label, "")) return I18n.format(message);
         return I18n.format(String.format("%s.%s.%s", label, Reference.MODID, message));
     }
-
-    @Override
-    public void initEvents() {
-        super.initEvents();
-    }
-
-
 }

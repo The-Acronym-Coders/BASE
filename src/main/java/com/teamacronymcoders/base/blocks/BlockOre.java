@@ -7,8 +7,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 
-public class BlockOre extends Block {
+import javax.annotation.Nullable;
+
+public class BlockOre extends Block implements IHasBlockColor {
 
     public MaterialType materialType;
 
@@ -54,4 +58,8 @@ public class BlockOre extends Block {
         return false;
     }
 
+    @Override
+    public int colorMultiplier(IBlockState state, @Nullable IBlockAccess world, @Nullable BlockPos pos, int tintIndex) {
+        return materialType.getColour().getRGB();
+    }
 }

@@ -6,9 +6,6 @@ import net.minecraft.world.World;
 
 public class ModCommonProxy {
 
-    public void registerRenderers() {
-    }
-
     public World getClientWorld() {
         return null;
     }
@@ -25,16 +22,6 @@ public class ModCommonProxy {
         return null;
     }
 
-    public void preInitBlocks() {
-
-    }
-
-    public void initBlockRenders() {
-    }
-
-    public void initItemRenders() {
-    }
-
 
     /**
      * Translates a message
@@ -45,9 +32,5 @@ public class ModCommonProxy {
      */
     public String translateMessage(String label, String message) {
         return String.format("%s.%s.%s", label, Reference.MODID, message);
-    }
-
-    public void initEvents() {
-
     }
 }

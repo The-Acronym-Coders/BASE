@@ -4,7 +4,7 @@ import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.blocks.BaseBlocks;
 import com.teamacronymcoders.base.blocks.BlockOre;
-import com.teamacronymcoders.base.blocks.sets.wood.BlockStorage;
+import com.teamacronymcoders.base.blocks.BlockStorage;
 import com.teamacronymcoders.base.items.ItemBlockOre;
 import com.teamacronymcoders.base.items.ItemBlockStorage;
 import com.teamacronymcoders.base.reference.Reference;

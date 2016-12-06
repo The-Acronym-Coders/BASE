@@ -2,7 +2,7 @@ package com.teamacronymcoders.base.items;
 
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialType;
-import com.teamacronymcoders.base.blocks.sets.wood.BlockStorage;
+import com.teamacronymcoders.base.blocks.BlockStorage;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;

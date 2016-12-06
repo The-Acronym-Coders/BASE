@@ -1,12 +1,15 @@
 package com.teamacronymcoders.base.proxies;
 
+import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.guisystem.IHasGui;
 import com.teamacronymcoders.base.guisystem.target.GuiTargetBase;
-import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -42,7 +45,7 @@ public class LibClientProxy extends LibCommonProxy {
     @Override
     public void setAllItemModels(Item item, IHasModel model) {
         List<ItemStack> allSubItems = new ArrayList<>();
-        item.getSubItems(item, item.getCreativeTab(), allSubItems);
+        model.getAllSubItems(allSubItems);
         int locationsIndex = 0;
         List<ModelResourceLocation> modelResourceLocations = model.getModelResourceLocations(new ArrayList<>());
         if(modelResourceLocations.size() > 0) {
@@ -84,6 +87,16 @@ public class LibClientProxy extends LibCommonProxy {
                 FMLCommonHandler.instance().showGuiScreen(gui);
             }
         }
+    }
+
+    @Override
+    public void registerItemColor(Item item, IHasItemColor itemColor) {
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(itemColor::getColorFromItemstack, item);
+    }
+
+    @Override
+    public void registerBlockColor(IHasBlockColor blockColor) {
+        Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(blockColor::colorMultiplier);
     }
 
     @Override
