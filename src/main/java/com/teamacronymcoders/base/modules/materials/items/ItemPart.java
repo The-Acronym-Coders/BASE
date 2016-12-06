@@ -1,8 +1,10 @@
-package com.teamacronymcoders.base.items;
+package com.teamacronymcoders.base.modules.materials.items;
 
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
+import com.teamacronymcoders.base.items.IHasItemColor;
+import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.util.IMetaItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

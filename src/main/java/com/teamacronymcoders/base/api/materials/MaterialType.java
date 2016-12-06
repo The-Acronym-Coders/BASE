@@ -75,7 +75,7 @@ public class MaterialType {
     }
 
     public enum EnumPartType {
-        BLOCK() {
+        BLOCK {
             @Override
             public List<IRecipe> getRecipes(List<IRecipe> recipes) {
                 return recipes;

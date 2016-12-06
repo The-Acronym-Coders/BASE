@@ -2,12 +2,9 @@ package com.teamacronymcoders.base.modules.minetweaker;
 
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialType;
-import com.teamacronymcoders.base.blocks.BaseBlocks;
-import com.teamacronymcoders.base.blocks.BlockOre;
-import com.teamacronymcoders.base.blocks.BlockStorage;
-import com.teamacronymcoders.base.items.ItemBlockOre;
-import com.teamacronymcoders.base.items.ItemBlockStorage;
-import com.teamacronymcoders.base.reference.Reference;
+import com.teamacronymcoders.base.modules.materials.blocks.BlockMaterial;
+import com.teamacronymcoders.base.modules.materials.blocks.BlockProperties;
+import com.teamacronymcoders.base.registry.BlockRegistry;
 import minetweaker.MineTweakerAPI;
 
 /**
@@ -23,8 +20,9 @@ public class BaseMaterialType implements IMaterialType {
     @Override
     public void registerBlock(float hardness, float resistance, String toolClass, int toolTier) {
         MineTweakerAPI.apply(new Materials.Change(type, MaterialType.EnumPartType.BLOCK));
-        BlockStorage ore = new BlockStorage(type, hardness, resistance, toolClass, toolTier);
-        BaseBlocks.storageBlockMap.put(type, BaseBlocks.registerBlock(ore, Reference.MODID, "storage_" + type.getName().toLowerCase(), "%s Block", "storage", null, Base.instance.getCreativeTab(), new ItemBlockStorage(ore)));
+        BlockProperties blockProperties = new BlockProperties(hardness, resistance, toolClass, toolTier);
+        BlockMaterial blockMaterial = new BlockMaterial(type, MaterialType.EnumPartType.BLOCK, blockProperties);
+        Base.instance.getRegistry(BlockRegistry.class, "BLOCK").register(blockMaterial);
     }
 
     @Override
@@ -50,8 +48,9 @@ public class BaseMaterialType implements IMaterialType {
     @Override
     public void registerOre(float hardness, float resistance, String toolClass, int toolTier) {
         MineTweakerAPI.apply(new Materials.Change(type, MaterialType.EnumPartType.ORE));
-        BlockOre ore = new BlockOre(type, hardness, resistance, toolClass, toolTier);
-        BaseBlocks.oreBlockMap.put(type, BaseBlocks.registerBlock(ore, Reference.MODID, "ore_" + type.getName().toLowerCase(), "%s Ore", "ore", null, Base.instance.getCreativeTab(), new ItemBlockOre(ore)));
+        BlockProperties blockProperties = new BlockProperties(hardness, resistance, toolClass, toolTier);
+        BlockMaterial blockMaterial = new BlockMaterial(type, MaterialType.EnumPartType.ORE, blockProperties);
+        Base.instance.getRegistry(BlockRegistry.class, "BLOCK").register(blockMaterial);
     }
 
     @Override

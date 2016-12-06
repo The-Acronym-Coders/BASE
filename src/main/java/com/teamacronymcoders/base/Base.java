@@ -1,15 +1,8 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.api.materials.MaterialRegistry;
-import com.teamacronymcoders.base.api.materials.MaterialType;
-import com.teamacronymcoders.base.blocks.BaseBlocks;
-import com.teamacronymcoders.base.modules.materials.MaterialRecipes;
-import com.teamacronymcoders.base.items.BaseItems;
-import com.teamacronymcoders.base.modules.materials.Material;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
 import com.teamacronymcoders.base.reference.TabBase;
 import com.teamacronymcoders.base.util.LanguageHelper;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -32,7 +25,7 @@ public class Base extends BaseModFoundation<Base> {
     public static ModCommonProxy proxy;
 
     public Base() {
-        super(MODID, NAME, VERSION, null);
+        super(MODID, NAME, VERSION, new TabBase());
     }
 
     @EventHandler
@@ -40,15 +33,11 @@ public class Base extends BaseModFoundation<Base> {
         super.preInit(event);
 
         BaseItems.preInit();
-        BaseBlocks.preInit();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
         super.init(event);
-        MaterialRecipes.init();
-        this.creativeTab = MaterialRegistry.getMaterials().isEmpty() ? CreativeTabs.MISC : new TabBase();
-        Material.WOOD.getMaterialType().getTypes().add(MaterialType.EnumPartType.INGOT);
     }
 
     @EventHandler

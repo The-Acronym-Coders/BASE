@@ -4,7 +4,7 @@ import com.teamacronymcoders.base.api.materials.MaterialType;
 
 import java.awt.*;
 
-public enum Material {
+public enum BaseMaterial {
     WOOD(new MaterialType("Wood", new Color(0x9d804f), false, MaterialType.EnumPartType.GEAR)),
     STONE(new MaterialType("Stone", new Color(0x514B4F), false, MaterialType.EnumPartType.GEAR)),
     IRON(new MaterialType("Iron", new Color(0x878787), false, MaterialType.EnumPartType.DUST, MaterialType.EnumPartType.NUGGET, MaterialType.EnumPartType.PLATE)),
@@ -20,7 +20,7 @@ public enum Material {
 
     private MaterialType materialType;
 
-    Material(MaterialType materialType) {
+    BaseMaterial(MaterialType materialType) {
         this.materialType = materialType;
     }
 

@@ -2,7 +2,6 @@ package com.teamacronymcoders.base.reference;
 
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
-import com.teamacronymcoders.base.items.BaseItems;
 import com.google.common.base.Stopwatch;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

@@ -22,7 +22,6 @@ public class ModCommonProxy {
         return null;
     }
 
-
     /**
      * Translates a message
      *

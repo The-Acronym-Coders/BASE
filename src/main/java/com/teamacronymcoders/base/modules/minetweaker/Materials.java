@@ -58,12 +58,12 @@ public class Materials {
 
         @Override
         public String describe() {
-            return String.format("[%s] Registering Part Type, %s, for Material, %s", Reference.MODID, type.getName(), mat.getName());
+            return String.format("[%s] Registering Part Type, %s, for BaseMaterial, %s", Reference.MODID, type.getName(), mat.getName());
         }
 
         @Override
         public String describeUndo() {
-            return String.format("[%s] Removing Part Type, %s, for Material, %s", Reference.MODID, type.getName(), mat.getName());
+            return String.format("[%s] Removing Part Type, %s, for BaseMaterial, %s", Reference.MODID, type.getName(), mat.getName());
         }
 
         @Override
@@ -103,12 +103,12 @@ public class Materials {
 
         @Override
         public String describe() {
-            return String.format("[%s] Registering Material, %s", Reference.MODID, name);
+            return String.format("[%s] Registering BaseMaterial, %s", Reference.MODID, name);
         }
 
         @Override
         public String describeUndo() {
-            return String.format("[%s] Unable to remove Material, %s, while the game is running!", Reference.MODID, name);
+            return String.format("[%s] Unable to remove BaseMaterial, %s, while the game is running!", Reference.MODID, name);
         }
 
         @Override
