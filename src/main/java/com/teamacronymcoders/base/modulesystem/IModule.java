@@ -31,7 +31,7 @@ public interface IModule {
     @Nullable
 	IModuleProxy getModuleProxy();
 
-    void setModuleProxy(@Nonnull IModuleProxy moduleProxy);
+    void setModuleProxy(IModuleProxy moduleProxy);
 
     boolean getIsActive();
 

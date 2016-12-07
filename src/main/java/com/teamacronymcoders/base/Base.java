@@ -31,8 +31,6 @@ public class Base extends BaseModFoundation<Base> {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
-
-        BaseItems.preInit();
     }
 
     @EventHandler

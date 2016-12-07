@@ -3,6 +3,7 @@ package com.teamacronymcoders.base.reference;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.google.common.base.Stopwatch;
+import com.teamacronymcoders.base.modules.materials.ModuleMaterials;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -76,9 +77,9 @@ public class TabBase extends CreativeTabs {
         updateIcon();
 
         if (iconIndex != -1) {
-            return new ItemStack(BaseItems.GEAR, 1, iconIndex);
+            return new ItemStack(ModuleMaterials.GEAR, 1, iconIndex);
         } else {
-            return new ItemStack(BaseItems.GEAR, 1);
+            return new ItemStack(ModuleMaterials.GEAR, 1);
         }
 
     }

@@ -89,7 +89,7 @@ public abstract class ModuleBase implements IModule {
     }
 
     @Override
-    public void setModuleProxy(@Nonnull IModuleProxy moduleProxy) {
+    public void setModuleProxy(IModuleProxy moduleProxy) {
         this.moduleProxy = moduleProxy;
     }
 
