@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.blocks.IHasItemBlock;
 import com.teamacronymcoders.base.blocks.IHasTileEntity;
 import com.teamacronymcoders.base.client.models.IHasModel;
@@ -35,6 +36,10 @@ public class BlockRegistry extends Registry<Block> {
 
     @Override
     protected void initiateModel(String name, Block entry) {
+        if(entry instanceof IHasBlockStateMapper) {
+            mod.getModelLoader().registerBlockStateMapper(entry, (IHasBlockStateMapper)entry);
+        }
+
         Item item = Item.getItemFromBlock(entry);
 
         IHasModel hasModel = null;

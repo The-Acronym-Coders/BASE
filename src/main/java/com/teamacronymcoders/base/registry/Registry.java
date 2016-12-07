@@ -85,7 +85,11 @@ public abstract class Registry<T> {
         if (getLoadingStage() != LoadingStage.PREINIT) {
             throw new UnsupportedOperationException("ALL REGISTERING MUST HAPPEN IN PREINIT");
         }
-        this.entries.put(name, entry);
+        if(!this.entries.containsKey(name)) {
+            this.entries.put(name, entry);
+        } else {
+            throw new UnsupportedOperationException("All Entries must be unique");
+        }
     }
 
     public LoadingStage getLoadingStage() {

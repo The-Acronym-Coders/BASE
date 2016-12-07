@@ -120,6 +120,9 @@ public class MaterialType {
             return this.name();
         }
 
+        public String getLowerCaseName() {
+            return this.getName().toLowerCase();
+        }
         public List<IRecipe> getRecipes(List<IRecipe> recipes) {
             return recipes;
         }

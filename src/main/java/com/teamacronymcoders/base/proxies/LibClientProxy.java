@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.guisystem.IHasGui;
 import com.teamacronymcoders.base.guisystem.target.GuiTargetBase;
@@ -97,6 +98,17 @@ public class LibClientProxy extends LibCommonProxy {
     @Override
     public void registerBlockColor(IHasBlockColor blockColor) {
         Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(blockColor::colorMultiplier);
+    }
+
+    @Override
+    public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
+        ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+            @Override
+            @Nonnull
+            protected ModelResourceLocation getModelResourceLocation(@Nonnull IBlockState state) {
+                return new ModelResourceLocation(stateMapper.getResourceLocation(state), stateMapper.getVariant(state));
+            }
+        });
     }
 
     @Override

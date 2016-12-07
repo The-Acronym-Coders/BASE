@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.client.models;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -76,5 +77,9 @@ public class SafeModelLoader {
 
     public void registerBlockColor(IHasBlockColor blockColor) {
         mod.getLibProxy().registerBlockColor(blockColor);
+    }
+
+    public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
+        mod.getLibProxy().registerBlockStateMapper(block, stateMapper);
     }
 }

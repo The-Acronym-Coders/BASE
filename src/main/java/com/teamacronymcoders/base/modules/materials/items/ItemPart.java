@@ -6,7 +6,6 @@ import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.ItemBase;
-import com.teamacronymcoders.base.util.IMetaItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,12 +14,11 @@ import net.minecraft.util.text.TextFormatting;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by Jared on 6/30/2016
  */
-public class ItemPart extends ItemBase implements IMetaItem, IHasOreDict, IHasItemColor {
+public class ItemPart extends ItemBase implements IHasOreDict, IHasItemColor {
 
     MaterialType.EnumPartType type;
 
@@ -32,7 +30,7 @@ public class ItemPart extends ItemBase implements IMetaItem, IHasOreDict, IHasIt
 
     @Override
     public void getSubItems(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
-        subItems.addAll(MaterialRegistry.getMaterials().entrySet().stream().filter(ent -> ent.getValue().isTypeSet(this.type)).map(ent -> new ItemStack(itemIn, 1, ent.getKey())).collect(Collectors.toList()));
+        getAllSubItems(subItems);
     }
 
     @Override
@@ -52,11 +50,6 @@ public class ItemPart extends ItemBase implements IMetaItem, IHasOreDict, IHasIt
             return String.format("%s %s", mat.getLocalizedName(), this.type.getLocalizedName());
 
         return TextFormatting.RED + Base.languageHelper.error("null_part");
-    }
-
-    @Override
-    public List<Integer> getMetaData() {
-        return MaterialRegistry.getIDList();
     }
 
     @Override
@@ -93,5 +86,12 @@ public class ItemPart extends ItemBase implements IMetaItem, IHasOreDict, IHasIt
             return material.getColour().getRGB();
         }
         return 0xFFFFFF;
+    }
+
+    @Override
+    public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
+        MaterialRegistry.getMaterials().entrySet().stream().filter(entry -> entry.getValue().isTypeSet(type))
+                .forEach(entry -> itemStacks.add(new ItemStack(this, 1, entry.getKey())));
+        return itemStacks;
     }
 }
