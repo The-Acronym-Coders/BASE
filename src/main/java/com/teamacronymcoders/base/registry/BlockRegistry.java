@@ -6,6 +6,7 @@ import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.blocks.IHasItemBlock;
 import com.teamacronymcoders.base.blocks.IHasTileEntity;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.items.IHasItemColor;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
@@ -62,6 +63,9 @@ public class BlockRegistry extends Registry<Block> {
 
     @Override
     protected void initiateColor(Block entry) {
+        if(entry instanceof IHasItemColor) {
+            mod.getModelLoader().registerItemColor(entry, (IHasItemColor)entry);
+        }
         if(entry instanceof IHasBlockColor) {
             mod.getModelLoader().registerBlockColor((IHasBlockColor)entry);
         }

@@ -75,6 +75,10 @@ public class SafeModelLoader {
         mod.getLibProxy().registerItemColor(item, itemColor);
     }
 
+    public void registerItemColor(Block block, IHasItemColor itemColor) {
+        mod.getLibProxy().registerItemColor(block, itemColor);
+    }
+
     public void registerBlockColor(IHasBlockColor blockColor) {
         mod.getLibProxy().registerBlockColor(blockColor);
     }

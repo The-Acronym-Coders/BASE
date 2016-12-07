@@ -66,6 +66,10 @@ public abstract class LibCommonProxy {
         //Only done Client Side
     }
 
+    public void registerItemColor(Block block, IHasItemColor itemColor) {
+        //Only done Client Side
+    }
+
     public void registerBlockColor(IHasBlockColor blockColor) {
         //Only done Client Side
     }

@@ -95,6 +95,10 @@ public class LibClientProxy extends LibCommonProxy {
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(itemColor::getColorFromItemstack, item);
     }
 
+    public void registerItemColor(Block block, IHasItemColor itemColor) {
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(itemColor::getColorFromItemstack, block);
+    }
+
     @Override
     public void registerBlockColor(IHasBlockColor blockColor) {
         Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(blockColor::colorMultiplier);
