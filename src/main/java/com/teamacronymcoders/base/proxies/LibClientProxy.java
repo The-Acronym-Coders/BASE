@@ -50,8 +50,8 @@ public class LibClientProxy extends LibCommonProxy {
         int locationsIndex = 0;
         List<ModelResourceLocation> modelResourceLocations = model.getModelResourceLocations(new ArrayList<>());
         if(modelResourceLocations.size() > 0) {
-            for (int i = 0; i < allSubItems.size(); i++) {
-                ModelLoader.setCustomModelResourceLocation(item, i, modelResourceLocations.get(locationsIndex));
+            for (ItemStack itemStack: allSubItems) {
+                ModelLoader.setCustomModelResourceLocation(itemStack.getItem(), itemStack.getMetadata(), modelResourceLocations.get(locationsIndex));
                 locationsIndex++;
                 if (locationsIndex >= modelResourceLocations.size()) {
                     locationsIndex = 0;

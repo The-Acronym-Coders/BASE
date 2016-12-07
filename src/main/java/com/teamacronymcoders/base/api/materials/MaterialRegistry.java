@@ -36,12 +36,6 @@ public class MaterialRegistry {
 
     public static MaterialType getFromID(int id) {
         return getMaterials().get(id);
-//        for (Map.Entry<Integer, MaterialType> ent : getMaterials().entrySet()) {
-//            if (ent.getKey() == id) {
-//                return ent.getValue();
-//            }
-//        }
-//        return null;
     }
 
     public static MaterialType getFromName(String name) {
