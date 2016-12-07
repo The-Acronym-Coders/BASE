@@ -152,6 +152,11 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
         return returnValue;
     }
 
+    @Override
+    public void register(String name, ConfigEntry entry) {
+        addEntry(name, entry);
+    }
+
     public void addListener(IConfigListener listener) {
         this.listeners.add(listener);
     }
