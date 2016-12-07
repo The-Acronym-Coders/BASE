@@ -35,6 +35,10 @@ public class PacketOpenGui implements IMessage {
         ByteBufUtils.writeTag(buf, context);
     }
 
+    public IBaseMod getMod() {
+        return this.mod;
+    }
+
     public GuiTargetBase getTarget() {
         return this.guiTarget;
     }

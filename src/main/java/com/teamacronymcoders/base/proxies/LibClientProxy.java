@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.guisystem.IHasGui;
+import com.teamacronymcoders.base.guisystem.network.PacketOpenGui;
 import com.teamacronymcoders.base.guisystem.target.GuiTargetBase;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
@@ -24,6 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -85,6 +87,18 @@ public class LibClientProxy extends LibCommonProxy {
         if(!openGuiFromServerContext) {
             if(guiTarget.getTarget() instanceof IHasGui) {
                 Gui gui = ((IHasGui) guiTarget.getTarget()).getGui(entityPlayer, world, context);
+                FMLCommonHandler.instance().showGuiScreen(gui);
+            }
+        }
+    }
+
+    @Override
+    public void openGuiFromPacket(PacketOpenGui message, MessageContext ctx) {
+        Minecraft mc = Minecraft.getMinecraft();
+        IHasGui hasGui = message.getTarget().deserialize(mc.thePlayer, mc.theWorld, message.getContext());
+        if(hasGui != null) {
+            Gui gui = hasGui.getGui(mc.thePlayer, mc.theWorld, message.getContext());
+            if(gui != null) {
                 FMLCommonHandler.instance().showGuiScreen(gui);
             }
         }
