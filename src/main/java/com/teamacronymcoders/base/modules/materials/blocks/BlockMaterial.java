@@ -25,6 +25,7 @@ public class BlockMaterial extends BlockBase implements IHasBlockColor {
         super(Material.IRON);
         this.materialType = materialType;
         this.partType = partType;
+        setUnlocalizedName(partType.getName().toLowerCase());
         blockProperties.setPropertiesToBlock(this);
         setItemBlock(new ItemBlockMaterial(this));
     }

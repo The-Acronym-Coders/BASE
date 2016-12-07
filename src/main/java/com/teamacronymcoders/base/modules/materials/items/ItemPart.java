@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.IHasOreDict;
+import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.util.IMetaItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -19,21 +20,23 @@ import java.util.stream.Collectors;
 /**
  * Created by Jared on 6/30/2016
  */
-public class ItemPart extends Item implements IMetaItem, IHasOreDict, IHasItemColor {
+public class ItemPart extends ItemBase implements IMetaItem, IHasOreDict, IHasItemColor {
 
     MaterialType.EnumPartType type;
 
     public ItemPart(MaterialType.EnumPartType type) {
+        super(type.getName().toLowerCase());
         this.type = type;
         setHasSubtypes(true);
     }
 
     @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+    public void getSubItems(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
         subItems.addAll(MaterialRegistry.getMaterials().entrySet().stream().filter(ent -> ent.getValue().isTypeSet(this.type)).map(ent -> new ItemStack(itemIn, 1, ent.getKey())).collect(Collectors.toList()));
     }
 
     @Override
+    @Nonnull
     public String getUnlocalizedName(ItemStack stack) {
         MaterialType mat = MaterialRegistry.getFromID(stack.getItemDamage());
         if (mat != null && mat.isTypeSet(type))
@@ -63,6 +66,12 @@ public class ItemPart extends Item implements IMetaItem, IHasOreDict, IHasItemCo
             return mat.isHasEffect();
         }
         return super.hasEffect(stack);
+    }
+
+    @Override
+    public List<String> getModelNames(List<String> modelNames) {
+        modelNames.add(type.getName().toLowerCase());
+        return modelNames;
     }
 
     @Override
