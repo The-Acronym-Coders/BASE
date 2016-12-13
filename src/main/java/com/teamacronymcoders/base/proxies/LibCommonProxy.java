@@ -1,8 +1,11 @@
 package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.guisystem.target.GuiTargetBase;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.util.ClassLoading;
@@ -57,5 +60,21 @@ public abstract class LibCommonProxy {
 
     public void setMod(IBaseMod mod) {
         this.mod = mod;
+    }
+
+    public void registerItemColor(Item item, IHasItemColor itemColor) {
+        //Only done Client Side
+    }
+
+    public void registerItemColor(Block block, IHasItemColor itemColor) {
+        //Only done Client Side
+    }
+
+    public void registerBlockColor(IHasBlockColor blockColor) {
+        //Only done Client Side
+    }
+
+    public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
+        //Only done Client Side
     }
 }

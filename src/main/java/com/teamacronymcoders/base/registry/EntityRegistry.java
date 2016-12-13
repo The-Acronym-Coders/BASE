@@ -19,7 +19,7 @@ public class EntityRegistry extends Registry<Class<? extends Entity>> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void initiateEntry(String name, Class<? extends Entity> entityClass) {
+    protected void initiateEntry(String name, Class<? extends Entity> entityClass) {
         net.minecraftforge.fml.common.registry.EntityRegistry
                 .registerModEntity(entityClass, name, ++nextAvailableID, mod, 64, 1, true);
         if (spawnEggs.containsKey(name)) {

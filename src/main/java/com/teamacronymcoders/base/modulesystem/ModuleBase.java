@@ -31,7 +31,7 @@ public abstract class ModuleBase implements IModule {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        this.config(this.getConfigRegistry());
+        this.configure(this.getConfigRegistry());
         this.registerBlocks(this.getConfigRegistry(), this.getBlockRegistry());
         this.registerItems(this.getConfigRegistry(), this.getItemRegistry());
         this.registerEntities(this.getConfigRegistry(), this.getEntityRegistry());
@@ -54,7 +54,7 @@ public abstract class ModuleBase implements IModule {
         }
     }
 
-    public void config(ConfigRegistry configRegistry) {
+    public void configure(ConfigRegistry configRegistry) {
 
     }
 
@@ -89,7 +89,7 @@ public abstract class ModuleBase implements IModule {
     }
 
     @Override
-    public void setModuleProxy(@Nonnull IModuleProxy moduleProxy) {
+    public void setModuleProxy(IModuleProxy moduleProxy) {
         this.moduleProxy = moduleProxy;
     }
 

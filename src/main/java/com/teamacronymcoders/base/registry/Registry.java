@@ -2,10 +2,13 @@ package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
+import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.registry.config.IConfigListener;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,26 +33,42 @@ public abstract class Registry<T> {
         setLoadingStage(LoadingStage.INIT);
     }
 
-    protected void initiateEntry(String name, T entry) {
-        if (entry instanceof IConfigListener) {
-            mod.getRegistryHolder().getRegistry(ConfigRegistry.class, "CONFIG").addListener((IConfigListener) entry);
-        }
-        if(entry instanceof IModAware) {
-            ((IModAware) entry).setMod(mod);
-        }
-    }
-
-    protected void initiateModel(String name, T entry) {
-    }
-
     public void init() {
-        this.entries.forEach((name, entry) -> initiateRecipes(entry));
+        this.entries.forEach((name, entry) -> {
+            initiateRecipes(entry);
+            initiateOreDict(entry);
+            initiateColor(entry);
+        });
 
         setLoadingStage(LoadingStage.POSTINIT);
     }
 
     public void postInit() {
         setLoadingStage(LoadingStage.DONE);
+    }
+
+    protected void initiateEntry(String name, T entry) {
+        if (entry instanceof IConfigListener) {
+            mod.getRegistryHolder().getRegistry(ConfigRegistry.class, "CONFIG").addListener((IConfigListener) entry);
+        }
+        if (entry instanceof IModAware) {
+            ((IModAware) entry).setMod(mod);
+        }
+    }
+
+    protected void initiateModel(String name, T entry) {
+
+    }
+
+    protected void initiateColor(T entry) {
+
+    }
+
+    protected void initiateOreDict(T entry) {
+        if(entry instanceof IHasOreDict) {
+            Map<ItemStack, String> oreDict = ((IHasOreDict) entry).getOreDictNames(new HashMap<>());
+            oreDict.forEach((itemStack, s) -> OreDictionary.registerOre(s, itemStack));
+        }
     }
 
     public void initiateRecipes(T entry) {
@@ -63,10 +82,14 @@ public abstract class Registry<T> {
     }
 
     public void register(String name, T entry) {
-        if(getLoadingStage() != LoadingStage.PREINIT) {
+        if (getLoadingStage() != LoadingStage.PREINIT) {
             throw new UnsupportedOperationException("ALL REGISTERING MUST HAPPEN IN PREINIT");
         }
-        this.entries.put(name, entry);
+        if(!this.entries.containsKey(name)) {
+            this.entries.put(name, entry);
+        } else {
+            throw new UnsupportedOperationException("All Entries must be unique");
+        }
     }
 
     public LoadingStage getLoadingStage() {

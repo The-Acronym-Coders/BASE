@@ -1,9 +1,12 @@
 package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.blocks.IHasItemBlock;
 import com.teamacronymcoders.base.blocks.IHasTileEntity;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.items.IHasItemColor;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
@@ -16,7 +19,7 @@ public class BlockRegistry extends Registry<Block> {
     }
 
     @Override
-    public void initiateEntry(String name, Block block) {
+    protected void initiateEntry(String name, Block block) {
         ResourceLocation blockName = new ResourceLocation(mod.getID(), name);
         block.setCreativeTab(mod.getCreativeTab());
         GameRegistry.register(block, blockName);
@@ -33,7 +36,11 @@ public class BlockRegistry extends Registry<Block> {
     }
 
     @Override
-    public void initiateModel(String name, Block entry) {
+    protected void initiateModel(String name, Block entry) {
+        if(entry instanceof IHasBlockStateMapper) {
+            mod.getModelLoader().registerBlockStateMapper(entry, (IHasBlockStateMapper)entry);
+        }
+
         Item item = Item.getItemFromBlock(entry);
 
         IHasModel hasModel = null;
@@ -52,6 +59,16 @@ public class BlockRegistry extends Registry<Block> {
         }
 
         super.initiateModel(name, entry);
+    }
+
+    @Override
+    protected void initiateColor(Block entry) {
+        if(entry instanceof IHasItemColor) {
+            mod.getModelLoader().registerItemColor(entry, (IHasItemColor)entry);
+        }
+        if(entry instanceof IHasBlockColor) {
+            mod.getModelLoader().registerBlockColor((IHasBlockColor)entry);
+        }
     }
 
     public void register(Block block) {
