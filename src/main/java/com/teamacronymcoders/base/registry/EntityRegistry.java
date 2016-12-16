@@ -1,8 +1,8 @@
 package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.entity.SpawnEgg;
-import com.teamacronymcoders.base.entity.SpawnInfo;
+import com.teamacronymcoders.base.registry.entity.SpawnEgg;
+import com.teamacronymcoders.base.registry.entity.SpawnInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 

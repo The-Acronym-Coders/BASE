@@ -25,19 +25,19 @@ public abstract class LibCommonProxy {
     private IBaseMod mod;
 
     public void addOBJDomain() {
-        //Only add Client Side
+        //Only add Client RegistrySide
     }
 
     public void setItemModel(Item item, int metadata, ResourceLocation location) {
-        //Only set Client Side
+        //Only set Client RegistrySide
     }
 
     public void setAllItemModels(Item item, IHasModel model) {
-        //Only set Client Side
+        //Only set Client RegistrySide
     }
 
     public void registerFluidModel(Block fluidBlock, final ResourceLocation loc) {
-        //Only done Client Side
+        //Only done Client RegistrySide
     }
 
     public abstract IModuleProxy getModuleProxy(IModule module);
@@ -57,7 +57,7 @@ public abstract class LibCommonProxy {
                                  EntityPlayer entityPlayer, World world);
 
     public void openGuiFromPacket(PacketOpenGui message, MessageContext ctx) {
-        //Only done Client Side
+        //Only done Client RegistrySide
     }
 
     public IBaseMod getMod() {
@@ -69,18 +69,18 @@ public abstract class LibCommonProxy {
     }
 
     public void registerItemColor(Item item, IHasItemColor itemColor) {
-        //Only done Client Side
+        //Only done Client RegistrySide
     }
 
     public void registerItemColor(Block block, IHasItemColor itemColor) {
-        //Only done Client Side
+        //Only done Client RegistrySide
     }
 
     public void registerBlockColor(IHasBlockColor blockColor) {
-        //Only done Client Side
+        //Only done Client RegistrySide
     }
 
     public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
-        //Only done Client Side
+        //Only done Client RegistrySide
     }
 }
