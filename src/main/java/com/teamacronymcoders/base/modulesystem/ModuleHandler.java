@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nonnull;
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
@@ -105,18 +104,11 @@ public class ModuleHandler {
 
     private TreeMap<String, IModule> getModules(@Nonnull ASMDataTable asmDataTable) {
         TreeMap<String, IModule> moduleMap = new TreeMap<>();
-        List<IModule> moduleList = ClassLoading.getInstances(asmDataTable, Module.class, IModule.class);
+        List<IModule> moduleList = ClassLoading.getInstances(asmDataTable, Module.class, IModule.class, aClass -> {
+            String modid = aClass.getAnnotation(Module.class).value().trim();
+            return modid.equalsIgnoreCase("") || modid.equalsIgnoreCase(handlerName);
+        });
         moduleList.sort(new ModuleComparator());
-        for (IModule module : moduleList) {
-            for (Annotation annotation : module.getClass().getDeclaredAnnotations()) {
-                if (annotation instanceof Module) {
-                    String handlerName = ((Module) annotation).value().trim();
-                    if(handlerName.equals(this.handlerName) || handlerName.equals("")) {
-                        moduleMap.put(module.getName(), module);
-                    }
-                }
-            }
-        }
         return moduleMap;
     }
 
