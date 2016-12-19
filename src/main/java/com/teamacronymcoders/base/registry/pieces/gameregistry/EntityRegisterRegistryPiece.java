@@ -27,7 +27,7 @@ public class EntityRegisterRegistryPiece extends RegistryPieceBase<EntityEntry> 
     @Override
     @SuppressWarnings("unchecked")
     public void preInit(String name, EntityEntry entry) {
-        Class<Entity> entityClass = entry.getEntityClass();
+        Class<? extends Entity> entityClass = entry.getEntityClass();
         UpdateInfo updateInfo = entry.getUpdateInfo();
         EntityRegistry.registerModEntity(entityClass, name, nextAvailableID++, this.getMod(),
                 updateInfo.getTrackingRange(), updateInfo.getUpdateFrequency(), updateInfo.isSendVelocityUpdates());

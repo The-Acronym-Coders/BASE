@@ -3,21 +3,21 @@ package com.teamacronymcoders.base.registry.entity;
 import net.minecraft.entity.Entity;
 
 public class EntityEntry {
-    private Class<Entity> entityClass;
+    private Class<? extends Entity> entityClass;
     private SpawnEgg spawnEgg;
     private SpawnInfo spawnInfo;
     private UpdateInfo updateInfo;
 
-    public EntityEntry(Class<Entity> entityClass) {
+    public EntityEntry(Class<? extends Entity> entityClass) {
         this.entityClass = entityClass;
         this.updateInfo = new UpdateInfo();
     }
 
-    public Class<Entity> getEntityClass() {
+    public Class<? extends Entity> getEntityClass() {
         return entityClass;
     }
 
-    public void setEntityClass(Class<Entity> entityClass) {
+    public void setEntityClass(Class<? extends Entity> entityClass) {
         this.entityClass = entityClass;
     }
 

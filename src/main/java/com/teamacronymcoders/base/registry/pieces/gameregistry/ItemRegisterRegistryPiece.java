@@ -1,9 +1,11 @@
 package com.teamacronymcoders.base.registry.pieces.gameregistry;
 
+import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+@RegistryPiece
 public class ItemRegisterRegistryPiece extends RegistryPieceBase<Item> {
     @Override
     public boolean acceptsRegistry(String name) {
