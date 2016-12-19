@@ -10,6 +10,11 @@ public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAwar
         return true;
     }
 
+    @Override
+    public boolean acceptsEntry(String name, Object entry) {
+        return true;
+    }
+
     public void preInit(String name, ENTRY entry) {}
 
     public void init(String name, ENTRY entry) {}

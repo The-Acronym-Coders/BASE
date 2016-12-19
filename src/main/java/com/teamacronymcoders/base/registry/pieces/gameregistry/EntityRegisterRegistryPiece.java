@@ -4,17 +4,24 @@ import com.teamacronymcoders.base.registry.entity.EntityEntry;
 import com.teamacronymcoders.base.registry.entity.SpawnEgg;
 import com.teamacronymcoders.base.registry.entity.SpawnInfo;
 import com.teamacronymcoders.base.registry.entity.UpdateInfo;
+import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
+@RegistryPiece
 public class EntityRegisterRegistryPiece extends RegistryPieceBase<EntityEntry> {
     public int nextAvailableID = 0;
 
     @Override
     public boolean acceptsRegistry(String name) {
         return "ENTITY".equalsIgnoreCase(name);
+    }
+
+    @Override
+    public boolean acceptsEntry(String name, Object entry) {
+        return entry instanceof EntityEntry;
     }
 
     @Override

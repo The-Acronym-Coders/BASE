@@ -1,21 +1,27 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.guisystem.GuiHandler;
 import com.teamacronymcoders.base.client.models.SafeModelLoader;
+import com.teamacronymcoders.base.guisystem.GuiHandler;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import com.teamacronymcoders.base.registry.*;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
+import com.teamacronymcoders.base.registry.entity.EntityEntry;
+import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
+import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
+import com.teamacronymcoders.base.registry.pieces.RegistrySide;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T>, IRegistryHolder {
@@ -47,9 +53,11 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getLibProxy().setMod(this);
         this.modelLoader = new SafeModelLoader(this);
 
+        List<IRegistryPiece> registryPieces = this.getRegistryPieces(event.getAsmData());
+
         this.addRegistry("BLOCK", new BlockRegistry(this));
         this.addRegistry("ITEM", new ItemRegistry(this));
-        this.addRegistry("ENTITY", new EntityRegistry(this));
+        this.addRegistry("ENTITY", new ModularRegistry<EntityEntry>("ENTITY", this, registryPieces));
         this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
 
         if (this.addOBJDomain()) {
@@ -68,6 +76,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
     }
+
 
     public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
 
@@ -173,5 +182,14 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         }
 
         return null;
+    }
+
+    private List<IRegistryPiece> getRegistryPieces(ASMDataTable asmData) {
+        List<IRegistryPiece> registryPieces;
+        registryPieces = ClassLoading.getInstances(asmData, RegistryPiece.class, IRegistryPiece.class, aClass -> {
+            RegistrySide side = aClass.getAnnotation(RegistryPiece.class).value();
+            return side == RegistrySide.BOTH || side == this.getLibProxy().getRegistrySide();
+        });
+        return registryPieces;
     }
 }

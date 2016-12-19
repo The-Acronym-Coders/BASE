@@ -9,6 +9,7 @@ import com.teamacronymcoders.base.guisystem.target.GuiTargetBase;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
+import com.teamacronymcoders.base.registry.pieces.RegistrySide;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -127,6 +128,10 @@ public class LibClientProxy extends LibCommonProxy {
                 return new ModelResourceLocation(stateMapper.getResourceLocation(state), stateMapper.getVariant(state));
             }
         });
+    }
+
+    public RegistrySide getRegistrySide() {
+        return RegistrySide.CLIENT;
     }
 
     @Override

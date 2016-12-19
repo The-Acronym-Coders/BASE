@@ -3,6 +3,8 @@ package com.teamacronymcoders.base.registry.pieces;
 public interface IRegistryPiece<ENTRY> {
     boolean acceptsRegistry(String name);
 
+    boolean acceptsEntry(String name, Object entry);
+
     void preInit(String name, ENTRY entry);
 
     void init(String name, ENTRY entry);
