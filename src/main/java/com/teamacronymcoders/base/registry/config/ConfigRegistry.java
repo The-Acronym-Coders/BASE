@@ -19,7 +19,7 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     private Map<String, Configuration> configurationFiles;
 
     public ConfigRegistry(IBaseMod mod, File suggestConfigFile, boolean useModFolder) {
-        super(mod);
+        super("CONFIG", mod);
         this.useModFolder = useModFolder;
         configurationFiles = new HashMap<>();
         if (suggestConfigFile.isDirectory()) {

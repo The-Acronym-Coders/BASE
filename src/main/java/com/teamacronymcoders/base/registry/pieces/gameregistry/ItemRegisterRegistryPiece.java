@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.registry.Registry;
 import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @RegistryPiece
@@ -20,6 +21,8 @@ public class ItemRegisterRegistryPiece extends RegistryPieceBase<Item> {
 
     @Override
     public void preInit(String name, Item entry) {
-        GameRegistry.register(entry);
+        ResourceLocation itemRegistryName = new ResourceLocation(this.getMod().getPrefix() + name);
+        entry.setCreativeTab(this.getMod().getCreativeTab());
+        GameRegistry.register(entry, itemRegistryName);
     }
 }

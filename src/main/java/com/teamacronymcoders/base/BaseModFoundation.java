@@ -7,7 +7,6 @@ import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import com.teamacronymcoders.base.registry.*;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
-import com.teamacronymcoders.base.registry.entity.EntityEntry;
 import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistrySide;
@@ -55,9 +54,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         List<IRegistryPiece> registryPieces = this.getRegistryPieces(event.getAsmData());
 
-        this.addRegistry("BLOCK", new BlockRegistry(this));
-        this.addRegistry("ITEM", new ItemRegistry(this));
-        this.addRegistry("ENTITY", new ModularRegistry<EntityEntry>("ENTITY", this, registryPieces));
+        this.addRegistry("BLOCK", new BlockRegistry(this, registryPieces));
+        this.addRegistry("ITEM", new ItemRegistry(this, registryPieces));
+        this.addRegistry("ENTITY", new EntityRegistry(this, registryPieces));
         this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
 
         if (this.addOBJDomain()) {

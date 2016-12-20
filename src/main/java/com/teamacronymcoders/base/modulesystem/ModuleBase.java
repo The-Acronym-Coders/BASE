@@ -4,11 +4,10 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registry.BlockRegistry;
+import com.teamacronymcoders.base.registry.EntityRegistry;
 import com.teamacronymcoders.base.registry.IRegistryHolder;
 import com.teamacronymcoders.base.registry.ItemRegistry;
-import com.teamacronymcoders.base.registry.ModularRegistry;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
-import com.teamacronymcoders.base.registry.entity.EntityEntry;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -67,7 +66,7 @@ public abstract class ModuleBase implements IModule {
 
     }
 
-    public void registerEntities(ConfigRegistry configRegistry, ModularRegistry<EntityEntry> entityRegistry) {
+    public void registerEntities(ConfigRegistry configRegistry, EntityRegistry entityRegistry) {
 
     }
 
@@ -138,8 +137,8 @@ public abstract class ModuleBase implements IModule {
         return this.registryHolder.getRegistry(BlockRegistry.class, "BLOCK");
     }
 
-    public ModularRegistry getEntityRegistry() {
-        return this.registryHolder.getRegistry(ModularRegistry.class, "ENTITY");
+    public EntityRegistry getEntityRegistry() {
+        return this.registryHolder.getRegistry(EntityRegistry.class, "ENTITY");
     }
 
     public ConfigRegistry getConfigRegistry() {
