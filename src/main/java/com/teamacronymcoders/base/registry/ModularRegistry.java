@@ -38,8 +38,12 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
                 .forEach(registryPiece -> registryPiece.postInit(entryName, entryValue)));
     }
 
-
-    public String getName() {
-        return this.name;
+    @Override
+    @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#addEntry()
+    public void register(String name, ENTRY entry) {
+        super.register(name, entry);
+        entries.forEach((entryName, entryValue) -> registryPieces.stream()
+                .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
+                .forEach(registryPiece -> registryPiece.addEntry(entryName, entryValue)));
     }
 }
