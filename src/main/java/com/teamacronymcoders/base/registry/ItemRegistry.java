@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry extends Registry<Item> {
     public ItemRegistry(IBaseMod mod) {
-        super(mod);
+        super("ITEM", mod);
     }
 
     @Override

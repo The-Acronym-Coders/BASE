@@ -7,13 +7,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
-    private String name;
     private List<IRegistryPiece> registryPieces;
 
     public ModularRegistry(String name, IBaseMod mod, List<IRegistryPiece> registryPieces) {
-        super(mod);
-        this.name = name;
-        this.registryPieces = registryPieces.stream().filter(registryPiece->registryPiece.acceptsRegistry(name)).collect(Collectors.toList());
+        super(name, mod);
+        this.registryPieces = registryPieces.stream().filter(registryPiece->registryPiece.acceptsRegistry(this)).collect(Collectors.toList());
     }
 
     @Override

@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry extends Registry<Block> {
     public BlockRegistry(IBaseMod mod) {
-        super(mod);
+        super("BLOCK", mod);
     }
 
     @Override
