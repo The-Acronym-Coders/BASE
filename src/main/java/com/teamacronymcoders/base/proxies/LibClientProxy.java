@@ -2,6 +2,9 @@ package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
+import com.teamacronymcoders.base.client.BlockStateMappers;
+import com.teamacronymcoders.base.client.Colors;
+import com.teamacronymcoders.base.client.Models;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.guisystem.IHasGui;
 import com.teamacronymcoders.base.guisystem.network.PacketOpenGui;
@@ -19,7 +22,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -31,8 +33,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class LibClientProxy extends LibCommonProxy {
@@ -48,21 +48,7 @@ public class LibClientProxy extends LibCommonProxy {
 
     @Override
     public void setAllItemModels(Item item, IHasModel model) {
-        List<ItemStack> allSubItems = new ArrayList<>();
-        model.getAllSubItems(allSubItems);
-        int locationsIndex = 0;
-        List<ModelResourceLocation> modelResourceLocations = model.getModelResourceLocations(new ArrayList<>());
-        if(modelResourceLocations.size() > 0) {
-            for (ItemStack itemStack: allSubItems) {
-                ModelLoader.setCustomModelResourceLocation(itemStack.getItem(), itemStack.getMetadata(), modelResourceLocations.get(locationsIndex));
-                locationsIndex++;
-                if (locationsIndex >= modelResourceLocations.size()) {
-                    locationsIndex = 0;
-                }
-            }
-        } else {
-            getMod().getLogger().devInfo(item.getRegistryName() + " implements IHasModel, but lists no models");
-        }
+        Models.registerModels(model);
     }
 
     @Override
@@ -107,27 +93,21 @@ public class LibClientProxy extends LibCommonProxy {
 
     @Override
     public void registerItemColor(Item item, IHasItemColor itemColor) {
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(itemColor::getColorFromItemstack, item);
+        Colors.registerItemColor(item, itemColor);
     }
 
     public void registerItemColor(Block block, IHasItemColor itemColor) {
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(itemColor::getColorFromItemstack, block);
+        Colors.registerItemColor(block, itemColor);
     }
 
     @Override
     public void registerBlockColor(IHasBlockColor blockColor) {
-        Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(blockColor::colorMultiplier);
+        Colors.registerBlockColor(blockColor);
     }
 
     @Override
     public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
-        ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
-            @Override
-            @Nonnull
-            protected ModelResourceLocation getModelResourceLocation(@Nonnull IBlockState state) {
-                return new ModelResourceLocation(stateMapper.getResourceLocation(state), stateMapper.getVariant(state));
-            }
-        });
+        BlockStateMappers.registerStateMapper(block, stateMapper);
     }
 
     public RegistrySide getRegistrySide() {
