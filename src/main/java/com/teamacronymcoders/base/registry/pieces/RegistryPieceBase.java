@@ -2,11 +2,13 @@ package com.teamacronymcoders.base.registry.pieces;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
+import com.teamacronymcoders.base.registry.Registry;
 
 public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAware {
     private IBaseMod mod;
 
-    public boolean acceptsRegistry(String name) {
+    @Override
+    public boolean acceptsRegistry(Registry registry) {
         return true;
     }
 
@@ -15,11 +17,17 @@ public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAwar
         return true;
     }
 
+    @Override
     public void preInit(String name, ENTRY entry) {}
 
+    @Override
     public void init(String name, ENTRY entry) {}
 
+    @Override
     public void postInit(String name, ENTRY entry) {}
+
+    @Override
+    public void addEntry(String name, ENTRY entry) {}
 
     @Override
     public IBaseMod getMod() {

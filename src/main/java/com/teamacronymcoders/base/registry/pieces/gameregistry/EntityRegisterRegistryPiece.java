@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.registry.pieces.gameregistry;
 
+import com.teamacronymcoders.base.registry.Registry;
 import com.teamacronymcoders.base.registry.entity.EntityEntry;
 import com.teamacronymcoders.base.registry.entity.SpawnEgg;
 import com.teamacronymcoders.base.registry.entity.SpawnInfo;
@@ -15,8 +16,8 @@ public class EntityRegisterRegistryPiece extends RegistryPieceBase<EntityEntry> 
     public int nextAvailableID = 0;
 
     @Override
-    public boolean acceptsRegistry(String name) {
-        return "ENTITY".equalsIgnoreCase(name);
+    public boolean acceptsRegistry(Registry registry) {
+        return "ENTITY".equalsIgnoreCase(registry.getName());
     }
 
     @Override

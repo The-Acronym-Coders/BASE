@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.registry.pieces.gameregistry;
 
+import com.teamacronymcoders.base.registry.Registry;
 import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import net.minecraft.item.Item;
@@ -8,8 +9,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 @RegistryPiece
 public class ItemRegisterRegistryPiece extends RegistryPieceBase<Item> {
     @Override
-    public boolean acceptsRegistry(String name) {
-        return "ITEM".equalsIgnoreCase(name);
+    public boolean acceptsRegistry(Registry registry) {
+        return "ITEM".equalsIgnoreCase(registry.getName());
     }
 
     @Override
