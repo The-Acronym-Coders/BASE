@@ -1,5 +1,6 @@
-package com.teamacronymcoders.base.modules.texturegenerator;
+package com.teamacronymcoders.base.util.files;
 
+import com.teamacronymcoders.base.util.Platform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.FileResourcePack;
 import net.minecraft.client.resources.IResourcePack;
@@ -12,61 +13,42 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
- * @author tterrag 1098
- *         <p>
- *         from <a href=
- *         "https://github.com/tterrag1098/ttCore/blob/master/src/main/java/tterrag/core/common/util/TTFileUtils.java"
- *         > this site </a> A class that can be used to inject resources from
- *         files/folders outside your mod resources. Useful for loading textures
- *         and other assets from the config dir or elsewhere.
- *         <p>
- *         To use, first construct an instance of this class, then add all your
- *         assets using {@link #addIcon(File)}, {@link #addLang(File)}, and
- *         {@link #addCustomFile(String, File)}.
- *         <p>
- *         Once all files have been added, {@link #assemble()} Will create a zip
- *         of all the files in the {@link File directory} passed into the
- *         constructor.
- *         <p>
- *         Finally, {@link #inject()} will insert this resource pack into the
- *         game.
- *         <p>
- *         Also, {@link #setHasPackPng(Class)} allows your resource pack to have
- *         a logo.
+ * Borrowed from EnderCore
+ * (https://github.com/SleepyTrousers/EnderCore/blob/1.10/src/main/java/com/enderio/core/common/util/ResourcePackAssembler.java)
+ *
+ * A class that can be used to inject resources from files/folders outside your
+ * mod resources. Useful for loading textures and other assets from the config
+ * dir or elsewhere.
+ * <p>
+ * To use, first construct an instance of this class, then add all your assets
+ * using {@link #addIcon(File)}, {@link #addLang(File)}, and
+ * {@link #addCustomFile(String, File)}.
+ * <p>
+ * Once all files have been added, {@link #assemble()} Will create a zip of all
+ * the files in the {@link File directory} passed into the constructor.
+ * <p>
+ * Finally, {@link #inject()} will insert this resource pack into the game.
+ * <p>
+ * Also, {@link #setHasPackPng(Class)} allows your resource pack to have a logo.
  */
 public class ResourcePackAssembler {
-    private class CustomFile {
-        private String ext;
-        private File file;
-
-        public CustomFile(String ext, File file) {
-            this.ext = ext;
-            this.file = file;
-        }
-
-    }
-
-    private List<File> icons = new ArrayList<File>();
-    private List<File> langs = new ArrayList<File>();
-    private List<CustomFile> customs = new ArrayList<CustomFile>();
-
-    private static List<IResourcePack> defaultResourcePacks;
-
     private static final String MC_META_BASE = "{\"pack\":{\"pack_format\":1,\"description\":\"%s\"}}";
-
+    private static List<IResourcePack> defaultResourcePacks;
+    private List<CustomFile> files = new ArrayList<CustomFile>();
     private File dir;
     private File zip;
     private String name;
     private String mcmeta;
     private String modid;
+    private String assetsPath;
     private boolean hasPackPng = false;
     private Class<?> jarClass;
-
     /**
-     * @param directory The directory to assemble the resource pack in. The name
-     *                  of the zip created will be the same as this folder, and it will be
+     * @param directory The directory to assemble the resource pack in. The name of the
+     *                  zip created will be the same as this folder, and it will be
      *                  created on the same level as the folder. This folder will be
      *                  <strong>WIPED</strong> on every call of {@link #assemble()} .
      * @param packName  The name of the resource pack.
@@ -76,8 +58,9 @@ public class ResourcePackAssembler {
         this.dir = directory;
         this.zip = new File(dir.getAbsolutePath() + ".zip");
         this.name = packName;
-        this.modid = modid.toLowerCase();
+        this.modid = modid.toLowerCase(Locale.US);
         this.mcmeta = String.format(MC_META_BASE, this.name);
+        this.assetsPath = "/assets/" + modid + "/";
     }
 
     /**
@@ -96,13 +79,14 @@ public class ResourcePackAssembler {
     }
 
     /**
-     * Adds an icon file. This file will be inserted into both the block and
-     * item texture folders.
+     * Adds an icon file. This file will be inserted into both the block and item
+     * texture folders.
      *
      * @param icon The icon file.
      */
     public void addIcon(File icon) {
-        icons.add(icon);
+        files.add(new CustomFile(assetsPath + "textures/items/", icon));
+        files.add(new CustomFile(assetsPath + "textures/blocks/", icon));
     }
 
     /**
@@ -111,7 +95,16 @@ public class ResourcePackAssembler {
      * @param lang A language file (e.g. en_US.lang)
      */
     public void addLang(File lang) {
-        langs.add(lang);
+        files.add(new CustomFile(assetsPath + "lang/", lang));
+    }
+
+    /**
+     * Adds a model json file. This file will be inserted into the models dir only.
+     *
+     */
+    public void addModel(File model, ModelType type) {
+        String path = assetsPath + type.getPath() + "/";
+        files.add(new CustomFile(path, model));
     }
 
     /**
@@ -122,7 +115,7 @@ public class ResourcePackAssembler {
      * @param file The file to add.
      */
     public void addCustomFile(String path, File file) {
-        customs.add(new CustomFile(path, file));
+        files.add(new CustomFile(path, file));
     }
 
     /**
@@ -143,7 +136,7 @@ public class ResourcePackAssembler {
      * @return The {@link ResourcePackAssembler} instance.
      */
     public ResourcePackAssembler assemble() {
-        dir.delete();
+        BaseFileUtils.safeDeleteDirectory(dir);
         dir.mkdirs();
 
         String pathToDir = dir.getAbsolutePath();
@@ -153,30 +146,17 @@ public class ResourcePackAssembler {
             writeNewFile(metaFile, mcmeta);
 
             if (hasPackPng) {
-                FileHelper.copyFromJar(jarClass, modid + "/" + "pack.png", new File(dir.getAbsolutePath() + "/pack.png"));
+                BaseFileUtils.copyFromJar(jarClass, modid + "/" + "pack.png", new File(dir.getAbsolutePath() + "/pack.png"));
             }
 
-            String itemsDir = pathToDir + "/assets/" + modid + "/textures/items";
-            String blocksDir = pathToDir + "/assets/" + modid + "/textures/blocks";
-            String langDir = pathToDir + "/assets/" + modid + "/lang";
-
-            for (File icon : icons) {
-                FileUtils.copyFile(icon, new File(itemsDir + "/" + icon.getName()));
-                FileUtils.copyFile(icon, new File(blocksDir + "/" + icon.getName()));
-            }
-
-            for (File lang : langs) {
-                FileUtils.copyFile(lang, new File(langDir + "/" + lang.getName()));
-            }
-
-            for (CustomFile custom : customs) {
+            for (CustomFile custom : files) {
                 File directory = new File(pathToDir + (custom.ext != null ? "/" + custom.ext : ""));
                 directory.mkdirs();
                 FileUtils.copyFile(custom.file, new File(directory.getAbsolutePath() + "/" + custom.file.getName()));
             }
 
-            FileHelper.zipFolderContents(dir, zip);
-            dir.delete();
+            BaseFileUtils.zipFolderContents(dir, zip);
+            BaseFileUtils.safeDeleteDirectory(dir);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -189,44 +169,62 @@ public class ResourcePackAssembler {
      * not be required, it will load automatically.
      * <p>
      * A cache of the pack zip will be kept in "resourcepack/[pack name].zip"
-     * where "resourcepack" is a folder at the same level as the directory
-     * passed into the constructor.
+     * where "resourcepack" is a folder at the same level as the directory passed
+     * into the constructor.
      */
     public void inject() {
         if (FMLCommonHandler.instance().getEffectiveSide().isClient()) {
             try {
                 if (defaultResourcePacks == null) {
-                    defaultResourcePacks = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "defaultResourcePacks",
-                            "field_110449_ao", "ap");
+                    defaultResourcePacks = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "defaultResourcePacks", "field_110449_ao", "ap");
                 }
 
                 File dest = new File(dir.getParent() + "/resourcepack/" + zip.getName());
-                dest.delete();
+                BaseFileUtils.safeDelete(dest);
                 FileUtils.copyFile(zip, dest);
-                zip.delete();
-                writeNewFile(new File(dest.getParent() + "/readme.txt"),
-                        "This is the default!" + "\n\n" + "NO TOUCHY!");
+                BaseFileUtils.safeDelete(zip);
                 defaultResourcePacks.add(new FileResourcePack(dest));
             } catch (Exception e) {
-                System.out.println("Failed to inject resource pack for mod {}" + modid);
+                Platform.attemptLogExceptionToCurrentMod(e);
             }
-        } else {
-            System.out.println("Skipping resource pack, we are on a dedicated server.");
         }
     }
 
-    private void writeNewFile(File file, String defaultText) {
-        try {
-            file.delete();
-            file.getParentFile().mkdirs();
-            file.createNewFile();
+    private void writeNewFile(File file, String defaultText) throws IOException {
+        BaseFileUtils.safeDelete(file);
+        file.delete();
+        file.getParentFile().mkdirs();
+        file.createNewFile();
 
-            FileWriter fw = new FileWriter(file);
-            fw.write(defaultText);
-            fw.flush();
-            fw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        FileWriter fw = new FileWriter(file);
+        fw.write(defaultText);
+        fw.flush();
+        fw.close();
+    }
+
+    public enum ModelType {
+        BLOCK("models/block"),
+        ITEM("models/item"),
+        BLOCKSTATE("blockstates");
+
+        private final String path;
+
+        private ModelType(String path) {
+            this.path = path;
+        }
+
+        String getPath() {
+            return path;
+        }
+    }
+
+    private class CustomFile {
+        private String ext;
+        private File file;
+
+        private CustomFile(String ext, File file) {
+            this.ext = ext;
+            this.file = file;
         }
     }
 }
