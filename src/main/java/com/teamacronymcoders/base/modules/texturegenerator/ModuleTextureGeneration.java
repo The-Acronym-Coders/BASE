@@ -26,6 +26,11 @@ public class ModuleTextureGeneration extends ModuleBase {
     }
 
     @Override
+    public boolean isConfigurable() {
+        return false;
+    }
+
+    @Override
     public void postInit(FMLPostInitializationEvent event) {
         this.getBlockRegistry().getEntries().forEach((name, block) -> {
             String key = name.replace(this.getMod().getPrefix(), "");
