@@ -153,6 +153,11 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     }
 
     @Override
+    public boolean requiresPreInitRegister() {
+        return false;
+    }
+
+    @Override
     public void register(String name, ConfigEntry entry) {
         addEntry(name, entry);
     }

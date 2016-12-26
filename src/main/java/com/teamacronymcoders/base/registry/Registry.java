@@ -84,7 +84,7 @@ public abstract class Registry<T> {
     }
 
     public void register(String name, T entry) {
-        if (getLoadingStage() != LoadingStage.PREINIT) {
+        if (requiresPreInitRegister() && getLoadingStage() != LoadingStage.PREINIT) {
             throw new UnsupportedOperationException("ALL REGISTERING MUST HAPPEN IN PREINIT");
         }
         if(!this.entries.containsKey(name)) {
@@ -92,6 +92,10 @@ public abstract class Registry<T> {
         } else {
             throw new UnsupportedOperationException("All Entries must be unique");
         }
+    }
+
+    public boolean requiresPreInitRegister() {
+        return true;
     }
 
     public LoadingStage getLoadingStage() {
