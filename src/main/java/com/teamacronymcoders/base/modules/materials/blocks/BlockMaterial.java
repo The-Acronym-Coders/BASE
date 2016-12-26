@@ -73,7 +73,6 @@ public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasItem
         return names;
     }
 
-
     @Override
     public int colorMultiplier(IBlockState state, @Nullable IBlockAccess world, @Nullable BlockPos pos, int tintIndex) {
         return materialType.getColour().getRGB();
