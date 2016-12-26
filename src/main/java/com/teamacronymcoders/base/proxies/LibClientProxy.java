@@ -110,6 +110,7 @@ public class LibClientProxy extends LibCommonProxy {
         BlockStateMappers.registerStateMapper(block, stateMapper);
     }
 
+    @Override
     public RegistrySide getRegistrySide() {
         return RegistrySide.CLIENT;
     }

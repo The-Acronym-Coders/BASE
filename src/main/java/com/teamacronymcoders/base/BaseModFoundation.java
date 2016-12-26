@@ -187,7 +187,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         List<IRegistryPiece> registryPieces;
         registryPieces = ClassLoading.getInstances(asmData, RegistryPiece.class, IRegistryPiece.class, aClass -> {
             RegistrySide side = aClass.getAnnotation(RegistryPiece.class).value();
-            return side == RegistrySide.BOTH || side == this.getLibProxy().getRegistrySide();
+            return this.getLibProxy().isRightSide(side);
         });
         return registryPieces;
     }

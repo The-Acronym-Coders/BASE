@@ -37,6 +37,7 @@ public class LibServerProxy extends LibCommonProxy {
         return getModuleProxy(module.getServerProxyPath());
     }
 
+    @Override
     public RegistrySide getRegistrySide() {
         return RegistrySide.SERVER;
     }

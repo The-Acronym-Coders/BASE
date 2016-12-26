@@ -105,8 +105,15 @@ public class ModuleHandler {
     private TreeMap<String, IModule> getModules(@Nonnull ASMDataTable asmDataTable) {
         TreeMap<String, IModule> moduleMap = new TreeMap<>();
         List<IModule> moduleList = ClassLoading.getInstances(asmDataTable, Module.class, IModule.class, aClass -> {
-            String modid = aClass.getAnnotation(Module.class).value().trim();
-            return modid.equalsIgnoreCase("") || modid.equalsIgnoreCase(handlerName);
+            Module moduleAnnotation = aClass.getAnnotation(Module.class);
+            boolean load = false;
+            if(moduleAnnotation != null) {
+                String modid = moduleAnnotation.value().trim();
+                load = modid.equalsIgnoreCase("") || modid.equalsIgnoreCase(handlerName);
+                load &= this.mod.getLibProxy().isRightSide(moduleAnnotation.side());
+            }
+
+            return load;
         });
         moduleList.sort(new ModuleComparator());
         return moduleMap;

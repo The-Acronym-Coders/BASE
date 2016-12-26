@@ -65,6 +65,11 @@ public abstract class LibCommonProxy {
         return RegistrySide.BOTH;
     }
 
+    public boolean isRightSide(RegistrySide side) {
+        //Check both and getRegistrySide since it can be overrode to not be both
+        return side == RegistrySide.BOTH || side == this.getRegistrySide();
+    }
+
     public IBaseMod getMod() {
         return this.mod;
     }
