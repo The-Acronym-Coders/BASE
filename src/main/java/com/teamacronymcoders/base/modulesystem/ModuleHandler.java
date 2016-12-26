@@ -14,7 +14,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -103,8 +102,8 @@ public class ModuleHandler {
     }
 
     private TreeMap<String, IModule> getModules(@Nonnull ASMDataTable asmDataTable) {
-        TreeMap<String, IModule> moduleMap = new TreeMap<>();
-        List<IModule> moduleList = ClassLoading.getInstances(asmDataTable, Module.class, IModule.class, aClass -> {
+        TreeMap<String, IModule> moduleMap = new TreeMap<>(new ModuleComparator(this));
+        ClassLoading.getInstances(asmDataTable, Module.class, IModule.class, aClass -> {
             Module moduleAnnotation = aClass.getAnnotation(Module.class);
             boolean load = false;
             if(moduleAnnotation != null) {
@@ -114,8 +113,13 @@ public class ModuleHandler {
             }
 
             return load;
+        }).forEach(module -> {
+            if(!moduleMap.containsKey(module.getName())) {
+                moduleMap.put(module.getName(), module);
+            } else {
+                throw new UnsupportedOperationException("Module Names must be Unique");
+            }
         });
-        moduleList.sort(new ModuleComparator());
         return moduleMap;
     }
 
