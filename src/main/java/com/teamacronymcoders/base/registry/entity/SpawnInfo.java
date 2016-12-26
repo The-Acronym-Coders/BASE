@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.entity;
+package com.teamacronymcoders.base.registry.entity;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.Biome;

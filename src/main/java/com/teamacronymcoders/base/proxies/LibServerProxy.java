@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.guisystem.network.PacketOpenGui;
 import com.teamacronymcoders.base.guisystem.target.GuiTargetBase;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
+import com.teamacronymcoders.base.registry.pieces.RegistrySide;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,5 +35,9 @@ public class LibServerProxy extends LibCommonProxy {
     @Override
     public IModuleProxy getModuleProxy(IModule module) {
         return getModuleProxy(module.getServerProxyPath());
+    }
+
+    public RegistrySide getRegistrySide() {
+        return RegistrySide.SERVER;
     }
 }

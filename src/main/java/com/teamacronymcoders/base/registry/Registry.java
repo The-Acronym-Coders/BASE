@@ -15,12 +15,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Registry<T> {
+    protected String name;
     protected IBaseMod mod;
     protected Registry<T> instance;
     protected Map<String, T> entries = new HashMap<>();
     private LoadingStage loadingStage = LoadingStage.PREINIT;
 
-    public Registry(IBaseMod mod) {
+    public Registry(String name, IBaseMod mod) {
+        this.name = name;
         this.mod = mod;
     }
 
@@ -106,5 +108,9 @@ public abstract class Registry<T> {
 
     public Map<String, T> getEntries() {
         return this.entries;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

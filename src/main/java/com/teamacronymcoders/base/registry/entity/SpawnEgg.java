@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.entity;
+package com.teamacronymcoders.base.registry.entity;
 
 public class SpawnEgg {
     private int primaryColor;
