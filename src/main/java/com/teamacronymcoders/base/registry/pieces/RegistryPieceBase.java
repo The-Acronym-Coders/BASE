@@ -7,6 +7,15 @@ import net.minecraft.util.ResourceLocation;
 
 public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAware {
     private IBaseMod mod;
+    private Class<ENTRY> entryClass;
+
+    public RegistryPieceBase() {
+        this(null);
+    }
+
+    public RegistryPieceBase(Class<ENTRY> entryClass) {
+        this.entryClass = entryClass;
+    }
 
     @Override
     public boolean acceptsRegistry(Registry registry) {
@@ -15,7 +24,7 @@ public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAwar
 
     @Override
     public boolean acceptsEntry(ResourceLocation name, Object entry) {
-        return true;
+        return entryClass == null || entry.getClass().isAssignableFrom(entryClass);
     }
 
     @Override
