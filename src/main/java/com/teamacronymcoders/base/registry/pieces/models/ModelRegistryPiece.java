@@ -9,15 +9,18 @@ import com.teamacronymcoders.base.registry.pieces.RegistrySide;
 import net.minecraft.util.ResourceLocation;
 
 @RegistryPiece(RegistrySide.CLIENT)
-public class ModelRegistryPiece extends RegistryPieceBase {
+public class ModelRegistryPiece extends RegistryPieceBase<IHasModel> {
+    public ModelRegistryPiece() {
+        super(IHasModel.class);
+    }
+
     @Override
     public boolean acceptsRegistry(Registry registry) {
         return "ITEM".equalsIgnoreCase(registry.getName()) || "BLOCK".equalsIgnoreCase(registry.getName());
     }
 
-    public void init(ResourceLocation name, Object entry) {
-        if(entry instanceof IHasModel) {
-            Models.registerModels((IHasModel) entry);
-        }
+    @Override
+    public void preInit(ResourceLocation name, IHasModel entry) {
+        Models.registerModels(entry);
     }
 }
