@@ -189,6 +189,11 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             RegistrySide side = aClass.getAnnotation(RegistryPiece.class).value();
             return this.getLibProxy().isRightSide(side);
         });
+        registryPieces.forEach(registryPiece -> {
+            if(registryPiece instanceof IModAware) {
+                ((IModAware) registryPiece).setMod(this);
+            }
+        });
         return registryPieces;
     }
 }
