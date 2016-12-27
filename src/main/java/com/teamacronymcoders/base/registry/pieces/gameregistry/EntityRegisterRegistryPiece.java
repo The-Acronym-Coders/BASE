@@ -9,6 +9,7 @@ import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 @RegistryPiece
@@ -21,16 +22,16 @@ public class EntityRegisterRegistryPiece extends RegistryPieceBase<EntityEntry> 
     }
 
     @Override
-    public boolean acceptsEntry(String name, Object entry) {
+    public boolean acceptsEntry(ResourceLocation name, Object entry) {
         return entry instanceof EntityEntry;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void preInit(String name, EntityEntry entry) {
+    public void preInit(ResourceLocation name, EntityEntry entry) {
         Class<? extends Entity> entityClass = entry.getEntityClass();
         UpdateInfo updateInfo = entry.getUpdateInfo();
-        EntityRegistry.registerModEntity(entityClass, name, nextAvailableID++, this.getMod(),
+        EntityRegistry.registerModEntity(entityClass, name.getResourcePath(), nextAvailableID++, this.getMod(),
                 updateInfo.getTrackingRange(), updateInfo.getUpdateFrequency(), updateInfo.isSendVelocityUpdates());
 
         SpawnEgg spawnEgg = entry.getSpawnEgg();

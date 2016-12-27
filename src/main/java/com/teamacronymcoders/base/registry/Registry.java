@@ -7,6 +7,7 @@ import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.registry.config.IConfigListener;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -18,7 +19,7 @@ public abstract class Registry<T> {
     protected String name;
     protected IBaseMod mod;
     protected Registry<T> instance;
-    protected Map<String, T> entries = new HashMap<>();
+    protected Map<ResourceLocation, T> entries = new HashMap<>();
     private LoadingStage loadingStage = LoadingStage.PREINIT;
 
     public Registry(String name, IBaseMod mod) {
@@ -49,7 +50,7 @@ public abstract class Registry<T> {
         setLoadingStage(LoadingStage.DONE);
     }
 
-    protected void initiateEntry(String name, T entry) {
+    protected void initiateEntry(ResourceLocation name, T entry) {
         if (entry instanceof IConfigListener) {
             mod.getRegistryHolder().getRegistry(ConfigRegistry.class, "CONFIG").addListener((IConfigListener) entry);
         }
@@ -58,7 +59,7 @@ public abstract class Registry<T> {
         }
     }
 
-    protected void initiateModel(String name, T entry) {
+    protected void initiateModel(ResourceLocation name, T entry) {
 
     }
 
@@ -83,7 +84,7 @@ public abstract class Registry<T> {
         return this.entries.get(name);
     }
 
-    public void register(String name, T entry) {
+    public void register(ResourceLocation name, T entry) {
         if (requiresPreInitRegister() && getLoadingStage() != LoadingStage.PREINIT) {
             throw new UnsupportedOperationException("ALL REGISTERING MUST HAPPEN IN PREINIT");
         }
@@ -110,7 +111,7 @@ public abstract class Registry<T> {
         }
     }
 
-    public Map<String, T> getEntries() {
+    public Map<ResourceLocation, T> getEntries() {
         return this.entries;
     }
 

@@ -5,9 +5,10 @@ import com.teamacronymcoders.base.registry.Registry;
 import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 
 @RegistryPiece
-public class ItemBlockRegisterRegistryPiece extends RegistryPieceBase {
+public class ItemBlockRegisterRegistryPiece extends RegistryPieceBase<IHasItemBlock> {
     private Registry<Item> itemRegistry;
 
     @Override
@@ -20,9 +21,12 @@ public class ItemBlockRegisterRegistryPiece extends RegistryPieceBase {
     }
 
     @Override
-    public void addEntry(String name, Object block) {
-        if(block instanceof IHasItemBlock) {
-            itemRegistry.register(name, ((IHasItemBlock) block).getItemBlock());
-        }
+    public boolean acceptsEntry(ResourceLocation name, Object entry) {
+        return entry instanceof IHasItemBlock;
+    }
+
+    @Override
+    public void addEntry(ResourceLocation name, IHasItemBlock block) {
+        itemRegistry.register(name, block.getItemBlock());
     }
 }

@@ -33,12 +33,12 @@ public class ModuleTextureGeneration extends ModuleBase {
     @Override
     public void postInit(FMLPostInitializationEvent event) {
         this.getBlockRegistry().getEntries().forEach((name, block) -> {
-            String key = name.replace(this.getMod().getPrefix(), "");
+            String key = name.getResourcePath();
             writeBlockModelFile(key, key);
             writeLangFile(key, key);
         });
         this.getItemRegistry().getEntries().forEach((name, item) -> {
-            String key = name.replace(this.getMod().getPrefix(), "");
+            String key = name.getResourcePath();
             writeItemModelFile(key, key);
             writeLangFile(key, key);
         });

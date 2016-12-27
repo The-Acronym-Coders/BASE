@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +41,7 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
 
     @Override
     @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#addEntry()
-    public void register(String name, ENTRY entry) {
+    public void register(ResourceLocation name, ENTRY entry) {
         super.register(name, entry);
         entries.forEach((entryName, entryValue) -> registryPieces.stream()
                 .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))

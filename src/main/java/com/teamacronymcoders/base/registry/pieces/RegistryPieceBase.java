@@ -3,6 +3,7 @@ package com.teamacronymcoders.base.registry.pieces;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.registry.Registry;
+import net.minecraft.util.ResourceLocation;
 
 public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAware {
     private IBaseMod mod;
@@ -13,21 +14,21 @@ public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAwar
     }
 
     @Override
-    public boolean acceptsEntry(String name, Object entry) {
+    public boolean acceptsEntry(ResourceLocation name, Object entry) {
         return true;
     }
 
     @Override
-    public void preInit(String name, ENTRY entry) {}
+    public void preInit(ResourceLocation name, ENTRY entry) {}
 
     @Override
-    public void init(String name, ENTRY entry) {}
+    public void init(ResourceLocation name, ENTRY entry) {}
 
     @Override
-    public void postInit(String name, ENTRY entry) {}
+    public void postInit(ResourceLocation name, ENTRY entry) {}
 
     @Override
-    public void addEntry(String name, ENTRY entry) {}
+    public void addEntry(ResourceLocation name, ENTRY entry) {}
 
     @Override
     public IBaseMod getMod() {

@@ -3,6 +3,7 @@ package com.teamacronymcoders.base.registry;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
 
@@ -12,10 +13,15 @@ public class ItemRegistry extends ModularRegistry<Item> {
     }
 
     public void register(Item item) {
-        String name = item.getUnlocalizedName();
-        if(name.startsWith("item.")) {
-            name = name.substring(5);
+        ResourceLocation name = item.getRegistryName();
+        if(name == null) {
+            String unlocalizedName = item.getUnlocalizedName();
+            if(unlocalizedName.startsWith("item.")) {
+                unlocalizedName = unlocalizedName.substring(5);
+            }
+            name = new ResourceLocation(this.mod.getName(), unlocalizedName);
         }
+
         this.register(name, item);
     }
 }

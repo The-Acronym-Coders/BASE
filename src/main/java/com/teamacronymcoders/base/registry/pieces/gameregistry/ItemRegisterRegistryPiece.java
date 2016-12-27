@@ -15,14 +15,13 @@ public class ItemRegisterRegistryPiece extends RegistryPieceBase<Item> {
     }
 
     @Override
-    public boolean acceptsEntry(String name, Object entry) {
+    public boolean acceptsEntry(ResourceLocation name, Object entry) {
         return entry instanceof Item;
     }
 
     @Override
-    public void preInit(String name, Item entry) {
-        ResourceLocation itemRegistryName = new ResourceLocation(this.getMod().getPrefix() + name);
+    public void preInit(ResourceLocation name, Item entry) {
         entry.setCreativeTab(this.getMod().getCreativeTab());
-        GameRegistry.register(entry, itemRegistryName);
+        GameRegistry.register(entry, name);
     }
 }

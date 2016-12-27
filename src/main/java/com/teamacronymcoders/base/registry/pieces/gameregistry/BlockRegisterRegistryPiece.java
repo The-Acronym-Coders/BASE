@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.registry.pieces.gameregistry;
 
-import com.teamacronymcoders.base.blocks.IHasItemBlock;
 import com.teamacronymcoders.base.blocks.IHasTileEntity;
 import com.teamacronymcoders.base.registry.Registry;
 import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
@@ -18,23 +17,18 @@ public class BlockRegisterRegistryPiece extends RegistryPieceBase<Block> {
     }
 
     @Override
-    public boolean acceptsEntry(String name, Object entry) {
+    public boolean acceptsEntry(ResourceLocation name, Object entry) {
         return entry instanceof Block;
     }
 
     @Override
-    public void preInit(String name, Block entry) {
-        ResourceLocation blockName = new ResourceLocation(this.getMod().getID(), name);
+    public void preInit(ResourceLocation name, Block entry) {
         entry.setCreativeTab(this.getMod().getCreativeTab());
-        GameRegistry.register(entry, blockName);
-
-        if (entry instanceof IHasItemBlock) {
-            GameRegistry.register(((IHasItemBlock) entry).getItemBlock(), blockName);
-        }
+        GameRegistry.register(entry, name);
 
         if (entry instanceof IHasTileEntity) {
             Class<? extends TileEntity> tileEntityClass = ((IHasTileEntity) entry).getTileEntityClass();
-            GameRegistry.registerTileEntity(tileEntityClass, this.getMod().getPrefix() + name);
+            GameRegistry.registerTileEntity(tileEntityClass, name.toString());
         }
     }
 }

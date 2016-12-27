@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.registry.config;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.registry.Registry;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
@@ -97,13 +98,13 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     }
 
     public void addEntry(String name, ConfigEntry entry, String configName) {
-        this.entries.put(name, entry);
+        this.entries.put(new ResourceLocation(this.mod.getName(), name), entry);
         entry.toProperty(configurationFiles.get(configName));
         configurationFiles.get(configName).save();
     }
 
     public void updateEntry(String name, String value) {
-        ConfigEntry configEntry = this.entries.get(name);
+        ConfigEntry configEntry = this.entries.get(new ResourceLocation(this.mod.getName(), name));
         if (configEntry != null) {
             configEntry.setValue(value);
             this.alertTheListeners(name, configEntry);
@@ -113,7 +114,7 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     }
 
     public ConfigEntry getEntry(String name) {
-        return this.entries.get(name);
+        return this.entries.get(new ResourceLocation(this.mod.getName(), name));
     }
 
     public boolean getBoolean(String name, boolean defaultValue) {
@@ -158,6 +159,10 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     }
 
     @Override
+    public void register(ResourceLocation name, ConfigEntry entry) {
+        addEntry(name.getResourcePath(), entry);
+    }
+
     public void register(String name, ConfigEntry entry) {
         addEntry(name, entry);
     }

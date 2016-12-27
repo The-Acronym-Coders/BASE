@@ -7,6 +7,7 @@ import com.teamacronymcoders.base.registry.Registry;
 import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import com.teamacronymcoders.base.registry.pieces.RegistrySide;
+import net.minecraft.util.ResourceLocation;
 
 @RegistryPiece(RegistrySide.CLIENT)
 public class ColorRegistryPiece extends RegistryPieceBase {
@@ -15,7 +16,7 @@ public class ColorRegistryPiece extends RegistryPieceBase {
         return "ITEM".equalsIgnoreCase(registry.getName()) || "BLOCK".equalsIgnoreCase(registry.getName());
     }
 
-    public void init(String name, Object entry) {
+    public void init(ResourceLocation name, Object entry) {
         if(entry instanceof IHasItemColor) {
             Colors.registerItemColor(entry, (IHasItemColor)entry);
         }
