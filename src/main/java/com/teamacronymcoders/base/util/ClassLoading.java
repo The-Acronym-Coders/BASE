@@ -44,7 +44,7 @@ public class ClassLoading {
         return null;
     }
 
-    public static Object createObjectInstance(Class clazz) {
+    public static <T> T createObjectInstance(Class<T> clazz) {
         try {
             return clazz.newInstance();
         } catch(InstantiationException | IllegalAccessException exception) {

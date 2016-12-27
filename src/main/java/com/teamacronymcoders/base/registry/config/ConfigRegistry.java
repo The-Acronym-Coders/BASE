@@ -26,13 +26,13 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
         if (suggestConfigFile.isDirectory()) {
             String configFileName = this.mod.getID();
             this.tacFolder = new File(suggestConfigFile, "ACRONYM");
-            boolean folderExists = tacFolder.exists();
+            boolean folderExists = getTacFolder().exists();
             if (!folderExists) {
-                folderExists = tacFolder.mkdir();
+                folderExists = getTacFolder().mkdir();
             }
 
             if(folderExists && useModFolder) {
-                this.modFolder = new File(this.tacFolder, this.mod.getID().toUpperCase());
+                this.modFolder = new File(this.getTacFolder(), this.mod.getID().toUpperCase());
                 if(!this.modFolder.exists()) {
                     folderExists = this.modFolder.mkdir();
                 }
@@ -57,7 +57,7 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     }
 
     public boolean addNewConfigFile(String fileName) {
-        File parentFile = useModFolder ? modFolder : tacFolder;
+        File parentFile = useModFolder ? modFolder : getTacFolder();
         return addNewConfigFile(parentFile, fileName);
     }
 
@@ -172,6 +172,10 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     }
 
     public File getConfigFolder() {
-        return this.useModFolder ? this.modFolder : this.tacFolder;
+        return this.useModFolder ? this.modFolder : this.getTacFolder();
+    }
+
+    public File getTacFolder() {
+        return tacFolder;
     }
 }

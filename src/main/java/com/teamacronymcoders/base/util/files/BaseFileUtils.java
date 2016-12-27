@@ -108,4 +108,31 @@ public class BaseFileUtils {
             Platform.attemptLogErrorToCurrentMod("Deleting directory " + file.getAbsolutePath() + " failed.");
         }
     }
+
+    public static void createFolder(File file) {
+        if(!file.exists() && !file.mkdir()) {
+            Platform.attemptLogErrorToCurrentMod("Couldn't create folder called: " + file.getName());
+        }
+    }
+
+    public static String readFileToString(File file) {
+        String string = null;
+        try {
+            string = FileUtils.readFileToString(file);
+        } catch (IOException e) {
+            Platform.attemptLogExceptionToCurrentMod(e);
+        }
+        return string;
+    }
+
+    public static void writeStringToFile(String string, File file) {
+        if(!file.exists()) {
+            try {
+                file.createNewFile();
+                FileUtils.writeStringToFile(file, string);
+            } catch (IOException e) {
+                Platform.attemptLogExceptionToCurrentMod(e);
+            }
+        }
+    }
 }
