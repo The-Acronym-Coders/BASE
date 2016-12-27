@@ -77,7 +77,6 @@ public class ModuleMaterials extends ModuleBase {
     public void init(FMLInitializationEvent event) {
         super.init(event);
         MaterialRecipes.init();
-        BaseMaterial.WOOD.getMaterialType().getTypes().add(MaterialType.EnumPartType.INGOT);
     }
 
     public static class MaterialConfigEntry extends ConfigEntry {
