@@ -43,8 +43,8 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
     @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#addEntry()
     public void register(ResourceLocation name, ENTRY entry) {
         super.register(name, entry);
-        entries.forEach((entryName, entryValue) -> registryPieces.stream()
-                .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
-                .forEach(registryPiece -> registryPiece.addEntry(entryName, entryValue)));
+        registryPieces.stream()
+                .filter(registryPiece -> registryPiece.acceptsEntry(name, entry))
+                .forEach(registryPiece -> registryPiece.addEntry(name, entry));
     }
 }
