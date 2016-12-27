@@ -28,6 +28,8 @@ public class ModuleMaterials extends ModuleBase {
     public static final ItemPart INGOT = new ItemPart(EnumPartType.INGOT);
 
     public static Map<String, MaterialType> activeBaseMaterials;
+    public static Map<MaterialType, BlockMaterial> oreBlocks;
+    public static Map<MaterialType, BlockMaterial> storageBlocks;
 
     @Override
     public String getName() {
@@ -46,6 +48,8 @@ public class ModuleMaterials extends ModuleBase {
                 activeBaseMaterials.put(materialType.getName(), materialType);
             }
         }
+        oreBlocks = new HashMap<>();
+        storageBlocks = new HashMap<>();
     }
 
     @Override
@@ -65,10 +69,12 @@ public class ModuleMaterials extends ModuleBase {
             if(materialType.isTypeSet(EnumPartType.ORE)) {
                 BlockMaterial blockMaterial = new BlockMaterial(materialType, EnumPartType.ORE, oreProperties);
                 blockRegistry.register(blockMaterial);
+                oreBlocks.put(materialType, blockMaterial);
             }
             if(materialType.isTypeSet(EnumPartType.BLOCK)) {
                 BlockMaterial blockMaterial = new BlockMaterial(materialType, EnumPartType.BLOCK, storageProperties);
                 blockRegistry.register(blockMaterial);
+                storageBlocks.put(materialType, blockMaterial);
             }
         });
     }
