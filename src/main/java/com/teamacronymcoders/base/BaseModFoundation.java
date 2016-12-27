@@ -10,6 +10,7 @@ import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistrySide;
+import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
@@ -58,6 +59,8 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.addRegistry("ITEM", new ItemRegistry(this, registryPieces));
         this.addRegistry("ENTITY", new EntityRegistry(this, registryPieces));
         this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
+
+        SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
 
         if (this.addOBJDomain()) {
             this.getLibProxy().addOBJDomain();
