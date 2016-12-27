@@ -107,7 +107,7 @@ public class LibClientProxy extends LibCommonProxy {
 
     @Override
     public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
-        BlockStateMappers.registerStateMapper(block, stateMapper);
+        BlockStateMappers.registerStateMapper(stateMapper);
     }
 
     @Override
