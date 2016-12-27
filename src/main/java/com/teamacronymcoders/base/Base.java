@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base;
 
+import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
-import com.teamacronymcoders.base.reference.TabBase;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -16,7 +16,7 @@ import static com.teamacronymcoders.base.reference.Reference.*;
 @Mod(modid = MODID, name = NAME, version = VERSION, acceptedMinecraftVersions = "[" + MINECRAFT_VERSION + "]", dependencies = "after:MineTweaker3;")
 public class Base extends BaseModFoundation<Base> {
     public static final LanguageHelper languageHelper = new LanguageHelper(MODID);
-    private static long totalTime = 0;
+    public static CreativeTabCarousel tabCarousel = new CreativeTabCarousel("base");
 
     @Instance(MODID)
     public static Base instance;
@@ -25,7 +25,7 @@ public class Base extends BaseModFoundation<Base> {
     public static ModCommonProxy proxy;
 
     public Base() {
-        super(MODID, NAME, VERSION, new TabBase());
+        super(MODID, NAME, VERSION, tabCarousel);
     }
 
     @EventHandler

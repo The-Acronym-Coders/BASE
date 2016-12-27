@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.modules.materials;
 
+import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.api.materials.MaterialType.EnumPartType;
@@ -16,6 +17,7 @@ import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,6 +85,7 @@ public class ModuleMaterials extends ModuleBase {
     public void init(FMLInitializationEvent event) {
         super.init(event);
         MaterialRecipes.init();
+        Base.tabCarousel.setIconStacks(GEAR.getAllSubItems(new ArrayList<>()));
     }
 
     public static class MaterialConfigEntry extends ConfigEntry {
