@@ -9,14 +9,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @RegistryPiece
 public class TileEntityRegisterRegistryPiece extends RegistryPieceBase<IHasTileEntity> {
-    @Override
-    public boolean acceptsRegistry(Registry registry) {
-        return "BLOCK".equalsIgnoreCase(registry.getName());
+    public TileEntityRegisterRegistryPiece() {
+        super(IHasTileEntity.class);
     }
 
     @Override
-    public boolean acceptsEntry(ResourceLocation name, Object entry) {
-        return entry instanceof IHasTileEntity;
+    public boolean acceptsRegistry(Registry registry) {
+        return "BLOCK".equalsIgnoreCase(registry.getName());
     }
 
     @Override

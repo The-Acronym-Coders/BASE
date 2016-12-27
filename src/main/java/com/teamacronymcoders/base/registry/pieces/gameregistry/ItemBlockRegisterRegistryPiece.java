@@ -12,15 +12,13 @@ import net.minecraft.util.ResourceLocation;
 public class ItemBlockRegisterRegistryPiece extends RegistryPieceBase<IHasItemBlock> {
     private ItemRegistry itemRegistry;
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public boolean acceptsRegistry(Registry registry) {
-        return "BLOCK".equalsIgnoreCase(registry.getName());
+    public ItemBlockRegisterRegistryPiece() {
+        super(IHasItemBlock.class);
     }
 
     @Override
-    public boolean acceptsEntry(ResourceLocation name, Object entry) {
-        return entry instanceof IHasItemBlock;
+    public boolean acceptsRegistry(Registry registry) {
+        return "BLOCK".equalsIgnoreCase(registry.getName());
     }
 
     @Override

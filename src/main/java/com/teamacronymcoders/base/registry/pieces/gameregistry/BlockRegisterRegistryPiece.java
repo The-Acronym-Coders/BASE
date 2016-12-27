@@ -9,14 +9,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @RegistryPiece
 public class BlockRegisterRegistryPiece extends RegistryPieceBase<Block> {
-    @Override
-    public boolean acceptsRegistry(Registry registry) {
-        return "BLOCK".equalsIgnoreCase(registry.getName());
+    public BlockRegisterRegistryPiece() {
+        super(Block.class);
     }
 
     @Override
-    public boolean acceptsEntry(ResourceLocation name, Object entry) {
-        return entry instanceof Block;
+    public boolean acceptsRegistry(Registry registry) {
+        return "BLOCK".equalsIgnoreCase(registry.getName());
     }
 
     @Override

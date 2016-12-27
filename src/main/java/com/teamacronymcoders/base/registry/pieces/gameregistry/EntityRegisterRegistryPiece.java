@@ -16,14 +16,13 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 public class EntityRegisterRegistryPiece extends RegistryPieceBase<EntityEntry> {
     public int nextAvailableID = 0;
 
-    @Override
-    public boolean acceptsRegistry(Registry registry) {
-        return "ENTITY".equalsIgnoreCase(registry.getName());
+    public EntityRegisterRegistryPiece() {
+        super(EntityEntry.class);
     }
 
     @Override
-    public boolean acceptsEntry(ResourceLocation name, Object entry) {
-        return entry instanceof EntityEntry;
+    public boolean acceptsRegistry(Registry registry) {
+        return "ENTITY".equalsIgnoreCase(registry.getName());
     }
 
     @Override

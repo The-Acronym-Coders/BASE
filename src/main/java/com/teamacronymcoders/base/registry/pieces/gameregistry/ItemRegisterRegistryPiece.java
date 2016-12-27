@@ -9,6 +9,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @RegistryPiece
 public class ItemRegisterRegistryPiece extends RegistryPieceBase<Item> {
+    public ItemRegisterRegistryPiece() {
+        super(Item.class);
+    }
+
     @Override
     public boolean acceptsRegistry(Registry registry) {
         return "ITEM".equalsIgnoreCase(registry.getName());
