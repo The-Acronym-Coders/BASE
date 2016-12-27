@@ -6,6 +6,6 @@ import net.minecraft.world.IBlockAccess;
 
 import javax.annotation.Nullable;
 
-public interface IHasBlockColor {
+public interface IHasBlockColor extends IAmBlock{
     int colorMultiplier(IBlockState state, @Nullable IBlockAccess world, @Nullable BlockPos pos, int tintIndex);
 }
