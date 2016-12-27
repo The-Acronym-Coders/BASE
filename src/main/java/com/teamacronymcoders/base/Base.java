@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.creativetabs.CreativeTabBase;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
+import com.teamacronymcoders.base.reference.TabBase;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -25,7 +25,7 @@ public class Base extends BaseModFoundation<Base> {
     public static ModCommonProxy proxy;
 
     public Base() {
-        super(MODID, NAME, VERSION, new CreativeTabBase("base"));
+        super(MODID, NAME, VERSION, new TabBase());
     }
 
     @EventHandler
