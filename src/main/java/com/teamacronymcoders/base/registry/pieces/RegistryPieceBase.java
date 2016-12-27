@@ -24,7 +24,7 @@ public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAwar
 
     @Override
     public boolean acceptsEntry(ResourceLocation name, Object entry) {
-        return entryClass == null || entry.getClass().isAssignableFrom(entryClass);
+        return entryClass == null || entryClass.isInstance(entry);
     }
 
     @Override
