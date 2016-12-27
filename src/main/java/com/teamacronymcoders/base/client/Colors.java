@@ -18,6 +18,6 @@ public class Colors {
     }
 
     public static void registerBlockColor(IHasBlockColor blockColor) {
-        Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(blockColor::colorMultiplier);
+        Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(blockColor::colorMultiplier, blockColor.getBlock());
     }
 }
