@@ -1,4 +1,4 @@
 package com.teamacronymcoders.base.items;
 
-public interface IIsHidden {
+public interface IIsHidden extends IHasSubItems {
 }

@@ -13,7 +13,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import static com.teamacronymcoders.base.reference.Reference.*;
 
-@Mod(modid = MODID, name = NAME, version = VERSION, acceptedMinecraftVersions = "[" + MINECRAFT_VERSION + "]", dependencies = "after:MineTweaker3;")
+@Mod(modid = MODID, name = NAME, version = VERSION, acceptedMinecraftVersions = "[" + MINECRAFT_VERSION + "]",
+        dependencies = DEPENDENCIES)
 public class Base extends BaseModFoundation<Base> {
     public static final LanguageHelper languageHelper = new LanguageHelper(MODID);
     public static CreativeTabCarousel tabCarousel = new CreativeTabCarousel("base");
