@@ -15,6 +15,8 @@ import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.StringUtils;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -189,8 +191,13 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     private List<IRegistryPiece> getRegistryPieces(ASMDataTable asmData) {
         List<IRegistryPiece> registryPieces;
         registryPieces = ClassLoading.getInstances(asmData, RegistryPiece.class, IRegistryPiece.class, aClass -> {
-            RegistrySide side = aClass.getAnnotation(RegistryPiece.class).value();
-            return this.getLibProxy().isRightSide(side);
+            RegistryPiece registryPiece = aClass.getAnnotation(RegistryPiece.class);
+            RegistrySide side = registryPiece.value();
+            boolean load = this.getLibProxy().isRightSide(side);
+            if(load && !StringUtils.isNullOrEmpty(registryPiece.modid())) {
+                load = Loader.isModLoaded(registryPiece.modid());
+            }
+            return load;
         });
         registryPieces.forEach(registryPiece -> {
             if(registryPiece instanceof IModAware) {
