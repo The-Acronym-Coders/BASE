@@ -31,13 +31,15 @@ public interface IModule {
     @Nullable
 	IModuleProxy getModuleProxy();
 
-    void setModuleProxy(@Nonnull IModuleProxy moduleProxy);
+    void setModuleProxy(IModuleProxy moduleProxy);
 
     boolean getIsActive();
 
     void setIsActive(Boolean isActive);
 
     boolean getActiveDefault();
+
+    boolean isConfigurable();
 
     IBaseMod getMod();
 

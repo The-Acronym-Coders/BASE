@@ -1,21 +1,27 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.client.gui.GuiHandler;
 import com.teamacronymcoders.base.client.models.SafeModelLoader;
+import com.teamacronymcoders.base.guisystem.GuiHandler;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import com.teamacronymcoders.base.registry.*;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
+import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
+import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
+import com.teamacronymcoders.base.registry.pieces.RegistrySide;
+import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T>, IRegistryHolder {
@@ -41,32 +47,44 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     }
 
     public void preInit(FMLPreInitializationEvent event) {
+        BaseMods.addBaseMod(this);
         this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
-                "com.teamacronymcoders.base.proxies.LibCommonProxy");
+                "com.teamacronymcoders.base.proxies.LibServerProxy");
         this.getLibProxy().setMod(this);
         this.modelLoader = new SafeModelLoader(this);
 
-        this.addRegistry("BLOCK", new BlockRegistry(this));
-        this.addRegistry("ITEM", new ItemRegistry(this));
-        this.addRegistry("ENTITY", new EntityRegistry(this));
+        List<IRegistryPiece> registryPieces = this.getRegistryPieces(event.getAsmData());
+
+        this.addRegistry("BLOCK", new BlockRegistry(this, registryPieces));
+        this.addRegistry("ITEM", new ItemRegistry(this, registryPieces));
+        this.addRegistry("ENTITY", new EntityRegistry(this, registryPieces));
         this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
+
+        SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
 
         if (this.addOBJDomain()) {
             this.getLibProxy().addOBJDomain();
         }
 
-        this.guiHandler = new GuiHandler(this);
+        this.guiHandler = new GuiHandler(this, event.getAsmData());
+
+        this.beforeModuleHandlerInit(event);
 
         this.moduleHandler = new ModuleHandler(this, event.getAsmData());
         this.getModuleHandler().setupModules();
         this.getModuleHandler().preInit(event);
 
-        this.modPreInit(event);
+        this.afterModuleHandlerInit(event);
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
     }
 
-    public void modPreInit(FMLPreInitializationEvent event) {
+
+    public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
+
+    }
+
+    public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
 
     }
 
@@ -166,5 +184,19 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         }
 
         return null;
+    }
+
+    private List<IRegistryPiece> getRegistryPieces(ASMDataTable asmData) {
+        List<IRegistryPiece> registryPieces;
+        registryPieces = ClassLoading.getInstances(asmData, RegistryPiece.class, IRegistryPiece.class, aClass -> {
+            RegistrySide side = aClass.getAnnotation(RegistryPiece.class).value();
+            return this.getLibProxy().isRightSide(side);
+        });
+        registryPieces.forEach(registryPiece -> {
+            if(registryPiece instanceof IModAware) {
+                ((IModAware) registryPiece).setMod(this);
+            }
+        });
+        return registryPieces;
     }
 }

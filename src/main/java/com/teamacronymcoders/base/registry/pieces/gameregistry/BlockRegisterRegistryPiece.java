@@ -1,0 +1,26 @@
+package com.teamacronymcoders.base.registry.pieces.gameregistry;
+
+import com.teamacronymcoders.base.registry.Registry;
+import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
+import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
+import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+
+@RegistryPiece
+public class BlockRegisterRegistryPiece extends RegistryPieceBase<Block> {
+    public BlockRegisterRegistryPiece() {
+        super(Block.class);
+    }
+
+    @Override
+    public boolean acceptsRegistry(Registry registry) {
+        return "BLOCK".equalsIgnoreCase(registry.getName());
+    }
+
+    @Override
+    public void preInit(ResourceLocation name, Block entry) {
+        entry.setCreativeTab(this.getMod().getCreativeTab());
+        GameRegistry.register(entry, name);
+    }
+}
