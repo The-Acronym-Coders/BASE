@@ -2,11 +2,13 @@ package com.teamacronymcoders.base.registry.pieces.gameregistry;
 
 import com.teamacronymcoders.base.items.IIsHidden;
 import com.teamacronymcoders.base.registry.Registry;
+import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
+@RegistryPiece
 public class CreativeTabRegistryPiece extends RegistryPieceBase {
     @Override
     public boolean acceptsRegistry(Registry registry) {
