@@ -20,7 +20,6 @@ public class BlockRegisterRegistryPiece extends RegistryPieceBase<Block> {
 
     @Override
     public void preInit(ResourceLocation name, Block entry) {
-        entry.setCreativeTab(this.getMod().getCreativeTab());
         GameRegistry.register(entry, name);
     }
 }

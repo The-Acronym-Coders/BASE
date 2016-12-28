@@ -25,7 +25,6 @@ public class ItemRegisterRegistryPiece extends RegistryPieceBase<Item> {
 
     @Override
     public void preInit(ResourceLocation name, Item entry) {
-        entry.setCreativeTab(this.getMod().getCreativeTab());
         GameRegistry.register(entry, name);
     }
 }
