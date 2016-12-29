@@ -19,7 +19,7 @@ public class ItemRegistry extends ModularRegistry<Item> {
             if(unlocalizedName.startsWith("item.")) {
                 unlocalizedName = unlocalizedName.substring(5);
             }
-            name = new ResourceLocation(this.mod.getName(), unlocalizedName);
+            name = new ResourceLocation(this.mod.getID(), unlocalizedName);
         }
 
         this.register(name, item);

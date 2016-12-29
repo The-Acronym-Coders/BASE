@@ -19,7 +19,7 @@ public class BlockRegistry extends ModularRegistry<Block> {
             if(unlocalizedName.startsWith("tile.")) {
                 unlocalizedName = unlocalizedName.substring(5);
             }
-            name = new ResourceLocation(this.mod.getName(), unlocalizedName);
+            name = new ResourceLocation(this.mod.getID(), unlocalizedName);
         }
 
         this.register(name, block);
