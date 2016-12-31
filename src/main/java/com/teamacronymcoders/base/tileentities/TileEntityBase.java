@@ -50,7 +50,7 @@ public abstract class TileEntityBase extends TileEntity {
     }
 
     @Override
-    public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
         this.readFromUpdatePacket(packet.getNbtCompound());
         super.onDataPacket(net, packet);
     }
