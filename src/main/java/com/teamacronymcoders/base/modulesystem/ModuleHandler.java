@@ -13,9 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nonnull;
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -50,9 +48,13 @@ public class ModuleHandler {
 
     public void setupModules() {
         for (IModule module : getModules().values()) {
-            this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(module));
-            module.setIsActive(this.getConfig().getBoolean(module.getName(), module.getActiveDefault()));
+            if(module.isConfigurable()) {
+                this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(module));
+                module.setIsActive(this.getConfig().getBoolean(module.getName(), module.getActiveDefault()));
+            }
+
             module.setMod(this.mod);
+            module.setModuleHandler(this);
         }
 
         this.modules.values().stream().filter(IModule::getIsActive).forEach(this::checkDependencies);
@@ -100,16 +102,24 @@ public class ModuleHandler {
     }
 
     private TreeMap<String, IModule> getModules(@Nonnull ASMDataTable asmDataTable) {
-        TreeMap<String, IModule> moduleMap = new TreeMap<>();
-        List<IModule> moduleList = ClassLoading.getInstances(asmDataTable, Module.class, IModule.class);
-        moduleList.sort(new ModuleComparator());
-        for (IModule module : moduleList) {
-            for (Annotation annotation : module.getClass().getDeclaredAnnotations()) {
-                if (annotation instanceof Module && ((Module) annotation).value().equals(this.handlerName)) {
-                    moduleMap.put(module.getName(), module);
-                }
+        TreeMap<String, IModule> moduleMap = new TreeMap<>(new ModuleComparator(this));
+        ClassLoading.getInstances(asmDataTable, Module.class, IModule.class, aClass -> {
+            Module moduleAnnotation = aClass.getAnnotation(Module.class);
+            boolean load = false;
+            if(moduleAnnotation != null) {
+                String modid = moduleAnnotation.value().trim();
+                load = modid.equalsIgnoreCase("") || modid.equalsIgnoreCase(handlerName);
+                load &= this.mod.getLibProxy().isRightSide(moduleAnnotation.side());
             }
-        }
+
+            return load;
+        }).forEach(module -> {
+            if(!moduleMap.containsKey(module.getName())) {
+                moduleMap.put(module.getName(), module);
+            } else {
+                throw new UnsupportedOperationException("Module Names must be Unique");
+            }
+        });
         return moduleMap;
     }
 

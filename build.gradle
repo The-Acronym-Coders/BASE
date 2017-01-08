@@ -26,7 +26,7 @@ repositories {
 }
 
 
-version = "${minecraft_version}-" + getVersion();
+version = "${minecraft_version}-" + getVersion()
 
 group = "com.teamacronymcoders.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "base"
@@ -74,18 +74,10 @@ artifacts {
     archives srcJar
 }
 
-configurations {
-    deployerJars
-}
-
-dependencies {
-    deployerJars 'org.apache.maven.wagon:wagon-ftp:2.2'
-}
-
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "file:///var/www/html/maven")
+            repository(url: "file://" + (System.getenv("local_maven") != null ? System.getenv("local_maven") : System.getenv("bamboo_local_maven")))
         }
     }
 }
@@ -112,22 +104,22 @@ String getVersion() {
     String version = "${base_version}"
     String branch = System.getenv("BRANCH") != null ? System.getenv("BRANCH") : ""
 
-    if(!branch.equals("")) {
+    if(branch != "") {
         version += "-" + branch
 
         String buildNumber = getBuildNumber()
-        if(!buildNumber.equals("")) {
-            version += "." + buildNumber;
+        if(buildNumber != "") {
+            version += "." + buildNumber
         }
     }
 
-    return version;
+    return version
 }
 
 String getBuildNumber() {
     String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
-    if(buildNumber.equals("")) {
+    if(buildNumber == "") {
         buildNumber = System.getenv("bamboo_buildNumber") != null ? "." + System.getenv("bamboo_buildNumber") : ""
     }
-    return buildNumber;
+    return buildNumber
 }

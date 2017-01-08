@@ -31,6 +31,4 @@ public class ItemWrench extends Item {
 
 		return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}
-
-
 }

@@ -8,10 +8,20 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class ModuleComparator implements Comparator<IModule> {
+public class ModuleComparator implements Comparator<String> {
+    private ModuleHandler moduleHandler;
+
+    //Because TreeMaps sort by key, not value...
+    public ModuleComparator(ModuleHandler moduleHandler) {
+        this.moduleHandler = moduleHandler;
+    }
+
     @Override
-    public int compare(IModule module1, IModule module2) {
+    public int compare(String moduleName1, String moduleName2) {
         int compareResult = 0;
+        IModule module1 = moduleHandler.getModule(moduleName1);
+        IModule module2 = moduleHandler.getModule(moduleName2);
+
         List<IDependency> module1Deps = new ArrayList<>();
         List<IDependency> module2Deps = new ArrayList<>();
 

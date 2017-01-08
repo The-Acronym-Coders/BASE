@@ -1,49 +1,28 @@
 package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.IModAware;
-import com.teamacronymcoders.base.items.IHasRecipe;
-import com.teamacronymcoders.base.registry.config.ConfigRegistry;
-import com.teamacronymcoders.base.registry.config.IConfigListener;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.util.ResourceLocation;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Registry<T> {
+    protected String name;
     protected IBaseMod mod;
     protected Registry<T> instance;
-    protected HashMap<String, T> entries = new HashMap<>();
+    protected Map<ResourceLocation, T> entries = new HashMap<>();
     private LoadingStage loadingStage = LoadingStage.PREINIT;
 
-    public Registry(IBaseMod mod) {
+    public Registry(String name, IBaseMod mod) {
+        this.name = name;
         this.mod = mod;
     }
 
     public void preInit() {
-        this.entries.forEach((name, entry) -> {
-            initiateEntry(name, entry);
-            initiateModel(name, entry);
-        });
-
         setLoadingStage(LoadingStage.INIT);
     }
 
-    protected void initiateEntry(String name, T entry) {
-        if (entry instanceof IConfigListener) {
-            mod.getRegistryHolder().getRegistry(ConfigRegistry.class, "CONFIG").addListener((IConfigListener) entry);
-        }
-        if(entry instanceof IModAware) {
-            ((IModAware) entry).setMod(mod);
-        }
-    }
-
-    protected void initiateModel(String name, T entry) {
-    }
-
     public void init() {
-        this.entries.forEach((name, entry) -> initiateRecipes(entry));
-
         setLoadingStage(LoadingStage.POSTINIT);
     }
 
@@ -51,21 +30,23 @@ public abstract class Registry<T> {
         setLoadingStage(LoadingStage.DONE);
     }
 
-    public void initiateRecipes(T entry) {
-        if (entry instanceof IHasRecipe) {
-            ((IHasRecipe) entry).getRecipes(new ArrayList<>()).forEach(GameRegistry::addRecipe);
-        }
-    }
-
     public T get(String name) {
         return this.entries.get(name);
     }
 
-    public void register(String name, T entry) {
-        if(getLoadingStage() != LoadingStage.PREINIT) {
+    public void register(ResourceLocation name, T entry) {
+        if (requiresPreInitRegister() && getLoadingStage() != LoadingStage.PREINIT) {
             throw new UnsupportedOperationException("ALL REGISTERING MUST HAPPEN IN PREINIT");
         }
-        this.entries.put(name, entry);
+        if(!this.entries.containsKey(name)) {
+            this.entries.put(name, entry);
+        } else {
+            throw new UnsupportedOperationException("All Entries must be unique");
+        }
+    }
+
+    public boolean requiresPreInitRegister() {
+        return true;
     }
 
     public LoadingStage getLoadingStage() {
@@ -78,5 +59,13 @@ public abstract class Registry<T> {
         } else {
             this.loadingStage = stage;
         }
+    }
+
+    public Map<ResourceLocation, T> getEntries() {
+        return this.entries;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.blocks;
 
 import com.teamacronymcoders.base.client.models.IHasModel;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
@@ -21,5 +22,11 @@ public class BlockFluidBase extends BlockFluidClassic implements IHasModel {
         }
         modelNames.add(name);
         return modelNames;
+    }
+
+    @Override
+    public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
+        itemStacks.add(new ItemStack(this, 1));
+        return itemStacks;
     }
 }

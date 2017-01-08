@@ -1,64 +1,27 @@
 package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.blocks.IHasItemBlock;
-import com.teamacronymcoders.base.blocks.IHasTileEntity;
-import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockRegistry extends Registry<Block> {
-    public BlockRegistry(IBaseMod mod) {
-        super(mod);
-    }
+import java.util.List;
 
-    @Override
-    public void initiateEntry(String name, Block block) {
-        ResourceLocation blockName = new ResourceLocation(mod.getID(), name);
-        block.setCreativeTab(mod.getCreativeTab());
-        GameRegistry.register(block, blockName);
-
-        if (block instanceof IHasItemBlock) {
-            GameRegistry.register(((IHasItemBlock) block).getItemBlock(), blockName);
-        }
-
-        if (block instanceof IHasTileEntity) {
-            Class<? extends TileEntity> tileEntityClass = ((IHasTileEntity) block).getTileEntityClass();
-            GameRegistry.registerTileEntity(tileEntityClass, mod.getPrefix() + name);
-        }
-        super.initiateEntry(name, block);
-    }
-
-    @Override
-    public void initiateModel(String name, Block entry) {
-        Item item = Item.getItemFromBlock(entry);
-
-        IHasModel hasModel = null;
-        if (item instanceof IHasModel) {
-            hasModel = (IHasModel) item;
-        } else if(entry instanceof IHasModel){
-            hasModel = (IHasModel)entry;
-        }
-
-        if(item != null) {
-            if(hasModel != null) {
-                mod.getModelLoader().setAllItemModels(item, hasModel);
-            } else {
-                mod.getModelLoader().setItemModel(item);
-            }
-        }
-
-        super.initiateModel(name, entry);
+public class BlockRegistry extends ModularRegistry<Block> {
+    public BlockRegistry(IBaseMod mod, List<IRegistryPiece> registryPieces) {
+        super("BLOCK", mod, registryPieces);
     }
 
     public void register(Block block) {
-        String name = block.getUnlocalizedName();
-        if (name.startsWith("tile.")) {
-            name = name.substring(5);
+        ResourceLocation name = block.getRegistryName();
+        if(name == null) {
+            String unlocalizedName = block.getUnlocalizedName();
+            if(unlocalizedName.startsWith("tile.")) {
+                unlocalizedName = unlocalizedName.substring(5);
+            }
+            name = new ResourceLocation(this.mod.getID(), unlocalizedName);
         }
-        register(name, block);
+
+        this.register(name, block);
     }
 }

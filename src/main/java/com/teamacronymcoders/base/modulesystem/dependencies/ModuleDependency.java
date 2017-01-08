@@ -16,7 +16,7 @@ public class ModuleDependency implements IDependency {
 
     @Override
     public String notMetMessage() {
-        return "Module with name: " + getModuleName() + " is not active";
+        return "Module with name: " + this.getModuleName() + " is not active";
     }
 
     public String getModuleName() {

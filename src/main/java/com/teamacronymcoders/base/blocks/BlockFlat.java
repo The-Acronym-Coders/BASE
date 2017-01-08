@@ -25,6 +25,7 @@ public abstract class BlockFlat extends BlockSubBase {
         return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
         this.checkForDrop(worldIn, pos, state);

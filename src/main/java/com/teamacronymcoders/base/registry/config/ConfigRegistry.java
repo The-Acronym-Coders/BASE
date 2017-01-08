@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.registry.config;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.registry.Registry;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
@@ -19,19 +20,19 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     private Map<String, Configuration> configurationFiles;
 
     public ConfigRegistry(IBaseMod mod, File suggestConfigFile, boolean useModFolder) {
-        super(mod);
+        super("CONFIG", mod);
         this.useModFolder = useModFolder;
         configurationFiles = new HashMap<>();
         if (suggestConfigFile.isDirectory()) {
             String configFileName = this.mod.getID();
             this.tacFolder = new File(suggestConfigFile, "ACRONYM");
-            boolean folderExists = tacFolder.exists();
+            boolean folderExists = getTacFolder().exists();
             if (!folderExists) {
-                folderExists = tacFolder.mkdir();
+                folderExists = getTacFolder().mkdir();
             }
 
             if(folderExists && useModFolder) {
-                this.modFolder = new File(this.tacFolder, this.mod.getID().toUpperCase());
+                this.modFolder = new File(this.getTacFolder(), this.mod.getID().toUpperCase());
                 if(!this.modFolder.exists()) {
                     folderExists = this.modFolder.mkdir();
                 }
@@ -56,7 +57,7 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     }
 
     public boolean addNewConfigFile(String fileName) {
-        File parentFile = useModFolder ? modFolder : tacFolder;
+        File parentFile = useModFolder ? modFolder : getTacFolder();
         return addNewConfigFile(parentFile, fileName);
     }
 
@@ -97,13 +98,13 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     }
 
     public void addEntry(String name, ConfigEntry entry, String configName) {
-        this.entries.put(name, entry);
+        this.entries.put(new ResourceLocation(this.mod.getName(), name), entry);
         entry.toProperty(configurationFiles.get(configName));
         configurationFiles.get(configName).save();
     }
 
     public void updateEntry(String name, String value) {
-        ConfigEntry configEntry = this.entries.get(name);
+        ConfigEntry configEntry = this.entries.get(new ResourceLocation(this.mod.getName(), name));
         if (configEntry != null) {
             configEntry.setValue(value);
             this.alertTheListeners(name, configEntry);
@@ -113,7 +114,7 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     }
 
     public ConfigEntry getEntry(String name) {
-        return this.entries.get(name);
+        return this.entries.get(new ResourceLocation(this.mod.getName(), name));
     }
 
     public boolean getBoolean(String name, boolean defaultValue) {
@@ -152,11 +153,29 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
         return returnValue;
     }
 
+    @Override
+    public boolean requiresPreInitRegister() {
+        return false;
+    }
+
+    @Override
+    public void register(ResourceLocation name, ConfigEntry entry) {
+        addEntry(name.getResourcePath(), entry);
+    }
+
+    public void register(String name, ConfigEntry entry) {
+        addEntry(name, entry);
+    }
+
     public void addListener(IConfigListener listener) {
         this.listeners.add(listener);
     }
 
     public File getConfigFolder() {
-        return this.useModFolder ? this.modFolder : this.tacFolder;
+        return this.useModFolder ? this.modFolder : this.getTacFolder();
+    }
+
+    public File getTacFolder() {
+        return tacFolder;
     }
 }

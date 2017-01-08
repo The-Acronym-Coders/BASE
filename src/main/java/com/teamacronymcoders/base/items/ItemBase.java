@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -54,5 +55,11 @@ public class ItemBase extends Item implements IHasModel, IModAware {
     @Override
     public void setMod(IBaseMod mod) {
         this.mod = mod;
+    }
+
+    @Override
+    public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
+        itemStacks.add(new ItemStack(this, 1));
+        return itemStacks;
     }
 }

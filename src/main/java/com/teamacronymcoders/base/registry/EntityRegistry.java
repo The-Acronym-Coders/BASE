@@ -1,53 +1,21 @@
 package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.entity.SpawnEgg;
-import com.teamacronymcoders.base.entity.SpawnInfo;
+import com.teamacronymcoders.base.registry.entity.EntityEntry;
+import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.ResourceLocation;
 
-import java.util.HashMap;
+import java.util.List;
 
-public class EntityRegistry extends Registry<Class<? extends Entity>> {
-    private HashMap<String, SpawnEgg> spawnEggs = new HashMap<>();
-    private HashMap<String, SpawnInfo> spawnInfos = new HashMap<>();
-    private int nextAvailableID = 0;
-
-    public EntityRegistry(IBaseMod mod) {
-        super(mod);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void initiateEntry(String name, Class<? extends Entity> entityClass) {
-        net.minecraftforge.fml.common.registry.EntityRegistry
-                .registerModEntity(entityClass, name, ++nextAvailableID, mod, 64, 1, true);
-        if (spawnEggs.containsKey(name)) {
-            SpawnEgg spawnEgg = spawnEggs.get(name);
-            net.minecraftforge.fml.common.registry.EntityRegistry
-                    .registerEgg(entityClass, spawnEgg.getPrimaryColor(), spawnEgg.getSecondaryColor());
-        }
-
-        if (spawnInfos.containsKey(name)) {
-            SpawnInfo spawnInfo = spawnInfos.get(name);
-            if (EntityLiving.class.isAssignableFrom(entityClass)) {
-                net.minecraftforge.fml.common.registry.EntityRegistry
-                        .addSpawn((Class<? extends EntityLiving>) entityClass, spawnInfo.getWeighted(), spawnInfo.getMinimum(), spawnInfo.getMaximum(), spawnInfo.getCreatureType(), spawnInfo.getSpawnBiomes());
-            }
-
-        }
-        super.initiateEntry(name, entityClass);
+public class EntityRegistry extends ModularRegistry<EntityEntry> {
+    public EntityRegistry(IBaseMod mod, List<IRegistryPiece> registryPieces) {
+        super("ENTITY", mod, registryPieces);
     }
 
     public void register(Class<? extends Entity> entityClass) {
-        register(entityClass.getSimpleName().toLowerCase(), entityClass);
-    }
-
-    public void addSpawnEgg(String name, SpawnEgg spawnEgg) {
-        this.spawnEggs.put(name, spawnEgg);
-    }
-
-    public void addSpawnInfo(String name, SpawnInfo spawnInfo) {
-        this.spawnInfos.put(name, spawnInfo);
+        EntityEntry entityEntry = new EntityEntry(entityClass);
+        ResourceLocation name = new ResourceLocation(this.mod.getName(), entityClass.getName());
+        register(name, entityEntry);
     }
 }

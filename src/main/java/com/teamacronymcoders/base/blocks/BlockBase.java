@@ -8,6 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -16,8 +17,9 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockBase extends Block implements IHasItemBlock, IHasModel, IModAware {
-    IBaseMod mod;
-    boolean creativeTabSet = false;
+    private IBaseMod mod;
+    private boolean creativeTabSet = false;
+    private ItemBlock itemBlock;
 
     public BlockBase(Material mat) {
         super(mat);
@@ -62,9 +64,13 @@ public class BlockBase extends Block implements IHasItemBlock, IHasModel, IModAw
         return this;
     }
 
+    public void setItemBlock(ItemBlock itemBlock) {
+        this.itemBlock = itemBlock;
+    }
+
     @Override
     public ItemBlock getItemBlock() {
-        return new ItemBlock(this);
+        return itemBlock == null ? new ItemBlock(this): itemBlock;
     }
 
     @Override
@@ -85,5 +91,11 @@ public class BlockBase extends Block implements IHasItemBlock, IHasModel, IModAw
     @Override
     public void setMod(IBaseMod mod) {
         this.mod = mod;
+    }
+
+    @Override
+    public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
+        itemStacks.add(new ItemStack(this, 1));
+        return itemStacks;
     }
 }
