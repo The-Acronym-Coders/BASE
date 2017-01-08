@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.api.materials.MaterialType.EnumPartType;
+import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
 import com.teamacronymcoders.base.modules.materials.blocks.BlockMaterial;
 import com.teamacronymcoders.base.modules.materials.blocks.BlockProperties;
 import com.teamacronymcoders.base.modules.materials.items.ItemPart;
@@ -16,6 +17,7 @@ import com.teamacronymcoders.base.registry.config.ConfigEntry;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,10 +84,19 @@ public class ModuleMaterials extends ModuleBase {
     }
 
     @Override
+    public void preInit(FMLPreInitializationEvent event) {
+        if(MaterialRegistry.getMaterials().size() > 0) {
+            CreativeTabCarousel tabCarousel = new CreativeTabCarousel("base");
+            tabCarousel.setIconStacks(GEAR.getAllSubItems(new ArrayList<>()));
+            Base.instance.setCreativeTab(tabCarousel);
+        }
+        super.preInit(event);
+    }
+
+    @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
         MaterialRecipes.init();
-        Base.tabCarousel.setIconStacks(GEAR.getAllSubItems(new ArrayList<>()));
     }
 
     public static class MaterialConfigEntry extends ConfigEntry {
