@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T>, IRegistryHolder {
@@ -123,6 +124,11 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Override
     public String getPrefix() {
         return this.getID() + ":";
+    }
+
+    @Override
+    public String getConfigFolderName() {
+        return this.getID().toUpperCase(Locale.ENGLISH);
     }
 
     @Override

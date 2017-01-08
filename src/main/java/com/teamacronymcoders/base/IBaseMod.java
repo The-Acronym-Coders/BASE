@@ -22,6 +22,8 @@ public interface IBaseMod<T> {
 
     String getPrefix();
 
+    String getConfigFolderName();
+
     LibCommonProxy getLibProxy();
 
     ILogger getLogger();
