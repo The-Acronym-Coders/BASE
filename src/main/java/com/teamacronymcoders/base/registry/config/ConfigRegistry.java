@@ -32,7 +32,7 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
             }
 
             if(folderExists && useModFolder) {
-                this.modFolder = new File(this.getTacFolder(), this.mod.getID().toUpperCase());
+                this.modFolder = new File(this.getTacFolder(), this.mod.getConfigFolderName());
                 if(!this.modFolder.exists()) {
                     folderExists = this.modFolder.mkdir();
                 }
