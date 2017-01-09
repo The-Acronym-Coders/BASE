@@ -18,7 +18,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class ModuleHandler {
-    private SortedMap<String, IModule> modules = new TreeMap<>();
+    private SortedMap<String, IModule> modules;
     private IRegistryHolder registryHolder;
     private IBaseMod mod;
     private String handlerName;
@@ -103,7 +103,8 @@ public class ModuleHandler {
     }
 
     private TreeMap<String, IModule> getModules(@Nonnull ASMDataTable asmDataTable) {
-        TreeMap<String, IModule> moduleMap = new TreeMap<>(new ModuleComparator(this));
+        //TODO fix the comparator
+        TreeMap<String, IModule> moduleMap = new TreeMap<>(/*new ModuleComparator(this)*/);
         ClassLoading.getInstances(asmDataTable, Module.class, IModule.class, aClass -> {
             Module moduleAnnotation = aClass.getAnnotation(Module.class);
             boolean load = false;
