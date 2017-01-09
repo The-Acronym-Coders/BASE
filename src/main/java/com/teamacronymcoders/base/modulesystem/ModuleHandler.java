@@ -48,7 +48,7 @@ public class ModuleHandler {
 
     public void setupModules() {
         for (IModule module : getModules().values()) {
-            if(module.isConfigurable()) {
+            if(module.isConfigurable() && mod.hasConfig()) {
                 this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(module));
                 module.setIsActive(this.getConfig().getBoolean(module.getName(), module.getActiveDefault()));
             }

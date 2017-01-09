@@ -11,6 +11,8 @@ import java.util.List;
 
 @Module(Reference.MODID)
 public class MinetweakerModule extends ModuleBase {
+    public static boolean tooLate = false;
+
     @Override
     public String getName() {
         return "MineTweaker3";
@@ -25,5 +27,6 @@ public class MinetweakerModule extends ModuleBase {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         MineTweakerRegistration.init(this);
+        tooLate = true;
     }
 }
