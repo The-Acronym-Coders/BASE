@@ -4,6 +4,8 @@ import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import com.teamacronymcoders.base.reference.Reference;
 import com.teamacronymcoders.base.util.Platform;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
 import java.io.File;
@@ -54,8 +56,7 @@ public class ModuleTextureGeneration extends ModuleBase {
                 userDir = currentDir.getParentFile();
             }
         }
-
-        String assetPath = "src/main/resources/assets/" + this.getMod().getID() + "/";
+        String assetPath = "src/main/resources/assets/" + Loader.instance().activeModContainer().getModId() + "/";
         assetPath = assetPath.replace("/", File.separator);
         return new File(userDir, assetPath);
     }
