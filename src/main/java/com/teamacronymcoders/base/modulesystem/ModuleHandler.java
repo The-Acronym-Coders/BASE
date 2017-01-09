@@ -16,6 +16,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 public class ModuleHandler {
     private SortedMap<String, IModule> modules = new TreeMap<>();
@@ -35,7 +36,9 @@ public class ModuleHandler {
     }
 
     public void preInit(FMLPreInitializationEvent event) {
-        this.modules.values().stream().filter(IModule::getIsActive).forEachOrdered(module -> module.preInit(event));
+        Stream<IModule> stream = this.modules.values().stream().filter(IModule::getIsActive);
+        stream.forEachOrdered(module -> module.preInit(event));
+        stream.forEachOrdered(module -> module.afterModulesPreInit(event));
     }
 
     public void init(FMLInitializationEvent event) {
