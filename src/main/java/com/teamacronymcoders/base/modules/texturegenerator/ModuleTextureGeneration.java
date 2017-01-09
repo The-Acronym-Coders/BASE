@@ -45,7 +45,16 @@ public class ModuleTextureGeneration extends ModuleBase {
     }
 
     private File getAssetDirectory() {
-        File userDir = new File(System.getProperty("user.dir"));
+        File userDir = null;
+        File currentDir = new File(System.getProperty("user.dir"));
+        while (userDir == null) {
+            if (currentDir.getParentFile().listFiles((dir, name) -> name.equals("src")).length == 0) {
+                currentDir = currentDir.getParentFile();
+            } else {
+                userDir = currentDir.getParentFile();
+            }
+        }
+
         String assetPath = "src/main/resources/assets/" + this.getMod().getID() + "/";
         assetPath = assetPath.replace("/", File.separator);
         return new File(userDir, assetPath);
@@ -62,21 +71,21 @@ public class ModuleTextureGeneration extends ModuleBase {
             FileHelper fileHelper = new FileHelper();
 
             if (!baseBlockState.exists()) {
-                if(baseBlockState.createNewFile()) {
+                if (baseBlockState.createNewFile()) {
                     fileHelper.writeFile(baseBlockState, fileHelper.scanFile(modid, key, texture,
                             new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json")));
                 }
             }
 
             if (!baseBlockModel.exists()) {
-                if(baseBlockModel.createNewFile()) {
+                if (baseBlockModel.createNewFile()) {
                     fileHelper.writeFile(baseBlockModel, fileHelper.scanFile(modid, key, texture,
                             new File(System.getProperty("user.home") + "/getFluxed/baseBlockModel.json")));
                 }
             }
 
             if (!baseItem.exists()) {
-                if(baseItem.createNewFile()) {
+                if (baseItem.createNewFile()) {
                     fileHelper.writeFile(baseItem, fileHelper.scanFile(modid, key, texture,
                             new File(System.getProperty("user.home") + "/getFluxed/baseBlockItem.json")));
                 }
