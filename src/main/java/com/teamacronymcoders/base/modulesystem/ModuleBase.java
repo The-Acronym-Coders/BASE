@@ -41,6 +41,11 @@ public abstract class ModuleBase implements IModule {
     }
 
     @Override
+    public void afterModulesPreInit(FMLPreInitializationEvent event) {
+
+    }
+
+    @Override
     public void init(FMLInitializationEvent event) {
         if (this.getModuleProxy() != null) {
             this.getModuleProxy().init(event);

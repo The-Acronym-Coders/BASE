@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T>, IRegistryHolder {
@@ -60,9 +61,10 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.addRegistry("BLOCK", new BlockRegistry(this, registryPieces));
         this.addRegistry("ITEM", new ItemRegistry(this, registryPieces));
         this.addRegistry("ENTITY", new EntityRegistry(this, registryPieces));
-        this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
-
-        SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
+        if(this.hasConfig()) {
+            this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
+            SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
+        }
 
         if (this.addOBJDomain()) {
             this.getLibProxy().addOBJDomain();
@@ -123,6 +125,16 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Override
     public String getPrefix() {
         return this.getID() + ":";
+    }
+
+    @Override
+    public boolean hasConfig() {
+        return true;
+    }
+
+    @Override
+    public String getConfigFolderName() {
+        return this.getID().toUpperCase(Locale.ENGLISH);
     }
 
     @Override

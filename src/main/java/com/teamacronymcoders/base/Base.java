@@ -1,8 +1,8 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
 import com.teamacronymcoders.base.util.LanguageHelper;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -17,7 +17,6 @@ import static com.teamacronymcoders.base.reference.Reference.*;
         dependencies = DEPENDENCIES)
 public class Base extends BaseModFoundation<Base> {
     public static final LanguageHelper languageHelper = new LanguageHelper(MODID);
-    public static CreativeTabCarousel tabCarousel = new CreativeTabCarousel("base");
 
     @Instance(MODID)
     public static Base instance;
@@ -26,7 +25,7 @@ public class Base extends BaseModFoundation<Base> {
     public static ModCommonProxy proxy;
 
     public Base() {
-        super(MODID, NAME, VERSION, tabCarousel);
+        super(MODID, NAME, VERSION, CreativeTabs.MISC);
     }
 
     @EventHandler
@@ -42,6 +41,10 @@ public class Base extends BaseModFoundation<Base> {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
+    }
+
+    public void setCreativeTab(CreativeTabs creativeTab) {
+        this.creativeTab = creativeTab;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.exceptions.TooLateException;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public abstract class Registry<T> {
 
     public void register(ResourceLocation name, T entry) {
         if (requiresPreInitRegister() && getLoadingStage() != LoadingStage.PREINIT) {
-            throw new UnsupportedOperationException("ALL REGISTERING MUST HAPPEN IN PREINIT");
+            throw new TooLateException("ALL REGISTERING MUST HAPPEN IN PREINIT");
         }
         if(!this.entries.containsKey(name)) {
             this.entries.put(name, entry);
