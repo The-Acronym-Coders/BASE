@@ -34,6 +34,7 @@ public class ModuleMaterials extends ModuleBase {
     public static Map<String, MaterialType> activeBaseMaterials;
     public static Map<MaterialType, BlockMaterial> oreBlocks;
     public static Map<MaterialType, BlockMaterial> storageBlocks;
+    public static boolean tooLate = false;
 
     @Override
     public String getName() {
