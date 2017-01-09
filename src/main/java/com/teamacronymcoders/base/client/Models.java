@@ -17,10 +17,12 @@ public class Models {
         List<ModelResourceLocation> modelResourceLocations = model.getModelResourceLocations(new ArrayList<>());
         if(modelResourceLocations.size() > 0) {
             for (ItemStack itemStack: allSubItems) {
-                ModelLoader.setCustomModelResourceLocation(itemStack.getItem(), itemStack.getMetadata(), modelResourceLocations.get(locationsIndex));
-                locationsIndex++;
-                if (locationsIndex >= modelResourceLocations.size()) {
-                    locationsIndex = 0;
+                if(model != null) {
+                    ModelLoader.setCustomModelResourceLocation(itemStack.getItem(), itemStack.getMetadata(), modelResourceLocations.get(locationsIndex));
+                    locationsIndex++;
+                    if (locationsIndex >= modelResourceLocations.size()) {
+                        locationsIndex = 0;
+                    }
                 }
             }
         } else {
