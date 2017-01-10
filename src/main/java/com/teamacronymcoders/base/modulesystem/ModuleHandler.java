@@ -6,6 +6,7 @@ import com.teamacronymcoders.base.registry.IRegistryHolder;
 import com.teamacronymcoders.base.registry.config.ConfigEntry;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.ClassLoading;
+import com.teamacronymcoders.base.util.collections.MapUtils;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -13,12 +14,10 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ModuleHandler {
-    private SortedMap<String, IModule> modules;
+    private Map<String, IModule> modules;
     private IRegistryHolder registryHolder;
     private IBaseMod mod;
     private String handlerName;
@@ -31,7 +30,7 @@ public class ModuleHandler {
         this.mod = mod;
         this.handlerName = handlerName;
         this.registryHolder = mod.getRegistryHolder();
-        this.modules = this.getModules(asmDataTable);
+        this.modules = MapUtils.sortByValue(this.loadModules(asmDataTable));
     }
 
     public void preInit(FMLPreInitializationEvent event) {
@@ -82,7 +81,7 @@ public class ModuleHandler {
         module.setModuleProxy(mod.getLibProxy().getModuleProxy(module));
     }
 
-    public SortedMap<String, IModule> getModules() {
+    public Map<String, IModule> getModules() {
         return modules;
     }
 
@@ -102,9 +101,8 @@ public class ModuleHandler {
         return this.registryHolder.getRegistry(ConfigRegistry.class, "CONFIG");
     }
 
-    private TreeMap<String, IModule> getModules(@Nonnull ASMDataTable asmDataTable) {
-        //TODO fix the comparator
-        TreeMap<String, IModule> moduleMap = new TreeMap<>(new ModuleComparator(this));
+    private Map<String, IModule> loadModules(@Nonnull ASMDataTable asmDataTable) {
+        Map<String, IModule> moduleMap = new HashMap<>();
         ClassLoading.getInstances(asmDataTable, Module.class, IModule.class, aClass -> {
             Module moduleAnnotation = aClass.getAnnotation(Module.class);
             boolean load = false;

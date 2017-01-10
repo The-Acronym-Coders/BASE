@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public interface IModule {
+public interface IModule extends Comparable<IModule> {
     String getName();
 
     List<IDependency> getDependencies(List<IDependency> dependencies);
@@ -31,7 +31,7 @@ public interface IModule {
     String getServerProxyPath();
 
     @Nullable
-	IModuleProxy getModuleProxy();
+    IModuleProxy getModuleProxy();
 
     void setModuleProxy(IModuleProxy moduleProxy);
 

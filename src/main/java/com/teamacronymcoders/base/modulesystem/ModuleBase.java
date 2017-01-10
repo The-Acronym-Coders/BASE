@@ -2,12 +2,14 @@ package com.teamacronymcoders.base.modulesystem;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
+import com.teamacronymcoders.base.modulesystem.dependencies.ModuleDependency;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.base.registry.EntityRegistry;
 import com.teamacronymcoders.base.registry.IRegistryHolder;
 import com.teamacronymcoders.base.registry.ItemRegistry;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
+import com.teamacronymcoders.base.util.Platform;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -15,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ModuleBase implements IModule {
@@ -156,5 +159,42 @@ public abstract class ModuleBase implements IModule {
 
     public boolean isOtherModuleActive(String name) {
         return moduleHandler.isModuleEnabled(name);
+    }
+
+    @Override
+    public int compareTo(@Nonnull IModule module) {
+        int result = 0;
+
+        if(module != null) {
+            List<IDependency> module1Deps = this.getDependencies(new ArrayList<>());
+            List<IDependency> module2Deps = module.getDependencies(new ArrayList<>());
+
+            boolean module1IsDepTo2 = false;
+            boolean module2IsDepTo1 = false;
+
+            for (IDependency dependency : module1Deps) {
+                if (dependency instanceof ModuleDependency) {
+                    module1IsDepTo2 |= ((ModuleDependency) dependency).getModuleName().equals(module.getName());
+                }
+            }
+
+            for (IDependency dependency : module2Deps) {
+                if (dependency instanceof ModuleDependency) {
+                    module2IsDepTo1 |= ((ModuleDependency) dependency).getModuleName().equals(this.getName());
+                }
+            }
+
+            if (module1IsDepTo2 && module2IsDepTo1) {
+                Platform.attemptLogErrorToCurrentMod("CIRCULAR DEPENDENCIES FOUND. THINKS MAY GO WRONG");
+            } else if (module1IsDepTo2) {
+                result = -1;
+            } else if (module2IsDepTo1) {
+                result = 1;
+            }
+        } else {
+            throw new NullPointerException("Module is null");
+        }
+
+        return result;
     }
 }
