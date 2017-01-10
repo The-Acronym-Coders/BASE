@@ -31,7 +31,8 @@ public class ModuleHandler {
         this.mod = mod;
         this.handlerName = handlerName;
         this.registryHolder = mod.getRegistryHolder();
-        this.modules = this.getModules(asmDataTable);
+        this.modules = new TreeMap<>(new ModuleComparator(this));
+        this.loadModules(asmDataTable);
     }
 
     public void preInit(FMLPreInitializationEvent event) {
@@ -101,9 +102,8 @@ public class ModuleHandler {
         return this.registryHolder.getRegistry(ConfigRegistry.class, "CONFIG");
     }
 
-    private TreeMap<String, IModule> getModules(@Nonnull ASMDataTable asmDataTable) {
+    private void loadModules(@Nonnull ASMDataTable asmDataTable) {
         //TODO fix the comparator
-        TreeMap<String, IModule> moduleMap = new TreeMap<>(new ModuleComparator(this));
         ClassLoading.getInstances(asmDataTable, Module.class, IModule.class, aClass -> {
             Module moduleAnnotation = aClass.getAnnotation(Module.class);
             boolean load = false;
@@ -115,13 +115,12 @@ public class ModuleHandler {
 
             return load;
         }).forEach(module -> {
-            if(!moduleMap.containsKey(module.getName())) {
-                moduleMap.put(module.getName(), module);
+            if(!modules.containsKey(module.getName())) {
+                modules.put(module.getName(), module);
             } else {
                 throw new UnsupportedOperationException("Module Names must be Unique");
             }
         });
-        return moduleMap;
     }
 
     private static class ModuleConfigEntry extends ConfigEntry {
