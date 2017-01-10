@@ -103,7 +103,7 @@ public class ModuleHandler {
 
     private TreeMap<String, IModule> getModules(@Nonnull ASMDataTable asmDataTable) {
         //TODO fix the comparator
-        TreeMap<String, IModule> moduleMap = new TreeMap<>(/*new ModuleComparator(this)*/);
+        TreeMap<String, IModule> moduleMap = new TreeMap<>(new ModuleComparator(this));
         ClassLoading.getInstances(asmDataTable, Module.class, IModule.class, aClass -> {
             Module moduleAnnotation = aClass.getAnnotation(Module.class);
             boolean load = false;
