@@ -1,15 +1,19 @@
 package com.teamacronymcoders.base.items;
 
+import com.teamacronymcoders.base.client.models.IHasModel;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
-public class ItemSubBlock extends ItemBlock {
+public class ItemSubBlock<BLOCK extends Block & IHasModel> extends ItemBlockGeneric<BLOCK> {
     String[] names;
 
-    public ItemSubBlock(Block block, String[] names) {
+    public ItemSubBlock(BLOCK block, String[] names) {
         super(block);
         this.names = names;
         this.setHasSubtypes(true);
@@ -24,5 +28,16 @@ public class ItemSubBlock extends ItemBlock {
     @Nonnull
     public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName() + "." + names[stack.getItemDamage()];
+    }
+
+    @Override
+    public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
+        return this.getActualBlock().getAllSubItems(itemStacks);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public List<ModelResourceLocation> getModelResourceLocations(List<ModelResourceLocation> models) {
+        return this.getActualBlock().getModelResourceLocations(models);
     }
 }
