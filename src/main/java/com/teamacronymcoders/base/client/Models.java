@@ -15,18 +15,26 @@ public class Models {
         model.getAllSubItems(allSubItems);
         int locationsIndex = 0;
         List<ModelResourceLocation> modelResourceLocations = model.getModelResourceLocations(new ArrayList<>());
-        if(modelResourceLocations.size() > 0) {
+        if(!modelResourceLocations.isEmpty()) {
             for (ItemStack itemStack: allSubItems) {
-                if(model != null) {
-                    ModelLoader.setCustomModelResourceLocation(itemStack.getItem(), itemStack.getMetadata(), modelResourceLocations.get(locationsIndex));
+                ModelResourceLocation modelResourceLocation = modelResourceLocations.get(locationsIndex);
+                if(itemStack != null && modelResourceLocation != null) {
+                    ModelLoader.setCustomModelResourceLocation(itemStack.getItem(), itemStack.getMetadata(), modelResourceLocation);
                     locationsIndex++;
                     if (locationsIndex >= modelResourceLocations.size()) {
                         locationsIndex = 0;
                     }
+                } else {
+                    Platform.attemptLogErrorToCurrentMod("Found IHasModel with null Itemstack or ResourceLocation");
                 }
             }
         } else {
-            Platform.attemptLogErrorToCurrentMod(allSubItems.get(0).getItem().getRegistryName() + " implements IHasModel, but lists no models");
+            ItemStack itemStack;
+            if(!allSubItems.isEmpty() && (itemStack = allSubItems.get(0)) != null) {
+                Platform.attemptLogErrorToCurrentMod(itemStack.getUnlocalizedName() + " has no models");
+            } else {
+                Platform.attemptLogErrorToCurrentMod("There's an issue with an IHasModel.");
+            }
         }
     }
 }
