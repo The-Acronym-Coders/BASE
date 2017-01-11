@@ -18,7 +18,7 @@ public class Models {
         if(!modelResourceLocations.isEmpty()) {
             for (ItemStack itemStack: allSubItems) {
                 ModelResourceLocation modelResourceLocation = modelResourceLocations.get(locationsIndex);
-                if(itemStack != null && modelResourceLocation != null) {
+                if(itemStack != null && itemStack.getItem() != null && modelResourceLocation != null) {
                     ModelLoader.setCustomModelResourceLocation(itemStack.getItem(), itemStack.getMetadata(), modelResourceLocation);
                     locationsIndex++;
                     if (locationsIndex >= modelResourceLocations.size()) {
