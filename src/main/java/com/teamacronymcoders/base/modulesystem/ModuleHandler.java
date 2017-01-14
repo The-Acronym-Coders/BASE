@@ -8,16 +8,13 @@ import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.collections.MapUtils;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ModuleHandler {
     private Map<String, IModule> modules;
@@ -113,19 +110,6 @@ public class ModuleHandler {
                 String modid = moduleAnnotation.value().trim();
                 load = modid.equalsIgnoreCase("") || modid.equalsIgnoreCase(handlerName);
                 load &= this.mod.getLibProxy().isRightSide(moduleAnnotation.side());
-                String modsRequired = moduleAnnotation.modsReq().trim();
-                if(!modsRequired.isEmpty()) {
-                    String[] modIdsReq = modsRequired.split(",");
-                    for(String modidReq : modIdsReq) {
-                        if(!modidReq.isEmpty()) {
-                            boolean modLoaded = Loader.isModLoaded(modidReq);
-                            if(!modLoaded) {
-                                this.mod.getLogger().error("Mod with modid: " + modidReq + " is not found");
-                                load = false;
-                            }
-                        }
-                    }
-                }
             }
 
             return load;

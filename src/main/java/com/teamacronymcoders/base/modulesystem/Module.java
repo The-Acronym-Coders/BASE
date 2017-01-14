@@ -13,6 +13,4 @@ public @interface Module {
     String value();
 
     RegistrySide side() default RegistrySide.BOTH;
-
-    String modsReq() default "";
 }

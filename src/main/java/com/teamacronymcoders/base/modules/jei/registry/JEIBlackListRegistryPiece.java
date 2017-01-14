@@ -6,7 +6,7 @@ import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import net.minecraft.util.ResourceLocation;
 
-@RegistryPiece(modid = "JEI")
+@RegistryPiece(modid = "jei")
 public class JEIBlackListRegistryPiece extends RegistryPieceBase<IIsHidden> {
     public JEIBlackListRegistryPiece() {
         super(IIsHidden.class);
