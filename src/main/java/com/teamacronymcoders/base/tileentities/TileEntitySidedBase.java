@@ -20,7 +20,7 @@ public abstract class TileEntitySidedBase extends TileEntityBase implements IBlo
 		super();
 		sideConfig = new SideType[6];
 		Arrays.fill(sideConfig, SideType.NONE);
-		isColorBlindActive = mod.getRegistryHolder().getConfigRegistry().getBoolean("colorblind", false);
+		isColorBlindActive = false; // TODO
 	}
 
 	public void toggleSide(int side) {
@@ -71,15 +71,16 @@ public abstract class TileEntitySidedBase extends TileEntityBase implements IBlo
 
 	@Override
 	public String[] getOverlayText(EntityPlayer player, RayTraceResult rayTrace, boolean tool) {
-		if(tool && isColorBlindActive) {
-			SideType facing = sideConfig[rayTrace.sideHit.ordinal()];
-			SideType opposite = sideConfig[rayTrace.sideHit.getOpposite().ordinal()];
-			return new String[] {
-					mod.getBoilerplateProxy().translate("blockSide.facing") + ": "
-							+ mod.getBoilerplateProxy().translate("sidetype." + facing.name().toLowerCase()),
-					mod.getBoilerplateProxy().translate("blockSide.opposite") + ": "
-							+ mod.getBoilerplateProxy().translate("sidetype." + opposite.name().toLowerCase())};
-		}
-		return null;
+		/*
+		 * // if(tool && isColorBlindActive) {
+		 * // SideType facing = sideConfig[rayTrace.sideHit.ordinal()];
+		 * // SideType opposite = sideConfig[rayTrace.sideHit.getOpposite().ordinal()];
+		 * // return new String[] {
+		 * // mod.getBoilerplateProxy().translate("blockSide.facing") + ": "
+		 * // + mod.getBoilerplateProxy().translate("sidetype." + facing.name().toLowerCase()),
+		 * // mod.getBoilerplateProxy().translate("blockSide.opposite") + ": "
+		 * + mod.getBoilerplateProxy().translate("sidetype." + opposite.name().toLowerCase())};
+		 * // }
+		 */ return null;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.multiblock.validation.IMultiblockValidator;
 import com.teamacronymcoders.base.multiblock.validation.ValidationError;
 import com.teamacronymcoders.base.util.Utils;
@@ -1062,7 +1063,7 @@ public abstract class MultiblockControllerBase implements IMultiblockValidator {
 	private static final IMultiblockRegistry REGISTRY;
 
 	static {
-		REGISTRY = Boilerplate.instance.getBoilerplateProxy().initMultiblockRegistry();
+		REGISTRY = Base.proxy.initMultiblockRegistry();
 	}
 
 	public abstract void readFromDisk(NBTTagCompound data);

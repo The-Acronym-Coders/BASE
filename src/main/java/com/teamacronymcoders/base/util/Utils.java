@@ -49,10 +49,10 @@ public class Utils {
 	}
 
 	public static long getChunkXZHashFromBlock(int blockX, int blockZ) {
-		return ChunkPos.chunkXZ2Int(getChunkXFromBlock(blockX), getChunkZFromBlock(blockZ));
+		return ChunkPos.asLong(getChunkXFromBlock(blockX), getChunkZFromBlock(blockZ));
 	}
 
 	public static long getChunkXZHashFromBlock(BlockPos position) {
-		return ChunkPos.chunkXZ2Int(getChunkXFromBlock(position), getChunkZFromBlock(position));
+		return ChunkPos.asLong(getChunkXFromBlock(position), getChunkZFromBlock(position));
 	}
 }

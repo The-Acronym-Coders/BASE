@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.tileentities.TileEntityBase;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -332,6 +333,6 @@ public abstract class MultiblockTileEntityBase extends TileEntityBase implements
 	private static final IMultiblockRegistry REGISTRY;
 
 	static {
-		REGISTRY = Boilerplate.instance.getBoilerplateProxy().initMultiblockRegistry();
+		REGISTRY = Base.proxy.initMultiblockRegistry();
 	}
 }
