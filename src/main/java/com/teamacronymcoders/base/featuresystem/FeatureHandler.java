@@ -1,36 +1,36 @@
 package com.teamacronymcoders.base.featuresystem;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class FeatureHandler {
-    private static Map<String, FeatureStatus> features = new HashMap<>();
+    private static Map<String, IFeature> features = new HashMap<>();
+    private static List<String> requests = new ArrayList<>();
+
+    public static void registerFeature(String name, IFeature feature) {
+        name = name.toLowerCase(Locale.ROOT);
+        features.put(name, feature);
+        attemptActivate(name);
+    }
 
     public static void requestFeature(String name) {
         name = name.toLowerCase(Locale.ROOT);
-        if(!features.containsKey(name)) {
-            features.put(name, FeatureStatus.REQUESTED);
+        if(features.containsKey(name)) {
+            activate(name);
+        } else {
+            requests.add(name);
         }
     }
 
-    public static void requireFeature(String name) {
-        name = name.toLowerCase(Locale.ROOT);
-        features.put(name, FeatureStatus.REQUIRED);
+    private static void attemptActivate(String name) {
+        if(requests.contains(name)) {
+            activate(name);
+        }
     }
 
-    public static FeatureStatus checkFeatureStatus(String name) {
-        name = name.toLowerCase(Locale.ROOT);
-        return features.get(name);
-    }
-
-    public static boolean isFeatureAtLeastRequested(String name) {
-        name = name.toLowerCase(Locale.ROOT);
-        return checkFeatureStatus(name) != FeatureStatus.NONE;
-    }
-
-    public static boolean isFeatureRequired(String name) {
-        name = name.toLowerCase(Locale.ROOT);
-        return checkFeatureStatus(name) == FeatureStatus.REQUIRED;
+    private static void activate(String name) {
+        IFeature feature = features.get(name);
+        if(!feature.isActive()) {
+            feature.activate();
+        }
     }
 }
