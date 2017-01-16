@@ -20,8 +20,8 @@ repositories {
     mavenCentral()
 
     maven {
-        name 'CraftTweaker'
-        url "maven.blamejared.com"
+        name 'Jared'
+        url "http://maven.blamejared.com"
     }
     maven {
         name 'JEI'
@@ -115,7 +115,6 @@ task getLibraries {
 
     def baubles = 'Baubles-' + minecraft_version + '-' + baubles_version + '-deobf.jar'
     def baublesSource = 'https://dl.dropboxusercontent.com/u/47135879/' + baubles
-
     downloads.add(new Tuple(botania, botaniaSource))
     downloads.add(new Tuple(baubles, baublesSource))
 
