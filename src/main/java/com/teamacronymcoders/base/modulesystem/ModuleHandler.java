@@ -71,8 +71,11 @@ public class ModuleHandler {
 
     private void printModuleDependencyOutcome(IModule module, IDependency dependency) {
         if (!dependency.isMet(this)) {
-            this.mod.getLogger().error("Module " + module.getName() + " did not load due to issue: " +
-                    dependency.notMetMessage());
+            if(dependency.isSilent() || dependency.notMetMessage() != null) {
+                this.mod.getLogger().error("Module " + module.getName() + " did not load due to issue: " +
+                        dependency.notMetMessage());
+            }
+
             module.setIsActive(false);
         }
     }
