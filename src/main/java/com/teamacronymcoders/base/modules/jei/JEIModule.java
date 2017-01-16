@@ -18,7 +18,7 @@ public class JEIModule extends ModuleBase {
 
     @Override
     public List<IDependency> getDependencies(List<IDependency> dependencies) {
-        dependencies.add(new ModDependency("jei"));
+        dependencies.add(new ModDependency("JEI"));
         return dependencies;
     }
 }
