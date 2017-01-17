@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 
 import com.teamacronymcoders.base.guisystem.IHasGui;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -13,43 +12,36 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 @GuiTarget
-public class GuiBlockTarget extends GuiTargetBase<Block> {
+public class GuiTileTarget extends GuiTargetBase<TileEntity> {
+
 	private BlockPos pos;
 
-	public GuiBlockTarget() {
+	public GuiTileTarget() {
 		super();
 	}
 
-	public GuiBlockTarget(@Nonnull Block block, @Nonnull BlockPos pos) {
-		super(block);
+	public GuiTileTarget(@Nonnull TileEntity te, @Nonnull BlockPos pos) {
+		super(te);
 		this.pos = pos;
 	}
 
 	@Override
-	@Nonnull
 	public String getName() {
-		return "block";
+		return "tile";
 	}
 
 	@Override
 	@Nullable
 	public IHasGui deserialize(@Nonnull EntityPlayer entityPlayer, @Nonnull World world,
 			@Nonnull NBTTagCompound nbtTagCompound) {
-		IHasGui hasGui = null;
 		Long posLong = nbtTagCompound.getLong("blockPos");
 		BlockPos pos = BlockPos.fromLong(posLong);
-		Block block = world.getBlockState(pos).getBlock();
-		if(block instanceof IHasGui) {
-			hasGui = (IHasGui) block;
+		TileEntity tileEntity = world.getTileEntity(pos);
+		if(tileEntity instanceof IHasGui) {
+			return (IHasGui) tileEntity;
 		}
-		else {
-			TileEntity tileEntity = world.getTileEntity(pos);
-			if(tileEntity instanceof IHasGui) {
-				hasGui = (IHasGui) tileEntity;
-			}
-		}
-
-		return hasGui;
+		else
+			return null;
 	}
 
 	@Override
@@ -59,7 +51,4 @@ public class GuiBlockTarget extends GuiTargetBase<Block> {
 		return nbtTagCompound;
 	}
 
-	public BlockPos getPos() {
-		return pos;
-	}
 }
