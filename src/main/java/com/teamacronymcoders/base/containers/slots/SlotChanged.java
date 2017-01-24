@@ -1,4 +1,4 @@
-package com.teamacroynmcoders.base.containers.slots;
+package com.teamacronymcoders.base.containers.slots;
 
 import com.teamacronymcoders.base.tileentities.IOnSlotChanged;
 

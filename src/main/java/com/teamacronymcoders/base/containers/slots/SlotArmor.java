@@ -1,4 +1,4 @@
-package com.teamacroynmcoders.base.containers.slots;
+package com.teamacronymcoders.base.containers.slots;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;

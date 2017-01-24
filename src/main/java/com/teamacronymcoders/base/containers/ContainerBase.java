@@ -1,4 +1,4 @@
-package com.teamacroynmcoders.base.containers;
+package com.teamacronymcoders.base.containers;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
