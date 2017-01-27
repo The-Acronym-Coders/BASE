@@ -11,7 +11,8 @@ import com.teamacronymcoders.base.multiblock.validation.IMultiblockValidator;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
-public abstract class RectangularMultiblockTileEntityBase extends MultiblockTileEntityBase {
+public abstract class RectangularMultiblockTileEntityBase<T extends RectangularMultiblockControllerBase>
+		extends MultiblockTileEntityBase<T> {
 
 	private PartPosition position;
 	private BlockFacings outwardFacings;
