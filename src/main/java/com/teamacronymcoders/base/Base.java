@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base;
 
+import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import net.minecraft.creativetab.CreativeTabs;
@@ -26,6 +27,7 @@ public class Base extends BaseModFoundation<Base> {
 
     public Base() {
         super(MODID, NAME, VERSION, CreativeTabs.MISC);
+        MaterialsSystem.initParts();
     }
 
     @EventHandler
