@@ -9,10 +9,13 @@ import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.materialsystem.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -43,7 +46,8 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
 
     @Override
     public ResourceLocation getResourceLocation(ItemStack itemStack) {
-        return getMaterialParkFromItemStack(itemStack).getTextureLocation();
+        MaterialPart materialPart = getMaterialParkFromItemStack(itemStack);
+        return materialPart != null ? materialPart.getTextureLocation() : Blocks.BARRIER.getRegistryName();
     }
 
     @Override
@@ -53,6 +57,23 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
             return materialPart.getMaterial().getColor().getRGB();
         }
         return 0xFFFFFF;
+    }
+
+    @Override
+    @Nonnull
+    public String getItemStackDisplayName(@Nonnull ItemStack itemStack) {
+        MaterialPart materialPart = this.getMaterialParkFromItemStack(itemStack);
+        if (materialPart != null) {
+            return String.format("%s %s", materialPart.getMaterial().getName(),
+                    I18n.format(materialPart.getPart().getUnlocalizedName()));
+        }
+        return TextFormatting.RED + Base.languageHelper.error("null_part");
+    }
+
+    @Override
+    public boolean hasEffect(ItemStack itemStack) {
+        MaterialPart materialPart = this.getMaterialParkFromItemStack(itemStack);
+        return materialPart != null ? materialPart.getMaterial().isHasEffect() : super.hasEffect(itemStack);
     }
 
     private MaterialPart getMaterialParkFromItemStack(ItemStack itemStack) {
