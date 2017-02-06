@@ -14,6 +14,6 @@ public class RegistryEventHandler {
     @SubscribeEvent
     public static void registryRegistries(NewRegistry newRegistry) {
         new RegistryBuilder<MaterialPart>().setName(new ResourceLocation(Reference.MODID, "material_parts"))
-                .setType(MaterialPart.class).create();
+                .setType(MaterialPart.class).setIDRange(0, 1024).create();
     }
 }
