@@ -86,4 +86,8 @@ public class SafeModelLoader {
     public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
         mod.getLibProxy().registerBlockStateMapper(block, stateMapper);
     }
+
+    public void registerModelVariant(Item item, ResourceLocation resourceLocation) {
+        mod.getLibProxy().registerModelVariant(item, resourceLocation);
+    }
 }

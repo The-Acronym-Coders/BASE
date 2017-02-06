@@ -49,6 +49,7 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
 
     public void setTextureLocation(ResourceLocation textureLocation) {
         this.textureLocation = textureLocation;
+        MaterialsSystem.ITEM_MATERIAL_PART.registerItemVariant(textureLocation);
     }
 
     @Override
