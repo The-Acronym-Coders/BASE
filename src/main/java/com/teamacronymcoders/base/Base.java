@@ -31,8 +31,12 @@ public class Base extends BaseModFoundation<Base> {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        MaterialsSystem.initParts();
         super.preInit(event);
+    }
+
+    @Override
+    public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
+        MaterialsSystem.setup();
     }
 
     @EventHandler
