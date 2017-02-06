@@ -24,6 +24,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
     public ItemMaterialPart() {
         super("material_part");
         this.setHasSubtypes(true);
+        this.setCreativeTab(MaterialsSystem.materialCreativeTab);
     }
 
     @Override
@@ -35,11 +36,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
         MaterialsSystem.MATERIAL_PARTS.getValues().stream().filter(materialPart ->
                 materialPart.getPart().getPartType() == PartType.ITEM).forEach(materialPart -> {
-            ItemStack itemStack = new ItemStack(this, 1, 0);
-            itemStack.setTagInfo("material", new NBTTagString(materialPart.getMaterial().getUnlocalizedName()));
-            itemStack.setTagInfo("part", new NBTTagString(materialPart.getPart().getUnlocalizedName()));
-            itemStacks.add(itemStack);
-            materialPart.setItemStack(itemStack);
+            itemStacks.add(materialPart.getItemStack());
         });
         return itemStacks;
     }

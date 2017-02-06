@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.reference.Reference;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
@@ -11,7 +12,6 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
     private Material material;
     private Part part;
     private ResourceLocation textureLocation;
-    private ItemStack itemStack;
 
     public MaterialPart(Material material, Part part) {
         this.setMaterial(material);
@@ -35,11 +35,10 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
         this.part = part;
     }
 
-    public void setItemStack(ItemStack itemStack) {
-        this.itemStack = itemStack;
-    }
-
     public ItemStack getItemStack() {
+        ItemStack itemStack = new ItemStack(MaterialsSystem.ITEM_MATERIAL_PART, 1, 0);
+        itemStack.setTagInfo("material", new NBTTagString(this.getMaterial().getUnlocalizedName()));
+        itemStack.setTagInfo("part", new NBTTagString(this.getPart().getUnlocalizedName()));
         return itemStack;
     }
 
