@@ -27,11 +27,11 @@ public class Base extends BaseModFoundation<Base> {
 
     public Base() {
         super(MODID, NAME, VERSION, CreativeTabs.MISC);
-        MaterialsSystem.initParts();
     }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        MaterialsSystem.initParts();
         super.preInit(event);
     }
 

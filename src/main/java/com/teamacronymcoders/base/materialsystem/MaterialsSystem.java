@@ -3,14 +3,19 @@ package com.teamacronymcoders.base.materialsystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
+import com.teamacronymcoders.base.reference.Reference;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.IForgeRegistry;
 import net.minecraftforge.fml.common.registry.RegistryBuilder;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MaterialsSystem {
     private static final Map<String, Part> parts = new HashMap<>();
-    public static final IForgeRegistry<MaterialPart> MATERIAL_PARTS = new RegistryBuilder<MaterialPart>().create();
+    public static final IForgeRegistry<MaterialPart> MATERIAL_PARTS = GameRegistry.findRegistry(MaterialPart.class);
 
     public static void initParts() {
         ProvidedParts.init();
