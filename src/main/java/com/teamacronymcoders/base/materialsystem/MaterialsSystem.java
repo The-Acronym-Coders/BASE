@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.materialsystem;
 
 import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.materialsystem.items.ItemMaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
@@ -21,7 +22,7 @@ public class MaterialsSystem {
     public static final IForgeRegistry<MaterialPart> MATERIAL_PARTS = GameRegistry.findRegistry(MaterialPart.class);
 
     public static void setup() {
-        Base.instance.getRegistry(ItemRegistry.class, "ITEM");
+        Base.instance.getRegistry(ItemRegistry.class, "ITEM").register(new ItemMaterialPart());
         ProvidedParts.init();
     }
 
