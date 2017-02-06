@@ -10,3 +10,5 @@ base.part.nugget=Nugget
 base.part.block=Block
 base.part.ore=Ore
 
+item.wrench.name=Wrench
+
