@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.materialsystem;
 
-import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.reference.Reference;
@@ -12,7 +11,6 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
     private Material material;
     private Part part;
     private ResourceLocation textureLocation;
-    private boolean colorize;
     private ItemStack itemStack;
 
     public MaterialPart(Material material, Part part) {
@@ -51,14 +49,6 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
 
     public void setTextureLocation(ResourceLocation textureLocation) {
         this.textureLocation = textureLocation;
-    }
-
-    public boolean isColorize() {
-        return colorize;
-    }
-
-    public void setColorize(boolean colorize) {
-        this.colorize = colorize;
     }
 
     @Override
