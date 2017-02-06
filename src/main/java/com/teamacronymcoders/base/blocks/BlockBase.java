@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -97,5 +98,10 @@ public class BlockBase extends Block implements IHasItemBlock, IHasModel, IModAw
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
         itemStacks.add(new ItemStack(this, 1));
         return itemStacks;
+    }
+
+    @Override
+    public Item getItem() {
+        return this.getItemBlock();
     }
 }

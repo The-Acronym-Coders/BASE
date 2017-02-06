@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.items.tools;
 
 import com.teamacronymcoders.base.client.models.IHasModel;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 
@@ -33,5 +34,10 @@ public class ItemSwordBase extends ItemSword implements IHasModel {
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
         itemStacks.add(new ItemStack(this, 1));
         return itemStacks;
+    }
+
+    @Override
+    public Item getItem() {
+        return this;
     }
 }

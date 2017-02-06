@@ -4,6 +4,6 @@ import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public interface IHasSubItems {
+public interface IHasSubItems extends IAmItem {
     List<ItemStack> getAllSubItems(List<ItemStack> itemStacks);
 }

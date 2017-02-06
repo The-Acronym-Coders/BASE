@@ -58,6 +58,11 @@ public class ItemBase extends Item implements IHasModel, IModAware {
     }
 
     @Override
+    public Item getItem() {
+        return this;
+    }
+
+    @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
         itemStacks.add(new ItemStack(this, 1));
         return itemStacks;
