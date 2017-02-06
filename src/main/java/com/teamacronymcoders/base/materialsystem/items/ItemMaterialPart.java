@@ -24,7 +24,6 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
     public ItemMaterialPart() {
         super("material_part");
         this.setHasSubtypes(true);
-        this.setCreativeTab(MaterialsSystem.materialCreativeTab);
     }
 
     @Override
