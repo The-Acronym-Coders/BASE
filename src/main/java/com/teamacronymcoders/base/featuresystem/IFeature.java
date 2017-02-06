@@ -4,6 +4,4 @@ public interface IFeature {
     void activate();
 
     boolean isActive();
-
-    void setActive();
 }
