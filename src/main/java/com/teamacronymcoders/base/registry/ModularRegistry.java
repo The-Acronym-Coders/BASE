@@ -18,6 +18,7 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
     @Override
     @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#preInit()
     public void preInit() {
+        super.preInit();
         entries.forEach((entryName, entryValue) -> registryPieces.stream()
                 .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
                 .forEach(registryPiece -> registryPiece.preInit(entryName, entryValue)));
@@ -26,6 +27,7 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
     @Override
     @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#init()
     public void init() {
+        super.init();
         entries.forEach((entryName, entryValue) -> registryPieces.stream()
                 .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
                 .forEach(registryPiece -> registryPiece.init(entryName, entryValue)));
@@ -34,6 +36,7 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
     @Override
     @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#postInit()
     public void postInit() {
+        super.postInit();
         entries.forEach((entryName, entryValue) -> registryPieces.stream()
                 .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
                 .forEach(registryPiece -> registryPiece.postInit(entryName, entryValue)));
