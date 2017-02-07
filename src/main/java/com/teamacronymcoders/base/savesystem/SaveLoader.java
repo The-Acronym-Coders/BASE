@@ -30,7 +30,7 @@ public class SaveLoader {
 
     public static <T> void saveObject(String name, T object) {
         createSaveFolder();
-        File fileToSaveTo = new File(saveFolder, name);
+        File fileToSaveTo = new File(saveFolder, name + ".json");
         String json = gson.toJson(object);
         BaseFileUtils.writeStringToFile(json, fileToSaveTo);
     }
