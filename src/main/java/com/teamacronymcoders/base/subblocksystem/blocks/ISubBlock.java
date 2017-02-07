@@ -2,7 +2,7 @@ package com.teamacronymcoders.base.subblocksystem.blocks;
 
 import net.minecraft.util.ResourceLocation;
 
-public interface ISubBlock {
+public interface ISubBlock extends Comparable<ISubBlock> {
     String getName();
 
     String getLocalizedName();

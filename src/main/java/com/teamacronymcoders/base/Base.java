@@ -29,6 +29,7 @@ public class Base extends BaseModFoundation<Base> {
 
     public Base() {
         super(MODID, NAME, VERSION, CreativeTabs.MISC);
+        FeatureHandler.requestFeature("MATERIALS");
     }
 
     @EventHandler

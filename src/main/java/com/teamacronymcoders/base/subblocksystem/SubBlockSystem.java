@@ -1,7 +1,9 @@
 package com.teamacronymcoders.base.subblocksystem;
 
 import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
+import com.teamacronymcoders.base.subblocksystem.blocks.BlockSubBlockHolder;
 import com.teamacronymcoders.base.subblocksystem.blocks.ISubBlock;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockInfo;
 
@@ -42,7 +44,7 @@ public class SubBlockSystem {
         List<ISubBlock> remainingSubBlocks = subBlocksToUse.values().stream().collect(Collectors.toList());
         while(remainingSubBlocks.size() > 0) {
             listOfSubBlocks.computeIfAbsent(blockToCheck, value -> new HashMap<>());
-            listOfSubBlocks.get(blockToCheck).computeIfAbsent(blockMetaToCheck, value -> remainingSubBlocks.get(0));
+            listOfSubBlocks.get(blockToCheck).computeIfAbsent(blockMetaToCheck, value -> remainingSubBlocks.remove(0));
             if(++blockMetaToCheck > 15) {
                 blockMetaToCheck = 0;
                 blockToCheck++;
@@ -50,5 +52,7 @@ public class SubBlockSystem {
         }
         subBlockInfo.setSavedSubBlocks(listOfSubBlocks);
         SaveLoader.saveObject("saved_sub_blocks", subBlockInfo);
+        BlockRegistry blockRegistry = Base.instance.getRegistry(BlockRegistry.class, "BLOCK");
+        listOfSubBlocks.forEach((id, subBlocks) -> blockRegistry.register(new BlockSubBlockHolder(id, subBlocks)));
     }
 }

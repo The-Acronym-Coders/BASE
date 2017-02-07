@@ -6,6 +6,10 @@ import java.util.Map;
 public class SubBlockInfo {
     private Map<Integer, Map<Integer, String>> savedSubBlockNames;
 
+    public SubBlockInfo() {
+        this.savedSubBlockNames = new HashMap<>();
+    }
+
     public Map<Integer, Map<Integer, String>> getSavedSubBlockNames() {
         return savedSubBlockNames;
     }

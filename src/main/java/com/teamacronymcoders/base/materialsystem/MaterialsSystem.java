@@ -14,6 +14,7 @@ import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.IForgeRegistry;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,11 @@ public class MaterialsSystem {
     }
 
     public static void createSubBlocks() {
+        for(int x = 0; x < 35; x++) {
+            Material material = new Material(x + "", Color.BLACK, false);
+            material.registerPartsFor("storage");
+        }
+
         MATERIAL_PARTS.getValues().stream().filter(materialPart -> materialPart.matchesPartType(PartType.BLOCK))
                 .forEach(materialPart -> SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
     }
