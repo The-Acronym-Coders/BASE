@@ -42,33 +42,26 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
 
     @Override
     public ResourceLocation getResourceLocation(ItemStack itemStack) {
-        MaterialPart materialPart = getMaterialParkFromItemStack(itemStack);
-        return materialPart != null ? materialPart.getTextureLocation() : Blocks.BARRIER.getRegistryName();
+        return this.getMaterialParkFromItemStack(itemStack).getTextureLocation();
     }
 
     @Override
     public int getColorFromItemstack(@Nonnull ItemStack itemStack, int tintIndex) {
-        MaterialPart materialPart = getMaterialParkFromItemStack(itemStack);
-        return materialPart != null && tintIndex == 0 ? materialPart.getColor() : -1;
+        return tintIndex == 0 ? this.getMaterialParkFromItemStack(itemStack).getColor() : -1;
     }
 
     @Override
     @Nonnull
     public String getItemStackDisplayName(@Nonnull ItemStack itemStack) {
-        MaterialPart materialPart = this.getMaterialParkFromItemStack(itemStack);
-        if (materialPart != null) {
-            return String.format("%s %s", materialPart.getMaterial().getName(),
-                    I18n.format(materialPart.getPart().getUnlocalizedName()));
-        }
-        return TextFormatting.RED + Base.languageHelper.error("null_part");
+        return this.getMaterialParkFromItemStack(itemStack).getLocalizedName();
     }
 
     @Override
     public boolean hasEffect(ItemStack itemStack) {
-        MaterialPart materialPart = this.getMaterialParkFromItemStack(itemStack);
-        return materialPart != null ? materialPart.getMaterial().isHasEffect() : super.hasEffect(itemStack);
+        return this.getMaterialParkFromItemStack(itemStack).hasEffect();
     }
 
+    @Nonnull
     private MaterialPart getMaterialParkFromItemStack(ItemStack itemStack) {
         NBTTagCompound nbtTagCompound = itemStack.getTagCompound();
         if(nbtTagCompound == null) {
@@ -76,7 +69,8 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
         }
         String material = nbtTagCompound.getString("material");
         String part = nbtTagCompound.getString("part");
-        return MaterialsSystem.MATERIAL_PARTS.getValue(new ResourceLocation(material, part));
+        MaterialPart materialPart = MaterialsSystem.MATERIAL_PARTS.getValue(new ResourceLocation(material, part));
+        return materialPart != null ? materialPart : MaterialsSystem.MISSING_MATERIAL_PART;
     }
 
     public void registerItemVariant(ResourceLocation resourceLocation) {

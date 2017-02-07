@@ -3,11 +3,14 @@ package com.teamacronymcoders.base.materialsystem;
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
+import com.teamacronymcoders.base.materialsystem.blocks.SubBlockPart;
 import com.teamacronymcoders.base.materialsystem.items.ItemMaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
+import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import com.teamacronymcoders.base.registry.ItemRegistry;
+import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.IForgeRegistry;
 
@@ -19,6 +22,7 @@ public class MaterialsSystem {
     private static final Map<String, Part> PART_MAP = new HashMap<>();
     public static final IForgeRegistry<MaterialPart> MATERIAL_PARTS = GameRegistry.findRegistry(MaterialPart.class);
     public static final ItemMaterialPart ITEM_MATERIAL_PART = new ItemMaterialPart();
+    public static final MissingMaterialPart MISSING_MATERIAL_PART = new MissingMaterialPart();
     public static CreativeTabCarousel materialCreativeTab;
 
     public static void setup() {
@@ -38,5 +42,10 @@ public class MaterialsSystem {
             MATERIAL_PARTS.register(materialPart);
             materialCreativeTab.addIconStacks(Lists.newArrayList(materialPart.getItemStack()));
         });
+    }
+
+    public static void createSubBlocks() {
+        MATERIAL_PARTS.getValues().stream().filter(materialPart -> materialPart.matchesPartType(PartType.BLOCK))
+                .forEach(materialPart -> SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
     }
 }

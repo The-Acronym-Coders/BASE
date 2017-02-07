@@ -3,6 +3,8 @@ package com.teamacronymcoders.base.materialsystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.Reference;
+import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
@@ -19,6 +21,18 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
         this.setPart(part);
         this.setTextureLocation(new ResourceLocation(Reference.MODID, part.getUnlocalizedName()));
         this.colorize = true;
+    }
+
+    public String getName() {
+        return material.getUnlocalizedName() + "." + part.getUnlocalizedName();
+    }
+
+    public String getLocalizedName() {
+        return String.format("%s %s", material.getName(), I18n.format(part.getUnlocalizedName()));
+    }
+
+    public boolean hasEffect() {
+        return this.getMaterial().isHasEffect();
     }
 
     public Material getMaterial() {
@@ -72,12 +86,15 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
         return MaterialPart.class;
     }
 
-
     public boolean isColorize() {
         return colorize;
     }
 
     public void setColorize(boolean colorize) {
         this.colorize = colorize;
+    }
+
+    public boolean matchesPartType(PartType partType) {
+        return this.getPart().getPartType() == partType;
     }
 }

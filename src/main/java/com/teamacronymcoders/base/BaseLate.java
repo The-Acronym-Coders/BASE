@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.featuresystem.FeatureHandler;
+import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -12,6 +13,9 @@ import static com.teamacronymcoders.base.Reference.*;
 public class BaseLate {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        if(FeatureHandler.isFeatureActivated("MATERIALS")) {
+            MaterialsSystem.createSubBlocks();
+        }
         if(FeatureHandler.isFeatureActivated("SUB_BLOCKS")) {
             SubBlockSystem.createBlocks();
         }
