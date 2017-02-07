@@ -15,6 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlockBase extends Block implements IHasItemBlock, IHasModel, IModAware {
@@ -92,6 +93,11 @@ public class BlockBase extends Block implements IHasItemBlock, IHasModel, IModAw
     @Override
     public void setMod(IBaseMod mod) {
         this.mod = mod;
+    }
+
+    @Override
+    public void getSubBlocks(@Nonnull Item block, CreativeTabs creativeTab, List<ItemStack> list) {
+        list.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 
     @Override
