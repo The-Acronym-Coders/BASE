@@ -3,7 +3,6 @@ package com.teamacronymcoders.base;
 import com.teamacronymcoders.base.featuresystem.FeatureHandler;
 import com.teamacronymcoders.base.materialsystem.FeatureMaterials;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
-import com.teamacronymcoders.base.subblocksystem.FeatureSubBlocks;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
@@ -40,7 +39,6 @@ public class Base extends BaseModFoundation<Base> {
     @Override
     public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
         FeatureHandler.registerFeature("MATERIALS", new FeatureMaterials());
-        FeatureHandler.registerFeature("SUB_BLOCKS", new FeatureSubBlocks());
     }
 
     @EventHandler

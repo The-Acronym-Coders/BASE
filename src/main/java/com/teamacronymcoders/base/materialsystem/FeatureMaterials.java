@@ -10,7 +10,6 @@ public class FeatureMaterials implements IFeature {
     @Override
     public void activate() {
         MaterialsSystem.setup();
-        FeatureHandler.requestFeature("SUB_BLOCKS");
         this.active = true;
     }
 
