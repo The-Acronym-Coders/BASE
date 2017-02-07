@@ -2,7 +2,7 @@ package com.teamacronymcoders.base.materialsystem;
 
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
-import com.teamacronymcoders.base.reference.Reference;
+import com.teamacronymcoders.base.Reference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;

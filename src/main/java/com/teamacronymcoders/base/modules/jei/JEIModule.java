@@ -7,7 +7,7 @@ import com.teamacronymcoders.base.modulesystem.dependencies.ModDependency;
 
 import java.util.List;
 
-import static com.teamacronymcoders.base.reference.Reference.MODID;
+import static com.teamacronymcoders.base.Reference.MODID;
 
 @Module(MODID)
 public class JEIModule extends ModuleBase {

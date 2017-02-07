@@ -1,8 +1,6 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.materialsystem.MaterialPart;
-import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
-import com.teamacronymcoders.base.reference.Reference;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.NewRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
