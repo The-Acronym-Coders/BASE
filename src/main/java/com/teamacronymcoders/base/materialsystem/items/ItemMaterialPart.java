@@ -49,10 +49,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
     @Override
     public int getColorFromItemstack(@Nonnull ItemStack itemStack, int tintIndex) {
         MaterialPart materialPart = getMaterialParkFromItemStack(itemStack);
-        if (materialPart != null && tintIndex == 0) {
-            return materialPart.getMaterial().getColor().getRGB();
-        }
-        return 0xFFFFFF;
+        return materialPart != null && tintIndex == 0 ? materialPart.getColor() : -1;
     }
 
     @Override

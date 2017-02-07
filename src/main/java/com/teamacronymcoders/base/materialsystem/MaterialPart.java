@@ -12,11 +12,13 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
     private Material material;
     private Part part;
     private ResourceLocation textureLocation;
+    private boolean colorize;
 
     public MaterialPart(Material material, Part part) {
         this.setMaterial(material);
         this.setPart(part);
         this.setTextureLocation(new ResourceLocation(Reference.MODID, part.getUnlocalizedName()));
+        this.colorize = true;
     }
 
     public Material getMaterial() {
@@ -51,6 +53,10 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
         MaterialsSystem.ITEM_MATERIAL_PART.registerItemVariant(textureLocation);
     }
 
+    public int getColor() {
+        return this.colorize ? this.getMaterial().getColor().getRGB() : -1;
+    }
+
     @Override
     public MaterialPart setRegistryName(ResourceLocation name) {
         return this;
@@ -67,4 +73,11 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
     }
 
 
+    public boolean isColorize() {
+        return colorize;
+    }
+
+    public void setColorize(boolean colorize) {
+        this.colorize = colorize;
+    }
 }
