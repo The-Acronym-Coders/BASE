@@ -1,17 +1,16 @@
 package com.teamacronymcoders.base.materialsystem;
 
 import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 public class MissingMaterialPart extends MaterialPart {
     public MissingMaterialPart() {
-        super(null, null);
+        super(null, new Part("MISSING", null));
     }
 
     @Override
