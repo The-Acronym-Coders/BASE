@@ -35,10 +35,12 @@ public class SaveLoader {
     }
 
     public static void createSaveFolder() {
-        saveFolder = new File(configFolder, "saved");
-        gson = new Gson();
+        if(saveFolder == null) {
+            saveFolder = new File(configFolder, "saved");
+            gson = new Gson();
 
-        BaseFileUtils.createFolder(saveFolder);
+            BaseFileUtils.createFolder(saveFolder);
+        }
     }
 
     public static void setConfigFolder(File folder) {
