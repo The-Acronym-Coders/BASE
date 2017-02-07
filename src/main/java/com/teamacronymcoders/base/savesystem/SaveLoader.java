@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.savesystem;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
 
@@ -37,7 +38,7 @@ public class SaveLoader {
     public static void createSaveFolder() {
         if(saveFolder == null) {
             saveFolder = new File(configFolder, "saved");
-            gson = new Gson();
+            gson = new GsonBuilder().setPrettyPrinting().create();
 
             BaseFileUtils.createFolder(saveFolder);
         }
