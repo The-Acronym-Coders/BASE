@@ -7,8 +7,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Map;
 
 public class BlockSubBlockHolder extends BlockBase {
@@ -20,6 +22,17 @@ public class BlockSubBlockHolder extends BlockBase {
         this.setItemBlock(new ItemBlockGeneric<>(this));
         this.subBlocks = subBlocks;
         this.setCreativeTab(Base.instance.getCreativeTab());
+    }
+
+
+    @Override
+    public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
+        for(int x = 0; x < 16; x++) {
+            if(subBlocks.get(x) != null) {
+                itemStacks.add(new ItemStack(this, 1, x));
+            }
+        }
+        return itemStacks;
     }
 
     @Override
