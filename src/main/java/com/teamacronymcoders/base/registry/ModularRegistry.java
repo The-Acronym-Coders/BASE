@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
+import com.teamacronymcoders.base.registry.pieces.RegistryPieceComparator;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
@@ -12,7 +13,9 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
 
     public ModularRegistry(String name, IBaseMod mod, List<IRegistryPiece> registryPieces) {
         super(name, mod);
-        this.registryPieces = registryPieces.stream().filter(registryPiece->registryPiece.acceptsRegistry(this)).collect(Collectors.toList());
+        this.registryPieces = registryPieces.stream().filter(registryPiece->registryPiece.acceptsRegistry(this))
+                .collect(Collectors.toList());
+        this.registryPieces.sort(new RegistryPieceComparator());
     }
 
     @Override

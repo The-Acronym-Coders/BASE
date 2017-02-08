@@ -12,7 +12,9 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-@RegistryPiece
+import static net.minecraftforge.fml.common.eventhandler.EventPriority.HIGH;
+
+@RegistryPiece(priority = HIGH)
 public class EntityRegisterRegistryPiece extends RegistryPieceBase<EntityEntry> {
     public int nextAvailableID = 0;
 

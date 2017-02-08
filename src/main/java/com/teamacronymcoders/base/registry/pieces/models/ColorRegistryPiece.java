@@ -9,7 +9,9 @@ import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import com.teamacronymcoders.base.registry.pieces.RegistrySide;
 import net.minecraft.util.ResourceLocation;
 
-@RegistryPiece(RegistrySide.CLIENT)
+import static net.minecraftforge.fml.common.eventhandler.EventPriority.LOW;
+
+@RegistryPiece(value = RegistrySide.CLIENT, priority = LOW)
 public class ColorRegistryPiece extends RegistryPieceBase {
     @Override
     public boolean acceptsRegistry(Registry registry) {
