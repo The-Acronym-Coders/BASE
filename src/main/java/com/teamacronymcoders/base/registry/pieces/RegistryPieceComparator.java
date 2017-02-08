@@ -13,6 +13,6 @@ public class RegistryPieceComparator implements Comparator<IRegistryPiece> {
         EventPriority eventPriority1 = annotation1.priority();
         EventPriority eventPriority2 = annotation2.priority();
 
-        return -Integer.compare(eventPriority1.ordinal(), eventPriority2.ordinal());
+        return Integer.compare(eventPriority1.ordinal(), eventPriority2.ordinal());
     }
 }
