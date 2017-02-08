@@ -10,7 +10,7 @@ import net.minecraft.util.text.TextFormatting;
 
 public class MissingMaterialPart extends MaterialPart {
     public MissingMaterialPart() {
-        super(null, new Part("MISSING", null));
+        super(null, new Part("Missing", null));
     }
 
     @Override
