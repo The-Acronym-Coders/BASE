@@ -21,6 +21,12 @@ public class ItemBlockSubBlockHolder extends ItemBlockGeneric<BlockSubBlockHolde
         return tintIndex == 0 ? this.getActualBlock().getSubBlock(stack.getMetadata()).getColor() : -1;
     }
 
+    @Override
+    @Nonnull
+    public String getItemStackDisplayName(@Nonnull ItemStack stack) {
+        return this.getActualBlock().getSubBlock(stack.getMetadata()).getLocalizedName();
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public List<ModelResourceLocation> getModelResourceLocations(List<ModelResourceLocation> models) {

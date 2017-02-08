@@ -34,7 +34,6 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
         this.setItemBlock(new ItemBlockSubBlockHolder(this));
     }
 
-
     @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
         for(int x = 0; x < 16; x++) {
