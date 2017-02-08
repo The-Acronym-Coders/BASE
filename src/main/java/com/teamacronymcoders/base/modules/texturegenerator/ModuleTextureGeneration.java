@@ -2,9 +2,8 @@ package com.teamacronymcoders.base.modules.texturegenerator;
 
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
-import com.teamacronymcoders.base.reference.Reference;
+import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.util.Platform;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 

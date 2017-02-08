@@ -4,7 +4,7 @@ import com.teamacronymcoders.base.api.ITool;
 import com.teamacronymcoders.base.api.ToolImpl;
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
-import com.teamacronymcoders.base.reference.Reference;
+import com.teamacronymcoders.base.Reference;
 
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTBase;

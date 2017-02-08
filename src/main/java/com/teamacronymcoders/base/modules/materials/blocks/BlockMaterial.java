@@ -9,7 +9,7 @@ import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modules.materials.items.ItemBlockMaterial;
-import com.teamacronymcoders.base.reference.Reference;
+import com.teamacronymcoders.base.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

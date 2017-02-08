@@ -2,8 +2,8 @@ package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.featuresystem.FeatureHandler;
 import com.teamacronymcoders.base.materialsystem.FeatureMaterials;
-import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
+import com.teamacronymcoders.base.subblocksystem.FeatureSubBlocks;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import static com.teamacronymcoders.base.reference.Reference.*;
+import static com.teamacronymcoders.base.Reference.*;
 
 @Mod(modid = MODID, name = NAME, version = VERSION, acceptedMinecraftVersions = "[" + MINECRAFT_VERSION + "]",
         dependencies = DEPENDENCIES)
@@ -29,6 +29,7 @@ public class Base extends BaseModFoundation<Base> {
 
     public Base() {
         super(MODID, NAME, VERSION, CreativeTabs.MISC);
+        FeatureHandler.requestFeature("MATERIALS");
     }
 
     @EventHandler
@@ -39,6 +40,7 @@ public class Base extends BaseModFoundation<Base> {
     @Override
     public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
         FeatureHandler.registerFeature("MATERIALS", new FeatureMaterials());
+        FeatureHandler.registerFeature("SUB_BLOCKS", new FeatureSubBlocks());
     }
 
     @EventHandler

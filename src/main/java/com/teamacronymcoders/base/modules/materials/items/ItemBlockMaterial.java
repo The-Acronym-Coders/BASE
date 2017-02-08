@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.modules.materials.items;
 
 import com.teamacronymcoders.base.api.materials.MaterialType;
+import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.items.ItemBlockGeneric;
 import com.teamacronymcoders.base.modules.materials.blocks.BlockMaterial;
 import net.minecraft.item.ItemStack;

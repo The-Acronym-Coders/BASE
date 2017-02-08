@@ -3,7 +3,7 @@ package com.teamacronymcoders.base.proxies;
 import com.teamacronymcoders.base.multiblock.IMultiblockRegistry;
 import com.teamacronymcoders.base.multiblock.MultiblockEventHandler;
 import com.teamacronymcoders.base.multiblock.MultiblockRegistry;
-import com.teamacronymcoders.base.reference.Reference;
+import com.teamacronymcoders.base.Reference;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

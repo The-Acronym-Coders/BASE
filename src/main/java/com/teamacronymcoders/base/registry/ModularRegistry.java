@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.registry;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
+import com.teamacronymcoders.base.registry.pieces.RegistryPieceComparator;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
@@ -12,12 +13,15 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
 
     public ModularRegistry(String name, IBaseMod mod, List<IRegistryPiece> registryPieces) {
         super(name, mod);
-        this.registryPieces = registryPieces.stream().filter(registryPiece->registryPiece.acceptsRegistry(this)).collect(Collectors.toList());
+        this.registryPieces = registryPieces.stream().filter(registryPiece->registryPiece.acceptsRegistry(this))
+                .collect(Collectors.toList());
+        this.registryPieces.sort(new RegistryPieceComparator());
     }
 
     @Override
     @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#preInit()
     public void preInit() {
+        super.preInit();
         entries.forEach((entryName, entryValue) -> registryPieces.stream()
                 .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
                 .forEach(registryPiece -> registryPiece.preInit(entryName, entryValue)));
@@ -26,6 +30,7 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
     @Override
     @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#init()
     public void init() {
+        super.init();
         entries.forEach((entryName, entryValue) -> registryPieces.stream()
                 .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
                 .forEach(registryPiece -> registryPiece.init(entryName, entryValue)));
@@ -34,6 +39,7 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
     @Override
     @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#postInit()
     public void postInit() {
+        super.postInit();
         entries.forEach((entryName, entryValue) -> registryPieces.stream()
                 .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
                 .forEach(registryPiece -> registryPiece.postInit(entryName, entryValue)));

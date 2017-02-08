@@ -10,7 +10,7 @@ import com.teamacronymcoders.base.modules.materials.blocks.BlockProperties;
 import com.teamacronymcoders.base.modules.materials.items.ItemPart;
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
-import com.teamacronymcoders.base.reference.Reference;
+import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.base.registry.ItemRegistry;
 import com.teamacronymcoders.base.registry.config.ConfigEntry;

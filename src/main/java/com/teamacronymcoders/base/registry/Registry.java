@@ -31,7 +31,7 @@ public abstract class Registry<T> {
         setLoadingStage(LoadingStage.DONE);
     }
 
-    public T get(String name) {
+    public T get(ResourceLocation name) {
         return this.entries.get(name);
     }
 

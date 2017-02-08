@@ -3,7 +3,7 @@ package com.teamacronymcoders.base.modules.minetweaker;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.exceptions.TooLateException;
-import com.teamacronymcoders.base.reference.Reference;
+import com.teamacronymcoders.base.Reference;
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import stanhebben.zenscript.annotations.Optional;
@@ -42,7 +42,6 @@ public class Materials {
         public Change(MaterialType mat, MaterialType.EnumPartType type) {
             this.mat = mat;
             this.type = type; //MaterialRegistry.getFromName(name);
-
         }
 
         @Override

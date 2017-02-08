@@ -5,12 +5,15 @@ import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@RegistryPiece
+import static net.minecraftforge.fml.common.eventhandler.EventPriority.LOW;
+
+@RegistryPiece(priority = LOW)
 public class OreDictRegistryPiece extends RegistryPieceBase<IHasOreDict> {
     public OreDictRegistryPiece() {
         super(IHasOreDict.class);
