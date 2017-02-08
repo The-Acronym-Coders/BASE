@@ -41,23 +41,14 @@ public class MaterialsSystem {
     public static void registerPartsForMaterial(Material material, String... partNames) {
         Arrays.stream(partNames).forEach(partName -> {
             Part part = PART_MAP.get(partName);
-            if(part != null) {
+            if (part != null) {
                 MaterialPart materialPart = new MaterialPart(material, part);
                 MATERIAL_PARTS.register(materialPart);
                 materialCreativeTab.addIconStacks(Lists.newArrayList(materialPart.getItemStack()));
+                part.getPartType().setup(materialPart);
             } else {
                 Base.instance.getLogger().error("Could not find part with name: " + partName);
             }
         });
-    }
-
-    public static void createSubBlocks() {
-        for(int x = 0; x < 35; x++) {
-            Material material = new Material(x + "", Color.BLACK, false);
-            material.registerPartsFor("storage");
-        }
-
-        MATERIAL_PARTS.getValues().stream().filter(materialPart -> materialPart.matchesPartType(PartType.BLOCK))
-                .forEach(materialPart -> SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
     }
 }
