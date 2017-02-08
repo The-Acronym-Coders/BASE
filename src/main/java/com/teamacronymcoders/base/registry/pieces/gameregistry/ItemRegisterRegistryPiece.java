@@ -21,11 +21,6 @@ public class ItemRegisterRegistryPiece extends RegistryPieceBase<Item> {
     }
 
     @Override
-    public boolean acceptsEntry(ResourceLocation name, Object entry) {
-        return entry instanceof Item;
-    }
-
-    @Override
     public void preInit(ResourceLocation name, Item entry) {
         GameRegistry.register(entry, name);
     }
