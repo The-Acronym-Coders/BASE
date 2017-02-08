@@ -21,6 +21,7 @@ import java.util.Map;
 
 public class MaterialsSystem {
     private static final Map<String, Part> PART_MAP = new HashMap<>();
+    private static final Map<String, Material> MATERIAL_MAP = new HashMap<>();
     public static final IForgeRegistry<MaterialPart> MATERIAL_PARTS = GameRegistry.findRegistry(MaterialPart.class);
     public static final ItemMaterialPart ITEM_MATERIAL_PART = new ItemMaterialPart();
     public static final MissingMaterialPart MISSING_MATERIAL_PART = new MissingMaterialPart();
@@ -39,9 +40,14 @@ public class MaterialsSystem {
 
     public static void registerPartsForMaterial(Material material, String... partNames) {
         Arrays.stream(partNames).forEach(partName -> {
-            MaterialPart materialPart = new MaterialPart(material, PART_MAP.get(partName));
-            MATERIAL_PARTS.register(materialPart);
-            materialCreativeTab.addIconStacks(Lists.newArrayList(materialPart.getItemStack()));
+            Part part = PART_MAP.get(partName);
+            if(part != null) {
+                MaterialPart materialPart = new MaterialPart(material, part);
+                MATERIAL_PARTS.register(materialPart);
+                materialCreativeTab.addIconStacks(Lists.newArrayList(materialPart.getItemStack()));
+            } else {
+                Base.instance.getLogger().error("Could not find part with name: " + partName);
+            }
         });
     }
 
