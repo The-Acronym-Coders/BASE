@@ -1,5 +1,8 @@
 package com.teamacronymcoders.base.modules.minetweaker;
 
+import com.teamacronymcoders.base.materialsystem.MaterialPart;
+import com.teamacronymcoders.base.materialsystem.materials.Material;
+import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import minetweaker.MineTweakerAPI;
 import minetweaker.MineTweakerImplementationAPI;
@@ -26,6 +29,11 @@ public class MineTweakerRegistration {
             ItemBracketHandler.rebuildItemRegistry();
             MineTweakerAPI.registerClass(IMaterialType.class);
             MineTweakerAPI.registerClass(Materials.class);
+
+            MineTweakerAPI.registerClass(MaterialFactory.class);
+            MineTweakerAPI.registerClass(MaterialPart.class);
+            MineTweakerAPI.registerClass(Material.class);
+            MineTweakerAPI.registerClass(Part.class);
 
             MineTweakerImplementationAPI.setScriptProvider(new ScriptProviderDirectory(scriptsDirectory));
             MineTweakerImplementationAPI.reload();

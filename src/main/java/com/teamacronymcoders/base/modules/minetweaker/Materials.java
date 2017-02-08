@@ -42,7 +42,6 @@ public class Materials {
         public Change(MaterialType mat, MaterialType.EnumPartType type) {
             this.mat = mat;
             this.type = type; //MaterialRegistry.getFromName(name);
-
         }
 
         @Override
