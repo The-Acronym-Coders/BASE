@@ -30,6 +30,7 @@ public class MaterialsSystem {
     public static void setup() {
         materialCreativeTab = new CreativeTabCarousel("base");
         ITEM_MATERIAL_PART.setCreativeTab(materialCreativeTab);
+        Base.instance.setCreativeTab(materialCreativeTab);
         Base.instance.getRegistry(ItemRegistry.class, "ITEM").register(ITEM_MATERIAL_PART);
         ProvidedParts.init();
     }

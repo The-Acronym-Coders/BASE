@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.subblocksystem.blocks.BlockSubBlockHolder;
 import com.teamacronymcoders.base.subblocksystem.blocks.ISubBlock;
+import com.teamacronymcoders.base.subblocksystem.blocks.MissingSubBlock;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockInfo;
 import com.teamacronymcoders.base.util.Platform;
 
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class SubBlockSystem {
     private static Map<String, Map<String, ISubBlock>> SUB_BLOCKS = new HashMap<>();
-
+    public static final ISubBlock MISSING_SUB_BLOCK = new MissingSubBlock();
     public static void registerSubBlock(ISubBlock iSubBlock) {
         IBaseMod mod = Platform.getCurrentMod();
         if(mod != null) {
