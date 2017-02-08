@@ -4,6 +4,7 @@ import java.util.*;
 
 public class FeatureHandler {
     private static Map<String, IFeature> features = new HashMap<>();
+    private static Map<String, List<String>> modsRequesting = new HashMap<>();
     private static List<String> requests = new ArrayList<>();
 
     public static void registerFeature(String name, IFeature feature) {
@@ -12,13 +13,22 @@ public class FeatureHandler {
         attemptActivate(name);
     }
 
-    public static void requestFeature(String name) {
+    public static void requestFeature(String name, String modid) {
         name = name.toLowerCase(Locale.US);
         if(features.containsKey(name)) {
             activate(name);
         } else {
-            requests.add(name);
+            if(!requests.contains(name)) {
+                requests.add(name);
+            }
         }
+        modsRequesting.computeIfAbsent(name, value -> new ArrayList<>());
+        modsRequesting.get(name).add(modid);
+    }
+
+    public static boolean didModRequestFeature(String name, String modid) {
+        name = name.toLowerCase(Locale.US);
+        return modsRequesting.get(name) != null && modsRequesting.get(name).contains(modid);
     }
 
     public static boolean isFeatureActivated(String name) {

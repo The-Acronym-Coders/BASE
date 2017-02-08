@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.client.models.SafeModelLoader;
+import com.teamacronymcoders.base.featuresystem.FeatureHandler;
 import com.teamacronymcoders.base.guisystem.GuiHandler;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
@@ -11,6 +12,7 @@ import com.teamacronymcoders.base.registry.pieces.IRegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistrySide;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
+import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
@@ -79,6 +81,10 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getModuleHandler().preInit(event);
 
         this.afterModuleHandlerInit(event);
+
+        if(FeatureHandler.didModRequestFeature("SUB_BLOCKS", this.getID())) {
+            SubBlockSystem.createBlocks(this);
+        }
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
     }

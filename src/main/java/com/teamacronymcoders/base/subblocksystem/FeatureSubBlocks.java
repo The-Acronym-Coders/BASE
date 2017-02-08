@@ -1,18 +1,17 @@
-package com.teamacronymcoders.base.materialsystem;
+package com.teamacronymcoders.base.subblocksystem;
 
 import com.teamacronymcoders.base.featuresystem.IFeature;
 
-public class FeatureMaterials implements IFeature {
-    boolean active;
+public class FeatureSubBlocks implements IFeature {
+    private boolean active;
 
     @Override
     public void activate() {
-        MaterialsSystem.setup();
         this.active = true;
     }
 
     @Override
     public boolean isActive() {
-        return active;
+        return this.active;
     }
 }
