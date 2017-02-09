@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base;
 
+import com.teamacronymcoders.base.entities.dataserializers.BaseDataSerializers;
 import com.teamacronymcoders.base.featuresystem.FeatureHandler;
 import com.teamacronymcoders.base.materialsystem.FeatureMaterials;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
@@ -34,6 +35,7 @@ public class Base extends BaseModFoundation<Base> {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+        BaseDataSerializers.registerSerializers();
     }
 
     @Override

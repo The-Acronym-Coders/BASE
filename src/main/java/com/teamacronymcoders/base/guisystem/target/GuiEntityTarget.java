@@ -22,7 +22,7 @@ public class GuiEntityTarget extends GuiTargetBase<Entity> {
     @Override
     @Nonnull
     public String getName() {
-        return "entity";
+        return "entities";
     }
 
     @Override

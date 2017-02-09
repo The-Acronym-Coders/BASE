@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.items.minecarts;
 
 import com.teamacronymcoders.base.client.models.IHasModel;
-import com.teamacronymcoders.base.entity.EntityMinecartBase;
+import com.teamacronymcoders.base.entities.EntityMinecartBase;
 import com.teamacronymcoders.base.util.BlockUtils;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.item.EntityMinecart;

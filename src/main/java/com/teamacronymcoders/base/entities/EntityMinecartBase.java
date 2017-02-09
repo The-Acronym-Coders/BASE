@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.entity;
+package com.teamacronymcoders.base.entities;
 
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.item.ItemMinecart;
