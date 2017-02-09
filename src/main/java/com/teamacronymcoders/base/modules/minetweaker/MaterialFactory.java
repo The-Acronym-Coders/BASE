@@ -1,8 +1,5 @@
 package com.teamacronymcoders.base.modules.minetweaker;
 
-import com.teamacronymcoders.base.Reference;
-import com.teamacronymcoders.base.api.materials.MaterialRegistry;
-import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.exceptions.TooLateException;
 import com.teamacronymcoders.base.materialsystem.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
@@ -39,7 +36,7 @@ public class MaterialFactory {
     @ZenMethod
     public static Part createPart(String name, String partTypeName) {
         checkIfTooLate();
-        return new Part(name, PartType.valueOf(partTypeName));
+        return new Part(name, MaterialsSystem.getPartType(partTypeName));
     }
 
     @ZenMethod

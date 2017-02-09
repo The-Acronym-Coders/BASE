@@ -1,21 +1,16 @@
 package com.teamacronymcoders.base.materialsystem.items;
 
 import com.teamacronymcoders.base.Base;
-import com.teamacronymcoders.base.api.materials.MaterialRegistry;
-import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.IHasItemMeshDefinition;
 import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.materialsystem.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Blocks;
+import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -34,7 +29,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
     @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
         MaterialsSystem.MATERIAL_PARTS.getValues().stream().filter(materialPart ->
-                materialPart.getPart().getPartType() == PartType.ITEM).forEach(materialPart -> {
+                materialPart.getPart().getPartType() == ProvidedParts.ITEM).forEach(materialPart -> {
             itemStacks.add(materialPart.getItemStack());
         });
         return itemStacks;

@@ -3,18 +3,15 @@ package com.teamacronymcoders.base.materialsystem;
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
-import com.teamacronymcoders.base.materialsystem.blocks.SubBlockPart;
 import com.teamacronymcoders.base.materialsystem.items.ItemMaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
-import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import com.teamacronymcoders.base.registry.ItemRegistry;
-import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.IForgeRegistry;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +19,7 @@ import java.util.Map;
 public class MaterialsSystem {
     private static final Map<String, Part> PART_MAP = new HashMap<>();
     private static final Map<String, Material> MATERIAL_MAP = new HashMap<>();
+    private static final Map<String, PartType> PART_TYPE_MAP = new HashMap<>();
     public static final IForgeRegistry<MaterialPart> MATERIAL_PARTS = GameRegistry.findRegistry(MaterialPart.class);
     public static final ItemMaterialPart ITEM_MATERIAL_PART = new ItemMaterialPart();
     public static final MissingMaterialPart MISSING_MATERIAL_PART = new MissingMaterialPart();
@@ -32,11 +30,32 @@ public class MaterialsSystem {
         ITEM_MATERIAL_PART.setCreativeTab(materialCreativeTab);
         Base.instance.setCreativeTab(materialCreativeTab);
         Base.instance.getRegistry(ItemRegistry.class, "ITEM").register(ITEM_MATERIAL_PART);
-        ProvidedParts.init();
+        ProvidedParts.initPartTypes();
+        ProvidedParts.initParts();
     }
 
     public static void registerPart(Part part) {
-        PART_MAP.put(part.getUnlocalizedName(), part);
+        PART_MAP.put(part.getName(), part);
+    }
+
+    public static void registerPartType(PartType partType) {
+        PART_TYPE_MAP.put(partType.getName(), partType);
+    }
+
+    public static void registerMaterial(Material material) {
+        MATERIAL_MAP.put(material.getName(), material);
+    }
+
+    public static Part getPart(String name) {
+        return PART_MAP.get(name);
+    }
+
+    public static PartType getPartType(String name) {
+        return PART_TYPE_MAP.get(name);
+    }
+
+    public static Material getMaterial(String name) {
+        return MATERIAL_MAP.get(name);
     }
 
     public static void registerPartsForMaterial(Material material, String... partNames) {

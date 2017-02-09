@@ -1,5 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
+import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
+import com.teamacronymcoders.base.materialsystem.materials.Material;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -10,6 +12,10 @@ public class Part {
     private String name;
     private String unlocalizedName;
     private PartType partType;
+
+    public Part(String name, String partTypeName) {
+        this(name, MaterialsSystem.getPartType(partTypeName));
+    }
 
     public Part(String name, PartType partType) {
         this.name = name;
@@ -47,12 +53,12 @@ public class Part {
 
     @ZenMethod
     public String getPartTypeName() {
-        return partType.name();
+        return partType.getName();
     }
 
     @ZenMethod
     public void setPartType(String partTypeName) {
-        this.partType = PartType.valueOf(partTypeName);
+        this.partType = MaterialsSystem.getPartType(partTypeName);
     }
 
     public String getOreDictPrefix() {
