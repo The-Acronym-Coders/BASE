@@ -9,6 +9,9 @@ import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import com.teamacronymcoders.base.registry.ItemRegistry;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.IForgeRegistry;
 
@@ -20,6 +23,7 @@ public class MaterialsSystem {
     private static final Map<String, Part> PART_MAP = new HashMap<>();
     private static final Map<String, Material> MATERIAL_MAP = new HashMap<>();
     private static final Map<String, PartType> PART_TYPE_MAP = new HashMap<>();
+    public static final MaterialPartDataSerializer MATERIAL_PART_SERIALIZER = new MaterialPartDataSerializer();
     public static final IForgeRegistry<MaterialPart> MATERIAL_PARTS = GameRegistry.findRegistry(MaterialPart.class);
     public static final ItemMaterialPart ITEM_MATERIAL_PART = new ItemMaterialPart();
     public static final MissingMaterialPart MISSING_MATERIAL_PART = new MissingMaterialPart();
@@ -32,6 +36,7 @@ public class MaterialsSystem {
         Base.instance.getRegistry(ItemRegistry.class, "ITEM").register(ITEM_MATERIAL_PART);
         ProvidedParts.initPartTypes();
         ProvidedParts.initParts();
+        DataSerializers.registerSerializer(MATERIAL_PART_SERIALIZER);
     }
 
     public static void registerPart(Part part) {
