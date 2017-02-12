@@ -30,10 +30,10 @@ public class MineTweakerRegistration {
             MineTweakerAPI.registerClass(IMaterialType.class);
             MineTweakerAPI.registerClass(Materials.class);
 
-            MineTweakerAPI.registerClass(MaterialFactory.class);
-            MineTweakerAPI.registerClass(MaterialPart.class);
-            MineTweakerAPI.registerClass(Material.class);
-            MineTweakerAPI.registerClass(Part.class);
+            //MineTweakerAPI.registerClass(MaterialFactory.class);
+            //MineTweakerAPI.registerClass(MaterialPart.class);
+            //MineTweakerAPI.registerClass(Material.class);
+            //MineTweakerAPI.registerClass(Part.class);
 
             MineTweakerImplementationAPI.setScriptProvider(new ScriptProviderDirectory(scriptsDirectory));
             MineTweakerImplementationAPI.reload();
