@@ -72,7 +72,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.getLibProxy().addOBJDomain();
         }
 
-        this.guiHandler = new GuiHandler(this, event.getAsmData());
+        this.guiHandler = new GuiHandler(this);
 
         this.beforeModuleHandlerInit(event);
 
