@@ -18,6 +18,7 @@ public class MaterialPart implements IForgeRegistryEntry<MaterialPart> {
     private Part part;
     private ResourceLocation textureLocation;
     private boolean colorize;
+    private MaterialPartData data;
 
     public MaterialPart(Material material, Part part) {
         this.setMaterial(material);
