@@ -1,6 +1,8 @@
 package com.teamacronymcoders.base.tileentities;
 
-import com.teamacronymcoders.base.blocks.SideType;
+import java.util.Arrays;
+
+import com.teamacronymcoders.base.blocks.properties.SideType;
 import com.teamacronymcoders.base.client.IBlockOverlayText;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
