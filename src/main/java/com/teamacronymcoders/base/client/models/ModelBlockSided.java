@@ -40,7 +40,7 @@ public class ModelBlockSided implements IBakedModel {
     private static final String MODEL_PREFIX = "confSides_";
     private static final String RESOURCE_LOCATION = "models/block/smartmodel/" + MODEL_PREFIX;
     //Holy shit, this type-chaining is messy. But I wanted to use lambdas!
-    private static HashMap<String, ITextureNamer> TYPES = new HashMap<>();
+    public static HashMap<String, ITextureNamer> TYPES = new HashMap<>();
 
     static {
         TYPES.put("hud_", new ITextureNamer() {//horizontal, up, down
@@ -153,52 +153,7 @@ public class ModelBlockSided implements IBakedModel {
         return ItemOverrideList.NONE;
     }
 
-    public static class Loader implements ICustomModelLoader {
-        private String modid;
-
-        public Loader(IBaseMod mod) {
-            this.modid = mod.getID();
-            ModelLoaderRegistry.registerLoader(this);
-        }
-
-        @Override
-        public void onResourceManagerReload(@Nonnull IResourceManager resourceManager) {
-            modelCache.clear();
-        }
-
-        @Override
-        public boolean accepts(ResourceLocation modelLocation) {
-            return modelLocation.getResourceDomain().equals(modid) && modelLocation.getResourcePath().contains(RESOURCE_LOCATION);
-        }
-
-        @Override
-        public IModel loadModel(ResourceLocation modelLocation) throws IOException {
-            String resourcePath = modelLocation.getResourcePath();
-            int pos = resourcePath.indexOf(MODEL_PREFIX);
-            if (pos >= 0) {
-                pos += MODEL_PREFIX.length();
-                String sub = resourcePath.substring(pos);
-                String name = sub;
-                String type = null;
-                ImmutableMap.Builder<String, ResourceLocation> builder = ImmutableMap.builder();
-                for (Map.Entry<String, ITextureNamer> e : TYPES.entrySet())
-                    if (sub.startsWith(e.getKey())) {
-                        type = e.getKey();
-                        name = sub.substring(type.length());
-                        for (EnumFacing f : EnumFacing.VALUES)
-                            for (SideType cfg : SideType.values()) {
-                                String key = f.getName() + "_" + cfg.getName();
-                                String tex = name + "_" + e.getValue().getTextureName(f, cfg);
-                                builder.put(key, new ResourceLocation(modid, "blocks/" + tex));
-                            }
-                    }
-                return new ConfigSidesModelBase(modid, name, type, builder.build());
-            }
-            return ModelLoaderRegistry.getMissingModel();
-        }
-    }
-
-    private static class ConfigSidesModelBase implements IRetexturableModel {
+    public static class ConfigSidesModelBase implements IRetexturableModel {
         final String name;
         final String modid;
         final String type;
@@ -272,7 +227,7 @@ public class ModelBlockSided implements IBakedModel {
         }
     }
 
-    interface ITextureNamer {
+    public interface ITextureNamer {
         default String getTextureName(EnumFacing side, SideType cfg) {
             String s = nameFromSide(side, cfg);
             String c = nameFromCfg(side, cfg);
