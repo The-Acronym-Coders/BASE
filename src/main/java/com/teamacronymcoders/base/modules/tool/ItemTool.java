@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.modules.tool;
 
-import com.teamacronymcoders.base.api.BaseAPI;
+import com.teamacronymcoders.base.Capabilities;
 import com.teamacronymcoders.base.api.ITool;
 import com.teamacronymcoders.base.api.ToolImpl;
 import com.teamacronymcoders.base.items.IHasRecipe;
@@ -14,6 +14,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemTool extends ItemBase implements IHasRecipe {
@@ -25,6 +26,7 @@ public class ItemTool extends ItemBase implements IHasRecipe {
     }
 
     @Override
+    @Nonnull
     public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack,
                                                                                        NBTTagCompound nbt) {
         return new CapabilityProvider(stack);
@@ -46,16 +48,12 @@ public class ItemTool extends ItemBase implements IHasRecipe {
 
         @Override
         public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-            if (capability == BaseAPI.TOOL_CAPABILITY)
-                return true;
-            return false;
+            return capability == Capabilities.TOOL;
         }
 
         @Override
         public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-            if (capability == BaseAPI.TOOL_CAPABILITY)
-                return BaseAPI.TOOL_CAPABILITY.cast(spanner);
-            return null;
+            return capability == Capabilities.TOOL ? Capabilities.TOOL.cast(spanner) : null;
         }
     }
 
