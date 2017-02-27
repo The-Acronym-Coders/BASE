@@ -6,6 +6,7 @@ import com.teamacronymcoders.base.util.BlockUtils;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemMinecart;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -68,6 +69,11 @@ public abstract class ItemMinecartBase extends ItemMinecart implements /*IMineca
             return EnumActionResult.SUCCESS;
         }
         return EnumActionResult.PASS;
+    }
+
+    @Override
+    public Item getItem() {
+        return this;
     }
 
     @Nonnull
