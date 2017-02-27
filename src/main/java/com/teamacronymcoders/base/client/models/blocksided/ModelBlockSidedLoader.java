@@ -3,8 +3,6 @@ package com.teamacronymcoders.base.client.models.blocksided;
 import com.google.common.collect.ImmutableMap;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.blocks.properties.SideType;
-import com.teamacronymcoders.base.client.models.ModelBlockSided;
-import com.teamacronymcoders.base.client.models.ModelBlockSided.ConfigSidesModelBase;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.EnumFacing;
@@ -21,14 +19,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.teamacronymcoders.base.client.models.ModelBlockSided.TYPES;
+import static com.teamacronymcoders.base.client.models.blocksided.BakedModelBlockSided.TYPES;
 
 @SideOnly(Side.CLIENT)
 public class ModelBlockSidedLoader implements ICustomModelLoader {
     private String modid;
     private static final String MODEL_PREFIX = "confSides_";
     private static final String RESOURCE_LOCATION = "models/block/smartmodel/" + MODEL_PREFIX;
-    //TODO: Find teh other clearing source
+    //TODO: Find the other clearing source
     public static HashMap<String, List<BakedQuad>> modelCache = new HashMap<>();
 
     public ModelBlockSidedLoader(IBaseMod mod) {
@@ -56,20 +54,21 @@ public class ModelBlockSidedLoader implements ICustomModelLoader {
             String name = sub;
             String type = null;
             ImmutableMap.Builder<String, ResourceLocation> builder = ImmutableMap.builder();
-            for (Map.Entry<String, ModelBlockSided.ITextureNamer> e : TYPES.entrySet()) {
+            for (Map.Entry<String, ITextureNamer> e : TYPES.entrySet()) {
                 if (sub.startsWith(e.getKey())) {
                     type = e.getKey();
                     name = sub.substring(type.length());
-                    for (EnumFacing f : EnumFacing.VALUES)
+                    for (EnumFacing f : EnumFacing.VALUES) {
                         for (SideType cfg : SideType.values()) {
                             String key = f.getName() + "_" + cfg.getName();
                             String tex = name + "_" + e.getValue().getTextureName(f, cfg);
                             builder.put(key, new ResourceLocation(modid, "blocks/" + tex));
                         }
+                    }
                 }
             }
 
-            return new ConfigSidesModelBase(modid, name, type, builder.build());
+            return new ModelBlockSided(modid, name, type, builder.build());
         }
         return ModelLoaderRegistry.getMissingModel();
     }

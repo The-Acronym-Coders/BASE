@@ -1,26 +1,15 @@
-package com.teamacronymcoders.base.client.models;
+package com.teamacronymcoders.base.client.models.blocksided;
 
-import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.blocks.properties.PropertySideType;
 import com.teamacronymcoders.base.blocks.properties.SideType;
-import com.teamacronymcoders.base.client.ClientHelper;
+import com.teamacronymcoders.base.client.models.ModelUtils;
+import com.teamacronymcoders.base.client.models.blocksided.ITextureNamer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ICustomModelLoader;
-import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.IRetexturableModel;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -28,15 +17,12 @@ import org.lwjgl.util.vector.Vector3f;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.IOException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 //Borrowed from IE with Permission
 @SideOnly(Side.CLIENT)
-public class ModelBlockSided implements IBakedModel {
+public class BakedModelBlockSided implements IBakedModel {
     private static final String MODEL_PREFIX = "confSides_";
     private static final String RESOURCE_LOCATION = "models/block/smartmodel/" + MODEL_PREFIX;
     //Holy shit, this type-chaining is messy. But I wanted to use lambdas!
@@ -57,7 +43,7 @@ public class ModelBlockSided implements IBakedModel {
     final String modid;
     public TextureAtlasSprite[][] textures;
 
-    public ModelBlockSided(String modid, String name, TextureAtlasSprite[][] textures) {
+    public BakedModelBlockSided(String modid, String name, TextureAtlasSprite[][] textures) {
         this.name = name;
         this.modid = modid;
         this.textures = textures;
@@ -129,6 +115,7 @@ public class ModelBlockSided implements IBakedModel {
         return this.textures[0][0];
     }
 
+    @SuppressWarnings("deprecation")
     static final ItemCameraTransforms defaultTransforms = new ItemCameraTransforms(
             new ItemTransformVec3f(new Vector3f(75, 45, 0), new Vector3f(0, .25f, 0), new Vector3f(0.375f, 0.375f, 0.375f)), //thirdperson left
             new ItemTransformVec3f(new Vector3f(75, 45, 0), new Vector3f(0, .15625f, 0), new Vector3f(0.375f, 0.375f, 0.375f)), //thirdperson left
@@ -151,103 +138,5 @@ public class ModelBlockSided implements IBakedModel {
     @Nonnull
     public ItemOverrideList getOverrides() {
         return ItemOverrideList.NONE;
-    }
-
-    public static class ConfigSidesModelBase implements IRetexturableModel {
-        final String name;
-        final String modid;
-        final String type;
-        ImmutableMap<String, ResourceLocation> textures;
-
-        public ConfigSidesModelBase(String modid, String name, String type, ImmutableMap<String, ResourceLocation> textures) {
-            this.name = name;
-            this.modid = modid;
-            this.type = type;
-            this.textures = textures;
-        }
-
-        @Override
-        public Collection<ResourceLocation> getDependencies() {
-            return ImmutableList.of();
-        }
-
-        @Override
-        public Collection<ResourceLocation> getTextures() {
-            return textures.values();
-        }
-
-        @Override
-        public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-            TextureAtlasSprite[][] tex = new TextureAtlasSprite[6][3];
-            for (EnumFacing f : EnumFacing.VALUES) {
-                for (SideType cfg : SideType.values()) {
-                    ResourceLocation rl = textures.get(f.getName() + "_" + cfg.getName());
-                    if (rl != null) {
-                        tex[f.ordinal()][cfg.ordinal()] = ModelUtils.getRegisterSprite(ClientHelper.mc().getTextureMapBlocks(), rl);
-                    }
-                }
-            }
-            return new ModelBlockSided(modid, name, tex);
-        }
-
-        @Override
-        public IModelState getDefaultState() {
-            return null;
-        }
-
-        @Override
-        public IModel retexture(ImmutableMap<String, String> textures) {
-            String newName = this.name;
-            ImmutableMap.Builder<String, ResourceLocation> builder = ImmutableMap.builder();
-            for (EnumFacing f : EnumFacing.VALUES)
-                for (SideType cfg : SideType.values()) {
-                    String key = f.getName() + "_" + cfg.getName();
-                    ResourceLocation rl = this.textures.get(key);
-                    if (textures.containsKey(key)) {
-                        rl = new ResourceLocation(textures.get(key));
-                    } else if (textures.containsKey(f.getName())) {
-                        ITextureNamer namer = TYPES.get(type);
-                        rl = new ResourceLocation(textures.get(f.getName()));
-                        if (namer != null) {
-                            String c = namer.nameFromCfg(f, cfg);
-                            if (c != null) {
-                                rl = new ResourceLocation(textures.get(f.getName()) + "_" + c);
-                            }
-                        }
-                    } else if (textures.containsKey("name")) {
-                        ITextureNamer namer = TYPES.get(type);
-                        newName = textures.get("name");
-                        if (namer != null) {
-                            rl = new ResourceLocation(newName + "_" + namer.getTextureName(f, cfg));
-                        }
-                    }
-                    builder.put(key, rl);
-                }
-            return new ConfigSidesModelBase(modid, newName, type, builder.build());
-        }
-    }
-
-    public interface ITextureNamer {
-        default String getTextureName(EnumFacing side, SideType cfg) {
-            String s = nameFromSide(side, cfg);
-            String c = nameFromCfg(side, cfg);
-            String textureName = "";
-            if (s != null && c != null) {
-                textureName =  s + "_" + c;
-            } else if (s != null) {
-                textureName =  s;
-            } else if (c != null) {
-                textureName =  c;
-            }
-            return textureName;
-        }
-
-        default String nameFromSide(EnumFacing side, SideType cfg) {
-            return side.getName();
-        }
-
-        default String nameFromCfg(EnumFacing side, SideType cfg) {
-            return cfg.getName();
-        }
     }
 }
