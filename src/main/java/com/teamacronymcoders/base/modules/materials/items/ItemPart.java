@@ -72,9 +72,11 @@ public class ItemPart extends ItemBase implements IHasOreDict, IHasItemColor {
     public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
         for (Map.Entry<Integer, MaterialType> ent : MaterialRegistry.getMaterials().entrySet()) {
             MaterialType mat = ent.getValue();
-            ItemStack itemStack = new ItemStack(this, 1, ent.getKey());
-            String oreDictName = type.getName().toLowerCase() + mat.getName().replace(" ", "");
-            names.put(itemStack, oreDictName);
+            if(mat.isTypeSet(type)) {
+                ItemStack itemStack = new ItemStack(this, 1, ent.getKey());
+                String oreDictName = type.getName().toLowerCase() + mat.getName().replace(" ", "");
+                names.put(itemStack, oreDictName);
+            }
         }
         return names;
     }
