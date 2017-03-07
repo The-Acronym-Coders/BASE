@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.blocks.properties;
 
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.util.IStringSerializable;
 
 import javax.annotation.Nonnull;
