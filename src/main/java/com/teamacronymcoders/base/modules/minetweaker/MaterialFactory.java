@@ -58,7 +58,7 @@ public class MaterialFactory {
 
         @Override
         public void apply() {
-            if (MaterialsSystem.MATERIAL_PARTS.containsKey(materialPart.getRegistryName())) {
+            if(!MaterialsSystem.MATERIAL_PARTS.containsKey(materialPart.getRegistryName())) {
                 MaterialsSystem.MATERIAL_PARTS.register(materialPart);
             }
         }

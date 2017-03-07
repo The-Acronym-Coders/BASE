@@ -21,6 +21,12 @@ public class ProvidedParts {
     public static final Part STORAGE = new Part("Storage", BLOCK);
     public static final Part ORE_BLOCK = new Part("Ore", ORE);
 
+    public static void initPartTypes() {
+        MaterialsSystem.registerPartType(ITEM);
+        MaterialsSystem.registerPartType(BLOCK);
+        MaterialsSystem.registerPartType(ORE);
+    }
+
     public static void initParts() {
         MaterialsSystem.registerPart(INGOT);
         MaterialsSystem.registerPart(BEAM);
@@ -34,9 +40,5 @@ public class ProvidedParts {
         MaterialsSystem.registerPart(ORE_BLOCK);
     }
 
-    public static void initPartTypes() {
-        MaterialsSystem.registerPartType(ITEM);
-        MaterialsSystem.registerPartType(BLOCK);
-        MaterialsSystem.registerPartType(ORE);
-    }
+
 }
