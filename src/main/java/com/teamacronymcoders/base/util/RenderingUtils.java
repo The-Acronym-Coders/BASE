@@ -10,12 +10,9 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
-
-import javax.annotation.Nonnull;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -32,9 +29,9 @@ public class RenderingUtils {
      */
     public static void render3DItem(EntityItem item, float angle) {
         GL11.glPushMatrix();
-            item.hoverStart = 0F;
-            GL11.glRotatef(angle, 0, 1, 0);
-            mc.getRenderManager().doRenderEntity(item, 0, 0, 0, 0, 0, false);
+        item.hoverStart = 0F;
+        GL11.glRotatef(angle, 0, 1, 0);
+        mc.getRenderManager().doRenderEntity(item, 0, 0, 0, 0, 0, false);
         GL11.glPopMatrix();
     }
 
@@ -69,16 +66,16 @@ public class RenderingUtils {
      */
     private static void renderTranslucent(VertexBuffer vertex, double startX, double startY, double startZ, double endX, double endY, double endZ, double rotationX, double rotationY, double rotationZ) {
         glPushMatrix();
-            glRotated(rotationX, 1, 0, 0);
-            glRotated(rotationY, 0, 1, 0);
-            glRotated(rotationZ, 0, 0, 1);
+        glRotated(rotationX, 1, 0, 0);
+        glRotated(rotationY, 0, 1, 0);
+        glRotated(rotationZ, 0, 0, 1);
 
-            glPushMatrix();
-                for (int j = 0; j < 4; j++) {
-                    drawTranslucent(vertex, startX, startY, startZ, endX, endY, endZ);
-                    glRotatef(-90, 0, 1, 0);
-                }
-            glPopMatrix();
+        glPushMatrix();
+        for (int j = 0; j < 4; j++) {
+            drawTranslucent(vertex, startX, startY, startZ, endX, endY, endZ);
+            glRotatef(-90, 0, 1, 0);
+        }
+        glPopMatrix();
         glPopMatrix();
     }
 
@@ -95,10 +92,10 @@ public class RenderingUtils {
      */
     private static void drawTranslucent(VertexBuffer vertex, double startX, double startY, double startZ, double endX, double endY, double endZ) {
         vertex.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-            vertex.pos(-startX, startY, -startZ).color(100, 0, 0, 255).endVertex();
-            vertex.pos(startX, startY, -startZ).color(0, 100, 0, 255).endVertex();
-            vertex.pos(endX, endY, -endZ).color(0, 0, 100, 255).endVertex();
-            vertex.pos(-endX, endY, -endZ).color(40, 20, 255, 255).endVertex();
+        vertex.pos(-startX, startY, -startZ).color(100, 0, 0, 255).endVertex();
+        vertex.pos(startX, startY, -startZ).color(0, 100, 0, 255).endVertex();
+        vertex.pos(endX, endY, -endZ).color(0, 0, 100, 255).endVertex();
+        vertex.pos(-endX, endY, -endZ).color(40, 20, 255, 255).endVertex();
         Tessellator.getInstance().draw();
     }
 
@@ -118,14 +115,14 @@ public class RenderingUtils {
      */
     public static void renderBeamAt(Entity entity, double startX, double startY, double startZ, double endX, double endY, double endZ, double rotationX, double rotationY, double rotationZ) {
         glPushMatrix();
-            glTranslated(startX, startY, startZ);
-            glPushAttrib(GL_ALL_ATTRIB_BITS);
-                setupGlTranslucent();
-                glTranslatef(0.5f, 0, 0.5f);
-                Tessellator tessellator = Tessellator.getInstance();
-                VertexBuffer vertex = tessellator.getBuffer();
-                renderTranslucent(vertex, startX, startY, startZ, endX, endY, endZ, rotationX, rotationY, rotationZ);
-            glPopAttrib();
+        glTranslated(startX, startY, startZ);
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        setupGlTranslucent();
+        glTranslatef(0.5f, 0, 0.5f);
+        Tessellator tessellator = Tessellator.getInstance();
+        VertexBuffer vertex = tessellator.getBuffer();
+        renderTranslucent(vertex, startX, startY, startZ, endX, endY, endZ, rotationX, rotationY, rotationZ);
+        glPopAttrib();
         glPopMatrix();
     }
 
@@ -149,19 +146,19 @@ public class RenderingUtils {
         VertexBuffer buff = tess.getBuffer();
 
         GL11.glPushMatrix();
-            GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS | GL11.GL_LIGHTING_BIT);
-                GL11.glLineWidth(lineWidth);
-                GL11.glDisable(GL_TEXTURE_2D);
-                    GL11.glBlendFunc(770, 1);
-                        buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
-                        buff.pos(x, y, 0).color(red, green, blue, alpha).endVertex();
-                        buff.pos(x2, y2, 0).color(red, green, blue, alpha).endVertex();
-                        tess.draw();
-                    GL11.glBlendFunc(770, 771);
-                    GL11.glDisable(32826);
-                GL11.glEnable(GL_TEXTURE_2D);
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glPopAttrib();
+        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS | GL11.GL_LIGHTING_BIT);
+        GL11.glLineWidth(lineWidth);
+        GL11.glDisable(GL_TEXTURE_2D);
+        GL11.glBlendFunc(770, 1);
+        buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
+        buff.pos(x, y, 0).color(red, green, blue, alpha).endVertex();
+        buff.pos(x2, y2, 0).color(red, green, blue, alpha).endVertex();
+        tess.draw();
+        GL11.glBlendFunc(770, 771);
+        GL11.glDisable(32826);
+        GL11.glEnable(GL_TEXTURE_2D);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glPopAttrib();
         GL11.glPopMatrix();
     }
 
@@ -188,17 +185,17 @@ public class RenderingUtils {
         VertexBuffer buff = tess.getBuffer();
 
         GL11.glPushMatrix();
-            GL11.glLineWidth(lineWidth);
-                GL11.glDisable(3553);
-                    GL11.glBlendFunc(770, 1);
-                        buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
-                        buff.pos(x, y, z).color(red, green, blue, alpha).endVertex();
-                        buff.pos(x2, y2, z2).color(red, green, blue, alpha).endVertex();
-                        tess.draw();
-                    GL11.glBlendFunc(770, 771);
-                GL11.glDisable(32826);
-            GL11.glEnable(3553);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glLineWidth(lineWidth);
+        GL11.glDisable(3553);
+        GL11.glBlendFunc(770, 1);
+        buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
+        buff.pos(x, y, z).color(red, green, blue, alpha).endVertex();
+        buff.pos(x2, y2, z2).color(red, green, blue, alpha).endVertex();
+        tess.draw();
+        GL11.glBlendFunc(770, 771);
+        GL11.glDisable(32826);
+        GL11.glEnable(3553);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glPopMatrix();
     }
 
@@ -220,17 +217,17 @@ public class RenderingUtils {
         VertexBuffer buff = tess.getBuffer();
 
         GL11.glPushMatrix();
-            GL11.glLineWidth(lineWidth);
-            GL11.glDisable(3553);
-                GL11.glBlendFunc(770, 771);
-                    buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
-                    buff.pos(x, y, 0).color(red, green, blue, alpha).endVertex();
-                    buff.pos(x2, y2, 0).color(red, green, blue, alpha).endVertex();
-                    tess.draw();
-                GL11.glBlendFunc(770, 771);
-                GL11.glDisable(32826);
-                GL11.glDisable(3042);
-            GL11.glEnable(3553);
+        GL11.glLineWidth(lineWidth);
+        GL11.glDisable(3553);
+        GL11.glBlendFunc(770, 771);
+        buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
+        buff.pos(x, y, 0).color(red, green, blue, alpha).endVertex();
+        buff.pos(x2, y2, 0).color(red, green, blue, alpha).endVertex();
+        tess.draw();
+        GL11.glBlendFunc(770, 771);
+        GL11.glDisable(32826);
+        GL11.glDisable(3042);
+        GL11.glEnable(3553);
         GL11.glPopMatrix();
     }
 
@@ -254,17 +251,17 @@ public class RenderingUtils {
         VertexBuffer buff = tess.getBuffer();
 
         GL11.glPushMatrix();
-            GL11.glLineWidth(lineWidth);
-            GL11.glDisable(3553);
-                GL11.glBlendFunc(770, 771);
-                    buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
-                    buff.pos(x, y, z).color(red, green, blue, alpha).endVertex();
-                    buff.pos(x2, y2, z2).color(red, green, blue, alpha).endVertex();
-                    tess.draw();
-                GL11.glBlendFunc(770, 771);
-                GL11.glDisable(32826);
-                GL11.glDisable(3042);
-            GL11.glEnable(3553);
+        GL11.glLineWidth(lineWidth);
+        GL11.glDisable(3553);
+        GL11.glBlendFunc(770, 771);
+        buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
+        buff.pos(x, y, z).color(red, green, blue, alpha).endVertex();
+        buff.pos(x2, y2, z2).color(red, green, blue, alpha).endVertex();
+        tess.draw();
+        GL11.glBlendFunc(770, 771);
+        GL11.glDisable(32826);
+        GL11.glDisable(3042);
+        GL11.glEnable(3553);
         GL11.glPopMatrix();
     }
 
@@ -289,17 +286,17 @@ public class RenderingUtils {
         VertexBuffer buff = tess.getBuffer();
 
         GL11.glPushMatrix();
-            GL11.glLineWidth(lineWidth);
-            GL11.glDisable(3553);
-                GL11.glBlendFunc(770, 771);
-                    buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
-                    buff.pos(x, y, 0).color(red, green, blue, alpha).endVertex();
-                    buff.pos(x2, y2, 0).color(red, green, blue, alpha).endVertex();
-                    tess.draw();
-                GL11.glBlendFunc(770, 771);
-                GL11.glDisable(32826);
-                GL11.glDisable(3042);
-            GL11.glEnable(3553);
+        GL11.glLineWidth(lineWidth);
+        GL11.glDisable(3553);
+        GL11.glBlendFunc(770, 771);
+        buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
+        buff.pos(x, y, 0).color(red, green, blue, alpha).endVertex();
+        buff.pos(x2, y2, 0).color(red, green, blue, alpha).endVertex();
+        tess.draw();
+        GL11.glBlendFunc(770, 771);
+        GL11.glDisable(32826);
+        GL11.glDisable(3042);
+        GL11.glEnable(3553);
         GL11.glPopMatrix();
     }
 
@@ -326,17 +323,17 @@ public class RenderingUtils {
         VertexBuffer buff = tess.getBuffer();
 
         GL11.glPushMatrix();
-            GL11.glLineWidth(lineWidth);
-            GL11.glDisable(3553);
-                GL11.glBlendFunc(770, 1);
-                    buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
-                    buff.pos(x, y, z).color(red, green, blue, alpha).endVertex();
-                    buff.pos(x2, y2, z2).color(red, green, blue, alpha).endVertex();
-                    tess.draw();
-                GL11.glBlendFunc(770, 771);
-                GL11.glDisable(32826);
-                GL11.glDisable(3042);
-            GL11.glEnable(3553);
+        GL11.glLineWidth(lineWidth);
+        GL11.glDisable(3553);
+        GL11.glBlendFunc(770, 1);
+        buff.begin(3, DefaultVertexFormats.POSITION_COLOR);
+        buff.pos(x, y, z).color(red, green, blue, alpha).endVertex();
+        buff.pos(x2, y2, z2).color(red, green, blue, alpha).endVertex();
+        tess.draw();
+        GL11.glBlendFunc(770, 771);
+        GL11.glDisable(32826);
+        GL11.glDisable(3042);
+        GL11.glEnable(3553);
         GL11.glPopMatrix();
     }
 
@@ -401,14 +398,15 @@ public class RenderingUtils {
 
     /**
      * Draws a 3D rectange
-     * @param x startX
-     * @param y startY
-     * @param z startZ
-     * @param width width
-     * @param height height
-     * @param red redColour
-     * @param green greenColour
-     * @param blue blueColour
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param z         startZ
+     * @param width     width
+     * @param height    height
+     * @param red       redColour
+     * @param green     greenColour
+     * @param blue      blueColour
      * @param lineWidth lineWidth
      */
     public static void drawRect(double x, double y, double z, double width, double height, float red, float green, float blue, float lineWidth) {
@@ -420,16 +418,17 @@ public class RenderingUtils {
 
     /**
      * Draws a non-fading 3D rectangle
-     * @param x startX
-     * @param y startY
-     * @param z startZ
-     * @param width width
-     * @param height height
-     * @param red redColour
-     * @param green greenColour
-     * @param blue blueColour
+     *
+     * @param x         startX
+     * @param y         startY
+     * @param z         startZ
+     * @param width     width
+     * @param height    height
+     * @param red       redColour
+     * @param green     greenColour
+     * @param blue      blueColour
      * @param lineWidth lineWidth
-     * @param alpha alpha
+     * @param alpha     alpha
      */
     public static void drawRectNoFade(double x, double y, double z, double width, double height, float red, float green, float blue, float lineWidth, float alpha) {
         drawLineNoFade(x, y, z, x + width, y, z, red, green, blue, lineWidth, alpha);

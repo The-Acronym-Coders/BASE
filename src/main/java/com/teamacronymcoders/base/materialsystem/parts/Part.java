@@ -1,7 +1,6 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
-import com.teamacronymcoders.base.materialsystem.materials.Material;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 

@@ -5,7 +5,6 @@ import com.teamacronymcoders.base.materialsystem.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import minetweaker.IUndoableAction;
 import net.minecraft.util.ResourceLocation;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -45,7 +44,7 @@ public class MaterialFactory {
     }
 
     public static void checkIfTooLate() {
-        if(MinetweakerModule.tooLate) {
+        if (MinetweakerModule.tooLate) {
             throw new TooLateException("You have to put scripts using BASE Functionality in ./config/ACRONYM/BASE/scripts");
         }
     }
@@ -59,7 +58,7 @@ public class MaterialFactory {
 
         @Override
         public void apply() {
-            if(MaterialsSystem.MATERIAL_PARTS.containsKey(materialPart.getRegistryName())) {
+            if (MaterialsSystem.MATERIAL_PARTS.containsKey(materialPart.getRegistryName())) {
                 MaterialsSystem.MATERIAL_PARTS.register(materialPart);
             }
         }

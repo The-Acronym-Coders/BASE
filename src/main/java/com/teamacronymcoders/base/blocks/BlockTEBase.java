@@ -32,7 +32,7 @@ public abstract class BlockTEBase<T extends TileEntity> extends BlockBase implem
     @SuppressWarnings("unchecked")
     public T getTileEntity(IBlockAccess world, BlockPos pos) {
         TileEntity tileEntity = world.getTileEntity(pos);
-        if(tileEntity != null && tileEntity.getClass() == this.getTileEntityClass()) {
+        if (tileEntity != null && tileEntity.getClass() == this.getTileEntityClass()) {
             return (T) tileEntity;
         }
         return null;

@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.materialsystem;
 
-import com.teamacronymcoders.base.entities.dataserializers.ResourceLocationDataSerializer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializer;

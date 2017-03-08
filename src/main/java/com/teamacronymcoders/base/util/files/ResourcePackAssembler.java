@@ -18,7 +18,7 @@ import java.util.Locale;
 /**
  * Borrowed from EnderCore
  * (https://github.com/SleepyTrousers/EnderCore/blob/1.10/src/main/java/com/enderio/core/common/util/ResourcePackAssembler.java)
- *
+ * <p>
  * A class that can be used to inject resources from files/folders outside your
  * mod resources. Useful for loading textures and other assets from the config
  * dir or elsewhere.
@@ -46,6 +46,7 @@ public class ResourcePackAssembler {
     private String assetsPath;
     private boolean hasPackPng = false;
     private Class<?> jarClass;
+
     /**
      * @param directory The directory to assemble the resource pack in. The name of the
      *                  zip created will be the same as this folder, and it will be
@@ -100,7 +101,6 @@ public class ResourcePackAssembler {
 
     /**
      * Adds a model json file. This file will be inserted into the models dir only.
-     *
      */
     public void addModel(File model, ModelType type) {
         String path = assetsPath + type.getPath() + "/";

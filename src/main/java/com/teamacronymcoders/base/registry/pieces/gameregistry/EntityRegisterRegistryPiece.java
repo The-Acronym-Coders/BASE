@@ -36,7 +36,7 @@ public class EntityRegisterRegistryPiece extends RegistryPieceBase<EntityEntry> 
                 updateInfo.getTrackingRange(), updateInfo.getUpdateFrequency(), updateInfo.isSendVelocityUpdates());
 
         SpawnEgg spawnEgg = entry.getSpawnEgg();
-        if(spawnEgg != null) {
+        if (spawnEgg != null) {
             EntityRegistry.registerEgg(entry.getEntityClass(), spawnEgg.getPrimaryColor(), spawnEgg.getSecondaryColor());
         }
 

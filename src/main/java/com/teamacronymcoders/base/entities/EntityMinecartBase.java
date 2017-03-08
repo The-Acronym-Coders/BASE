@@ -20,7 +20,7 @@ public abstract class EntityMinecartBase extends EntityMinecart {
     @Nonnull
     public ItemStack getCartItem() {
         ItemStack cartItemStack = new ItemStack(this.getItem(), 1, this.getMetadata());
-        if(!this.getName().isEmpty()) {
+        if (!this.getName().isEmpty()) {
             cartItemStack.setStackDisplayName(this.getName());
         }
         return cartItemStack;
@@ -45,7 +45,7 @@ public abstract class EntityMinecartBase extends EntityMinecart {
     @Override
     public void setDead() {
         super.setDead();
-        if(this.getEntityWorld().getGameRules().getBoolean("doEntityDrops")) {
+        if (this.getEntityWorld().getGameRules().getBoolean("doEntityDrops")) {
             dropCart();
         }
     }
@@ -60,7 +60,7 @@ public abstract class EntityMinecartBase extends EntityMinecart {
     }
 
     public void dropCartItemStack(ItemStack cartItem) {
-        if(!this.getEntityWorld().isRemote) {
+        if (!this.getEntityWorld().isRemote) {
             this.entityDropItem(cartItem, 0.1F);
         }
     }

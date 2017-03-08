@@ -12,6 +12,7 @@ import java.util.function.Function;
 
 public class CreativeTabBase extends CreativeTabs {
     private Function<Object, ItemStack> function;
+
     public CreativeTabBase(String label, Function<Object, ItemStack> function) {
         super(label);
         this.function = function;

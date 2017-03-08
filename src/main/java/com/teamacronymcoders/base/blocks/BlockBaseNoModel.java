@@ -72,7 +72,7 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
 
     @Override
     public ItemBlock getItemBlock() {
-        return itemBlock == null ? new ItemBlock(this): itemBlock;
+        return itemBlock == null ? new ItemBlock(this) : itemBlock;
     }
 
     @Override

@@ -13,22 +13,22 @@ import net.minecraft.world.World;
 
 public class ItemWrench extends Item {
 
-	public ItemWrench() {
-		this.setMaxStackSize(1);
-		this.setUnlocalizedName("wrench");
-	}
+    public ItemWrench() {
+        this.setMaxStackSize(1);
+        this.setUnlocalizedName("wrench");
+    }
 
-	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		Block block = worldIn.getBlockState(pos).getBlock();
-		TileEntity tile = worldIn.getTileEntity(pos);
+    @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        Block block = worldIn.getBlockState(pos).getBlock();
+        TileEntity tile = worldIn.getTileEntity(pos);
 
 		/*if(WrenchRegistry.isWrenchable(block)) {
-			worldIn.destroyBlock(pos,true);
+            worldIn.destroyBlock(pos,true);
 			if(tile!=null)
 				worldIn.removeTileEntity(pos);
 		}*/
 
-		return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-	}
+        return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+    }
 }

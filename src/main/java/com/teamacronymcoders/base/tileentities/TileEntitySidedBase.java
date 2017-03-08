@@ -1,13 +1,12 @@
 package com.teamacronymcoders.base.tileentities;
 
-import java.util.Arrays;
-
 import com.teamacronymcoders.base.blocks.SideType;
 import com.teamacronymcoders.base.client.IBlockOverlayText;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.RayTraceResult;
+
+import java.util.Arrays;
 
 /**
  * @author SkySom
@@ -72,7 +71,7 @@ public abstract class TileEntitySidedBase extends TileEntityBase implements IBlo
     @Override
     public String[] getOverlayText(EntityPlayer player, RayTraceResult rayTrace, boolean tool) {
         /*
-		 * // if(tool && isColorBlindActive) {
+         * // if(tool && isColorBlindActive) {
 		 * // SideType facing = sideConfig[rayTrace.sideHit.ordinal()];
 		 * // SideType opposite = sideConfig[rayTrace.sideHit.getOpposite().ordinal()];
 		 * // return new String[] {

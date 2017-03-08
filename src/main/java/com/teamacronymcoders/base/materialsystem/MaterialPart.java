@@ -1,8 +1,8 @@
 package com.teamacronymcoders.base.materialsystem;
 
+import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
-import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;

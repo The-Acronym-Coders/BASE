@@ -16,13 +16,13 @@ public class SaveLoader {
         createSaveFolder();
         File savedFile = new File(saveFolder, name);
         T savedObject = null;
-        if(savedFile.exists()) {
+        if (savedFile.exists()) {
             String json = BaseFileUtils.readFileToString(savedFile);
-            if(json != null) {
+            if (json != null) {
                 savedObject = gson.fromJson(json, clazz);
             }
         }
-        if(savedObject == null) {
+        if (savedObject == null) {
             savedObject = ClassLoading.createObjectInstance(clazz);
         }
         return savedObject;
@@ -36,7 +36,7 @@ public class SaveLoader {
     }
 
     public static void createSaveFolder() {
-        if(saveFolder == null) {
+        if (saveFolder == null) {
             saveFolder = new File(configFolder, "saved");
             gson = new GsonBuilder().setPrettyPrinting().create();
 

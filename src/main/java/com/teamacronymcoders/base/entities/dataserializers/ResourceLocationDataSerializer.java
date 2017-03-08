@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class ResourceLocationDataSerializer implements DataSerializer<ResourceLocation> {
     @Override
-    public void write(@Nonnull PacketBuffer buf,@Nonnull ResourceLocation value) {
+    public void write(@Nonnull PacketBuffer buf, @Nonnull ResourceLocation value) {
         buf.writeString(value.getResourceDomain());
         buf.writeString(value.getResourcePath());
     }

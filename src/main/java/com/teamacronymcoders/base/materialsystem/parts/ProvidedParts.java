@@ -8,7 +8,8 @@ public class ProvidedParts {
     public static final PartType ITEM = new PartType("Item");
     public static final PartType BLOCK = new PartType("Block", materialPart ->
             SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
-    public static final PartType ORE = new PartType("ORE", materialPart -> {});
+    public static final PartType ORE = new PartType("ORE", materialPart -> {
+    });
 
     public static final Part INGOT = new Part("Ingot", ITEM);
     public static final Part BEAM = new Part("Beam", ITEM);

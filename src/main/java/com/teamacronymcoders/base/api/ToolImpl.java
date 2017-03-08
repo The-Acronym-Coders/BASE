@@ -4,12 +4,13 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class ToolImpl implements ITool {
 
-	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {}
+    @Override
+    public void deserializeNBT(NBTTagCompound nbt) {
+    }
 
-	@Override
-	public NBTTagCompound serializeNBT() {
-		return null;
-	}
+    @Override
+    public NBTTagCompound serializeNBT() {
+        return null;
+    }
 
 }

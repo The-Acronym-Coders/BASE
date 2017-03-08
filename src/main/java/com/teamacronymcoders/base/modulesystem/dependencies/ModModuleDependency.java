@@ -14,6 +14,7 @@ public class ModModuleDependency extends ModDependency {
         this.mod = BaseMods.getBaseMod(modid);
         this.moduleName = moduleName;
     }
+
     @Override
     public boolean isMet(ModuleHandler moduleHandler) {
         return super.isMet(moduleHandler) && this.getMod() != null &&

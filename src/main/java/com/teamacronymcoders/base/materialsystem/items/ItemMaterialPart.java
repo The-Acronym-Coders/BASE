@@ -6,7 +6,6 @@ import com.teamacronymcoders.base.items.IHasItemMeshDefinition;
 import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.materialsystem.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -59,7 +58,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
     @Nonnull
     private MaterialPart getMaterialParkFromItemStack(ItemStack itemStack) {
         NBTTagCompound nbtTagCompound = itemStack.getTagCompound();
-        if(nbtTagCompound == null) {
+        if (nbtTagCompound == null) {
             nbtTagCompound = new NBTTagCompound();
         }
         String material = nbtTagCompound.getString("material");

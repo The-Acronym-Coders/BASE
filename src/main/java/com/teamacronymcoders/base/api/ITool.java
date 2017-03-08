@@ -4,8 +4,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public interface ITool {
 
-	void deserializeNBT(NBTTagCompound nbt);
+    void deserializeNBT(NBTTagCompound nbt);
 
-	NBTTagCompound serializeNBT();
+    NBTTagCompound serializeNBT();
 
 }

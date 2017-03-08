@@ -32,14 +32,14 @@ public class CreativeTabCarousel extends CreativeTabBase {
     }
 
     private void updateIcon() {
-        if(currentStackSize > 0) {
+        if (currentStackSize > 0) {
             if (this.watch.elapsed(TimeUnit.MILLISECONDS) >= 1500L) {
                 this.watch.reset();
                 this.watch.start();
                 currentIconStack = iconStacks.get(random.nextInt(iconStacks.size()));
             }
         } else {
-            if(defaultIconStack == null) {
+            if (defaultIconStack == null) {
                 defaultIconStack = new ItemStack(Items.STICK);
             }
             currentIconStack = defaultIconStack;

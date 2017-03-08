@@ -28,16 +28,20 @@ public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAwar
     }
 
     @Override
-    public void preInit(ResourceLocation name, ENTRY entry) {}
+    public void preInit(ResourceLocation name, ENTRY entry) {
+    }
 
     @Override
-    public void init(ResourceLocation name, ENTRY entry) {}
+    public void init(ResourceLocation name, ENTRY entry) {
+    }
 
     @Override
-    public void postInit(ResourceLocation name, ENTRY entry) {}
+    public void postInit(ResourceLocation name, ENTRY entry) {
+    }
 
     @Override
-    public void addEntry(ResourceLocation name, ENTRY entry) {}
+    public void addEntry(ResourceLocation name, ENTRY entry) {
+    }
 
     @Override
     public IBaseMod getMod() {

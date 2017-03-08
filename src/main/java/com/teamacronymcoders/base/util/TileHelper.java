@@ -26,9 +26,10 @@ public class TileHelper {
 
     /**
      * Drops items from a tile
+     *
      * @param tileEntity tileEntityIn
-     * @param min minItemDrop
-     * @param max maxItemDrop
+     * @param min        minItemDrop
+     * @param max        maxItemDrop
      */
     public static void DropItems(TileEntity tileEntity, int min, int max) {
         if (!(tileEntity instanceof IInventory)) {
