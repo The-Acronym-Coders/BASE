@@ -45,7 +45,7 @@ public abstract class EntityMinecartBase extends EntityMinecart {
     @Override
     public void setDead() {
         super.setDead();
-        if(this.worldObj.getGameRules().getBoolean("doEntityDrops")) {
+        if(this.getEntityWorld().getGameRules().getBoolean("doEntityDrops")) {
             dropCart();
         }
     }
@@ -60,7 +60,7 @@ public abstract class EntityMinecartBase extends EntityMinecart {
     }
 
     public void dropCartItemStack(ItemStack cartItem) {
-        if(!worldObj.isRemote) {
+        if(!this.getEntityWorld().isRemote) {
             this.entityDropItem(cartItem, 0.1F);
         }
     }

@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.util;
 
+import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -11,8 +12,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 public final class TextureUtils {
 
     public final static int TEXTURE_MAP_BLOCKS = 0;
@@ -20,11 +24,7 @@ public final class TextureUtils {
 
     public static void bindTextureToClient(ResourceLocation texture) {
         if (texture != null) {
-            final Minecraft mc = Minecraft.getMinecraft();
-            if (mc != null) {
-                mc.renderEngine.bindTexture(texture);
-
-            }
+            ClientHelper.mc().renderEngine.bindTexture(texture);
         }
     }
 
@@ -51,7 +51,7 @@ public final class TextureUtils {
         mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         int color = fluid.getFluid().getColor(fluid);
         // RenderUtil.setColorRGBA(color);
-        int brightness = mc.theWorld.getCombinedLight(pos, fluid.getFluid().getLuminosity());
+        int brightness = ClientHelper.world().getCombinedLight(pos, fluid.getFluid().getLuminosity());
 
         pre(x, y, z);
 

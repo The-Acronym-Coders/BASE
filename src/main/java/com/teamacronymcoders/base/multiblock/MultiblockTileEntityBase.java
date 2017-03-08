@@ -172,7 +172,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 	@Override
 	public void validate() {
 		super.validate();
-		REGISTRY.onPartAdded(this.worldObj, this);
+		REGISTRY.onPartAdded(this.getWorld(), this);
 	}
 
 	@Override
@@ -271,7 +271,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 		for(EnumFacing facing : EnumFacing.VALUES) {
 
 			neighborPosition = partPosition.offset(facing);
-			te = this.worldObj.getTileEntity(neighborPosition);
+			te = this.getWorld().getTileEntity(neighborPosition);
 
 			if(te instanceof IMultiblockPart)
 				neighborParts.add((IMultiblockPart) te);
@@ -283,7 +283,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 	@Override
 	public void onOrphaned(MultiblockControllerBase controller, int oldSize, int newSize) {
 		this.markDirty();
-		worldObj.markChunkDirty(this.getWorldPosition(), this);
+		getWorld().markChunkDirty(this.getWorldPosition(), this);
 	}
 
 	@Override
@@ -298,7 +298,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 
 	//// Helper functions for notifying neighboring blocks
 	protected void notifyNeighborsOfBlockChange() {
-		worldObj.notifyNeighborsOfStateChange(this.getWorldPosition(), this.getBlockType());
+		getWorld().notifyNeighborsOfStateChange(this.getWorldPosition(), this.getBlockType());
 	}
 
 	///// Private/Protected Logic Helpers
@@ -315,7 +315,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 		}
 
 		// Clean part out of lists in the registry
-		REGISTRY.onPartRemovedFromWorld(worldObj, this);
+		REGISTRY.onPartRemovedFromWorld(getWorld(), this);
 	}
 
 	/**

@@ -19,7 +19,7 @@ public class BASEJEIPlugin extends BlankModPlugin {
     }
 
     public static void blackListItemStack(ItemStack itemStack) {
-        jeiHelpers.getItemBlacklist().addItemToBlacklist(itemStack);
+        jeiHelpers.getIngredientBlacklist().addIngredientToBlacklist(itemStack);
     }
 
     public static void blackListItem(IHasSubItems item) {

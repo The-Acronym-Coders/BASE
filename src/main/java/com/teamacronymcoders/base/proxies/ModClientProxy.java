@@ -1,6 +1,8 @@
 package com.teamacronymcoders.base.proxies;
 
+import blusunrize.immersiveengineering.client.ClientUtils;
 import com.teamacronymcoders.base.Reference;
+import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -14,7 +16,7 @@ import java.util.Objects;
 public class ModClientProxy extends ModCommonProxy {
 
     public World getClientWorld() {
-        return FMLClientHandler.instance().getClient().theWorld;
+        return ClientHelper.world();
     }
 
     public boolean isClient() {
@@ -26,7 +28,7 @@ public class ModClientProxy extends ModCommonProxy {
     }
 
     public EntityPlayer getClientPlayer() {
-        return FMLClientHandler.instance().getClient().thePlayer;
+        return ClientHelper.player();
     }
 
     /**

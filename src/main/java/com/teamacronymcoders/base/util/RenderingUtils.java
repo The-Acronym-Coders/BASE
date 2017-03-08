@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.util;
 
+import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
@@ -10,10 +11,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nonnull;
 
 import static org.lwjgl.opengl.GL11.*;
 
+@SideOnly(Side.CLIENT)
 public class RenderingUtils {
 
     public static Minecraft mc = Minecraft.getMinecraft();
@@ -136,7 +142,7 @@ public class RenderingUtils {
      * @param lineWidth lineWidth;
      */
     public static void drawLine(double x, double y, double x2, double y2, float red, float green, float blue, float lineWidth) {
-        int existed = FMLClientHandler.instance().getClient().thePlayer.ticksExisted;
+        int existed = ClientHelper.player().ticksExisted;
         float alpha = 0.3F + MathHelper.sin((float) (existed + x)) * 0.3F + 0.3F;
 
         Tessellator tess = Tessellator.getInstance();
@@ -175,7 +181,7 @@ public class RenderingUtils {
      */
     public static void drawLine(double x, double y, double z, double x2, double y2, double z2, float red, float green, float blue, float lineWidth) {
 
-        int count = FMLClientHandler.instance().getClient().thePlayer.ticksExisted;
+        int count = ClientHelper.player().ticksExisted;
         float alpha = 0.3F + MathHelper.sin((float) (count + x)) * 0.3F + 0.3F;
 
         Tessellator tess = Tessellator.getInstance();
@@ -276,7 +282,7 @@ public class RenderingUtils {
      * @param fadeSpeed fadeSpeed
      */
     public static void drawLine(double x, double y, double x2, double y2, float red, float green, float blue, float lineWidth, float fadeSpeed) {
-        int count = FMLClientHandler.instance().getClient().thePlayer.ticksExisted;
+        int count = ClientHelper.player().ticksExisted;
         float alpha = fadeSpeed + MathHelper.sin((float) (count + x)) * 0.3F + 0.3F;
 
         Tessellator tess = Tessellator.getInstance();
@@ -313,7 +319,7 @@ public class RenderingUtils {
      * @param fadeSpeed fadeSpeed
      */
     public static void drawLine(double x, double y, double z, double x2, double y2, double z2, float red, float green, float blue, float lineWidth, float fadeSpeed) {
-        int existed = FMLClientHandler.instance().getClient().thePlayer.ticksExisted;
+        int existed = ClientHelper.player().ticksExisted;
         float alpha = 0.3F + MathHelper.sin((float) (existed + x)) * 0.3F + 0.3F;
 
         Tessellator tess = Tessellator.getInstance();

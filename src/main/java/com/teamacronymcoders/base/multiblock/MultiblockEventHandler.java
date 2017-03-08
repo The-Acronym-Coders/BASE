@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.multiblock;
 
+import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.world.ChunkEvent;
@@ -37,6 +38,6 @@ public final class MultiblockEventHandler {
 	public void onClientTick(final TickEvent.ClientTickEvent event) {
 
 		if(TickEvent.Phase.START == event.phase)
-			MultiblockRegistry.INSTANCE.tickStart(Minecraft.getMinecraft().theWorld);
+			MultiblockRegistry.INSTANCE.tickStart(ClientHelper.world());
 	}
 }

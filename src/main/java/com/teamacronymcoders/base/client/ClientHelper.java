@@ -38,11 +38,11 @@ public class ClientHelper {
 	}
 
 	public static EntityPlayerSP player() {
-		return mc().thePlayer;
+		return mc().player;
 	}
 
 	public static WorldClient world() {
-		return mc().theWorld;
+		return mc().world;
 	}
 
 	public static Entity viewEntity() {

@@ -19,8 +19,8 @@ public class MaterialPartDataSerializer implements DataSerializer<MaterialPart> 
     @Override
     @Nonnull
     public MaterialPart read(@Nonnull PacketBuffer buf) throws IOException {
-        ResourceLocation resourceLocation = new ResourceLocation(buf.readStringFromBuffer(256),
-                buf.readStringFromBuffer(256));
+        ResourceLocation resourceLocation = new ResourceLocation(buf.readString(256),
+                buf.readString(256));
         return MaterialsSystem.MATERIAL_PARTS.getValue(resourceLocation);
     }
 
