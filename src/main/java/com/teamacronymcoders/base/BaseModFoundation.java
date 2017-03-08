@@ -63,7 +63,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.addRegistry("BLOCK", new BlockRegistry(this, registryPieces));
         this.addRegistry("ITEM", new ItemRegistry(this, registryPieces));
         this.addRegistry("ENTITY", new EntityRegistry(this, registryPieces));
-        if(this.hasConfig()) {
+        if (this.hasConfig()) {
             this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
             SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
         }
@@ -82,7 +82,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.afterModuleHandlerInit(event);
 
-        if(FeatureHandler.didModRequestFeature("SUB_BLOCKS", this.getID())) {
+        if (FeatureHandler.didModRequestFeature("SUB_BLOCKS", this.getID())) {
             SubBlockSystem.createBlocks(this);
         }
 
@@ -212,13 +212,13 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             RegistryPiece registryPiece = aClass.getAnnotation(RegistryPiece.class);
             RegistrySide side = registryPiece.value();
             boolean load = this.getLibProxy().isRightSide(side);
-            if(load && !StringUtils.isNullOrEmpty(registryPiece.modid())) {
+            if (load && !StringUtils.isNullOrEmpty(registryPiece.modid())) {
                 load = Loader.isModLoaded(registryPiece.modid());
             }
             return load;
         });
         registryPieces.forEach(registryPiece -> {
-            if(registryPiece instanceof IModAware) {
+            if (registryPiece instanceof IModAware) {
                 ((IModAware) registryPiece).setMod(this);
             }
         });

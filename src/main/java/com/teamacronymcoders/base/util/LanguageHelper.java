@@ -16,7 +16,6 @@ public class LanguageHelper {
     }
 
 
-
     /**
      * Returns an empty translated string
      *

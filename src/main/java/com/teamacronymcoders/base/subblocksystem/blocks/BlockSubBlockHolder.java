@@ -28,7 +28,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
         super(Material.IRON, "sub_block_holder_" + number);
         this.setItemBlock(new ItemBlockGeneric<>(this));
         this.subBlocks = subBlocks;
-        for(int x = 0; x < 16; x++) {
+        for (int x = 0; x < 16; x++) {
             this.getSubBlocks().computeIfAbsent(x, value -> SubBlockSystem.MISSING_SUB_BLOCK);
         }
         this.setItemBlock(new ItemBlockSubBlockHolder(this));
@@ -36,8 +36,8 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
 
     @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
-        for(int x = 0; x < 16; x++) {
-            if(getSubBlocks().get(x) != SubBlockSystem.MISSING_SUB_BLOCK) {
+        for (int x = 0; x < 16; x++) {
+            if (getSubBlocks().get(x) != SubBlockSystem.MISSING_SUB_BLOCK) {
                 itemStacks.add(new ItemStack(this, 1, x));
             }
         }

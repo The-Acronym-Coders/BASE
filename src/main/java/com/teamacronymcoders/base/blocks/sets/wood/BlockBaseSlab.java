@@ -2,12 +2,10 @@ package com.teamacronymcoders.base.blocks.sets.wood;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -17,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 /**
@@ -41,10 +40,15 @@ public class BlockBaseSlab extends Block {
         this.setDefaultState(iblockstate);
     }
 
+    @Override
+    @SuppressWarnings("deprecation")
     protected boolean canSilkHarvest() {
         return false;
     }
 
+    @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return this.isDouble() ? FULL_BLOCK_AABB : (state.getValue(HALF) == BlockBaseSlab.EnumBlockHalf.TOP ? AABB_TOP_HALF : AABB_BOTTOM_HALF);
     }
@@ -52,6 +56,8 @@ public class BlockBaseSlab extends Block {
     /**
      * Checks if an IBlockState represents a block that is opaque and a full cube.
      */
+    @Override
+    @SuppressWarnings("deprecation")
     public boolean isFullyOpaque(IBlockState state) {
         return ((BlockBaseSlab) state.getBlock()).isDouble() || state.getValue(HALF) == BlockBaseSlab.EnumBlockHalf.TOP;
     }
@@ -59,6 +65,8 @@ public class BlockBaseSlab extends Block {
     /**
      * Used to determine ambient occlusion and culling when rebuilding chunks for render
      */
+    @Override
+    @SuppressWarnings("deprecation")
     public boolean isOpaqueCube(IBlockState state) {
         return this.isDouble();
     }
@@ -76,44 +84,40 @@ public class BlockBaseSlab extends Block {
      * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
      * IBlockstate
      */
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        IBlockState iblockstate = super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(HALF, BlockBaseSlab.EnumBlockHalf.BOTTOM);
+    @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+        IBlockState iblockstate = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer);
+        iblockstate = iblockstate.withProperty(HALF, BlockBaseSlab.EnumBlockHalf.BOTTOM);
         return this.isDouble() ? iblockstate : (facing != EnumFacing.DOWN && (facing == EnumFacing.UP || (double) hitY <= 0.5D) ? iblockstate : iblockstate.withProperty(HALF, BlockBaseSlab.EnumBlockHalf.TOP));
     }
 
     /**
      * Returns the quantity of items to drop on block destruction.
      */
+    @Override
     public int quantityDropped(Random random) {
         return this.isDouble() ? 2 : 1;
     }
 
+    @Override
+    @SuppressWarnings("deprecation")
     public boolean isFullCube(IBlockState state) {
         return this.isDouble();
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean shouldSideBeRendered(IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, EnumFacing side) {
         if (this.isDouble()) {
             return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
         } else if (side != EnumFacing.UP && side != EnumFacing.DOWN && !super.shouldSideBeRendered(blockState, blockAccess, pos, side)) {
             return false;
-        } else if (false) // Forge: Additional logic breaks doesSideBlockRendering and is no longer useful.
-        {
-            IBlockState iblockstate = blockAccess.getBlockState(pos.offset(side));
-            boolean flag = isHalfSlab(iblockstate) && iblockstate.getValue(HALF) == BlockBaseSlab.EnumBlockHalf.TOP;
-            boolean flag1 = isHalfSlab(blockState) && blockState.getValue(HALF) == BlockBaseSlab.EnumBlockHalf.TOP;
-            return flag1 ? (side == EnumFacing.DOWN ? true : (side == EnumFacing.UP && super.shouldSideBeRendered(blockState, blockAccess, pos, side) ? true : !isHalfSlab(iblockstate) || !flag)) : (side == EnumFacing.UP ? true : (side == EnumFacing.DOWN && super.shouldSideBeRendered(blockState, blockAccess, pos, side) ? true : !isHalfSlab(iblockstate) || flag));
         }
         return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
-
-    @SideOnly(Side.CLIENT)
-    protected static boolean isHalfSlab(IBlockState state) {
-        Block block = state.getBlock();
-        return block == Blocks.STONE_SLAB || block == Blocks.WOODEN_SLAB || block == Blocks.STONE_SLAB2 || block == Blocks.PURPUR_SLAB;
-    }
-
 
     public boolean isDouble() {
         return isDouble;
@@ -122,6 +126,9 @@ public class BlockBaseSlab extends Block {
     /**
      * Convert the given metadata into a BlockState for this Block
      */
+    @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
     public IBlockState getStateFromMeta(int meta) {
         IBlockState iblockstate = this.getDefaultState();
 
@@ -145,18 +152,20 @@ public class BlockBaseSlab extends Block {
         return i;
     }
 
+    @Override
+    @Nonnull
     protected BlockStateContainer createBlockState() {
-        return this.isDouble() ? new BlockStateContainer(this, new IProperty[]{}) : new BlockStateContainer(this, new IProperty[]{HALF});
+        return this.isDouble() ? new BlockStateContainer(this) : new BlockStateContainer(this, HALF);
     }
 
 
-    public static enum EnumBlockHalf implements IStringSerializable {
+    public enum EnumBlockHalf implements IStringSerializable {
         TOP("top"),
         BOTTOM("bottom");
 
         private final String name;
 
-        private EnumBlockHalf(String name) {
+        EnumBlockHalf(String name) {
             this.name = name;
         }
 
@@ -164,6 +173,7 @@ public class BlockBaseSlab extends Block {
             return this.name;
         }
 
+        @Nonnull
         public String getName() {
             return this.name;
         }

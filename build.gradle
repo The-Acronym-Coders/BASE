@@ -20,12 +20,16 @@ repositories {
     mavenCentral()
 
     maven {
-        name 'Jared'
-        url "http://maven.blamejared.com"
+        name 'CraftTweaker/IE'
+        url 'http://maven.blamejared.com'
     }
     maven {
         name 'JEI'
-        url "http://dvs1.progwml6.com/files/maven"
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        name 'Tesla'
+        url 'http://maven.epoxide.xyz'
     }
 }
 
@@ -47,7 +51,9 @@ minecraft {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    compile "MineTweaker3:MineTweaker3-MC1102-Main:${minecraft_version}-${minetweaker_version}"
+    deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:${minecraft_version}-${minetweaker_version}"
+    deobfCompile "net.darkhax.tesla:Tesla:${minecraft_version}-${tesla_version}"
+    deobfCompile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}"
 }
 
 def commonManifest = {

@@ -26,9 +26,10 @@ public class TileHelper {
 
     /**
      * Drops items from a tile
+     *
      * @param tileEntity tileEntityIn
-     * @param min minItemDrop
-     * @param max maxItemDrop
+     * @param min        minItemDrop
+     * @param max        maxItemDrop
      */
     public static void DropItems(TileEntity tileEntity, int min, int max) {
         if (!(tileEntity instanceof IInventory)) {
@@ -59,7 +60,7 @@ public class TileHelper {
                 entityItem.motionX = rand.nextGaussian() * factor;
                 entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
                 entityItem.motionZ = rand.nextGaussian() * factor;
-                world.spawnEntityInWorld(entityItem);
+                world.spawnEntity(entityItem);
                 itemStack.stackSize = 0;
                 inventory.setInventorySlotContents(i, null);
             }

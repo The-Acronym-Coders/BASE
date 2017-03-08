@@ -22,9 +22,9 @@ public class CreativeTabRegistryPiece extends RegistryPieceBase {
 
     @Override
     public void addEntry(ResourceLocation location, Object object) {
-        if(object instanceof Item) {
+        if (object instanceof Item) {
             ((Item) object).setCreativeTab(this.getMod().getCreativeTab());
-        } else if(object instanceof Block) {
+        } else if (object instanceof Block) {
             ((Block) object).setCreativeTab(this.getMod().getCreativeTab());
         }
     }

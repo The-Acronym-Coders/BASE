@@ -66,8 +66,7 @@ public class ItemBase extends Item implements IHasModel, IModAware {
     }
 
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> subItems)
-    {
+    public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> subItems) {
         subItems.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 

@@ -1,8 +1,5 @@
 package com.teamacronymcoders.base.items;
 
-import com.teamacronymcoders.base.blocks.IAmBlock;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 

@@ -23,7 +23,7 @@ public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHas
 
     @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
-        if(this.actualBlock instanceof IHasSubItems) {
+        if (this.actualBlock instanceof IHasSubItems) {
             itemStacks.addAll(((IHasSubItems) this.actualBlock).getAllSubItems(new ArrayList<>()));
         } else {
             itemStacks.add(new ItemStack(this));

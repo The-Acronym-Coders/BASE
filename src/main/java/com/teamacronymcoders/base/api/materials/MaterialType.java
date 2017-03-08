@@ -27,6 +27,7 @@ public class MaterialType {
         this.hasEffect = hasEffect;
         this.types = types;
     }
+
     public MaterialType(String name, Color colour, boolean hasEffect) {
         this.name = name;
         this.colour = colour;
@@ -123,6 +124,7 @@ public class MaterialType {
         public String getLowerCaseName() {
             return this.getName().toLowerCase();
         }
+
         public List<IRecipe> getRecipes(List<IRecipe> recipes) {
             return recipes;
         }

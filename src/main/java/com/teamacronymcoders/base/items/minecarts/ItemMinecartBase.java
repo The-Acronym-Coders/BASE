@@ -63,7 +63,7 @@ public abstract class ItemMinecartBase extends ItemMinecart implements /*IMineca
                 entityMinecart.posX = (float) blockPos.getX() + 0.5F;
                 entityMinecart.posY = (float) blockPos.getY() + 0.5F;
                 entityMinecart.posZ = (float) blockPos.getZ() + 0.5F;
-                world.spawnEntityInWorld(entityMinecart);
+                world.spawnEntity(entityMinecart);
             }
             --itemStack.stackSize;
             return EnumActionResult.SUCCESS;

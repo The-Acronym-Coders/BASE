@@ -165,7 +165,7 @@ public abstract class ModuleBase implements IModule {
     public int compareTo(@Nonnull IModule module) {
         int result = 0;
 
-        if(module != null) {
+        if (module != null) {
             List<IDependency> module1Deps = this.getDependencies(new ArrayList<>());
             List<IDependency> module2Deps = module.getDependencies(new ArrayList<>());
 

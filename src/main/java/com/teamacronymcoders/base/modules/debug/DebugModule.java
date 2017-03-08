@@ -6,7 +6,7 @@ import com.teamacronymcoders.base.registry.ItemRegistry;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.Platform;
 
-public class DebugModule extends ModuleBase{
+public class DebugModule extends ModuleBase {
     @Override
     public String getName() {
         return "Debug";

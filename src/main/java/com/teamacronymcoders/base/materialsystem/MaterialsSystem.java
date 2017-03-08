@@ -5,13 +5,11 @@ import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
 import com.teamacronymcoders.base.materialsystem.items.ItemMaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
+import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import com.teamacronymcoders.base.registry.ItemRegistry;
-import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.IForgeRegistry;
 

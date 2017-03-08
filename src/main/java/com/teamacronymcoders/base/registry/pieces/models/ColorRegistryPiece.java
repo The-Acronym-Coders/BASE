@@ -19,11 +19,11 @@ public class ColorRegistryPiece extends RegistryPieceBase {
     }
 
     public void init(ResourceLocation name, Object entry) {
-        if(entry instanceof IHasItemColor) {
-            Colors.registerItemColor(entry, (IHasItemColor)entry);
+        if (entry instanceof IHasItemColor) {
+            Colors.registerItemColor(entry, (IHasItemColor) entry);
         }
-        if(entry instanceof IHasBlockColor) {
-            Colors.registerBlockColor((IHasBlockColor)entry);
+        if (entry instanceof IHasBlockColor) {
+            Colors.registerBlockColor((IHasBlockColor) entry);
         }
     }
 }

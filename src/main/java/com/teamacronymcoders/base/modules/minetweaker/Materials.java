@@ -1,9 +1,9 @@
 package com.teamacronymcoders.base.modules.minetweaker;
 
+import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.exceptions.TooLateException;
-import com.teamacronymcoders.base.Reference;
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import stanhebben.zenscript.annotations.Optional;
@@ -20,7 +20,7 @@ public class Materials {
 
     @ZenMethod
     public static IMaterialType getOrRegister(String name, @Optional int ID, @Optional int colour, @Optional boolean hasEffect) throws TooLateException {
-        if(MinetweakerModule.tooLate) {
+        if (MinetweakerModule.tooLate) {
             throw new TooLateException("You have to put scripts using BASE Functionality in ./config/ACRONYM/BASE/scripts");
         }
         if (MaterialRegistry.isRegistered(name)) {

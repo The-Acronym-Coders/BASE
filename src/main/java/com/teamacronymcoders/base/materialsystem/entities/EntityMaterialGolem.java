@@ -1,12 +1,10 @@
 package com.teamacronymcoders.base.materialsystem.entities;
 
-import com.teamacronymcoders.base.entities.dataserializers.BaseDataSerializers;
 import com.teamacronymcoders.base.materialsystem.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class EntityMaterialGolem extends EntityIronGolem {

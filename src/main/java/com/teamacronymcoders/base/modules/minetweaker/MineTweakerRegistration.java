@@ -1,8 +1,5 @@
 package com.teamacronymcoders.base.modules.minetweaker;
 
-import com.teamacronymcoders.base.materialsystem.MaterialPart;
-import com.teamacronymcoders.base.materialsystem.materials.Material;
-import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import minetweaker.MineTweakerAPI;
 import minetweaker.MineTweakerImplementationAPI;
@@ -20,11 +17,11 @@ public class MineTweakerRegistration {
         File scriptsDirectory = new File(module.getConfigRegistry().getConfigFolder(), "scripts");
 
         boolean fileExists = scriptsDirectory.exists();
-        if (!fileExists){
+        if (!fileExists) {
             fileExists = scriptsDirectory.mkdir();
         }
 
-        if(fileExists) {
+        if (fileExists) {
             MineTweakerAPI.registerBracketHandler(new ItemBracketHandler());
             ItemBracketHandler.rebuildItemRegistry();
             MineTweakerAPI.registerClass(IMaterialType.class);

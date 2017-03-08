@@ -1,52 +1,51 @@
 package com.teamacronymcoders.base.proxies;
 
+import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.multiblock.IMultiblockRegistry;
 import com.teamacronymcoders.base.multiblock.MultiblockEventHandler;
 import com.teamacronymcoders.base.multiblock.MultiblockRegistry;
-import com.teamacronymcoders.base.Reference;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 public class ModCommonProxy {
 
-	public World getClientWorld() {
-		return null;
-	}
+    public World getClientWorld() {
+        return null;
+    }
 
-	public boolean isClient() {
-		return false;
-	}
+    public boolean isClient() {
+        return false;
+    }
 
-	public boolean isServer() {
-		return true;
-	}
+    public boolean isServer() {
+        return true;
+    }
 
-	public EntityPlayer getClientPlayer() {
-		return null;
-	}
+    public EntityPlayer getClientPlayer() {
+        return null;
+    }
 
-	/**
-	 * Translates a message
-	 *
-	 * @param label prefix
-	 * @param message message
-	 * @return Translated String
-	 */
-	public String translateMessage(String label, String message) {
-		return String.format("%s.%s.%s", label, Reference.MODID, message);
-	}
+    /**
+     * Translates a message
+     *
+     * @param label   prefix
+     * @param message message
+     * @return Translated String
+     */
+    public String translateMessage(String label, String message) {
+        return String.format("%s.%s.%s", label, Reference.MODID, message);
+    }
 
-	// TODO
+    // TODO
 
-	public IMultiblockRegistry initMultiblockRegistry() {
+    public IMultiblockRegistry initMultiblockRegistry() {
 
-		if(null == s_multiblockHandler)
-			MinecraftForge.EVENT_BUS.register(s_multiblockHandler = new MultiblockEventHandler());
+        if (null == s_multiblockHandler)
+            MinecraftForge.EVENT_BUS.register(s_multiblockHandler = new MultiblockEventHandler());
 
-		return MultiblockRegistry.INSTANCE;
-	}
+        return MultiblockRegistry.INSTANCE;
+    }
 
-	private static MultiblockEventHandler s_multiblockHandler = null;
+    private static MultiblockEventHandler s_multiblockHandler = null;
 }

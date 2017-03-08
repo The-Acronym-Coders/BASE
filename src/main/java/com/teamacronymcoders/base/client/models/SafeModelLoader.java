@@ -32,7 +32,7 @@ public class SafeModelLoader {
     }
 
     public void setItemModel(Item item, int metadata) {
-        if(item != null) {
+        if (item != null) {
             String name = item.getUnlocalizedName();
             if (name.startsWith("item.") || name.startsWith("tile.")) {
                 name = name.substring(5);

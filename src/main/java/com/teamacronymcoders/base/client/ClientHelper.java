@@ -1,7 +1,5 @@
 package com.teamacronymcoders.base.client;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -17,67 +15,68 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import org.lwjgl.input.Keyboard;
 
 /**
  * @author Surseance
  */
 public class ClientHelper {
-	public static String shiftForInfo =
-			TextFormatting.GRAY + "Hold " + TextFormatting.GREEN + "SHIFT" + TextFormatting.GRAY + " for more info.";
+    public static String shiftForInfo =
+            TextFormatting.GRAY + "Hold " + TextFormatting.GREEN + "SHIFT" + TextFormatting.GRAY + " for more info.";
 
-	public static boolean isShiftKeyDown() {
-		return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-	}
+    public static boolean isShiftKeyDown() {
+        return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+    }
 
-	public static Minecraft mc() {
-		return FMLClientHandler.instance().getClient();
-	}
+    public static Minecraft mc() {
+        return FMLClientHandler.instance().getClient();
+    }
 
-	public static FontRenderer fontRenderer() {
-		return mc().fontRendererObj;
-	}
+    public static FontRenderer fontRenderer() {
+        return mc().fontRendererObj;
+    }
 
-	public static EntityPlayerSP player() {
-		return mc().thePlayer;
-	}
+    public static EntityPlayerSP player() {
+        return mc().player;
+    }
 
-	public static WorldClient world() {
-		return mc().theWorld;
-	}
+    public static WorldClient world() {
+        return mc().world;
+    }
 
-	public static Entity viewEntity() {
-		return mc().getRenderViewEntity();
-	}
+    public static Entity viewEntity() {
+        return mc().getRenderViewEntity();
+    }
 
-	public static TextureManager textureManager() {
-		return mc().getTextureManager();
-	}
+    public static TextureManager textureManager() {
+        return mc().getTextureManager();
+    }
 
-	public static RayTraceResult rayTrace() {
-		return mc().objectMouseOver;
-	}
+    public static RayTraceResult rayTrace() {
+        return mc().objectMouseOver;
+    }
 
-	public static GuiScreen screen() {
-		return mc().currentScreen;
-	}
+    public static GuiScreen screen() {
+        return mc().currentScreen;
+    }
 
-	public static GameSettings settings() {
-		return mc().gameSettings;
-	}
+    public static GameSettings settings() {
+        return mc().gameSettings;
+    }
 
-	public static EntityRenderer entityRenderer() {
-		return mc().entityRenderer;
-	}
+    public static EntityRenderer entityRenderer() {
+        return mc().entityRenderer;
+    }
 
-	public static RenderManager renderManager() {
-		return mc().getRenderManager();
-	}
+    public static RenderManager renderManager() {
+        return mc().getRenderManager();
+    }
 
-	public static ScaledResolution resolution() {
-		return new ScaledResolution(mc());
-	}
+    public static ScaledResolution resolution() {
+        return new ScaledResolution(mc());
+    }
 
-	public static ItemModelMesher getItemModelMesher() {
-		return mc().getRenderItem().getItemModelMesher();
-	}
+    public static ItemModelMesher getItemModelMesher() {
+        return mc().getRenderItem().getItemModelMesher();
+    }
 }

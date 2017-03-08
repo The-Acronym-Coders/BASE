@@ -13,7 +13,7 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
 
     public ModularRegistry(String name, IBaseMod mod, List<IRegistryPiece> registryPieces) {
         super(name, mod);
-        this.registryPieces = registryPieces.stream().filter(registryPiece->registryPiece.acceptsRegistry(this))
+        this.registryPieces = registryPieces.stream().filter(registryPiece -> registryPiece.acceptsRegistry(this))
                 .collect(Collectors.toList());
         this.registryPieces.sort(new RegistryPieceComparator());
     }

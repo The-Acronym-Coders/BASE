@@ -28,7 +28,7 @@ public interface IHasModel extends IHasSubItems {
     @SideOnly(Side.CLIENT)
     default List<ModelResourceLocation> getModelResourceLocations(List<ModelResourceLocation> models) {
         List<ResourceLocation> resourceLocations = getResourceLocations(new ArrayList<>());
-        for(ResourceLocation resourceLocation : resourceLocations) {
+        for (ResourceLocation resourceLocation : resourceLocations) {
             models.add(new ModelResourceLocation(resourceLocation, "inventory"));
         }
         return models;

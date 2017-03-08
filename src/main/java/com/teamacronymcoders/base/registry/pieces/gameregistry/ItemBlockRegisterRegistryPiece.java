@@ -22,7 +22,7 @@ public class ItemBlockRegisterRegistryPiece extends RegistryPieceBase<IHasItemBl
 
     @Override
     public void addEntry(ResourceLocation name, IHasItemBlock block) {
-        if(itemRegistry == null) {
+        if (itemRegistry == null) {
             this.itemRegistry = this.getMod().getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM");
         }
         itemRegistry.register(name, block.getItemBlock());

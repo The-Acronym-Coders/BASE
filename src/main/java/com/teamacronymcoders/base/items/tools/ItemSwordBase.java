@@ -19,7 +19,7 @@ public class ItemSwordBase extends ItemSword implements IHasModel {
         super(material);
         this.name = name;
         this.texturePath = texturePath;
-        if(!texturePath.isEmpty() && !texturePath.endsWith("/"))
+        if (!texturePath.isEmpty() && !texturePath.endsWith("/"))
             this.texturePath += "/";
         this.setUnlocalizedName(name);
     }

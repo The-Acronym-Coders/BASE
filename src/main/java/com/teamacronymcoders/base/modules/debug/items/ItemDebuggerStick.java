@@ -28,7 +28,8 @@ public class ItemDebuggerStick extends ItemBase {
     public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStack, World world, EntityPlayer entityPlayer,
                                                     EnumHand hand) {
         RayTraceResult result = ProjectileHelper.forwardsRaycast(entityPlayer, true, true, null);
-        ActionResult<ItemStack> actionResult = ActionResult.newResult(EnumActionResult.PASS, itemStack);;
+        ActionResult<ItemStack> actionResult = ActionResult.newResult(EnumActionResult.PASS, itemStack);
+        ;
         if (result != null) {
             boolean wroteOutput = false;
             switch (result.typeOfHit) {
@@ -48,7 +49,7 @@ public class ItemDebuggerStick extends ItemBase {
                     Entity entity = result.entityHit;
                     if (entity instanceof IDebuggable) {
                         writeDebug((IDebuggable) entity);
-                    } else if(entity != null) {
+                    } else if (entity != null) {
                         this.getMod().getLogger().info(entity.getName());
                     }
                     wroteOutput = true;
@@ -56,7 +57,7 @@ public class ItemDebuggerStick extends ItemBase {
                 case MISS:
                     break;
             }
-            if(wroteOutput) {
+            if (wroteOutput) {
                 actionResult = ActionResult.newResult(EnumActionResult.SUCCESS, itemStack);
             }
         }

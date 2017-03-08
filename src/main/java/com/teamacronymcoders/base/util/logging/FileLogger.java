@@ -52,13 +52,13 @@ public class FileLogger implements ILogger {
     }
 
     public void logError(String message) {
-        this.logError(message, (Throwable)null);
+        this.logError(message, (Throwable) null);
     }
 
     public void logError(String message, Throwable exception) {
         try {
             this.writer.write("ERROR: " + message + "\n");
-            if(exception != null) {
+            if (exception != null) {
                 exception.printStackTrace(this.printWriter);
             }
 

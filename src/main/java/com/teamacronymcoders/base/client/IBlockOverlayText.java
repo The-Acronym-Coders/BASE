@@ -7,5 +7,5 @@ import net.minecraft.util.math.RayTraceResult;
  * @author IE Team
  */
 public interface IBlockOverlayText {
-	String[] getOverlayText(EntityPlayer player, RayTraceResult rayTraceResult, boolean tool);
+    String[] getOverlayText(EntityPlayer player, RayTraceResult rayTraceResult, boolean tool);
 }
