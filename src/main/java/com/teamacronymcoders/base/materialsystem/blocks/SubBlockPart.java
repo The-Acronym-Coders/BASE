@@ -1,8 +1,11 @@
 package com.teamacronymcoders.base.materialsystem.blocks;
 
-import com.teamacronymcoders.base.materialsystem.MaterialPart;
+import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.Map;
 
 public class SubBlockPart extends SubBlockBase {
     private MaterialPart materialPart;
@@ -19,6 +22,11 @@ public class SubBlockPart extends SubBlockBase {
     @Override
     public int getColor() {
         return materialPart.getColor();
+    }
+
+    @Override
+    public void setOreDict(Map<ItemStack, String> oreDict) {
+        materialPart.setOreDict(oreDict);
     }
 
     @Override

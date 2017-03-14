@@ -3,18 +3,24 @@ package com.teamacronymcoders.base.materialsystem.items;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.IHasItemMeshDefinition;
+import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.ItemBase;
-import com.teamacronymcoders.base.materialsystem.MaterialPart;
+import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition, IHasItemColor {
+public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition, IHasItemColor, IHasOreDict {
+    private Map<Integer, MaterialPart> itemMaterialParts;
+
     public ItemMaterialPart() {
         super("material_part");
         this.setHasSubtypes(true);
@@ -27,10 +33,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
 
     @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
-        MaterialsSystem.MATERIAL_PARTS.getValues().stream().filter(materialPart ->
-                materialPart.getPart().getPartType() == ProvidedParts.ITEM).forEach(materialPart -> {
-            itemStacks.add(materialPart.getItemStack());
-        });
+        this.getItemMaterialParts().values().forEach(materialPart -> itemStacks.add(materialPart.getItemStack()));
         return itemStacks;
     }
 
@@ -57,17 +60,28 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
 
     @Nonnull
     private MaterialPart getMaterialParkFromItemStack(ItemStack itemStack) {
-        NBTTagCompound nbtTagCompound = itemStack.getTagCompound();
-        if (nbtTagCompound == null) {
-            nbtTagCompound = new NBTTagCompound();
-        }
-        String material = nbtTagCompound.getString("material");
-        String part = nbtTagCompound.getString("part");
-        MaterialPart materialPart = MaterialsSystem.MATERIAL_PARTS.getValue(new ResourceLocation(material, part));
+        MaterialPart materialPart = MaterialsSystem.getMaterialPart(itemStack.getItemDamage());
         return materialPart != null ? materialPart : MaterialsSystem.MISSING_MATERIAL_PART;
     }
 
     public void registerItemVariant(ResourceLocation resourceLocation) {
         Base.instance.getModelLoader().registerModelVariant(this, resourceLocation);
+    }
+
+    public Map<Integer, MaterialPart> getItemMaterialParts() {
+        if (itemMaterialParts != null) {
+            itemMaterialParts = new HashMap<>();
+            MaterialsSystem.getMaterialParts().entrySet().stream().filter(entry ->
+                    entry.getValue().matchesPartType(ProvidedParts.ITEM)).forEach(entry ->
+                        itemMaterialParts.put(entry.getKey(), entry.getValue()));
+        }
+        return itemMaterialParts;
+    }
+
+    @Nonnull
+    @Override
+    public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
+        this.getItemMaterialParts().values().stream().forEach(materialPart -> materialPart.setOreDict(names));
+        return names;
     }
 }

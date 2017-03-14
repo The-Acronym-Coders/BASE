@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.modules.minetweaker;
 
 import com.teamacronymcoders.base.exceptions.TooLateException;
-import com.teamacronymcoders.base.materialsystem.MaterialPart;
+import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;

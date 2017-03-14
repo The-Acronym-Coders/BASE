@@ -49,4 +49,8 @@ public class FeatureHandler {
             feature.activate();
         }
     }
+
+    public static void cleanUp() {
+        features.values().stream().filter(IFeature::isActive).forEach(IFeature::cleanUp);
+    }
 }
