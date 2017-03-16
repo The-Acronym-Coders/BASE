@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.materialsystem;
+package com.teamacronymcoders.base.materialsystem.materialparts;
 
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
