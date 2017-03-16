@@ -3,9 +3,11 @@ package com.teamacronymcoders.base;
 import com.teamacronymcoders.base.entities.dataserializers.BaseDataSerializers;
 import com.teamacronymcoders.base.featuresystem.FeatureHandler;
 import com.teamacronymcoders.base.materialsystem.FeatureMaterials;
+import com.teamacronymcoders.base.materialsystem.commands.CommandOreDictDump;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
 import com.teamacronymcoders.base.subblocksystem.FeatureSubBlocks;
 import com.teamacronymcoders.base.util.LanguageHelper;
+import net.minecraft.command.ServerCommandManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -14,6 +16,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 import static com.teamacronymcoders.base.Reference.*;
 
@@ -52,6 +55,11 @@ public class Base extends BaseModFoundation<Base> {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
+    }
+
+    @EventHandler
+    public void serverStart(FMLServerStartingEvent event) {
+        ((ServerCommandManager) event.getServer().getCommandManager()).registerCommand(new CommandOreDictDump());
     }
 
     public void setCreativeTab(CreativeTabs creativeTab) {
