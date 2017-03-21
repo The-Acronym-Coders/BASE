@@ -31,6 +31,10 @@ repositories {
         name 'Tesla'
         url 'http://maven.epoxide.xyz'
     }
+    maven {
+        name 'Botania/Baubles'
+        url 'https://jitpack.io'
+    }
 }
 
 
@@ -54,6 +58,7 @@ dependencies {
     deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:${minecraft_version}-${minetweaker_version}"
     deobfCompile "net.darkhax.tesla:Tesla:${minecraft_version}-${tesla_version}"
     deobfCompile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}"
+    deobfCompile "com.github.Azanor:Baubles:1.10.2-SNAPSHOT"
 }
 
 def commonManifest = {
@@ -108,54 +113,6 @@ processResources {
     }
 }
 
-task getLibraries {
-    def libsFolder = new File('libs')
-    if (!libsFolder.isDirectory()) {
-        libsFolder.mkdirs()
-    }
-
-    def downloads = new ArrayList<Tuple>()
-
-    def botania = 'Botania r' + botania_version + '-deobf.jar'
-    def botaniaSource = 'http://botaniamod.net/files/deobf/' + botania
-
-    def baubles = 'Baubles-' + minecraft_version + '-' + baubles_version + '-deobf.jar'
-    def baublesSource = 'https://dl.dropboxusercontent.com/u/47135879/' + baubles
-    downloads.add(new Tuple(botania, botaniaSource))
-    downloads.add(new Tuple(baubles, baublesSource))
-
-    libsFolder.listFiles().each { file ->
-        def isInDownloadList = false;
-        downloads.each { download ->
-            if (file.name == download.get(0).toString()) {
-                isInDownloadList = true;
-            }
-        }
-        if (!isInDownloadList || file.size() < 5) {
-            println "Deleting file " + file.name
-            file.delete()
-        }
-    }
-
-    downloads.each { download ->
-        def fileLocation = new File('libs', download.get(0).toString())
-        if (!fileLocation.exists()) {
-            def downloadString = download.get(1).toString()
-            if (downloadString.contains(" ")) {
-                downloadString = downloadString.replace(" ", "%20");
-            }
-            if (!downloadString.equals("")) {
-                println "Downloading " + download.get(0).toString()
-                fileLocation.withOutputStream { out ->
-                    new URL(downloadString).withInputStream { from ->
-                        out << from;
-                    }
-                }
-            }
-        }
-    }
-}
-
 String getVersion() {
     String version = "${base_version}"
     String branch = System.getenv("BRANCH") != null ? System.getenv("BRANCH") : ""
@@ -172,7 +129,7 @@ String getVersion() {
     return version
 }
 
-String getBuildNumber() {
+static String getBuildNumber() {
     String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
     if(buildNumber == "") {
         buildNumber = System.getenv("bamboo_buildNumber") != null ? "." + System.getenv("bamboo_buildNumber") : ""
