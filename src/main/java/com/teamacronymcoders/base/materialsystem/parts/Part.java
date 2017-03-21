@@ -1,8 +1,6 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
-import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.util.Locale;
 
