@@ -3,26 +3,32 @@ package com.teamacronymcoders.base.modules.materials.items;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
+import com.teamacronymcoders.base.api.materials.MaterialType.EnumPartType;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.IHasOreDict;
+import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.items.ItemBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Jared on 6/30/2016
  */
-public class ItemPart extends ItemBase implements IHasOreDict, IHasItemColor {
+public class ItemPart extends ItemBase implements IHasOreDict, IHasItemColor, IHasRecipe {
 
-    MaterialType.EnumPartType type;
+    private EnumPartType type;
 
-    public ItemPart(MaterialType.EnumPartType type) {
+    public ItemPart(EnumPartType type) {
         super(type.getName().toLowerCase());
         this.type = type;
         setHasSubtypes(true);
@@ -37,14 +43,16 @@ public class ItemPart extends ItemBase implements IHasOreDict, IHasItemColor {
     @Nonnull
     public String getUnlocalizedName(ItemStack stack) {
         MaterialType mat = MaterialRegistry.getFromID(stack.getItemDamage());
-        if (mat != null && mat.isTypeSet(type))
+        if (mat != null && mat.isTypeSet(type)) {
             return String.format("item.base.%s.%s", this.type.name().toLowerCase(), mat.getName().toLowerCase());
+        }
 
         return "item.base.null_part";
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack) {
+    @Nonnull
+    public String getItemStackDisplayName(@Nonnull ItemStack stack) {
         MaterialType mat = MaterialRegistry.getFromID(stack.getItemDamage());
         if (mat != null && mat.isTypeSet(type))
             return String.format("%s %s", mat.getLocalizedName(), this.type.getLocalizedName());
@@ -53,6 +61,7 @@ public class ItemPart extends ItemBase implements IHasOreDict, IHasItemColor {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack stack) {
         MaterialType mat = MaterialRegistry.getFromID(stack.getItemDamage());
         if (mat != null && mat.isTypeSet(type)) {
@@ -95,5 +104,12 @@ public class ItemPart extends ItemBase implements IHasOreDict, IHasItemColor {
         MaterialRegistry.getMaterials().entrySet().stream().filter(entry -> entry.getValue().isTypeSet(type))
                 .forEach(entry -> itemStacks.add(new ItemStack(this, 1, entry.getKey())));
         return itemStacks;
+    }
+
+    @Override
+    public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+        this.getAllSubItems(new ArrayList<>()).forEach(itemStack -> this.type.getRecipes(recipes,
+                MaterialRegistry.getFromID(itemStack.getItemDamage()), itemStack));
+        return recipes;
     }
 }

@@ -8,12 +8,14 @@ import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.items.IHasItemColor;
+import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.modules.materials.items.ItemBlockMaterial;
 import com.teamacronymcoders.base.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -24,7 +26,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasItemColor, IHasBlockStateMapper {
+public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasItemColor, IHasBlockStateMapper, IHasRecipe {
     private MaterialType materialType;
     private EnumPartType partType;
 
@@ -111,5 +113,10 @@ public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasItem
     @Override
     public Block getBlock() {
         return this;
+    }
+
+    @Override
+    public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+        return this.getPartType().getRecipes(recipes);
     }
 }
