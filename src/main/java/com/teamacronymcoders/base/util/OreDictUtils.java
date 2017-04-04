@@ -18,11 +18,12 @@ public class OreDictUtils {
     private static List<String> preferredModIds;
 
     private OreDictUtils() {
-        preferredItemStacks = new HashMap<>();
-        preferredModIds = new ArrayList<>();
+
     }
 
     public static void setup() {
+        preferredItemStacks = new HashMap<>();
+        preferredModIds = new ArrayList<>();
         ConfigEntry preferredMods = ConfigEntryBuilder.getBuilder("preferredOreDictIds", "base").setArray(true)
                 .setCategory("materials").setComment("List for Prioritizing OreDict returns by modid").build();
         Base.instance.getRegistry(ConfigRegistry.class, "CONFIG").addEntry(preferredMods);
@@ -49,9 +50,5 @@ public class OreDictUtils {
         }
         ItemStack itemStack = preferredItemStacks.get(oreDictName);
         return ItemStackUtils.isValidItemStack(itemStack) ? itemStack.copy() : null;
-    }
-
-    public static List<String> getPreferredModIds() {
-        return preferredModIds;
     }
 }
