@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MaterialPartData {
-    private Map<String, String> data = new HashMap<>();
+    private Map<String, Object> data = new HashMap<>();
 
 
 }

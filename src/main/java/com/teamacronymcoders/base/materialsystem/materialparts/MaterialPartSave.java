@@ -7,7 +7,7 @@ public class MaterialPartSave {
     private BiMap<Integer, MaterialPart> materialParts;
 
     public MaterialPartSave() {
-        HashBiMap.create();
+        materialParts = HashBiMap.create();
     }
 
     public BiMap<Integer, MaterialPart> getMaterialParts() {

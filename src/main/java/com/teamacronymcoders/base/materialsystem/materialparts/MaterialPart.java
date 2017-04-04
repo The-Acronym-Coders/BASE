@@ -8,6 +8,8 @@ import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Map;
 
@@ -24,12 +26,14 @@ public class MaterialPart {
         this.setPart(part);
         this.setTextureLocation(new ResourceLocation(Reference.MODID, part.getUnlocalizedName()));
         this.colorize = true;
+        this.data = new MaterialPartData(part.getRequiredData(), part.getAllData());
     }
 
     public String getName() {
         return material.getUnlocalizedName() + "." + part.getUnlocalizedName();
     }
 
+    @SideOnly(Side.CLIENT)
     public String getLocalizedName() {
         return String.format("%s %s", material.getName(), I18n.format(part.getUnlocalizedName()));
     }

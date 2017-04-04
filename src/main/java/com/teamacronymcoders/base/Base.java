@@ -58,11 +58,6 @@ public class Base extends BaseModFoundation<Base> {
         super.postInit(event);
     }
 
-    @EventHandler
-    public void serverStart(FMLServerStartingEvent event) {
-        ((ServerCommandManager) event.getServer().getCommandManager()).registerCommand(new CommandOreDictDump());
-    }
-
     public void setCreativeTab(CreativeTabs creativeTab) {
         this.creativeTab = creativeTab;
     }
