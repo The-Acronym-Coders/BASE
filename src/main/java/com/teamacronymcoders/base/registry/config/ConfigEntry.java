@@ -4,13 +4,20 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.common.config.Property.Type;
 
+import java.util.Arrays;
+
 public class ConfigEntry {
     private String category;
     private String propertyName;
+    private boolean isArray;
     private Type type;
     private String value;
     private String comment;
     private boolean guiChangeable;
+
+    public ConfigEntry(String propertyName, String value) {
+        this("General", propertyName, Type.STRING, value);
+    }
 
     public ConfigEntry(String category, String propertyName, Type type, String value) {
         this(category, propertyName, type, value, "");
@@ -21,16 +28,22 @@ public class ConfigEntry {
     }
 
     public ConfigEntry(String category, String propertyName, Type type, String value, String comment,
-                       boolean guiChangeable) {
+                            boolean guiChangeable) {
+        this(category, propertyName, type, value, comment, guiChangeable, false);
+    }
+
+    public ConfigEntry(String category, String propertyName, Type type, String value, String comment,
+                       boolean guiChangeable, boolean isArray) {
         this.setCategory(category);
         this.setPropertyName(propertyName);
         this.setType(type);
         this.setValue(value);
         this.setComment(comment);
         this.setGuiChangeable(guiChangeable);
+        this.setArray(isArray);
     }
 
-    public Property toProperty(Configuration configuration) {
+    public void saveProperty(Configuration configuration) {
         Property property;
         switch (getType()) {
             case INTEGER:
@@ -47,11 +60,15 @@ public class ConfigEntry {
                 this.value = Double.toString(property.getDouble());
                 break;
             default:
-                property = configuration.get(getCategory(), getPropertyName(), getValue(), getComment());
-                this.value = property.getString();
+                if (!isArray) {
+                    this.value = configuration.get(getCategory(), getPropertyName(), getValue(), getComment()).getString();
+                } else {
+                    String[] values = value.split(",");
+                    this.value = String.join(",", configuration.get(getCategory(), getPropertyName(), values,
+                            getComment()).getStringList());
+                }
                 break;
         }
-        return property;
     }
 
     public int getInt(int defaultValue) {
@@ -80,6 +97,16 @@ public class ConfigEntry {
 
     public String getString() {
         return getValue();
+    }
+
+    public String[] getStringArray() {
+        String[] stringArray;
+        if (isArray) {
+            stringArray = this.getString().split(",");
+        } else {
+            stringArray = new String[] {this.getString()};
+        }
+        return stringArray;
     }
 
     public String getCategory() {
@@ -128,5 +155,13 @@ public class ConfigEntry {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public boolean isArray() {
+        return isArray;
+    }
+
+    public void setArray(boolean array) {
+        isArray = array;
     }
 }
