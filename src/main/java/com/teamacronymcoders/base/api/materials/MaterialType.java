@@ -1,6 +1,10 @@
 package com.teamacronymcoders.base.api.materials;
 
 import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.recipes.BasicRecipes;
+import com.teamacronymcoders.base.util.OreDictUtils;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 
 import java.awt.*;
@@ -78,35 +82,52 @@ public class MaterialType {
     public enum EnumPartType {
         BLOCK {
             @Override
-            public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+            public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
+                if (!materialType.isTypeSet(INGOT)) {
+                    this.addCompressedRecipe(recipes, materialType, currentPart, "ingot", true);
+                }
+
                 return recipes;
             }
         },
         DUST {
             @Override
-            public List<IRecipe> getRecipes(List<IRecipe> recipes) {
-                return null;
+            public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
+                if (!materialType.isTypeSet(INGOT)) {
+                    this.addFurnaceRecipe(materialType, currentPart, "ingot", false);
+                }
+                return recipes;
             }
         },
-        GEAR {
-            @Override
-            public List<IRecipe> getRecipes(List<IRecipe> recipes) {
-                return null;
-            }
-        },
+        GEAR,
         INGOT {
             @Override
-            public List<IRecipe> getRecipes(List<IRecipe> recipes) {
-                return null;
+            public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
+                this.addCompressedRecipe(recipes, materialType, currentPart, "nugget", true);
+                this.addCompressedRecipe(recipes, materialType, currentPart, "block", true);
+                this.addFurnaceRecipe(materialType, currentPart, "dust", true);
+                this.addFurnaceRecipe(materialType, currentPart, "ore", true);
+                return recipes;
             }
         },
         NUGGET {
             @Override
-            public List<IRecipe> getRecipes(List<IRecipe> recipes) {
-                return null;
+            public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
+                if (!materialType.isTypeSet(INGOT)) {
+                    this.addCompressedRecipe(recipes, materialType, currentPart, "ingot", false);
+                }
+                return recipes;
             }
         },
-        ORE,
+        ORE {
+            @Override
+            public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
+                if (!materialType.isTypeSet(INGOT)) {
+                    this.addFurnaceRecipe(materialType, currentPart, "ingot", false);
+                }
+                return recipes;
+            }
+        },
         PLATE;
 
         public String getUnlocalizedName() {
@@ -125,8 +146,35 @@ public class MaterialType {
             return this.getName().toLowerCase();
         }
 
-        public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+        public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
             return recipes;
+        }
+
+        protected void addCompressedRecipe(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart,
+                                           String otherOreDict, boolean currentPartIsResult) {
+            String materialName = materialType.getName().replace(" ", "");
+            ItemStack newPart = OreDictUtils.getPreferredItemStack(otherOreDict + materialName);
+            if (newPart != null) {
+                if (currentPartIsResult) {
+                    recipes.add(BasicRecipes.createCompressedRecipe(newPart, currentPart));
+                    recipes.add(BasicRecipes.createUnCompressingRecipe(currentPart, newPart));
+                } else {
+                    recipes.add(BasicRecipes.createCompressedRecipe(currentPart, newPart));
+                    recipes.add(BasicRecipes.createUnCompressingRecipe(newPart, currentPart));
+                }
+            }
+        }
+
+        protected void addFurnaceRecipe(MaterialType materialType, ItemStack currentPart, String otherOreDict, boolean currentPartIsResult) {
+            String materialName = materialType.getName().replace(" ", "");
+            ItemStack newPart = OreDictUtils.getPreferredItemStack(otherOreDict + materialName);
+            if (newPart != null) {
+                if (currentPartIsResult) {
+                    FurnaceRecipes.instance().addSmeltingRecipe(newPart, currentPart, 1);
+                } else {
+                    FurnaceRecipes.instance().addSmeltingRecipe(currentPart, newPart, 1);
+                }
+            }
         }
     }
 

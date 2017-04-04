@@ -9,11 +9,14 @@ import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.items.IHasItemColor;
+import com.teamacronymcoders.base.items.IHasOreDict;
+import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.modules.materials.items.ItemBlockMaterial;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -22,9 +25,10 @@ import net.minecraft.world.IBlockAccess;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("deprecation")
-public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasItemColor, IHasBlockStateMapper {
+public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasBlockStateMapper {
     private MaterialType materialType;
     private EnumPartType partType;
 
@@ -82,14 +86,6 @@ public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasItem
     @Override
     public ResourceLocation getResourceLocation(IBlockState blockState) {
         return new ResourceLocation(Reference.MODID, getPartType().getLowerCaseName());
-    }
-
-    @Override
-    public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
-        if (getMaterialType() != null && tintIndex == 0) {
-            return getMaterialType().getColour().getRGB();
-        }
-        return 0xFFFFFF;
     }
 
     public MaterialType getMaterialType() {

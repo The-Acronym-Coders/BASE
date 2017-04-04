@@ -99,7 +99,7 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
 
     public void addEntry(String name, ConfigEntry entry, String configName) {
         this.entries.put(new ResourceLocation(this.mod.getName(), name), entry);
-        entry.toProperty(configurationFiles.get(configName));
+        entry.saveProperty(configurationFiles.get(configName));
         configurationFiles.get(configName).save();
     }
 

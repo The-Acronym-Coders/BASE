@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.modules.jei;
+package com.teamacronymcoders.base.registry.pieces.jei;
 
 import com.teamacronymcoders.base.items.IHasSubItems;
 import mezz.jei.api.BlankModPlugin;
@@ -25,6 +25,4 @@ public class BASEJEIPlugin extends BlankModPlugin {
     public static void blackListItem(IHasSubItems item) {
         item.getAllSubItems(new ArrayList<>()).forEach(BASEJEIPlugin::blackListItemStack);
     }
-
-
 }
