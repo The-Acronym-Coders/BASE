@@ -2,6 +2,7 @@ package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
 import com.teamacronymcoders.base.util.LanguageHelper;
+import com.teamacronymcoders.base.util.OreDictUtils;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -31,6 +32,7 @@ public class Base extends BaseModFoundation<Base> {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+        OreDictUtils.setup();
     }
 
     @EventHandler
