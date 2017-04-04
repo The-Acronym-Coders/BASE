@@ -1,6 +1,7 @@
-package com.teamacronymcoders.base.materialsystem;
+package com.teamacronymcoders.base.materialsystem.materialparts;
 
 import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import net.minecraft.init.Blocks;
@@ -41,11 +42,6 @@ public class MissingMaterialPart extends MaterialPart {
     @Override
     public int getColor() {
         return -1;
-    }
-
-    @Override
-    public ResourceLocation getRegistryName() {
-        return new ResourceLocation("missing", "material_part");
     }
 
     @Override

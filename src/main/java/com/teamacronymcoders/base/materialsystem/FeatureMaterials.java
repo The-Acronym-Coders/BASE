@@ -12,6 +12,11 @@ public class FeatureMaterials implements IFeature {
     }
 
     @Override
+    public void cleanUp() {
+        MaterialsSystem.finishUp();
+    }
+
+    @Override
     public boolean isActive() {
         return active;
     }
