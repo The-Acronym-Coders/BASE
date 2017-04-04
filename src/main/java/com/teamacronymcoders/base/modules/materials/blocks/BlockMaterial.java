@@ -8,6 +8,7 @@ import com.teamacronymcoders.base.blocks.BlockBase;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.items.IHasItemColor;
+import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.modules.materials.items.ItemBlockMaterial;
 import com.teamacronymcoders.base.reference.Reference;
@@ -24,9 +25,10 @@ import net.minecraft.world.IBlockAccess;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("deprecation")
-public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasItemColor, IHasBlockStateMapper, IHasRecipe {
+public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasBlockStateMapper {
     private MaterialType materialType;
     private EnumPartType partType;
 
@@ -86,14 +88,6 @@ public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasItem
         return new ResourceLocation(Reference.MODID, getPartType().getLowerCaseName());
     }
 
-    @Override
-    public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
-        if (getMaterialType() != null && tintIndex == 0) {
-            return getMaterialType().getColour().getRGB();
-        }
-        return 0xFFFFFF;
-    }
-
     public MaterialType getMaterialType() {
         return materialType;
     }
@@ -113,10 +107,5 @@ public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasItem
     @Override
     public Block getBlock() {
         return this;
-    }
-
-    @Override
-    public List<IRecipe> getRecipes(List<IRecipe> recipes) {
-        return this.getPartType().getRecipes(recipes);
     }
 }
