@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.util;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.registry.config.ConfigEntry;
 import com.teamacronymcoders.base.registry.config.ConfigEntryBuilder;
@@ -8,10 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OreDictUtils {
     private static Map<String, ItemStack> preferredItemStacks;
@@ -27,6 +25,7 @@ public class OreDictUtils {
         ConfigEntry preferredMods = ConfigEntryBuilder.getBuilder("preferredOreDictIds", "base").setArray(true)
                 .setCategory("materials").setComment("List for Prioritizing OreDict returns by modid").build();
         Base.instance.getRegistry(ConfigRegistry.class, "CONFIG").addEntry(preferredMods);
+        preferredModIds = Arrays.asList(preferredMods.getStringArray());
     }
 
     @Nullable

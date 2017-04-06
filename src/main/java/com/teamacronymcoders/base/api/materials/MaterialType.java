@@ -104,7 +104,7 @@ public class MaterialType {
             @Override
             public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
                 this.addCompressedRecipe(recipes, materialType, currentPart, "nugget", true);
-                this.addCompressedRecipe(recipes, materialType, currentPart, "block", true);
+                this.addCompressedRecipe(recipes, materialType, currentPart, "block", false);
                 this.addFurnaceRecipe(materialType, currentPart, "dust", true);
                 this.addFurnaceRecipe(materialType, currentPart, "ore", true);
                 return recipes;

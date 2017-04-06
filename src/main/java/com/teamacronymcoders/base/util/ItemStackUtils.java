@@ -30,8 +30,4 @@ public class ItemStackUtils {
     public static String getModIdFromItemStack(@Nonnull ItemStack itemStack) {
         return itemStack.getItem().getRegistryName().getResourceDomain();
     }
-
-    public static boolean isItemNonNull(ItemStack itemStack) {
-        return itemStack != null && itemStack.getItem() != null;
-    }
 }
