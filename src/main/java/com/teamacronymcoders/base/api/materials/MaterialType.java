@@ -116,6 +116,7 @@ public class MaterialType {
                 if (!materialType.isTypeSet(INGOT)) {
                     this.addCompressedRecipe(recipes, materialType, currentPart, "ingot", false);
                 }
+                this.addFurnaceRecipe(materialType, currentPart, "poorOre", true);
                 return recipes;
             }
         },
@@ -128,6 +129,20 @@ public class MaterialType {
                 return recipes;
             }
         },
+        POOR_ORE {
+            @Override
+            public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
+                if (!materialType.isTypeSet(NUGGET)) {
+                    this.addFurnaceRecipe(materialType, currentPart, "nugget", false);
+                }
+                return recipes;
+            }
+
+            @Override
+            public String getOreDictName() {
+                return "poorOre";
+            }
+        },
         PLATE;
 
         public String getUnlocalizedName() {
@@ -136,6 +151,10 @@ public class MaterialType {
 
         public String getLocalizedName() {
             return Base.languageHelper.none(getUnlocalizedName());
+        }
+
+        public String getOreDictName() {
+            return this.getName().toLowerCase();
         }
 
         public String getName() {

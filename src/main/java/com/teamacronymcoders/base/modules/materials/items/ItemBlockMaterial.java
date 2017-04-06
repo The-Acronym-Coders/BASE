@@ -42,7 +42,7 @@ public class ItemBlockMaterial extends ItemBlockGeneric<BlockMaterial> implement
     @Nonnull
     @Override
     public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
-        String oreDictName = this.getPartType().getName().toLowerCase() + this.getMaterialType().getName().replace(" ", "");
+        String oreDictName = this.getPartType().getOreDictName() + this.getMaterialType().getName().replace(" ", "");
         names.put(new ItemStack(this), oreDictName);
         return names;
     }

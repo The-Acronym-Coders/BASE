@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "normal": {
+      "model": "base:poor_ore"
+    },
+    "inventory": {
+      "model": "base:poor_ore"
+    }
+  }
+}

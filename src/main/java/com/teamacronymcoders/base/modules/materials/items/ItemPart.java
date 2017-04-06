@@ -83,7 +83,7 @@ public class ItemPart extends ItemBase implements IHasOreDict, IHasItemColor, IH
             MaterialType mat = ent.getValue();
             if (mat.isTypeSet(type)) {
                 ItemStack itemStack = new ItemStack(this, 1, ent.getKey());
-                String oreDictName = type.getName().toLowerCase() + mat.getName().replace(" ", "");
+                String oreDictName = type.getOreDictName() + mat.getName().replace(" ", "");
                 names.put(itemStack, oreDictName);
             }
         }

@@ -26,6 +26,9 @@ public interface IMaterialType {
     void registerOre(float hardness, float resistance, String toolClass, int toolTier);
 
     @ZenMethod
+    void registerPoorOre(float hardness, float resistance, String toolClass, int toolTier);
+
+    @ZenMethod
     void registerPlate();
 
     Object getInternal();
