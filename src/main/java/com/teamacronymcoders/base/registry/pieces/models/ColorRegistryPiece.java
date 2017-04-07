@@ -9,7 +9,9 @@ import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import com.teamacronymcoders.base.registry.pieces.RegistrySide;
 import net.minecraft.util.ResourceLocation;
 
-@RegistryPiece(RegistrySide.CLIENT)
+import static net.minecraftforge.fml.common.eventhandler.EventPriority.LOW;
+
+@RegistryPiece(value = RegistrySide.CLIENT, priority = LOW)
 public class ColorRegistryPiece extends RegistryPieceBase {
     @Override
     public boolean acceptsRegistry(Registry registry) {
@@ -17,11 +19,11 @@ public class ColorRegistryPiece extends RegistryPieceBase {
     }
 
     public void init(ResourceLocation name, Object entry) {
-        if(entry instanceof IHasItemColor) {
-            Colors.registerItemColor(entry, (IHasItemColor)entry);
+        if (entry instanceof IHasItemColor) {
+            Colors.registerItemColor(entry, (IHasItemColor) entry);
         }
-        if(entry instanceof IHasBlockColor) {
-            Colors.registerBlockColor((IHasBlockColor)entry);
+        if (entry instanceof IHasBlockColor) {
+            Colors.registerBlockColor((IHasBlockColor) entry);
         }
     }
 }

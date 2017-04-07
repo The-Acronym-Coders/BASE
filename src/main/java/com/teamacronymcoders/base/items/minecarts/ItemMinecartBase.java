@@ -1,11 +1,12 @@
 package com.teamacronymcoders.base.items.minecarts;
 
 import com.teamacronymcoders.base.client.models.IHasModel;
-import com.teamacronymcoders.base.entity.EntityMinecartBase;
+import com.teamacronymcoders.base.entities.EntityMinecartBase;
 import com.teamacronymcoders.base.util.BlockUtils;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemMinecart;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -62,12 +63,17 @@ public abstract class ItemMinecartBase extends ItemMinecart implements /*IMineca
                 entityMinecart.posX = (float) blockPos.getX() + 0.5F;
                 entityMinecart.posY = (float) blockPos.getY() + 0.5F;
                 entityMinecart.posZ = (float) blockPos.getZ() + 0.5F;
-                world.spawnEntityInWorld(entityMinecart);
+                world.spawnEntity(entityMinecart);
             }
             --itemStack.stackSize;
             return EnumActionResult.SUCCESS;
         }
         return EnumActionResult.PASS;
+    }
+
+    @Override
+    public Item getItem() {
+        return this;
     }
 
     @Nonnull

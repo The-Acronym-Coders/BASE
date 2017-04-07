@@ -3,6 +3,7 @@ package com.teamacronymcoders.base.api.materials;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.recipes.BasicRecipes;
 import com.teamacronymcoders.base.util.OreDictUtils;
+import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
@@ -104,7 +105,7 @@ public class MaterialType {
             @Override
             public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
                 this.addCompressedRecipe(recipes, materialType, currentPart, "nugget", true);
-                this.addCompressedRecipe(recipes, materialType, currentPart, "block", true);
+                this.addCompressedRecipe(recipes, materialType, currentPart, "block", false);
                 this.addFurnaceRecipe(materialType, currentPart, "dust", true);
                 this.addFurnaceRecipe(materialType, currentPart, "ore", true);
                 return recipes;
@@ -116,6 +117,7 @@ public class MaterialType {
                 if (!materialType.isTypeSet(INGOT)) {
                     this.addCompressedRecipe(recipes, materialType, currentPart, "ingot", false);
                 }
+                this.addFurnaceRecipe(materialType, currentPart, "poorOre", true, 2);
                 return recipes;
             }
         },
@@ -128,6 +130,20 @@ public class MaterialType {
                 return recipes;
             }
         },
+        POOR_ORE {
+            @Override
+            public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
+                if (!materialType.isTypeSet(NUGGET)) {
+                    this.addFurnaceRecipe(materialType, currentPart, "nugget", false, 2);
+                }
+                return recipes;
+            }
+
+            @Override
+            public String getOreDictName(MaterialType materialType) {
+                return "poorOre" + TextUtils.removeSpecialCharacters(materialType.getName());
+            }
+        },
         PLATE;
 
         public String getUnlocalizedName() {
@@ -136,6 +152,10 @@ public class MaterialType {
 
         public String getLocalizedName() {
             return Base.languageHelper.none(getUnlocalizedName());
+        }
+
+        public String getOreDictName(MaterialType materialType) {
+            return this.getName().toLowerCase() + TextUtils.removeSpecialCharacters(materialType.getName());
         }
 
         public String getName() {
@@ -165,16 +185,23 @@ public class MaterialType {
             }
         }
 
-        protected void addFurnaceRecipe(MaterialType materialType, ItemStack currentPart, String otherOreDict, boolean currentPartIsResult) {
+        protected void addFurnaceRecipe(MaterialType materialType, ItemStack currentPart, String otherOreDict,
+                                        boolean currentPartIsResult, int outputNumber) {
             String materialName = materialType.getName().replace(" ", "");
             ItemStack newPart = OreDictUtils.getPreferredItemStack(otherOreDict + materialName);
             if (newPart != null) {
                 if (currentPartIsResult) {
+                    currentPart = new ItemStack(currentPart.getItem(), outputNumber, currentPart.getItemDamage());
                     FurnaceRecipes.instance().addSmeltingRecipe(newPart, currentPart, 1);
                 } else {
+                    newPart = new ItemStack(newPart.getItem(), outputNumber, newPart.getItemDamage());
                     FurnaceRecipes.instance().addSmeltingRecipe(currentPart, newPart, 1);
                 }
             }
+        }
+
+        protected void addFurnaceRecipe(MaterialType materialType, ItemStack currentPart, String otherOreDict, boolean currentPartIsResult) {
+            this.addFurnaceRecipe(materialType, currentPart, otherOreDict, currentPartIsResult, 1);
         }
     }
 

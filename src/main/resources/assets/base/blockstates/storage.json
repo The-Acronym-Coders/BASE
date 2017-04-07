@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "normal": {
+      "model": "base:storage"
+    },
+    "inventory": {
+      "model": "base:storage"
+    }
+  }
+}

@@ -18,7 +18,7 @@ public class BlockSubBase extends BlockBase {
 
     @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
-        for(int x = 0; x < names.length; x++) {
+        for (int x = 0; x < names.length; x++) {
             itemStacks.add(new ItemStack(this, 1, x));
         }
         return itemStacks;

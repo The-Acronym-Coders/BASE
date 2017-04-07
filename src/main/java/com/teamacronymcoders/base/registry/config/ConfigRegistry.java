@@ -31,15 +31,15 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
                 folderExists = getTacFolder().mkdir();
             }
 
-            if(folderExists && useModFolder) {
+            if (folderExists && useModFolder) {
                 this.modFolder = new File(this.getTacFolder(), this.mod.getConfigFolderName());
-                if(!this.modFolder.exists()) {
+                if (!this.modFolder.exists()) {
                     folderExists = this.modFolder.mkdir();
                 }
                 configFileName = "General";
             }
 
-            if(folderExists) {
+            if (folderExists) {
                 addNewConfigFile(configFileName);
             } else {
                 this.mod.getLogger().fatal("FAILED TO CREATE REQUIRED FOLDERS FOR CONFIG");

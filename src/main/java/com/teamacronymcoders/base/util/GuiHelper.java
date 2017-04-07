@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.util;
 
+import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
@@ -338,7 +339,7 @@ public class GuiHelper extends GuiScreen {
      * @param y startY
      */
     public void drawPlayerHead(int x, int y) {
-        ResourceLocation playerSkin = Minecraft.getMinecraft().thePlayer.getLocationSkin();
+        ResourceLocation playerSkin = ClientHelper.player().getLocationSkin();
         mc.getTextureManager().bindTexture(playerSkin);
 
         int[][] savedGLState = OpenGLHelper.saveGLState(new int[]{GL11.GL_ALPHA_TEST, GL11.GL_LIGHTING});

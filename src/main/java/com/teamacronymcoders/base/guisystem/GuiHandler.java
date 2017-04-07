@@ -1,48 +1,32 @@
 package com.teamacronymcoders.base.guisystem;
 
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.guisystem.network.PacketHandlerOpenGui;
-import com.teamacronymcoders.base.guisystem.network.PacketOpenGui;
-import com.teamacronymcoders.base.guisystem.target.GuiTarget;
-import com.teamacronymcoders.base.guisystem.target.GuiTargetBase;
-import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
-
-public class GuiHandler {
-    private IBaseMod mod;
-    private Map<String, GuiTargetBase> guiTargetRegistry;
-
-    public GuiHandler(IBaseMod mod, ASMDataTable asmDataTable) {
-        this.mod = mod;
-        this.guiTargetRegistry = new HashMap<>();
-        this.getGuiTargets(asmDataTable);
-        mod.getPacketHandler().registerPacket(PacketHandlerOpenGui.class, PacketOpenGui.class, Side.CLIENT);
+public class GuiHandler implements IGuiHandler {
+    public GuiHandler(IBaseMod instance) {
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, this);
     }
 
-    /*
-     * Called similar to EntityPlayer#openGui but allows for passing a context NBTTag in
-     * @param guiTarget the target for which to open the GUI;
-     * @param context Any data items for which you want to know when opening the guisystem
-     */
-    public void openGui(@Nonnull GuiTargetBase guiTarget, @Nonnull NBTTagCompound context, boolean openGuiFromServer,
-                        EntityPlayer entityPlayer, World world) {
-        this.mod.getLibProxy().openGui(guiTarget, context, openGuiFromServer, entityPlayer, world);
+    @Override
+    public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+        BlockPos blockPos = new BlockPos(x, y, z);
+        IHasGui openableGUI = this.getHasGUI(id, player, world, blockPos);
+        return openableGUI != null ? openableGUI.getContainer(player, world, blockPos) : null;
     }
 
-    private void getGuiTargets(ASMDataTable asmDataTable) {
-        ClassLoading.getInstances(asmDataTable, GuiTarget.class, GuiTargetBase.class).forEach(guiTarget ->
-                this.guiTargetRegistry.put(guiTarget.getName(), guiTarget));
+    @Override
+    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, final int z) {
+        BlockPos blockPos = new BlockPos(x, y, z);
+        IHasGui openableGUI = this.getHasGUI(id, player, world, blockPos);
+        return openableGUI != null ? openableGUI.getGui(player, world, blockPos) : null;
     }
 
-    public GuiTargetBase getGuiTarget(String name) {
-        return guiTargetRegistry.get(name);
+    private IHasGui getHasGUI(int id, EntityPlayer player, World world, BlockPos blockPos) {
+        return GuiCarrier.values()[id].getHasGUI(player, world, blockPos);
     }
 }

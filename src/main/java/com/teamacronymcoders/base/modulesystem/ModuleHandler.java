@@ -14,7 +14,9 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModuleHandler {
     private Map<String, IModule> modules;
@@ -35,6 +37,7 @@ public class ModuleHandler {
 
     public void preInit(FMLPreInitializationEvent event) {
         this.modules.values().stream().filter(IModule::getIsActive).forEachOrdered(module -> module.preInit(event));
+        this.modules.values().stream().filter(IModule::getIsActive).forEachOrdered(module -> module.afterModulesPreInit(event));
     }
 
     public void init(FMLInitializationEvent event) {
@@ -47,7 +50,7 @@ public class ModuleHandler {
 
     public void setupModules() {
         for (IModule module : getModules().values()) {
-            if(module.isConfigurable() && mod.hasConfig()) {
+            if (module.isConfigurable() && mod.hasConfig()) {
                 this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(module));
                 module.setIsActive(this.getConfig().getBoolean(module.getName(), module.getActiveDefault()));
             }
@@ -70,8 +73,11 @@ public class ModuleHandler {
 
     private void printModuleDependencyOutcome(IModule module, IDependency dependency) {
         if (!dependency.isMet(this)) {
-            this.mod.getLogger().error("Module " + module.getName() + " did not load due to issue: " +
-                    dependency.notMetMessage());
+            if (dependency.isSilent() || dependency.notMetMessage() != null) {
+                this.mod.getLogger().error("Module " + module.getName() + " did not load due to issue: " +
+                        dependency.notMetMessage());
+            }
+
             module.setIsActive(false);
         }
     }
@@ -105,7 +111,7 @@ public class ModuleHandler {
         ClassLoading.getInstances(asmDataTable, Module.class, IModule.class, aClass -> {
             Module moduleAnnotation = aClass.getAnnotation(Module.class);
             boolean load = false;
-            if(moduleAnnotation != null) {
+            if (moduleAnnotation != null) {
                 String modid = moduleAnnotation.value().trim();
                 load = modid.equalsIgnoreCase("") || modid.equalsIgnoreCase(handlerName);
                 load &= this.mod.getLibProxy().isRightSide(moduleAnnotation.side());
@@ -113,7 +119,7 @@ public class ModuleHandler {
 
             return load;
         }).forEach(module -> {
-            if(!moduleMap.containsKey(module.getName())) {
+            if (!moduleMap.containsKey(module.getName())) {
                 moduleMap.put(module.getName(), module);
             } else {
                 throw new UnsupportedOperationException("Module Names must be Unique");

@@ -10,7 +10,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.HashMap;
 import java.util.Map;
 
-@RegistryPiece
+import static net.minecraftforge.fml.common.eventhandler.EventPriority.LOW;
+
+@RegistryPiece(priority = LOW)
 public class OreDictRegistryPiece extends RegistryPieceBase<IHasOreDict> {
     public OreDictRegistryPiece() {
         super(IHasOreDict.class);

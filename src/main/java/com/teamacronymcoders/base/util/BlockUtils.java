@@ -5,7 +5,8 @@ import net.minecraft.block.BlockRailBase.EnumRailDirection;
 import net.minecraft.block.state.IBlockState;
 
 public class BlockUtils {
-    private BlockUtils() { }
+    private BlockUtils() {
+    }
 
     public static boolean isRailBlock(IBlockState blockState) {
         boolean isRailBlock;
@@ -16,7 +17,7 @@ public class BlockUtils {
 
     public static EnumRailDirection getRailDirection(IBlockState blockState) {
         EnumRailDirection railDirection = null;
-        if(blockState.getBlock() instanceof BlockRailBase) {
+        if (blockState.getBlock() instanceof BlockRailBase) {
             BlockRailBase blockRailBase = (BlockRailBase) blockState.getBlock();
             railDirection = blockState.getValue(blockRailBase.getShapeProperty());
         }

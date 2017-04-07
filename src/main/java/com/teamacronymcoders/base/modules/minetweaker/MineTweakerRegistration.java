@@ -17,11 +17,11 @@ public class MineTweakerRegistration {
         File scriptsDirectory = new File(module.getConfigRegistry().getConfigFolder(), "scripts");
 
         boolean fileExists = scriptsDirectory.exists();
-        if (!fileExists){
+        if (!fileExists) {
             fileExists = scriptsDirectory.mkdir();
         }
 
-        if(fileExists) {
+        if (fileExists) {
             MineTweakerAPI.registerBracketHandler(new ItemBracketHandler());
             ItemBracketHandler.rebuildItemRegistry();
             MineTweakerAPI.registerClass(IMaterialType.class);

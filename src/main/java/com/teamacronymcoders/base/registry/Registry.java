@@ -31,7 +31,7 @@ public abstract class Registry<T> {
         setLoadingStage(LoadingStage.DONE);
     }
 
-    public T get(String name) {
+    public T get(ResourceLocation name) {
         return this.entries.get(name);
     }
 
@@ -39,10 +39,10 @@ public abstract class Registry<T> {
         if (requiresPreInitRegister() && getLoadingStage() != LoadingStage.PREINIT) {
             throw new TooLateException("ALL REGISTERING MUST HAPPEN IN PREINIT");
         }
-        if(!this.entries.containsKey(name)) {
+        if (!this.entries.containsKey(name)) {
             this.entries.put(name, entry);
         } else {
-            throw new UnsupportedOperationException("All Entries must be unique");
+            throw new UnsupportedOperationException("All Entries must be unique. Key: " + name.toString() + " is not.");
         }
     }
 

@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.modules.materials;
 
 import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.api.materials.MaterialRegistry;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.api.materials.MaterialType.EnumPartType;
@@ -10,7 +11,6 @@ import com.teamacronymcoders.base.modules.materials.blocks.BlockProperties;
 import com.teamacronymcoders.base.modules.materials.items.ItemPart;
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
-import com.teamacronymcoders.base.reference.Reference;
 import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.base.registry.ItemRegistry;
 import com.teamacronymcoders.base.registry.config.ConfigEntry;
@@ -32,8 +32,6 @@ public class ModuleMaterials extends ModuleBase {
     public static final ItemPart INGOT = new ItemPart(EnumPartType.INGOT);
 
     public static Map<String, MaterialType> activeBaseMaterials;
-    public static Map<MaterialType, BlockMaterial> oreBlocks;
-    public static Map<MaterialType, BlockMaterial> storageBlocks;
 
     @Override
     public String getName() {
@@ -52,8 +50,6 @@ public class ModuleMaterials extends ModuleBase {
                 activeBaseMaterials.put(materialType.getName(), materialType);
             }
         }
-        oreBlocks = new HashMap<>();
-        storageBlocks = new HashMap<>();
     }
 
     @Override
@@ -70,22 +66,24 @@ public class ModuleMaterials extends ModuleBase {
         BlockProperties oreProperties = new BlockProperties(3, 5, "pickaxe", 2);
         BlockProperties storageProperties = new BlockProperties(5, 10, "pickaxe", 2);
         MaterialRegistry.getMaterials().forEach((id, materialType) -> {
-            if(materialType.isTypeSet(EnumPartType.ORE)) {
+            if (materialType.isTypeSet(EnumPartType.ORE)) {
                 BlockMaterial blockMaterial = new BlockMaterial(materialType, EnumPartType.ORE, oreProperties);
                 blockRegistry.register(blockMaterial);
-                oreBlocks.put(materialType, blockMaterial);
             }
-            if(materialType.isTypeSet(EnumPartType.BLOCK)) {
+            if (materialType.isTypeSet(EnumPartType.BLOCK)) {
                 BlockMaterial blockMaterial = new BlockMaterial(materialType, EnumPartType.BLOCK, storageProperties);
                 blockRegistry.register(blockMaterial);
-                storageBlocks.put(materialType, blockMaterial);
+            }
+            if (materialType.isTypeSet(EnumPartType.POOR_ORE)) {
+                BlockMaterial blockMaterial = new BlockMaterial(materialType, EnumPartType.POOR_ORE, oreProperties);
+                blockRegistry.register(blockMaterial);
             }
         });
     }
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        if(MaterialRegistry.getMaterials().size() > 0) {
+        if (MaterialRegistry.getMaterials().size() > 0) {
             CreativeTabCarousel tabCarousel = new CreativeTabCarousel("base");
             tabCarousel.setIconStacks(GEAR.getAllSubItems(new ArrayList<>()));
             Base.instance.setCreativeTab(tabCarousel);

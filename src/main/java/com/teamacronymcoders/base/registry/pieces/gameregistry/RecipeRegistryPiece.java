@@ -8,7 +8,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.ArrayList;
 
-@RegistryPiece
+import static net.minecraftforge.fml.common.eventhandler.EventPriority.LOW;
+
+@RegistryPiece(priority = LOW)
 public class RecipeRegistryPiece extends RegistryPieceBase<IHasRecipe> {
     public RecipeRegistryPiece() {
         super(IHasRecipe.class);

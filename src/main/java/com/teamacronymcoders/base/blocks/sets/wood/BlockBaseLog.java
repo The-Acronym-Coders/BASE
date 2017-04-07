@@ -13,20 +13,17 @@ public class BlockBaseLog extends BlockLog {
         this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
     }
 
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] {LOG_AXIS});
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, new IProperty[]{LOG_AXIS});
     }
 
     /**
      * Convert the given metadata into a BlockState for this Block
      */
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         IBlockState iblockstate = this.getDefaultState();
 
-        switch (meta)
-        {
+        switch (meta) {
             case 0:
                 iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
                 break;
@@ -47,11 +44,9 @@ public class BlockBaseLog extends BlockLog {
      * Convert the BlockState into the correct metadata value
      */
     @SuppressWarnings("incomplete-switch")
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         int i = 0;
-        switch ((BlockLog.EnumAxis)state.getValue(LOG_AXIS))
-        {
+        switch ((BlockLog.EnumAxis) state.getValue(LOG_AXIS)) {
             case X:
                 i |= 1;
                 break;

@@ -98,9 +98,9 @@ public class PlayerUtils {
             Entity entity = (Entity) aList;
 
             RayTraceResult mop = world.rayTraceBlocks(
-                new Vec3d(entityplayer.posX, entityplayer.posY + entityplayer.getEyeHeight(), entityplayer.posZ),
-                new Vec3d(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ),
-                false
+                    new Vec3d(entityplayer.posX, entityplayer.posY + entityplayer.getEyeHeight(), entityplayer.posZ),
+                    new Vec3d(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ),
+                    false
             );
 
             if (((entity.canBeCollidedWith()) || (nonCollide)) && mop == null) {

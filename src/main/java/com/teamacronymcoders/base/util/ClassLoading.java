@@ -12,13 +12,14 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class ClassLoading {
-    private ClassLoading() { }
+    private ClassLoading() {
+    }
 
     public static LibCommonProxy createProxy(String clientString, String serverString) {
         Side side = FMLCommonHandler.instance().getEffectiveSide();
         String proxyString = side == Side.CLIENT ? clientString : serverString;
         Object proxyObject = createObjectInstance(proxyString);
-        if(proxyObject instanceof LibCommonProxy) {
+        if (proxyObject instanceof LibCommonProxy) {
             return (LibCommonProxy) proxyObject;
         }
         return null;
@@ -26,7 +27,7 @@ public class ClassLoading {
 
     public static <T> T createInstanceOf(Class<T> tClass, String path) {
         Object object = createObjectInstance(path);
-        if(object != null) {
+        if (object != null) {
             return tClass.cast(object);
         }
         return null;
@@ -37,7 +38,7 @@ public class ClassLoading {
             Class classToGrab;
             classToGrab = Class.forName(path);
             return createObjectInstance(classToGrab);
-        } catch(ClassNotFoundException exception) {
+        } catch (ClassNotFoundException exception) {
             Platform.attemptLogExceptionToCurrentMod(exception);
             Platform.attemptLogErrorToCurrentMod(path + " did not initialize. Something's gonna break.");
         }
@@ -47,7 +48,7 @@ public class ClassLoading {
     public static <T> T createObjectInstance(Class<T> clazz) {
         try {
             return clazz.newInstance();
-        } catch(InstantiationException | IllegalAccessException exception) {
+        } catch (InstantiationException | IllegalAccessException exception) {
             Platform.attemptLogExceptionToCurrentMod(exception);
             Platform.attemptLogErrorToCurrentMod(clazz.getName() + " did not initialize. Something's gonna break.");
         }
@@ -64,15 +65,15 @@ public class ClassLoading {
         String annotationClassName = annotationClass.getCanonicalName();
         Set<ASMDataTable.ASMData> asmDatas = asmDataTable.getAll(annotationClassName);
         List<T> instances = new ArrayList<>();
-        for(ASMDataTable.ASMData asmData : asmDatas) {
+        for (ASMDataTable.ASMData asmData : asmDatas) {
             try {
                 Class<?> asmClass = Class.forName(asmData.getClassName());
                 Class<? extends T> asmInstanceClass = asmClass.asSubclass(instanceClass);
-                if(createInstance.apply(asmInstanceClass)) {
+                if (createInstance.apply(asmInstanceClass)) {
                     T instance = asmInstanceClass.newInstance();
                     instances.add(instance);
                 }
-            } catch(ClassNotFoundException | IllegalAccessException | InstantiationException exception) {
+            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException exception) {
                 Platform.attemptLogErrorToCurrentMod("Failed to load: " + asmData.getClassName());
                 Platform.attemptLogExceptionToCurrentMod(exception);
             }

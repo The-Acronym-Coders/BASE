@@ -18,6 +18,8 @@ public interface IModule extends Comparable<IModule> {
 
     void preInit(FMLPreInitializationEvent event);
 
+    void afterModulesPreInit(FMLPreInitializationEvent event);
+
     void init(FMLInitializationEvent event);
 
     void postInit(FMLPostInitializationEvent event);

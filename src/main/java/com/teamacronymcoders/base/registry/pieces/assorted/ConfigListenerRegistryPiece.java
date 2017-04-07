@@ -17,7 +17,7 @@ public class ConfigListenerRegistryPiece extends RegistryPieceBase<IConfigListen
 
     @Override
     public void addEntry(ResourceLocation name, IConfigListener listener) {
-        if(configRegistry == null) {
+        if (configRegistry == null) {
             configRegistry = this.getMod().getRegistryHolder().getRegistry(ConfigRegistry.class, "CONFIG");
         }
         configRegistry.addListener(listener);

@@ -4,6 +4,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,6 +31,7 @@ public abstract class TileEntityBase extends TileEntity {
     }
 
     protected void readFromDisk(NBTTagCompound data) {
+        this.sendBlockUpdate();
     }
 
     protected NBTTagCompound writeToDisk(NBTTagCompound data) {
@@ -50,6 +53,7 @@ public abstract class TileEntityBase extends TileEntity {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
         this.readFromUpdatePacket(packet.getNbtCompound());
         super.onDataPacket(net, packet);
@@ -66,15 +70,14 @@ public abstract class TileEntityBase extends TileEntity {
     protected void readFromUpdatePacket(NBTTagCompound data) {
     }
 
-    ;
-
     protected NBTTagCompound writeToUpdatePacket(NBTTagCompound data) {
         return data;
     }
 
     public void sendBlockUpdate() {
-        if (!worldObj.isRemote)
-            this.worldObj.notifyBlockUpdate(getPos(), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
+        if (!this.getWorld().isRemote) {
+            this.getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(pos), getWorld().getBlockState(pos), 3);
+        }
     }
 
 }

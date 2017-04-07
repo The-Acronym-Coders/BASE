@@ -14,9 +14,9 @@ public class ItemRegistry extends ModularRegistry<Item> {
 
     public void register(Item item) {
         ResourceLocation name = item.getRegistryName();
-        if(name == null) {
+        if (name == null) {
             String unlocalizedName = item.getUnlocalizedName();
-            if(unlocalizedName.startsWith("item.")) {
+            if (unlocalizedName.startsWith("item.")) {
                 unlocalizedName = unlocalizedName.substring(5);
             }
             name = new ResourceLocation(this.mod.getID(), unlocalizedName);

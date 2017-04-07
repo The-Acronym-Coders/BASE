@@ -27,13 +27,16 @@ public abstract class ItemBaubleBase extends ItemBase implements IBauble {
 
     @Override
     @Optional.Method(modid = "Baubles")
-    public void onEquipped(ItemStack bauble, EntityLivingBase entityLivingBase) {}
+    public void onEquipped(ItemStack bauble, EntityLivingBase entityLivingBase) {
+    }
 
     @Override
     @Optional.Method(modid = "Baubles")
-    public void onUnequipped(ItemStack bauble, EntityLivingBase entityLivingBase) {}
+    public void onUnequipped(ItemStack bauble, EntityLivingBase entityLivingBase) {
+    }
 
     @Override
     @Optional.Method(modid = "Baubles")
-    public void onWornTick(ItemStack bauble, EntityLivingBase entityLivingBase) {}
+    public void onWornTick(ItemStack bauble, EntityLivingBase entityLivingBase) {
+    }
 }

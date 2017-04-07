@@ -3,8 +3,6 @@ package com.teamacronymcoders.base.proxies;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
-import com.teamacronymcoders.base.guisystem.network.PacketOpenGui;
-import com.teamacronymcoders.base.guisystem.target.GuiTargetBase;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
@@ -12,33 +10,28 @@ import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registry.pieces.RegistrySide;
 import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class LibCommonProxy {
     private IBaseMod mod;
 
     public void addOBJDomain() {
-        //Only add Client RegistrySide
+        // Only add Client RegistrySide
     }
 
     public void setItemModel(Item item, int metadata, ResourceLocation location) {
-        //Only set Client RegistrySide
+        // Only set Client RegistrySide
     }
 
     public void setAllItemModels(Item item, IHasModel model) {
-        //Only set Client RegistrySide
+        // Only set Client RegistrySide
     }
 
     public void registerFluidModel(Block fluidBlock, final ResourceLocation loc) {
-        //Only done Client RegistrySide
+        // Only done Client RegistrySide
     }
 
     public abstract IModuleProxy getModuleProxy(IModule module);
@@ -54,19 +47,12 @@ public abstract class LibCommonProxy {
         return moduleProxy;
     }
 
-    public abstract void openGui(@Nonnull GuiTargetBase guiTarget, @Nonnull NBTTagCompound context, boolean openGuiFromServer,
-                                 EntityPlayer entityPlayer, World world);
-
-    public void openGuiFromPacket(PacketOpenGui message, MessageContext ctx) {
-        //Only done Client RegistrySide
-    }
-
     public RegistrySide getRegistrySide() {
         return RegistrySide.BOTH;
     }
 
     public boolean isRightSide(RegistrySide side) {
-        //Check both and getRegistrySide since it can be overrode to not be both
+        // Check both and getRegistrySide since it can be overrode to not be both
         return side == RegistrySide.BOTH || side == this.getRegistrySide();
     }
 
@@ -79,18 +65,22 @@ public abstract class LibCommonProxy {
     }
 
     public void registerItemColor(Item item, IHasItemColor itemColor) {
-        //Only done Client RegistrySide
+        // Only done Client RegistrySide
     }
 
     public void registerItemColor(Block block, IHasItemColor itemColor) {
-        //Only done Client RegistrySide
+        // Only done Client RegistrySide
     }
 
     public void registerBlockColor(IHasBlockColor blockColor) {
-        //Only done Client RegistrySide
+        // Only done Client RegistrySide
     }
 
     public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
-        //Only done Client RegistrySide
+        // Only done Client RegistrySide
+    }
+
+    public void registerModelVariant(Item item, ResourceLocation resourceLocation) {
+        // Only done Client RegistrySide
     }
 }

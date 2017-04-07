@@ -1,9 +1,10 @@
 package com.teamacronymcoders.base.modules.texturegenerator;
 
+import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
-import com.teamacronymcoders.base.reference.Reference;
 import com.teamacronymcoders.base.util.Platform;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
 import java.io.File;
@@ -45,8 +46,16 @@ public class ModuleTextureGeneration extends ModuleBase {
     }
 
     private File getAssetDirectory() {
-        File userDir = new File(System.getProperty("user.dir"));
-        String assetPath = "src/main/resources/assets/" + this.getMod().getID() + "/";
+        File userDir = null;
+        File currentDir = new File(System.getProperty("user.dir"));
+        while (userDir == null) {
+            if (currentDir.getParentFile().listFiles((dir, name) -> name.equals("src")).length == 0) {
+                currentDir = currentDir.getParentFile();
+            } else {
+                userDir = currentDir.getParentFile();
+            }
+        }
+        String assetPath = "src/main/resources/assets/" + Loader.instance().activeModContainer().getModId() + "/";
         assetPath = assetPath.replace("/", File.separator);
         return new File(userDir, assetPath);
     }
@@ -62,21 +71,21 @@ public class ModuleTextureGeneration extends ModuleBase {
             FileHelper fileHelper = new FileHelper();
 
             if (!baseBlockState.exists()) {
-                if(baseBlockState.createNewFile()) {
+                if (baseBlockState.createNewFile()) {
                     fileHelper.writeFile(baseBlockState, fileHelper.scanFile(modid, key, texture,
                             new File(System.getProperty("user.home") + "/getFluxed/baseBlockState.json")));
                 }
             }
 
             if (!baseBlockModel.exists()) {
-                if(baseBlockModel.createNewFile()) {
+                if (baseBlockModel.createNewFile()) {
                     fileHelper.writeFile(baseBlockModel, fileHelper.scanFile(modid, key, texture,
                             new File(System.getProperty("user.home") + "/getFluxed/baseBlockModel.json")));
                 }
             }
 
             if (!baseItem.exists()) {
-                if(baseItem.createNewFile()) {
+                if (baseItem.createNewFile()) {
                     fileHelper.writeFile(baseItem, fileHelper.scanFile(modid, key, texture,
                             new File(System.getProperty("user.home") + "/getFluxed/baseBlockItem.json")));
                 }

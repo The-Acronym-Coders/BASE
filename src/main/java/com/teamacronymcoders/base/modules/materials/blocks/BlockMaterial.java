@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.modules.materials.blocks;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.api.materials.MaterialType;
 import com.teamacronymcoders.base.api.materials.MaterialType.EnumPartType;
 import com.teamacronymcoders.base.blocks.BlockBase;
@@ -11,7 +12,6 @@ import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.modules.materials.items.ItemBlockMaterial;
-import com.teamacronymcoders.base.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

@@ -20,8 +20,20 @@ repositories {
     mavenCentral()
 
     maven {
+        name 'CraftTweaker/IE'
+        url 'http://maven.blamejared.com'
+    }
+    maven {
         name 'JEI'
-        url "http://dvs1.progwml6.com/files/maven"
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        name 'Tesla'
+        url 'http://maven.epoxide.xyz'
+    }
+    maven {
+        name 'Botania/Baubles'
+        url 'https://jitpack.io'
     }
 }
 
@@ -43,9 +55,10 @@ minecraft {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
-
-    // test
-    testCompile 'junit:junit:4.12'
+    deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:${minecraft_version}-${minetweaker_version}"
+    deobfCompile "net.darkhax.tesla:Tesla:${minecraft_version}-${tesla_version}"
+    deobfCompile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}"
+    deobfCompile "com.github.Azanor:Baubles:1.10.2-SNAPSHOT"
 }
 
 def commonManifest = {
@@ -116,7 +129,7 @@ String getVersion() {
     return version
 }
 
-String getBuildNumber() {
+static String getBuildNumber() {
     String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
     if(buildNumber == "") {
         buildNumber = System.getenv("bamboo_buildNumber") != null ? "." + System.getenv("bamboo_buildNumber") : ""

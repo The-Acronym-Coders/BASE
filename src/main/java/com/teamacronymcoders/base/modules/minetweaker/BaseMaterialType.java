@@ -54,6 +54,14 @@ public class BaseMaterialType implements IMaterialType {
     }
 
     @Override
+    public void registerPoorOre(float hardness, float resistance, String toolClass, int toolTier) {
+        MineTweakerAPI.apply(new Materials.Change(type, MaterialType.EnumPartType.POOR_ORE));
+        BlockProperties blockProperties = new BlockProperties(hardness, resistance, toolClass, toolTier);
+        BlockMaterial blockMaterial = new BlockMaterial(type, MaterialType.EnumPartType.POOR_ORE, blockProperties);
+        Base.instance.getRegistry(BlockRegistry.class, "BLOCK").register(blockMaterial);
+    }
+
+    @Override
     public void registerPlate() {
         MineTweakerAPI.apply(new Materials.Change(type, MaterialType.EnumPartType.PLATE));
     }

@@ -1,8 +1,12 @@
 package com.teamacronymcoders.base.proxies;
 
-import com.teamacronymcoders.base.reference.Reference;
+import com.teamacronymcoders.base.Reference;
+import com.teamacronymcoders.base.multiblock.IMultiblockRegistry;
+import com.teamacronymcoders.base.multiblock.MultiblockEventHandler;
+import com.teamacronymcoders.base.multiblock.MultiblockRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ModCommonProxy {
 
@@ -32,4 +36,16 @@ public class ModCommonProxy {
     public String translateMessage(String label, String message) {
         return String.format("%s.%s.%s", label, Reference.MODID, message);
     }
+
+    // TODO
+
+    public IMultiblockRegistry initMultiblockRegistry() {
+
+        if (null == s_multiblockHandler)
+            MinecraftForge.EVENT_BUS.register(s_multiblockHandler = new MultiblockEventHandler());
+
+        return MultiblockRegistry.INSTANCE;
+    }
+
+    private static MultiblockEventHandler s_multiblockHandler = null;
 }

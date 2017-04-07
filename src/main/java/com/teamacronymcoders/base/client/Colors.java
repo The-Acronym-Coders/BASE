@@ -10,10 +10,10 @@ import net.minecraft.item.Item;
 public class Colors {
     public static void registerItemColor(Object object, IHasItemColor itemColor) {
         ItemColors itemColors = Minecraft.getMinecraft().getItemColors();
-        if(object instanceof Item) {
-            itemColors.registerItemColorHandler(itemColor::getColorFromItemstack, (Item)object);
-        } else if(object instanceof Block) {
-            itemColors.registerItemColorHandler(itemColor::getColorFromItemstack, (Block)object);
+        if (object instanceof Item) {
+            itemColors.registerItemColorHandler(itemColor::getColorFromItemstack, (Item) object);
+        } else if (object instanceof Block) {
+            itemColors.registerItemColorHandler(itemColor::getColorFromItemstack, (Block) object);
         }
     }
 

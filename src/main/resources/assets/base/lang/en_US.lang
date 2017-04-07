@@ -7,6 +7,11 @@ base.part.plate=Plate
 base.part.dust=Dust
 base.part.ingot=Ingot
 base.part.nugget=Nugget
+base.part.beam=Beam
+base.part.bolt=Bolt
 base.part.block=Block
 base.part.ore=Ore
+base.part.poor_ore=Poor Ore
+
+item.wrench.name=Wrench
 

@@ -7,7 +7,9 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@RegistryPiece
+import static net.minecraftforge.fml.common.eventhandler.EventPriority.HIGH;
+
+@RegistryPiece(priority = HIGH)
 public class ItemRegisterRegistryPiece extends RegistryPieceBase<Item> {
     public ItemRegisterRegistryPiece() {
         super(Item.class);
@@ -16,11 +18,6 @@ public class ItemRegisterRegistryPiece extends RegistryPieceBase<Item> {
     @Override
     public boolean acceptsRegistry(Registry registry) {
         return "ITEM".equalsIgnoreCase(registry.getName());
-    }
-
-    @Override
-    public boolean acceptsEntry(ResourceLocation name, Object entry) {
-        return entry instanceof Item;
     }
 
     @Override
