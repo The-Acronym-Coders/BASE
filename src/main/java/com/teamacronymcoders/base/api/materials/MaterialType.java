@@ -117,7 +117,7 @@ public class MaterialType {
                 if (!materialType.isTypeSet(INGOT)) {
                     this.addCompressedRecipe(recipes, materialType, currentPart, "ingot", false);
                 }
-                this.addFurnaceRecipe(materialType, currentPart, "poorOre", true);
+                this.addFurnaceRecipe(materialType, currentPart, "poorOre", true, 2);
                 return recipes;
             }
         },
@@ -134,7 +134,7 @@ public class MaterialType {
             @Override
             public List<IRecipe> getRecipes(List<IRecipe> recipes, MaterialType materialType, ItemStack currentPart) {
                 if (!materialType.isTypeSet(NUGGET)) {
-                    this.addFurnaceRecipe(materialType, currentPart, "nugget", false);
+                    this.addFurnaceRecipe(materialType, currentPart, "nugget", false, 2);
                 }
                 return recipes;
             }
@@ -185,16 +185,22 @@ public class MaterialType {
             }
         }
 
-        protected void addFurnaceRecipe(MaterialType materialType, ItemStack currentPart, String otherOreDict, boolean currentPartIsResult) {
+        protected void addFurnaceRecipe(MaterialType materialType, ItemStack currentPart, String otherOreDict,
+                                        boolean currentPartIsResult, int outputNumber) {
             String materialName = materialType.getName().replace(" ", "");
             ItemStack newPart = OreDictUtils.getPreferredItemStack(otherOreDict + materialName);
             if (newPart != null) {
+                newPart = new ItemStack(newPart.getItem(), outputNumber, newPart.getItemDamage());
                 if (currentPartIsResult) {
                     FurnaceRecipes.instance().addSmeltingRecipe(newPart, currentPart, 1);
                 } else {
                     FurnaceRecipes.instance().addSmeltingRecipe(currentPart, newPart, 1);
                 }
             }
+        }
+
+        protected void addFurnaceRecipe(MaterialType materialType, ItemStack currentPart, String otherOreDict, boolean currentPartIsResult) {
+            this.addFurnaceRecipe(materialType, currentPart, otherOreDict, currentPartIsResult, 1);
         }
     }
 
