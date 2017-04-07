@@ -3,6 +3,7 @@ package com.teamacronymcoders.base.api.materials;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.recipes.BasicRecipes;
 import com.teamacronymcoders.base.util.OreDictUtils;
+import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
@@ -139,8 +140,8 @@ public class MaterialType {
             }
 
             @Override
-            public String getOreDictName() {
-                return "poorOre";
+            public String getOreDictName(MaterialType materialType) {
+                return "poorOre" + TextUtils.removeSpecialCharacters(materialType.getName());
             }
         },
         PLATE;
@@ -153,8 +154,8 @@ public class MaterialType {
             return Base.languageHelper.none(getUnlocalizedName());
         }
 
-        public String getOreDictName() {
-            return this.getName().toLowerCase();
+        public String getOreDictName(MaterialType materialType) {
+            return this.getName().toLowerCase() + TextUtils.removeSpecialCharacters(materialType.getName());
         }
 
         public String getName() {
