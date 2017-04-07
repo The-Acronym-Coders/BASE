@@ -3,7 +3,7 @@
 "textures": {
     "particle": "blocks/stone",
     "texture": "blocks/stone",
-    "ore": "base:blocks/poor_ore",
+    "ore": "base:blocks/poor_ore"
 },
 "elements": [ 
 {
