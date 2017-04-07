@@ -190,10 +190,11 @@ public class MaterialType {
             String materialName = materialType.getName().replace(" ", "");
             ItemStack newPart = OreDictUtils.getPreferredItemStack(otherOreDict + materialName);
             if (newPart != null) {
-                newPart = new ItemStack(newPart.getItem(), outputNumber, newPart.getItemDamage());
                 if (currentPartIsResult) {
+                    currentPart = new ItemStack(currentPart.getItem(), outputNumber, currentPart.getItemDamage());
                     FurnaceRecipes.instance().addSmeltingRecipe(newPart, currentPart, 1);
                 } else {
+                    newPart = new ItemStack(newPart.getItem(), outputNumber, newPart.getItemDamage());
                     FurnaceRecipes.instance().addSmeltingRecipe(currentPart, newPart, 1);
                 }
             }

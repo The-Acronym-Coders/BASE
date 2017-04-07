@@ -5,12 +5,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
-import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.Arrays;
 
 public class BasicRecipes {
     public static IRecipe createCompressedRecipe(ItemStack input, ItemStack output) {
         ItemStack[] inputArray = new ItemStack[9];
-        ArrayUtils.addAll(inputArray, input);
+        Arrays.fill(inputArray, input);
         return new ShapedRecipes(3, 3, inputArray, output);
     }
 
