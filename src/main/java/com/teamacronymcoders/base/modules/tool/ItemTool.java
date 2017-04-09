@@ -27,22 +27,18 @@ public class ItemTool extends ItemBase implements IHasRecipe {
 
     @Override
     @Nonnull
-    public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack,
-                                                                                       NBTTagCompound nbt) {
-        return new CapabilityProvider(stack);
+    public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+        return new CapabilityProvider();
     }
 
     public static class CapabilityProvider implements ICapabilityProvider {
-        private final ItemStack stack;
         private ITool spanner;
 
-        public CapabilityProvider(ItemStack stack) {
-            this.stack = stack;
-            this.spanner = new ToolImpl();
+        public CapabilityProvider() {
+            this(new ITool(){});
         }
 
-        public CapabilityProvider(ItemStack stack, ITool cap) {
-            this.stack = stack;
+        public CapabilityProvider(ITool cap) {
             this.spanner = cap;
         }
 
