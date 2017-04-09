@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.tileentities;
 
-import com.teamacronymcoders.base.blocks.SideType;
+import com.teamacronymcoders.base.blocks.properties.SideType;
 import com.teamacronymcoders.base.client.IBlockOverlayText;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,12 +23,8 @@ public abstract class TileEntitySidedBase extends TileEntityBase implements IBlo
     }
 
     public void toggleSide(int side) {
-        int type = sideConfig[side].ordinal();
-        type++;
-        if (type >= SideType.values().length || type < 0)
-            type = 0;
-        this.sideConfig[side] = SideType.values()[type];
-        this.getWorld().addBlockEvent(this.getPos(), this.getBlockType(), 0, 0);
+        this.sideConfig[side] = this.sideConfig[side].next();
+        worldObj.addBlockEvent(this.getPos(), this.getBlockType(), 0, 0);
     }
 
     public void setSideConfig(int side, SideType sideType) {
