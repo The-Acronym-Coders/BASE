@@ -18,6 +18,7 @@ import com.teamacronymcoders.base.savesystem.SaveLoader;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MaterialsSystem {
@@ -89,8 +90,9 @@ public class MaterialsSystem {
         return MATERIAL_PARTS_IDS;
     }
 
-    public static void registerPartsForMaterial(Material material, String... partNames) {
-        Arrays.stream(partNames).forEach(partName -> {
+    public static List<MaterialPart> registerPartsForMaterial(Material material, String... partNames) throws MaterialException {
+        List<MaterialPart> materialParts = Lists.newArrayList();
+        for (String partName : partNames){
             Part part = PART_MAP.get(partName);
             if (part != null) {
                 MaterialPart materialPart = new MaterialPart(material, part);
@@ -99,9 +101,11 @@ public class MaterialsSystem {
                 }
                 materialCreativeTab.addIconStacks(Lists.newArrayList(materialPart.getItemStack()));
                 part.getPartType().setup(materialPart);
+                materialParts.add(materialPart);
             } else {
-                Base.instance.getLogger().error("Could not find part with name: " + partName);
+                throw new MaterialException("Could not find part with name: " + partName);
             }
-        });
+        }
+        return materialParts;
     }
 }
