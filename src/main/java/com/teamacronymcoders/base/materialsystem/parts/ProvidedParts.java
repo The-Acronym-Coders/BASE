@@ -6,7 +6,8 @@ import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 
 public class ProvidedParts {
-    public static final PartType ITEM = new PartType("Item");
+    public static final PartType ITEM = new PartType("Item", materialPart ->
+            MaterialsSystem.setupItem());
     public static final PartType BLOCK = new PartType("Block", materialPart ->
             SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
 

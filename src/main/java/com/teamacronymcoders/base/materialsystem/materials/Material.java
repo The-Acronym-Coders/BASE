@@ -3,6 +3,7 @@ package com.teamacronymcoders.base.materialsystem.materials;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.base.modules.minetweaker.Materials;
 import com.teamacronymcoders.base.util.TextUtils;
 
 import java.awt.*;
@@ -51,7 +52,7 @@ public class Material {
 
     public static class Builder extends Material {
         private Builder() {
-
+            MaterialsSystem.MATERIALS_NOT_BUILT.add(this);
         }
 
         public void setName(String name) {
@@ -82,6 +83,7 @@ public class Material {
             validate();
             Material material = new Material(this.name, this.unlocalizedName, this.color, this.hasEffect);
             MaterialsSystem.registerMaterial(material);
+            MaterialsSystem.MATERIALS_NOT_BUILT.remove(this);
             return material;
         }
 
