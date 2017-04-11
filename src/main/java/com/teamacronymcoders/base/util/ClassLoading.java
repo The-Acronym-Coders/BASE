@@ -33,6 +33,7 @@ public class ClassLoading {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     public static Object createObjectInstance(String path) {
         try {
             Class classToGrab;

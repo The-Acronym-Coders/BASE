@@ -15,11 +15,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 /**
  * @author Surseance
  */
+@SideOnly(Side.CLIENT)
 public class ClientHelper {
     public static String shiftForInfo =
             TextFormatting.GRAY + "Hold " + TextFormatting.GREEN + "SHIFT" + TextFormatting.GRAY + " for more info.";
@@ -33,7 +36,7 @@ public class ClientHelper {
     }
 
     public static FontRenderer fontRenderer() {
-        return mc().fontRendererObj;
+        return mc().fontRenderer;
     }
 
     public static EntityPlayerSP player() {

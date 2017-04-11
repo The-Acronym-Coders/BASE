@@ -11,19 +11,19 @@ public class ItemStackUtils {
     }
 
     public static boolean isSmeltable(ItemStack itemStack) {
-        return isValidItemStack(itemStack) && FurnaceRecipes.instance().getSmeltingResult(itemStack) != null;
+        return isValid(itemStack) && isValid(FurnaceRecipes.instance().getSmeltingResult(itemStack));
     }
 
     public static boolean isItemInstanceOf(ItemStack itemStack, Class itemClass) {
-        return isValidItemStack(itemStack) && itemClass != null && itemClass.isInstance(itemStack.getItem());
+        return isValid(itemStack) && itemClass != null && itemClass.isInstance(itemStack.getItem());
     }
 
     public static boolean doItemsMatch(ItemStack itemStack, Item item) {
-        return isValidItemStack(itemStack) && itemStack.getItem() == item;
+        return isValid(itemStack) && itemStack.getItem() == item;
     }
 
-    public static boolean isValidItemStack(ItemStack itemStack) {
-        return itemStack != null;
+    public static boolean isValid(ItemStack itemStack) {
+        return !itemStack.isEmpty();
     }
 
     @Nonnull

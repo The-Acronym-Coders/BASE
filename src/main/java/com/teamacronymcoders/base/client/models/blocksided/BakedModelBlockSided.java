@@ -130,6 +130,7 @@ public class BakedModelBlockSided implements IBakedModel {
 
     @Override
     @Nonnull
+    @SuppressWarnings("deprecation")
     public ItemCameraTransforms getItemCameraTransforms() {
         return defaultTransforms;
     }

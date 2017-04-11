@@ -27,17 +27,16 @@ public abstract class BlockFlat extends BlockSubBase {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
+    {
         this.checkForDrop(worldIn, pos, state);
     }
 
-    public boolean checkForDrop(World worldIn, BlockPos pos, IBlockState state) {
+    public void checkForDrop(World worldIn, BlockPos pos, IBlockState state) {
         if (!this.canBlockStay(worldIn, pos)) {
             this.dropBlockAsItem(worldIn, pos, state, 0);
             worldIn.setBlockToAir(pos);
-            return false;
-        } else
-            return true;
+        }
     }
 
     public abstract boolean canBlockStay(World worldIn, BlockPos pos);

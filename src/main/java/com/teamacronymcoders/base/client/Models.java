@@ -1,14 +1,18 @@
 package com.teamacronymcoders.base.client;
 
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.util.ItemStackUtils;
 import com.teamacronymcoders.base.util.Platform;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SideOnly(Side.CLIENT)
 public class Models {
     public static void registerModels(IHasModel model) {
         List<ItemStack> allSubItems = new ArrayList<>();
@@ -18,7 +22,7 @@ public class Models {
         if (!modelResourceLocations.isEmpty()) {
             for (ItemStack itemStack : allSubItems) {
                 ModelResourceLocation modelResourceLocation = modelResourceLocations.get(locationsIndex);
-                if (itemStack != null && itemStack.getItem() != null && modelResourceLocation != null) {
+                if (ItemStackUtils.isValid(itemStack) && modelResourceLocation != null) {
                     ModelLoader.setCustomModelResourceLocation(itemStack.getItem(), itemStack.getMetadata(), modelResourceLocation);
                     locationsIndex++;
                     if (locationsIndex >= modelResourceLocations.size()) {

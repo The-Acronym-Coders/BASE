@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.util;
 
-import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.registry.config.ConfigEntry;
 import com.teamacronymcoders.base.registry.config.ConfigEntryBuilder;
@@ -33,10 +32,10 @@ public class OreDictUtils {
     public static ItemStack getPreferredItemStack(String oreDictName) {
         if (!preferredItemStacks.containsKey(oreDictName)) {
             int bestMatchLevel = preferredModIds.size();
-            ItemStack preferredItemStack = null;
+            ItemStack preferredItemStack = ItemStack.EMPTY;
             List<ItemStack> itemStackList = OreDictionary.getOres(oreDictName);
             for (ItemStack itemStack : itemStackList) {
-                if (ItemStackUtils.isValidItemStack(itemStack)) {
+                if (ItemStackUtils.isValid(itemStack)) {
                     String modid = ItemStackUtils.getModIdFromItemStack(itemStack);
                     if (preferredModIds.contains(modid)) {
                         int newMatch = preferredModIds.indexOf(modid);
@@ -48,6 +47,6 @@ public class OreDictUtils {
             preferredItemStacks.put(oreDictName, preferredItemStack);
         }
         ItemStack itemStack = preferredItemStacks.get(oreDictName);
-        return ItemStackUtils.isValidItemStack(itemStack) ? itemStack.copy() : null;
+        return ItemStackUtils.isValid(itemStack) ? itemStack.copy() : null;
     }
 }

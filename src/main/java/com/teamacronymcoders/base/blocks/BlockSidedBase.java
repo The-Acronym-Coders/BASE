@@ -22,10 +22,11 @@ public abstract class BlockSidedBase<T extends TileEntitySidedBase> extends Bloc
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-                                    ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+                                    EnumFacing side, float hitX, float hitY, float hitZ) {
         if(!world.isRemote) {
             TileEntitySidedBase tileEntity = this.getTileEntity(world, pos);
             if(tileEntity != null) {
+                ItemStack heldItem = player.getHeldItem(hand);
                 if(heldItem.hasCapability(Capabilities.TOOL, null)) {
                     if(player.isSneaking()) {
                         side = side.getOpposite();

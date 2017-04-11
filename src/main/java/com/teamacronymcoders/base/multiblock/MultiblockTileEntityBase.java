@@ -295,13 +295,13 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 
     //// Helper functions for notifying neighboring blocks
     protected void notifyNeighborsOfBlockChange() {
-        getWorld().notifyNeighborsOfStateChange(this.getWorldPosition(), this.getBlockType());
+        getWorld().notifyNeighborsOfStateChange(this.getWorldPosition(), this.getBlockType(), true);
     }
 
     ///// Private/Protected Logic Helpers
     /*
-	 * Detaches this block from its controller. Calls detachBlock() and clears the controller member.
-	 */
+     * Detaches this block from its controller. Calls detachBlock() and clears the controller member.
+     * */
     protected void detachSelf(boolean chunkUnloading) {
         if (this.controller != null) {
             // Clean part out of controller

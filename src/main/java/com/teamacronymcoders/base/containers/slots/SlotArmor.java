@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.containers.slots;
 
+import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
@@ -11,16 +12,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 
 public class SlotArmor extends Slot {
-    public static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS =
-            new EntityEquipmentSlot[]{EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS,
-                    EntityEquipmentSlot.FEET};
+    private EntityEquipmentSlot entityEquipmentSlot;
+    private EntityPlayer entityPlayer;
 
-    EntityEquipmentSlot entityEquipmentSlot;
-    EntityPlayer entityPlayer;
-
-    public SlotArmor(EntityPlayer entityPlayer, int entityEquipmentSlotNumber, int xPos, int yPos) {
-        super(entityPlayer.inventory, 36 + (3 - entityEquipmentSlotNumber), xPos, yPos);
-        this.entityEquipmentSlot = VALID_EQUIPMENT_SLOTS[entityEquipmentSlotNumber];
+    public SlotArmor(EntityPlayer entityPlayer, EntityEquipmentSlot entityEquipmentSlot, int xPos, int yPos) {
+        super(entityPlayer.inventory, 36 + (3 - entityEquipmentSlot.ordinal()), xPos, yPos);
+        this.entityEquipmentSlot = entityEquipmentSlot;
+        this.entityPlayer = entityPlayer;
     }
 
     /**
@@ -35,8 +33,8 @@ public class SlotArmor extends Slot {
      * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace
      * fuel.
      */
-    public boolean isItemValid(@Nullable ItemStack stack) {
-        return stack != null && stack.getItem().isValidArmor(stack, entityEquipmentSlot, entityPlayer);
+    public boolean isItemValid(ItemStack itemStack) {
+        return ItemStackUtils.isValid(itemStack) && itemStack.getItem().isValidArmor(itemStack, entityEquipmentSlot, entityPlayer);
     }
 
     @Nullable

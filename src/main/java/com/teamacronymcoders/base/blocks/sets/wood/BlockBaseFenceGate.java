@@ -105,7 +105,7 @@ public class BlockBaseFenceGate extends BlockHorizontal {
     @Override
     @Nullable
     @SuppressWarnings("deprecation")
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, @Nonnull World worldIn, @Nonnull BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
         return blockState.getValue(OPEN) ? NULL_AABB : (blockState.getValue(FACING).getAxis() == EnumFacing.Axis.Z ? AABB_CLOSED_SELECTED_ZAXIS : AABB_CLOSED_SELECTED_XAXIS);
     }
 
@@ -140,12 +140,14 @@ public class BlockBaseFenceGate extends BlockHorizontal {
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing()).withProperty(OPEN, FALSE).withProperty(POWERED, FALSE).withProperty(IN_WALL, FALSE);
     }
 
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+                                    EnumFacing side, float hitX, float hitY, float hitZ) {
         if (state.getValue(OPEN)) {
             state = state.withProperty(OPEN, FALSE);
             worldIn.setBlockState(pos, state, 10);
         } else {
-            EnumFacing enumfacing = EnumFacing.fromAngle((double) playerIn.rotationYaw);
+            EnumFacing enumfacing = EnumFacing.fromAngle((double) player.rotationYaw);
 
             if (state.getValue(FACING) == enumfacing.getOpposite()) {
                 state = state.withProperty(FACING, enumfacing);
@@ -155,7 +157,7 @@ public class BlockBaseFenceGate extends BlockHorizontal {
             worldIn.setBlockState(pos, state, 10);
         }
 
-        worldIn.playEvent(playerIn, state.getValue(OPEN) ? 1008 : 1014, pos, 0);
+        worldIn.playEvent(player, state.getValue(OPEN) ? 1008 : 1014, pos, 0);
         return true;
     }
 
@@ -166,7 +168,7 @@ public class BlockBaseFenceGate extends BlockHorizontal {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if (!worldIn.isRemote) {
             boolean flag = worldIn.isBlockPowered(pos);
 

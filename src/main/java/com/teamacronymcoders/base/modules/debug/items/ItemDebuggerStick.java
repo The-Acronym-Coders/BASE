@@ -25,44 +25,43 @@ public class ItemDebuggerStick extends ItemBase {
 
     @Override
     @Nonnull
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStack, World world, EntityPlayer entityPlayer,
-                                                    EnumHand hand) {
-        RayTraceResult result = ProjectileHelper.forwardsRaycast(entityPlayer, true, true, null);
-        ActionResult<ItemStack> actionResult = ActionResult.newResult(EnumActionResult.PASS, itemStack);
-        ;
-        if (result != null) {
-            boolean wroteOutput = false;
-            switch (result.typeOfHit) {
-                case BLOCK:
-                    TileEntity tileEntity = world.getTileEntity(result.getBlockPos());
-                    Block block = world.getBlockState(result.getBlockPos()).getBlock();
-                    if (tileEntity instanceof IDebuggable) {
-                        writeDebug((IDebuggable) tileEntity);
-                    } else if (block instanceof IDebuggable) {
-                        writeDebug((IDebuggable) block);
-                    } else {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, @Nonnull EnumHand hand) {
+        RayTraceResult result = ProjectileHelper.forwardsRaycast(entityPlayer, true, true, entityPlayer);
+        EnumActionResult enumActionResult = EnumActionResult.PASS;
+        boolean wroteOutput = false;
+        switch (result.typeOfHit) {
+            case BLOCK:
+                TileEntity tileEntity = world.getTileEntity(result.getBlockPos());
+                Block block = world.getBlockState(result.getBlockPos()).getBlock();
+                if (tileEntity instanceof IDebuggable) {
+                    writeDebug((IDebuggable) tileEntity);
+                } else if (block instanceof IDebuggable) {
+                    writeDebug((IDebuggable) block);
+                } else {
+                    if (block.getRegistryName() != null) {
                         this.getMod().getLogger().info(block.getRegistryName().toString());
                     }
-                    wroteOutput = true;
-                    break;
-                case ENTITY:
-                    Entity entity = result.entityHit;
-                    if (entity instanceof IDebuggable) {
-                        writeDebug((IDebuggable) entity);
-                    } else if (entity != null) {
-                        this.getMod().getLogger().info(entity.getName());
-                    }
-                    wroteOutput = true;
-                    break;
-                case MISS:
-                    break;
-            }
-            if (wroteOutput) {
-                actionResult = ActionResult.newResult(EnumActionResult.SUCCESS, itemStack);
-            }
+                }
+                wroteOutput = true;
+                break;
+            case ENTITY:
+                Entity entity = result.entityHit;
+                if (entity instanceof IDebuggable) {
+                    writeDebug((IDebuggable) entity);
+                } else if (entity != null) {
+                    this.getMod().getLogger().info(entity.getName());
+                }
+                wroteOutput = true;
+                break;
+            case MISS:
+                break;
+        }
+        if (wroteOutput) {
+            enumActionResult = EnumActionResult.SUCCESS;
         }
 
-        return actionResult;
+
+        return ActionResult.newResult(enumActionResult, entityPlayer.getHeldItem(hand));
     }
 
     public void writeDebug(IDebuggable debuggable) {

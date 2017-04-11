@@ -18,7 +18,7 @@ import java.util.List;
 
 public class GuiHelper extends GuiScreen {
     private Minecraft mc = Minecraft.getMinecraft();
-    private FontRenderer fontRenderer = mc.fontRendererObj;
+    private FontRenderer fontRenderer = mc.fontRenderer;
 
     /**
      * Draws a window

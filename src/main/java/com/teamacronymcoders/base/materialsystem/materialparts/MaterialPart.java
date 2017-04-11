@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -19,7 +20,7 @@ public class MaterialPart {
     private ResourceLocation textureLocation;
     private boolean colorize;
     private MaterialPartData data;
-    private ItemStack itemStack;
+    private ItemStack itemStack = ItemStack.EMPTY;
 
     public MaterialPart(Material material, Part part) {
         this.setMaterial(material);
@@ -59,7 +60,7 @@ public class MaterialPart {
     }
 
     public ItemStack getItemStack() {
-        if(itemStack == null) {
+        if(!ItemStackUtils.isValid(itemStack)) {
             itemStack = new ItemStack(MaterialsSystem.ITEM_MATERIAL_PART, 1, MaterialsSystem.getMaterialPartId(this));
         }
 

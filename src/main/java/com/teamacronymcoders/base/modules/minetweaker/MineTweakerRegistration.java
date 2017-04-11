@@ -3,7 +3,7 @@ package com.teamacronymcoders.base.modules.minetweaker;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import minetweaker.MineTweakerAPI;
 import minetweaker.MineTweakerImplementationAPI;
-import minetweaker.mc1102.brackets.ItemBracketHandler;
+import minetweaker.mc1112.brackets.ItemBracketHandler;
 import minetweaker.runtime.providers.ScriptProviderDirectory;
 
 import java.io.File;

@@ -10,6 +10,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -86,7 +87,7 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     }
 
     @Override
-    public void getSubBlocks(@Nonnull Item block, CreativeTabs creativeTab, List<ItemStack> list) {
+    public void getSubBlocks(@Nonnull Item block, CreativeTabs creativeTab, NonNullList<ItemStack> list) {
         list.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 

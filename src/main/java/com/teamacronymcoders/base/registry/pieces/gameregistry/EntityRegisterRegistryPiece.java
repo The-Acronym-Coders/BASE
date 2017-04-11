@@ -32,12 +32,12 @@ public class EntityRegisterRegistryPiece extends RegistryPieceBase<EntityEntry> 
     public void preInit(ResourceLocation name, EntityEntry entry) {
         Class<? extends Entity> entityClass = entry.getEntityClass();
         UpdateInfo updateInfo = entry.getUpdateInfo();
-        EntityRegistry.registerModEntity(entityClass, name.getResourcePath(), nextAvailableID++, this.getMod(),
+        EntityRegistry.registerModEntity(name, entityClass, name.getResourcePath(), nextAvailableID++, this.getMod(),
                 updateInfo.getTrackingRange(), updateInfo.getUpdateFrequency(), updateInfo.isSendVelocityUpdates());
 
         SpawnEgg spawnEgg = entry.getSpawnEgg();
         if (spawnEgg != null) {
-            EntityRegistry.registerEgg(entry.getEntityClass(), spawnEgg.getPrimaryColor(), spawnEgg.getSecondaryColor());
+            EntityRegistry.registerEgg(name, spawnEgg.getPrimaryColor(), spawnEgg.getSecondaryColor());
         }
 
         SpawnInfo spawnInfo = entry.getSpawnInfo();

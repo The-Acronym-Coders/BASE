@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.creativetabs;
 
 import com.google.common.base.Stopwatch;
+import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -10,7 +11,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class CreativeTabCarousel extends CreativeTabBase {
-    private ItemStack defaultIconStack;
+    private ItemStack defaultIconStack = ItemStack.EMPTY;
     private List<ItemStack> iconStacks;
     private int currentStackSize;
     private ItemStack currentIconStack;
@@ -23,7 +24,7 @@ public class CreativeTabCarousel extends CreativeTabBase {
         watch = Stopwatch.createStarted();
         random = new Random();
         updateIcon();
-        this.setFunction(nothing -> getCurrentIconStack());
+        this.setFunction(this::getCurrentIconStack);
     }
 
     private ItemStack getCurrentIconStack() {
@@ -39,7 +40,7 @@ public class CreativeTabCarousel extends CreativeTabBase {
                 currentIconStack = iconStacks.get(random.nextInt(iconStacks.size()));
             }
         } else {
-            if (defaultIconStack == null) {
+            if (!ItemStackUtils.isValid(defaultIconStack)) {
                 defaultIconStack = new ItemStack(Items.STICK);
             }
             currentIconStack = defaultIconStack;
