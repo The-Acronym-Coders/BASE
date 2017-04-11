@@ -20,7 +20,7 @@ repositories {
     mavenCentral()
 
     maven {
-        name 'CraftTweaker/IE'
+        name 'CraftTweaker'
         url 'http://maven.blamejared.com'
     }
     maven {
@@ -32,7 +32,7 @@ repositories {
         url 'http://maven.epoxide.xyz'
     }
     maven {
-        name 'Botania/Baubles'
+        name 'Baubles'
         url 'https://jitpack.io'
     }
 }
@@ -55,10 +55,9 @@ minecraft {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:${minecraft_version}-${minetweaker_version}"
-    deobfCompile "net.darkhax.tesla:Tesla:${minecraft_version}-${tesla_version}"
-    deobfCompile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}"
-    deobfCompile "com.github.Azanor:Baubles:1.10.2-SNAPSHOT"
+    deobfCompile "MineTweaker3:MineTweaker3-MC1112-Main:${minecraft_version}-${minetweaker_version}"
+    deobfCompile "net.darkhax.tesla:Tesla:${tesla_version}"
+    deobfCompile "com.github.Azanor:Baubles:${baubles_version}"
 }
 
 def commonManifest = {
