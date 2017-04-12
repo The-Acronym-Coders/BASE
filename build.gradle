@@ -68,12 +68,6 @@ jar {
     manifest commonManifest
 }
 
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'deobf'
-    manifest commonManifest
-}
-
 task srcJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'
@@ -81,7 +75,6 @@ task srcJar(type: Jar) {
 }
 
 artifacts {
-    archives deobfJar
     archives srcJar
 }
 
