@@ -24,7 +24,7 @@ public abstract class TileEntitySidedBase extends TileEntityBase implements IBlo
 
     public void toggleSide(int side) {
         this.sideConfig[side] = this.sideConfig[side].next();
-        worldObj.addBlockEvent(this.getPos(), this.getBlockType(), 0, 0);
+        this.getWorld().addBlockEvent(this.getPos(), this.getBlockType(), 0, 0);
     }
 
     public void setSideConfig(int side, SideType sideType) {
