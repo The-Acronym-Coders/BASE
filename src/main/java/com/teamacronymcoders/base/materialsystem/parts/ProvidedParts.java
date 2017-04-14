@@ -1,43 +1,38 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
+import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 
 public class ProvidedParts {
-    public static final PartType ITEM = new PartType("Item", materialPart ->
-            MaterialsSystem.setupItem());
-    public static final PartType BLOCK = new PartType("Block", materialPart ->
-            SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
+    public static void initPartsAndTypes() {
+        PartType item = new PartType("Item", materialPart ->
+                MaterialsSystem.setupItem());
+        PartType block = new PartType("Block", materialPart ->
+                SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
+        MaterialsSystem.registerPartType(item);
+        MaterialsSystem.registerPartType(block);
 
-    public static final Part INGOT = new Part("Ingot", ITEM);
-    public static final Part BEAM = new Part("Beam", ITEM);
-    public static final Part GEAR = new Part("Gear", ITEM);
-    public static final Part BOLT = new Part("Bolt", ITEM);
-    public static final Part DUST = new Part("Dust", ITEM);
-    public static final Part PLATE = new Part("Plate", ITEM);
-    public static final Part NUGGET = new Part("Nugget", ITEM);
-    public static final Part STORAGE = new Part("Storage", BLOCK);
-    public static final Part ORE_BLOCK = new Part("Ore", BLOCK);
-    public static final Part POOR_ORE_BLOCK = new Part("Poor Ore", BLOCK);
-
-    public static void initPartTypes() {
-        MaterialsSystem.registerPartType(ITEM);
-        MaterialsSystem.registerPartType(BLOCK);
+        registerPart(new PartBuilder().setName("Ingot").setPartType(item));
+        registerPart(new PartBuilder().setName("Beam").setPartType(item));
+        registerPart(new PartBuilder().setName("Gear").setPartType(item));
+        registerPart(new PartBuilder().setName("Bolt").setPartType(item));
+        registerPart(new PartBuilder().setName("Dust").setPartType(item));
+        registerPart(new PartBuilder().setName("Plate").setPartType(item));
+        registerPart(new PartBuilder().setName("Nugget").setPartType(item));
+        registerPart(new PartBuilder().setName("Storage").setPartType(block));
+        registerPart(new PartBuilder().setName("Ore").setPartType(block));
+        registerPart(new PartBuilder().setName("Poor Ore").setPartType(block));
     }
 
-    public static void initParts() {
-        MaterialsSystem.registerPart(INGOT);
-        MaterialsSystem.registerPart(BEAM);
-        MaterialsSystem.registerPart(GEAR);
-        MaterialsSystem.registerPart(BOLT);
-        MaterialsSystem.registerPart(DUST);
-        MaterialsSystem.registerPart(PLATE);
-        MaterialsSystem.registerPart(NUGGET);
-
-        MaterialsSystem.registerPart(STORAGE);
-        MaterialsSystem.registerPart(ORE_BLOCK);
-        MaterialsSystem.registerPart(POOR_ORE_BLOCK);
+    private static void registerPart(PartBuilder partBuilder) {
+        try {
+            MaterialsSystem.registerPart(partBuilder.createPart());
+        } catch (MaterialException e) {
+            Base.instance.getLogger().getLogger().error(e);
+        }
     }
 }

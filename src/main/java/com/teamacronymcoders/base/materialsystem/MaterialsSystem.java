@@ -11,7 +11,9 @@ import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartSave;
 import com.teamacronymcoders.base.materialsystem.materialparts.MissingMaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
+import com.teamacronymcoders.base.materialsystem.materials.MaterialBuilder;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
+import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import com.teamacronymcoders.base.registry.ItemRegistry;
@@ -34,7 +36,8 @@ public class MaterialsSystem {
     public static final MissingMaterialPart MISSING_MATERIAL_PART = new MissingMaterialPart();
     public static CreativeTabCarousel materialCreativeTab;
 
-    public static final List<Material.Builder> MATERIALS_NOT_BUILT = Lists.newArrayList();
+    public static final List<MaterialBuilder> MATERIALS_NOT_BUILT = Lists.newArrayList();
+    public static final List<PartBuilder> PARTS_NOT_BUILT = Lists.newArrayList();
 
 
     public static void setup() {
@@ -46,8 +49,7 @@ public class MaterialsSystem {
         });
         materialCreativeTab = new CreativeTabCarousel("base");
         Base.instance.setCreativeTab(materialCreativeTab);
-        ProvidedParts.initPartTypes();
-        ProvidedParts.initParts();
+        ProvidedParts.initPartsAndTypes();
     }
 
     public static void setupItem() {
