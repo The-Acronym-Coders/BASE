@@ -9,13 +9,11 @@ import java.util.List;
 public class PartBuilder {
     private String name;
     private PartType partType;
-    private List<String> possibleData;
-    private List<String> requiredData;
+    private List<PartDataPiece> data;
 
     public PartBuilder() {
         MaterialsSystem.PARTS_NOT_BUILT.add(this);
-        possibleData = Lists.newArrayList();
-        requiredData = Lists.newArrayList();
+        data = Lists.newArrayList();
     }
 
     public PartBuilder setName(String name) {
@@ -28,37 +26,19 @@ public class PartBuilder {
         return this;
     }
 
-    public PartBuilder setPossibleData(List<String> possibleData) {
-        this.possibleData = possibleData;
+    public PartBuilder setData(List<PartDataPiece> data) {
+        this.data = data;
         return this;
     }
 
-    public PartBuilder setRequiredData(List<String> requiredData) {
-        this.requiredData = requiredData;
-        for (String dataName : this.requiredData) {
-            if (!possibleData.contains(dataName)) {
-                possibleData.add(dataName);
-            }
-        }
-        return this;
-    }
-
-    public PartBuilder addPossibleData(String dataName) {
-        this.possibleData.add(dataName);
-        return this;
-    }
-
-    public PartBuilder addRequiredData(String dataName) {
-        this.requiredData.add(dataName);
-        if (!possibleData.contains(dataName)) {
-            possibleData.add(dataName);
-        }
+    public PartBuilder addData(PartDataPiece dataName) {
+        this.data.add(dataName);
         return this;
     }
 
     public Part createPart() throws MaterialException {
         validate();
-        Part part =  new Part(name, partType, possibleData, requiredData);
+        Part part =  new Part(name, partType, data);
         MaterialsSystem.registerPart(part);
         MaterialsSystem.PARTS_NOT_BUILT.remove(this);
         return part;

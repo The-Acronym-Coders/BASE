@@ -26,7 +26,7 @@ public class MaterialPart {
         this.setPart(part);
         this.setTextureLocation(new ResourceLocation(Reference.MODID, part.getUnlocalizedName()));
         this.colorize = true;
-        this.data = new MaterialPartData(part.getRequiredData(), part.getAllData());
+        this.data = new MaterialPartData(part.getData());
     }
 
     public String getName() {
