@@ -20,8 +20,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 import static com.teamacronymcoders.base.Reference.*;
 
-@Mod(modid = MODID, name = NAME, version = VERSION, acceptedMinecraftVersions = "[" + MINECRAFT_VERSION + "]",
-        dependencies = DEPENDENCIES)
+@Mod(modid = MODID, name = NAME, version = VERSION, dependencies = DEPENDENCIES)
 public class Base extends BaseModFoundation<Base> {
     public static final LanguageHelper languageHelper = new LanguageHelper(MODID);
 
