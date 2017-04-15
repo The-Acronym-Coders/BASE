@@ -2,9 +2,9 @@ package com.teamacronymcoders.base.modulesystem;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
-import com.teamacronymcoders.base.registry.IRegistryHolder;
-import com.teamacronymcoders.base.registry.config.ConfigEntry;
-import com.teamacronymcoders.base.registry.config.ConfigRegistry;
+import com.teamacronymcoders.base.registrysystem.IRegistryHolder;
+import com.teamacronymcoders.base.registrysystem.config.ConfigEntry;
+import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.collections.MapUtils;
 import net.minecraftforge.common.config.Property;

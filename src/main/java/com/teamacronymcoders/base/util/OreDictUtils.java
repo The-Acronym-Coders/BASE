@@ -1,9 +1,9 @@
 package com.teamacronymcoders.base.util;
 
 import com.teamacronymcoders.base.Base;
-import com.teamacronymcoders.base.registry.config.ConfigEntry;
-import com.teamacronymcoders.base.registry.config.ConfigEntryBuilder;
-import com.teamacronymcoders.base.registry.config.ConfigRegistry;
+import com.teamacronymcoders.base.registrysystem.config.ConfigEntry;
+import com.teamacronymcoders.base.registrysystem.config.ConfigEntryBuilder;
+import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 

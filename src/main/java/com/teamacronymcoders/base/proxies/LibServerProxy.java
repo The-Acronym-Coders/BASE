@@ -2,7 +2,7 @@ package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
-import com.teamacronymcoders.base.registry.pieces.RegistrySide;
+import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 
 public class LibServerProxy extends LibCommonProxy {
 

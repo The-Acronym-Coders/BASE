@@ -14,7 +14,7 @@ import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
-import com.teamacronymcoders.base.registry.ItemRegistry;
+import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
 
 import java.util.HashMap;

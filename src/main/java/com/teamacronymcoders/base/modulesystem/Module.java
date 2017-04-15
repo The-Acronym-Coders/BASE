@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.modulesystem;
 
-import com.teamacronymcoders.base.registry.pieces.RegistrySide;
+import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

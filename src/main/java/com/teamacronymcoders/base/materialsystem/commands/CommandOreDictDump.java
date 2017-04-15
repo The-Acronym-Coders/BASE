@@ -3,7 +3,7 @@ package com.teamacronymcoders.base.materialsystem.commands;
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.commands.CommandBase;
-import com.teamacronymcoders.base.registry.config.ConfigRegistry;
+import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;

@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.subblocksystem;
 
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.registry.BlockRegistry;
+import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.subblocksystem.blocks.BlockSubBlockHolder;
 import com.teamacronymcoders.base.subblocksystem.blocks.ISubBlock;
