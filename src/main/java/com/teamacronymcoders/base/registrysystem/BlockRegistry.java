@@ -13,12 +13,18 @@ public class BlockRegistry extends ModularRegistry<Block> {
     }
 
     public void register(Block block) {
+        String unlocalizedName = block.getUnlocalizedName();
+        boolean removedTile = false;
+        if (unlocalizedName.startsWith("tile.")) {
+            unlocalizedName = unlocalizedName.substring(5);
+            removedTile = true;
+        }
+        if (!unlocalizedName.contains(mod.getID())) {
+            String tilePart = removedTile ? "tile." : "";
+            block.setUnlocalizedName(tilePart + mod.getID() + "." + unlocalizedName);
+        }
         ResourceLocation name = block.getRegistryName();
         if (name == null) {
-            String unlocalizedName = block.getUnlocalizedName();
-            if (unlocalizedName.startsWith("tile.")) {
-                unlocalizedName = unlocalizedName.substring(5);
-            }
             name = new ResourceLocation(this.mod.getID(), unlocalizedName);
         }
 
