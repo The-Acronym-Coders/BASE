@@ -11,7 +11,7 @@ public class BlockSubBase extends BlockBase {
     String[] names;
 
     public BlockSubBase(Material mat, String[] names) {
-        super(mat);
+        super(mat, "");
         this.names = names;
         setItemBlock(new ItemSubBlock<>(this, names));
     }
