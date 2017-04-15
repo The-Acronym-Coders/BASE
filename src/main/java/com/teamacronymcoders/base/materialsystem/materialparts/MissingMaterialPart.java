@@ -13,7 +13,7 @@ import net.minecraft.util.text.TextFormatting;
 
 public class MissingMaterialPart extends MaterialPart {
     public MissingMaterialPart() throws MaterialException {
-        super(null, new PartBuilder().setName("Missing").setPartType(new PartType("Missing", part -> {})).createPart();
+        super(null, new PartBuilder().setName("Missing").setPartType(new PartType("Missing", part -> {})).createPart());
     }
 
     @Override
