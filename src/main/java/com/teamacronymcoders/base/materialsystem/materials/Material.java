@@ -3,7 +3,6 @@ package com.teamacronymcoders.base.materialsystem.materials;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import com.teamacronymcoders.base.modules.minetweaker.Materials;
 import com.teamacronymcoders.base.util.TextUtils;
 
 import java.awt.*;
