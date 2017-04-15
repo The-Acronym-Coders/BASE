@@ -5,11 +5,9 @@ import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Map;
 
@@ -33,9 +31,9 @@ public class MaterialPart {
         return material.getUnlocalizedName() + "." + part.getUnlocalizedName();
     }
 
-    @SideOnly(Side.CLIENT)
+    @SuppressWarnings("deprecation")
     public String getLocalizedName() {
-        return String.format("%s %s", material.getName(), I18n.format(part.getUnlocalizedName()));
+        return String.format("%s %s", material.getName(), I18n.translateToLocal(part.getUnlocalizedName()));
     }
 
     public boolean hasEffect() {

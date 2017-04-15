@@ -11,9 +11,10 @@ import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import java.util.List;
 
 public class ProvidedParts {
+
+
     public static void initPartsAndTypes() {
-        PartType item = new PartType("Item", materialPart ->
-                MaterialsSystem.setupItem());
+        PartType item = new PartType("Item", MaterialsSystem::setupItem);
         PartType block = new PartType("Block", materialPart ->
                 SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
         MaterialsSystem.registerPartType(item);

@@ -33,7 +33,8 @@ public class MaterialsSystem {
     private static int nextId = 0;
 
     public static ItemMaterialPart ITEM_MATERIAL_PART;
-    public static final MissingMaterialPart MISSING_MATERIAL_PART = new MissingMaterialPart();
+    public static MissingMaterialPart MISSING_MATERIAL_PART;
+
     public static CreativeTabCarousel materialCreativeTab;
 
     public static final List<MaterialBuilder> MATERIALS_NOT_BUILT = Lists.newArrayList();
@@ -49,15 +50,21 @@ public class MaterialsSystem {
         });
         materialCreativeTab = new CreativeTabCarousel("base");
         Base.instance.setCreativeTab(materialCreativeTab);
+        try {
+            MISSING_MATERIAL_PART = new MissingMaterialPart();
+        } catch (MaterialException e) {
+            Base.instance.getLogger().fatal("Failed to Create Missing Material Part, THIS IS BAD");
+        }
         ProvidedParts.initPartsAndTypes();
     }
 
-    public static void setupItem() {
+    public static void setupItem(MaterialPart materialPart) {
         if (ITEM_MATERIAL_PART == null) {
             ITEM_MATERIAL_PART = new ItemMaterialPart();
             ITEM_MATERIAL_PART.setCreativeTab(materialCreativeTab);
             Base.instance.getRegistry(ItemRegistry.class, "ITEM").register(ITEM_MATERIAL_PART);
         }
+        ITEM_MATERIAL_PART.addMaterialPart(MATERIAL_PARTS_IDS.inverse().get(materialPart), materialPart);
     }
 
     public static void finishUp() {

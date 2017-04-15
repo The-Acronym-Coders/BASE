@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -71,9 +73,6 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
     public Map<Integer, MaterialPart> getItemMaterialParts() {
         if (itemMaterialParts != null) {
             itemMaterialParts = new HashMap<>();
-            MaterialsSystem.getMaterialParts().entrySet().stream().filter(entry ->
-                    entry.getValue().matchesPartType(ProvidedParts.ITEM)).forEach(entry ->
-                        itemMaterialParts.put(entry.getKey(), entry.getValue()));
         }
         return itemMaterialParts;
     }
@@ -81,7 +80,11 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
     @Nonnull
     @Override
     public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
-        this.getItemMaterialParts().values().stream().forEach(materialPart -> materialPart.setOreDict(names));
+        this.getItemMaterialParts().values().forEach(materialPart -> materialPart.setOreDict(names));
         return names;
+    }
+
+    public void addMaterialPart(int id, MaterialPart materialPart) {
+        this.getItemMaterialParts().put(id, materialPart);
     }
 }
