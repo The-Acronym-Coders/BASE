@@ -3,7 +3,7 @@ package com.teamacronymcoders.base.subblocksystem.blocks;
 import com.teamacronymcoders.base.blocks.BlockBaseNoModel;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
-import com.teamacronymcoders.base.items.ItemBlockGeneric;
+import com.teamacronymcoders.base.items.itemblocks.ItemBlockGeneric;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.subblocksystem.items.ItemBlockSubBlockHolder;
 import net.minecraft.block.material.Material;

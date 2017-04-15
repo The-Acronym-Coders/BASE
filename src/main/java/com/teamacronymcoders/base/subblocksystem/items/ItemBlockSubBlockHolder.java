@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.subblocksystem.items;
 
 import com.teamacronymcoders.base.items.IHasItemColor;
-import com.teamacronymcoders.base.items.ItemBlockGeneric;
+import com.teamacronymcoders.base.items.itemblocks.ItemBlockGeneric;
 import com.teamacronymcoders.base.subblocksystem.blocks.BlockSubBlockHolder;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;

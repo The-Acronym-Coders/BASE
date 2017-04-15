@@ -23,15 +23,13 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     private IBaseMod mod;
     private boolean creativeTabSet = false;
     private ItemBlock itemBlock;
-
-    public BlockBaseNoModel(Material mat) {
-        super(mat);
-        this.setHardness(1F);
-    }
+    private String name;
 
     public BlockBaseNoModel(Material mat, String name) {
-        this(mat);
+        super(mat);
+        this.name = name;
         this.setUnlocalizedName(name);
+        this.setHardness(1F);
     }
 
     @Override
@@ -105,5 +103,9 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     @Override
     public Block getBlock() {
         return this;
+    }
+
+    public String getName() {
+        return name;
     }
 }

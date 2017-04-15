@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.blocks;
 
-import com.teamacronymcoders.base.items.ItemSubBlock;
+import com.teamacronymcoders.base.items.itemblocks.ItemSubBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;

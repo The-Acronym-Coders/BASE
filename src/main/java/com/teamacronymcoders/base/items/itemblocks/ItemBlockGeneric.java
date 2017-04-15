@@ -1,6 +1,7 @@
-package com.teamacronymcoders.base.items;
+package com.teamacronymcoders.base.items.itemblocks;
 
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.items.IHasSubItems;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
