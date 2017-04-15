@@ -58,15 +58,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getLibProxy().setMod(this);
         this.modelLoader = new SafeModelLoader(this);
 
-        List<IRegistryPiece> registryPieces = this.getRegistryPieces(event.getAsmData());
-
-        this.addRegistry("BLOCK", new BlockRegistry(this, registryPieces));
-        this.addRegistry("ITEM", new ItemRegistry(this, registryPieces));
-        this.addRegistry("ENTITY", new EntityRegistry(this, registryPieces));
-        if (this.hasConfig()) {
-            this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
-            SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
-        }
+        this.createRegistries(event, this.getRegistryPieces(event.getAsmData()));
 
         if (this.addOBJDomain()) {
             this.getLibProxy().addOBJDomain();
@@ -87,6 +79,16 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         }
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
+    }
+
+    public void createRegistries(FMLPreInitializationEvent event, List<IRegistryPiece> registryPieces) {
+        this.addRegistry("BLOCK", new BlockRegistry(this, registryPieces));
+        this.addRegistry("ITEM", new ItemRegistry(this, registryPieces));
+        this.addRegistry("ENTITY", new EntityRegistry(this, registryPieces));
+        if (this.hasConfig()) {
+            this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
+            SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
+        }
     }
 
 
