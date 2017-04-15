@@ -197,4 +197,8 @@ public abstract class ModuleBase implements IModule {
 
         return result;
     }
+
+    public IRegistryHolder getRegistryHolder() {
+        return registryHolder;
+    }
 }
