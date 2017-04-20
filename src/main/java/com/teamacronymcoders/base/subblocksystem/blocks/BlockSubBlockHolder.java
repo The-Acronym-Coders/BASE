@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.blocks.BlockBaseNoModel;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
@@ -18,12 +19,14 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -75,14 +78,26 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
+    @Nonnull
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
+        List<ItemStack> itemStacks = Lists.newArrayList();
+        this.getSubBlock(state).getDrops(state, fortune, itemStacks);
+        return itemStacks;
+    }
+
+    @Override
     public ResourceLocation getResourceLocation(IBlockState blockState) {
-        return this.getSubBlock(blockState.getValue(SUB_BLOCK_NUMBER)).getTextureLocation();
+        return this.getSubBlock(blockState).getTextureLocation();
     }
 
     @Override
     @Nonnull
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
+    }
+
+    public ISubBlock getSubBlock(IBlockState blockState) {
+        return this.getSubBlock(blockState.getValue(SUB_BLOCK_NUMBER));
     }
 
     public ISubBlock getSubBlock(int meta) {

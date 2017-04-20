@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockPart;
+import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 
@@ -17,8 +18,7 @@ public class ProvidedParts {
         PartType item = new PartType("Item", MaterialsSystem::setupItem);
         PartType block = new PartType("Block", materialPart ->
                 SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
-        PartType ore = new PartType("Ore", materialPart ->
-                SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
+        PartType ore = new PartType("Ore", ProvidedParts::createOreSubBlocks);
         MaterialsSystem.registerPartType(item);
         MaterialsSystem.registerPartType(block);
         MaterialsSystem.registerPartType(ore);
@@ -55,4 +55,15 @@ public class ProvidedParts {
             Base.instance.getLogger().getLogger().error(e);
         }
     }
+
+    private static void createOreSubBlocks(MaterialPart materialPart) {
+        Object variants = materialPart.getData().getDataPiece("variants");
+        if (variants instanceof String) {
+
+        } else {
+
+        }
+    }
+
+
 }

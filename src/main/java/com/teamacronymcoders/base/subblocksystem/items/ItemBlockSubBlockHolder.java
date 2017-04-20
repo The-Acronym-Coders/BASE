@@ -24,7 +24,7 @@ public class ItemBlockSubBlockHolder extends ItemBlockGeneric<BlockSubBlockHolde
     @Override
     @Nonnull
     public String getItemStackDisplayName(@Nonnull ItemStack stack) {
-        return this.getActualBlock().getSubBlock(stack.getMetadata()).getUnLocalizedName();
+        return this.getActualBlock().getSubBlock(stack.getMetadata()).getLocalizedName();
     }
 
     @SideOnly(Side.CLIENT)

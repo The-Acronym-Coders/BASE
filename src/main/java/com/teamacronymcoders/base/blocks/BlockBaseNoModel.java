@@ -36,7 +36,6 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     @Override
     public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         world.updateComparatorOutputLevel(pos, this);
-
         super.breakBlock(world, pos, state);
     }
 

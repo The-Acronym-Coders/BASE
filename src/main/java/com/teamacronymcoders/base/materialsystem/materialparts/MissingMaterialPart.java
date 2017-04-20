@@ -17,7 +17,7 @@ public class MissingMaterialPart extends MaterialPart {
     }
 
     @Override
-    public String getName() {
+    public String getUnlocalizedName() {
         return "Missing Part";
     }
 

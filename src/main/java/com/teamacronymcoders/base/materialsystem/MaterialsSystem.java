@@ -116,8 +116,8 @@ public class MaterialsSystem {
             if (part != null) {
                 MaterialPart materialPart = new MaterialPart(material, part);
                 int id = nextId;
-                if (NAME_MAPPING.containsKey(materialPart.getName())) {
-                    id = NAME_MAPPING.get(materialPart.getName());
+                if (NAME_MAPPING.containsKey(materialPart.getUnlocalizedName())) {
+                    id = NAME_MAPPING.get(materialPart.getUnlocalizedName());
                 }
                 MATERIAL_PARTS_IDS.put(id, materialPart);
                 materialCreativeTab.addIconStacks(Lists.newArrayList(materialPart.getItemStack()));

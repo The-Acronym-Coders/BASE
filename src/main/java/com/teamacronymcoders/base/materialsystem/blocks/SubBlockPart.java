@@ -18,7 +18,7 @@ public class SubBlockPart extends SubBlockBase {
     private String harvestTool = "pickaxe";
 
     public SubBlockPart(MaterialPart materialPart) {
-        super(materialPart.getName());
+        super(materialPart.getUnlocalizedName());
         this.materialPart = materialPart;
         MaterialPartData data = this.materialPart.getData();
         if (data.getDataPiece("hardness") instanceof Number) {
@@ -36,7 +36,7 @@ public class SubBlockPart extends SubBlockBase {
     }
 
     public String getUnLocalizedName() {
-        return this.materialPart.getName();
+        return this.materialPart.getUnlocalizedName();
     }
 
     @Override

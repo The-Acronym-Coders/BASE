@@ -5,9 +5,9 @@ import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
 import java.util.Map;
 
@@ -27,12 +27,12 @@ public class MaterialPart {
         this.data = new MaterialPartData(part.getData());
     }
 
-    public String getName() {
-        return material.getUnlocalizedName() + "." + part.getUnlocalizedName();
+    public String getUnlocalizedName() {
+        return material.getUnlocalizedName() + "_" + part.getUnlocalizedName();
     }
 
-    @SuppressWarnings("deprecation")
     public String getLocalizedName() {
+        //noinspection deprecation
         return String.format("%s %s", material.getName(), I18n.translateToLocal(part.getUnlocalizedName()));
     }
 
@@ -57,7 +57,7 @@ public class MaterialPart {
     }
 
     public ItemStack getItemStack() {
-        if(itemStack == null) {
+        if (itemStack == null) {
             itemStack = new ItemStack(MaterialsSystem.ITEM_MATERIAL_PART, 1, MaterialsSystem.getMaterialPartId(this));
         }
 
@@ -89,7 +89,7 @@ public class MaterialPart {
         return this.getPart().getPartType() == partType;
     }
 
-    public void setOreDict(Map<ItemStack,String> oreDict) {
+    public void setOreDict(Map<ItemStack, String> oreDict) {
         oreDict.put(itemStack, part.getUnlocalizedName() + material.getName());
     }
 
