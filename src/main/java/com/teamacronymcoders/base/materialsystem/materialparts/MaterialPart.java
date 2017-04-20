@@ -92,4 +92,12 @@ public class MaterialPart {
     public void setOreDict(Map<ItemStack,String> oreDict) {
         oreDict.put(itemStack, part.getUnlocalizedName() + material.getName());
     }
+
+    public MaterialPartData getData() {
+        return data;
+    }
+
+    public void setData(MaterialPartData data) {
+        this.data = data;
+    }
 }

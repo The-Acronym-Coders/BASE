@@ -1,7 +1,11 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
-import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.List;
+import java.util.Map;
 
 import static com.teamacronymcoders.base.Reference.MODID;
 
@@ -18,8 +22,8 @@ public abstract class SubBlockBase implements ISubBlock {
         return this.name;
     }
 
-    public String getLocalizedName() {
-        return I18n.format("base.subblock." + name);
+    public String getUnLocalizedName() {
+        return "base.subblock." + name;
     }
 
     public ResourceLocation getTextureLocation() {
@@ -28,5 +32,15 @@ public abstract class SubBlockBase implements ISubBlock {
 
     public int getColor() {
         return -1;
+    }
+
+    @Override
+    public void setRecipes(List<IRecipe> recipes) {
+
+    }
+
+    @Override
+    public void setOreDict(Map<ItemStack, String> oreDict) {
+
     }
 }

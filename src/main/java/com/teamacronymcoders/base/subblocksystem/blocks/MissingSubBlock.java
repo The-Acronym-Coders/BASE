@@ -2,8 +2,11 @@ package com.teamacronymcoders.base.subblocksystem.blocks;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Map;
 
 public class MissingSubBlock implements ISubBlock {
@@ -13,7 +16,7 @@ public class MissingSubBlock implements ISubBlock {
     }
 
     @Override
-    public String getLocalizedName() {
+    public String getUnLocalizedName() {
         return "Missing";
     }
 
@@ -25,6 +28,32 @@ public class MissingSubBlock implements ISubBlock {
     @Override
     public int getColor() {
         return -1;
+    }
+
+    @Override
+    public int getHardness() {
+        return 0;
+    }
+
+    @Override
+    public int getResistance() {
+        return 0;
+    }
+
+    @Override
+    public int getHarvestLevel() {
+        return 0;
+    }
+
+    @Override
+    @Nonnull
+    public String getHarvestTool() {
+        return "";
+    }
+
+    @Override
+    public void setRecipes(List<IRecipe> recipes) {
+
     }
 
     @Override

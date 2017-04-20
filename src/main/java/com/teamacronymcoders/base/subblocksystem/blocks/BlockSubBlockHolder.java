@@ -3,6 +3,8 @@ package com.teamacronymcoders.base.subblocksystem.blocks;
 import com.teamacronymcoders.base.blocks.BlockBaseNoModel;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
+import com.teamacronymcoders.base.items.IHasOreDict;
+import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.items.ItemBlockGeneric;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.subblocksystem.items.ItemBlockSubBlockHolder;
@@ -10,17 +12,22 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockStateMapper, IHasBlockColor {
+public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockStateMapper, IHasBlockColor, IHasOreDict, IHasRecipe {
     private static final PropertyInteger SUB_BLOCK_NUMBER = PropertyInteger.create("sub_block_number", 0, 15);
     private Map<Integer, ISubBlock> subBlocks;
 
@@ -29,7 +36,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
         this.setItemBlock(new ItemBlockGeneric<>(this));
         this.subBlocks = subBlocks;
         for (int x = 0; x < 16; x++) {
-            this.getSubBlocks().computeIfAbsent(x, value -> SubBlockSystem.MISSING_SUB_BLOCK);
+            this.getSubBlocks().putIfAbsent(x, SubBlockSystem.MISSING_SUB_BLOCK);
         }
         this.setItemBlock(new ItemBlockSubBlockHolder(this));
     }
@@ -45,8 +52,37 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
+    @SuppressWarnings("deprecation")
+    public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
+        return this.getSubBlock(blockState.getValue(SUB_BLOCK_NUMBER)).getHardness();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public float getExplosionResistance(World world, BlockPos pos, @Nonnull Entity exploder, Explosion explosion) {
+        return this.getSubBlock(world.getBlockState(pos).getValue(SUB_BLOCK_NUMBER)).getResistance();
+    }
+
+    @Override
+    @Nonnull
+    public String getHarvestTool(@Nonnull IBlockState state) {
+        return this.getSubBlock(state.getValue(SUB_BLOCK_NUMBER)).getHarvestTool();
+    }
+
+    @Override
+    public int getHarvestLevel(@Nonnull IBlockState state) {
+        return this.getSubBlock(state.getValue(SUB_BLOCK_NUMBER)).getHarvestLevel();
+    }
+
+    @Override
     public ResourceLocation getResourceLocation(IBlockState blockState) {
         return this.getSubBlock(blockState.getValue(SUB_BLOCK_NUMBER)).getTextureLocation();
+    }
+
+    @Override
+    @Nonnull
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT;
     }
 
     public ISubBlock getSubBlock(int meta) {
@@ -78,5 +114,18 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
 
     public Map<Integer, ISubBlock> getSubBlocks() {
         return subBlocks;
+    }
+
+    @Nonnull
+    @Override
+    public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
+        this.getSubBlocks().values().forEach(subBlock -> subBlock.setOreDict(names));
+        return names;
+    }
+
+    @Override
+    public List<IRecipe> getRecipes(List<IRecipe> recipes) {
+        this.getSubBlocks().values().forEach(subBlock -> subBlock.setRecipes(recipes));
+        return recipes;
     }
 }

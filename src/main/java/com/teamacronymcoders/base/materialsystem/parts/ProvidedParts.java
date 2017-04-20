@@ -17,8 +17,11 @@ public class ProvidedParts {
         PartType item = new PartType("Item", MaterialsSystem::setupItem);
         PartType block = new PartType("Block", materialPart ->
                 SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
+        PartType ore = new PartType("Ore", materialPart ->
+                SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
         MaterialsSystem.registerPartType(item);
         MaterialsSystem.registerPartType(block);
+        MaterialsSystem.registerPartType(ore);
 
         registerPart(new PartBuilder().setName("Ingot").setPartType(item));
         registerPart(new PartBuilder().setName("Beam").setPartType(item));
@@ -27,15 +30,22 @@ public class ProvidedParts {
         registerPart(new PartBuilder().setName("Dust").setPartType(item));
         registerPart(new PartBuilder().setName("Plate").setPartType(item));
         registerPart(new PartBuilder().setName("Nugget").setPartType(item));
-        registerPart(new PartBuilder().setName("Storage").setPartType(block));
+
+
+        List<PartDataPiece> blockDataPieces = Lists.newArrayList();
+        blockDataPieces.add(new PartDataPiece("hardness", false));
+        blockDataPieces.add(new PartDataPiece("resistance", false));
+        blockDataPieces.add(new PartDataPiece("harvestLevel", false));
+        blockDataPieces.add(new PartDataPiece("harvestTool", false));
+        registerPart(new PartBuilder().setName("Storage").setPartType(block).setData(blockDataPieces));
 
         List<PartDataPiece> oreDataPieces = Lists.newArrayList();
+        oreDataPieces.addAll(blockDataPieces);
         oreDataPieces.add(new PartDataPiece("variants", false));
-        oreDataPieces.add(new PartDataPiece("hardness", false));
-        oreDataPieces.add(new PartDataPiece("toolLevel", false));
-        oreDataPieces.add(new PartDataPiece("toolClass", false));
-        registerPart(new PartBuilder().setName("Ore").setPartType(block).setData(oreDataPieces));
-        registerPart(new PartBuilder().setName("Poor Ore").setPartType(block).setData(oreDataPieces));
+        oreDataPieces.add(new PartDataPiece("dropType", false));
+        registerPart(new PartBuilder().setName("Ore").setPartType(ore).setData(oreDataPieces));
+        registerPart(new PartBuilder().setName("Poor Ore").setPartType(ore).setData(oreDataPieces));
+        registerPart(new PartBuilder().setName("Dense Ore").setPartType(ore).setData(oreDataPieces));
     }
 
     private static void registerPart(PartBuilder partBuilder) {
