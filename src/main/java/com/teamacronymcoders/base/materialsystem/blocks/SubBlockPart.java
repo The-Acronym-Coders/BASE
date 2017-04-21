@@ -74,4 +74,8 @@ public class SubBlockPart extends SubBlockBase {
     public ResourceLocation getTextureLocation() {
         return materialPart.getTextureLocation();
     }
+
+    public MaterialPart getMaterialPart() {
+        return materialPart;
+    }
 }
