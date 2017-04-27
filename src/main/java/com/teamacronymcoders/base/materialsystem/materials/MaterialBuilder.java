@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
-import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 
 import java.awt.*;
 
@@ -12,7 +12,7 @@ public class MaterialBuilder {
     private boolean hasEffect;
 
     public MaterialBuilder() {
-        MaterialsSystem.MATERIALS_NOT_BUILT.add(this);
+        MaterialSystem.MATERIALS_NOT_BUILT.add(this);
     }
 
     public MaterialBuilder setName(String name) {
@@ -38,8 +38,8 @@ public class MaterialBuilder {
     public Material createMaterial() throws MaterialException {
         validate();
         Material material = new Material(this.name, this.unlocalizedName, this.color, this.hasEffect);
-        MaterialsSystem.registerMaterial(material);
-        MaterialsSystem.MATERIALS_NOT_BUILT.remove(this);
+        MaterialSystem.registerMaterial(material);
+        MaterialSystem.MATERIALS_NOT_BUILT.remove(this);
         return material;
     }
 

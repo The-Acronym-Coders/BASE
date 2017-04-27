@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.materialparts;
 
 import com.teamacronymcoders.base.Reference;
-import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
@@ -58,7 +58,7 @@ public class MaterialPart {
 
     public ItemStack getItemStack() {
         if (itemStack == null) {
-            itemStack = new ItemStack(MaterialsSystem.ITEM_MATERIAL_PART, 1, MaterialsSystem.getMaterialPartId(this));
+            itemStack = new ItemStack(MaterialSystem.ITEM_MATERIAL_PART, 1, MaterialSystem.getMaterialPartId(this));
         }
 
         return itemStack;
@@ -70,7 +70,7 @@ public class MaterialPart {
 
     public void setTextureLocation(ResourceLocation textureLocation) {
         this.textureLocation = textureLocation;
-        MaterialsSystem.ITEM_MATERIAL_PART.registerItemVariant(textureLocation);
+        MaterialSystem.ITEM_MATERIAL_PART.registerItemVariant(textureLocation);
     }
 
     public int getColor() {

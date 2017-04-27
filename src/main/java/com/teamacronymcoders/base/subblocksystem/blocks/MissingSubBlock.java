@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -49,6 +50,11 @@ public class MissingSubBlock implements ISubBlock {
     @Nonnull
     public String getHarvestTool() {
         return "";
+    }
+
+    @Override
+    public void getDrops(IBlockState blockState, int fortune, List<ItemStack> itemStacks) {
+
     }
 
     @Override

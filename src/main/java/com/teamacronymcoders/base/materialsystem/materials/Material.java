@@ -1,10 +1,8 @@
 package com.teamacronymcoders.base.materialsystem.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
-import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import com.teamacronymcoders.base.modules.minetweaker.Materials;
-import com.teamacronymcoders.base.util.TextUtils;
 
 import java.awt.*;
 import java.util.List;
@@ -39,6 +37,6 @@ public class Material {
     }
 
     public List<MaterialPart> registerPartsFor(String... partNames) throws MaterialException {
-        return MaterialsSystem.registerPartsForMaterial(this, partNames);
+        return MaterialSystem.registerPartsForMaterial(this, partNames);
     }
 }

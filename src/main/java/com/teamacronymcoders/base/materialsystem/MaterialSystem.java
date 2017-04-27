@@ -5,6 +5,7 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
 import com.teamacronymcoders.base.materialsystem.items.ItemMaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
@@ -23,7 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MaterialsSystem {
+public class MaterialSystem {
+    private IBaseMod mod;
+
     private static final Map<String, Part> PART_MAP = new HashMap<>();
     private static final Map<String, Material> MATERIAL_MAP = new HashMap<>();
     private static final Map<String, PartType> PART_TYPE_MAP = new HashMap<>();
@@ -40,6 +43,10 @@ public class MaterialsSystem {
     public static final List<MaterialBuilder> MATERIALS_NOT_BUILT = Lists.newArrayList();
     public static final List<PartBuilder> PARTS_NOT_BUILT = Lists.newArrayList();
 
+
+    public MaterialSystem(IBaseMod mod) {
+        this.mod = mod;
+    }
 
     public static void setup() {
         NAME_MAPPING.putAll(SaveLoader.getSavedObject("material_part_ids", MaterialPartSave.class).getMaterialMappings());

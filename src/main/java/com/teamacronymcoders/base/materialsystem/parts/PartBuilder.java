@@ -2,7 +2,7 @@ package com.teamacronymcoders.base.materialsystem.parts;
 
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
-import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class PartBuilder {
     private List<PartDataPiece> data;
 
     public PartBuilder() {
-        MaterialsSystem.PARTS_NOT_BUILT.add(this);
+        MaterialSystem.PARTS_NOT_BUILT.add(this);
         data = Lists.newArrayList();
     }
 
@@ -39,8 +39,8 @@ public class PartBuilder {
     public Part createPart() throws MaterialException {
         validate();
         Part part =  new Part(name, partType, data);
-        MaterialsSystem.registerPart(part);
-        MaterialsSystem.PARTS_NOT_BUILT.remove(this);
+        MaterialSystem.registerPart(part);
+        MaterialSystem.PARTS_NOT_BUILT.remove(this);
         return part;
     }
 

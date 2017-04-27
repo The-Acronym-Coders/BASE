@@ -2,26 +2,24 @@ package com.teamacronymcoders.base.materialsystem.parts;
 
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
-import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 
 import java.util.List;
 
 public class ProvidedParts {
-
-
-    public static void initPartsAndTypes() {
-        PartType item = new PartType("Item", MaterialsSystem::setupItem);
+    public static void initPartsAndTypes(IBaseMod mod) {
+        PartType item = new PartType("Item", MaterialSystem::setupItem);
         PartType block = new PartType("Block", materialPart ->
-                SubBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
+                mod.getSubBlockSystem().registerSubBlock(new SubBlockPart(materialPart)));
         PartType ore = new PartType("Ore", ProvidedParts::createOreSubBlocks);
-        MaterialsSystem.registerPartType(item);
-        MaterialsSystem.registerPartType(block);
-        MaterialsSystem.registerPartType(ore);
+        MaterialSystem.registerPartType(item);
+        MaterialSystem.registerPartType(block);
+        MaterialSystem.registerPartType(ore);
 
         registerPart(new PartBuilder().setName("Ingot").setPartType(item));
         registerPart(new PartBuilder().setName("Beam").setPartType(item));
@@ -50,7 +48,7 @@ public class ProvidedParts {
 
     private static void registerPart(PartBuilder partBuilder) {
         try {
-            MaterialsSystem.registerPart(partBuilder.createPart());
+            MaterialSystem.registerPart(partBuilder.createPart());
         } catch (MaterialException e) {
             Base.instance.getLogger().getLogger().error(e);
         }

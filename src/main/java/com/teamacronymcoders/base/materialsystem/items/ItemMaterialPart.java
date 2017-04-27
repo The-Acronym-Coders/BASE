@@ -6,14 +6,9 @@ import com.teamacronymcoders.base.items.IHasItemMeshDefinition;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import com.teamacronymcoders.base.materialsystem.MaterialsSystem;
-import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -62,8 +57,8 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
 
     @Nonnull
     private MaterialPart getMaterialParkFromItemStack(ItemStack itemStack) {
-        MaterialPart materialPart = MaterialsSystem.getMaterialPart(itemStack.getItemDamage());
-        return materialPart != null ? materialPart : MaterialsSystem.MISSING_MATERIAL_PART;
+        MaterialPart materialPart = MaterialSystem.getMaterialPart(itemStack.getItemDamage());
+        return materialPart != null ? materialPart : MaterialSystem.MISSING_MATERIAL_PART;
     }
 
     public void registerItemVariant(ResourceLocation resourceLocation) {
