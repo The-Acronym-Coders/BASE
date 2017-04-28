@@ -7,19 +7,17 @@ import com.teamacronymcoders.base.subblocksystem.blocks.BlockSubBlockHolder;
 import com.teamacronymcoders.base.subblocksystem.blocks.ISubBlock;
 import com.teamacronymcoders.base.subblocksystem.blocks.MissingSubBlock;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockInfo;
-import com.teamacronymcoders.base.util.Platform;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 public class SubBlockSystem {
     private IBaseMod mod;
 
-    private Map<String, Map<String, ISubBlock>> SUB_BLOCKS = new HashMap<>();
+    private Map<String, Map<String, ISubBlock>> subBlocks = new HashMap<>();
     public static final ISubBlock MISSING_SUB_BLOCK = new MissingSubBlock();
 
     public SubBlockSystem(IBaseMod mod) {
@@ -27,17 +25,13 @@ public class SubBlockSystem {
     }
 
     public void registerSubBlock(ISubBlock iSubBlock) {
-        IBaseMod mod = Platform.getCurrentMod();
-        if (mod != null) {
-            SUB_BLOCKS.computeIfAbsent(mod.getID(), value -> new HashMap<>());
-            SUB_BLOCKS.get(mod.getID()).put(iSubBlock.getName(), iSubBlock);
-        }
-
+        subBlocks.computeIfAbsent(mod.getID(), value -> new HashMap<>());
+        subBlocks.get(mod.getID()).put(iSubBlock.getName(), iSubBlock);
     }
 
     public void createBlocks() {
         Map<String, ISubBlock> subBlocksToUse = new HashMap<>();
-        subBlocksToUse.putAll(SUB_BLOCKS.get(mod.getID()));
+        subBlocksToUse.putAll(subBlocks.get(mod.getID()));
         SubBlockInfo subBlockInfo = SaveLoader.getSavedObject("saved_sub_blocks_" + mod.getID(), SubBlockInfo.class);
         Map<Integer, Map<Integer, String>> listOfBlockNames = subBlockInfo.getSavedSubBlockNames();
         Map<Integer, Map<Integer, ISubBlock>> listOfSubBlocks = new HashMap<>();
