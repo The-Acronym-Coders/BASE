@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.materialsystem.materialparts;
 
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
@@ -12,8 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 public class MissingMaterialPart extends MaterialPart {
-    public MissingMaterialPart() throws MaterialException {
-        super(null, new PartBuilder().setName("Missing").setPartType(new PartType("Missing", part -> {})).createPart());
+    public MissingMaterialPart(MaterialSystem materialSystem) throws MaterialException {
+        super(materialSystem, null, new PartBuilder(materialSystem).setName("Missing").setPartType(new PartType("Missing", part -> {})).createPart());
     }
 
     @Override

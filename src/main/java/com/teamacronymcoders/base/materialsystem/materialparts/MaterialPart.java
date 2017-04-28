@@ -18,13 +18,15 @@ public class MaterialPart {
     private boolean colorize;
     private MaterialPartData data;
     private ItemStack itemStack;
+    private MaterialSystem materialSystem;
 
-    public MaterialPart(Material material, Part part) {
+    public MaterialPart(MaterialSystem materialSystem, Material material, Part part) {
         this.setMaterial(material);
         this.setPart(part);
         this.setTextureLocation(new ResourceLocation(Reference.MODID, part.getUnlocalizedName()));
         this.colorize = true;
         this.data = new MaterialPartData(part.getData());
+        this.materialSystem = materialSystem;
     }
 
     public String getUnlocalizedName() {
@@ -58,7 +60,7 @@ public class MaterialPart {
 
     public ItemStack getItemStack() {
         if (itemStack == null) {
-            itemStack = new ItemStack(MaterialSystem.ITEM_MATERIAL_PART, 1, MaterialSystem.getMaterialPartId(this));
+            itemStack = new ItemStack(this.materialSystem.itemMaterialPart, 1, this.materialSystem.getMaterialPartId(this));
         }
 
         return itemStack;
@@ -70,7 +72,7 @@ public class MaterialPart {
 
     public void setTextureLocation(ResourceLocation textureLocation) {
         this.textureLocation = textureLocation;
-        MaterialSystem.ITEM_MATERIAL_PART.registerItemVariant(textureLocation);
+        this.materialSystem.itemMaterialPart.registerItemVariant(textureLocation);
     }
 
     public int getColor() {

@@ -1,12 +1,11 @@
 package com.teamacronymcoders.base.materialsystem.items;
 
-import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.IHasItemMeshDefinition;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.ItemBase;
-import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -17,10 +16,12 @@ import java.util.Map;
 
 public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition, IHasItemColor, IHasOreDict {
     private Map<Integer, MaterialPart> itemMaterialParts;
+    private MaterialSystem materialSystem;
 
-    public ItemMaterialPart() {
+    public ItemMaterialPart(MaterialSystem materialSystem) {
         super("material_part");
         this.setHasSubtypes(true);
+        this.materialSystem = materialSystem;
     }
 
     @Override
@@ -57,12 +58,12 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
 
     @Nonnull
     private MaterialPart getMaterialParkFromItemStack(ItemStack itemStack) {
-        MaterialPart materialPart = MaterialSystem.getMaterialPart(itemStack.getItemDamage());
+        MaterialPart materialPart = materialSystem.getMaterialPart(itemStack.getItemDamage());
         return materialPart != null ? materialPart : MaterialSystem.MISSING_MATERIAL_PART;
     }
 
     public void registerItemVariant(ResourceLocation resourceLocation) {
-        Base.instance.getModelLoader().registerModelVariant(this, resourceLocation);
+        materialSystem.getMod().getModelLoader().registerModelVariant(this, resourceLocation);
     }
 
     public Map<Integer, MaterialPart> getItemMaterialParts() {

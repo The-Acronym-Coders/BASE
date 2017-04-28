@@ -10,9 +10,10 @@ public class PartBuilder {
     private String name;
     private PartType partType;
     private List<PartDataPiece> data;
+    private MaterialSystem materialSystem;
 
-    public PartBuilder() {
-        MaterialSystem.PARTS_NOT_BUILT.add(this);
+    public PartBuilder(MaterialSystem materialSystem) {
+        materialSystem.partsNotBuilt.add(this);
         data = Lists.newArrayList();
     }
 
@@ -39,8 +40,8 @@ public class PartBuilder {
     public Part createPart() throws MaterialException {
         validate();
         Part part =  new Part(name, partType, data);
-        MaterialSystem.registerPart(part);
-        MaterialSystem.PARTS_NOT_BUILT.remove(this);
+        this.materialSystem.registerPart(part);
+        this.materialSystem.partsNotBuilt.remove(this);
         return part;
     }
 

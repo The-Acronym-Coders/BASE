@@ -35,8 +35,4 @@ public class Material {
     public String getUnlocalizedName() {
         return unlocalizedName;
     }
-
-    public List<MaterialPart> registerPartsFor(String... partNames) throws MaterialException {
-        return MaterialSystem.registerPartsForMaterial(this, partNames);
-    }
 }

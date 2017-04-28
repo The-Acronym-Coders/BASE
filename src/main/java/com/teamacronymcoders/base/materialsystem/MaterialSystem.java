@@ -25,108 +25,112 @@ import java.util.List;
 import java.util.Map;
 
 public class MaterialSystem {
-    private IBaseMod mod;
-
-    private static final Map<String, Part> PART_MAP = new HashMap<>();
-    private static final Map<String, Material> MATERIAL_MAP = new HashMap<>();
-    private static final Map<String, PartType> PART_TYPE_MAP = new HashMap<>();
-    private static final BiMap<Integer, MaterialPart> MATERIAL_PARTS_IDS = HashBiMap.create();
-    private static final Map<String, Integer> NAME_MAPPING = Maps.newHashMap();
-
-    private static int nextId = 0;
-
-    public static ItemMaterialPart ITEM_MATERIAL_PART;
     public static MissingMaterialPart MISSING_MATERIAL_PART;
 
-    public static CreativeTabCarousel materialCreativeTab;
+    private IBaseMod mod;
 
-    public static final List<MaterialBuilder> MATERIALS_NOT_BUILT = Lists.newArrayList();
-    public static final List<PartBuilder> PARTS_NOT_BUILT = Lists.newArrayList();
+    private Map<String, Part> partMap = new HashMap<>();
+    private Map<String, Material> materialMap = new HashMap<>();
+    private Map<String, PartType> partTypeMap = new HashMap<>();
+    private BiMap<Integer, MaterialPart> materialPartBiMap = HashBiMap.create();
+    private Map<String, Integer> nameMapping = Maps.newHashMap();
+
+    private int nextId = 0;
+
+    public ItemMaterialPart itemMaterialPart;
+    public CreativeTabCarousel materialCreativeTab;
+
+    public List<MaterialBuilder> materialsNotBuilt = Lists.newArrayList();
+    public List<PartBuilder> partsNotBuilt = Lists.newArrayList();
 
 
     public MaterialSystem(IBaseMod mod) {
         this.mod = mod;
     }
 
-    public static void setup() {
-        NAME_MAPPING.putAll(SaveLoader.getSavedObject("material_part_ids", MaterialPartSave.class).getMaterialMappings());
-        NAME_MAPPING.values().forEach(id -> {
+    public void setup() {
+        nameMapping.putAll(SaveLoader.getSavedObject("material_part_ids_" + mod.getID(), MaterialPartSave.class).getMaterialMappings());
+        nameMapping.values().forEach(id -> {
             if (id > nextId) {
                 nextId = id + 1;
             }
         });
-        materialCreativeTab = new CreativeTabCarousel("base");
-        Base.instance.setCreativeTab(materialCreativeTab);
+        materialCreativeTab = new CreativeTabCarousel("materials." + mod.getID());
         try {
             MISSING_MATERIAL_PART = new MissingMaterialPart();
         } catch (MaterialException e) {
-            Base.instance.getLogger().fatal("Failed to Create Missing Material Part, THIS IS BAD");
+            mod.getLogger().fatal("Failed to Create Missing Material Part, THIS IS BAD");
         }
-        ProvidedParts.initPartsAndTypes();
+        if (mod.getSubBlockSystem() != null) {
+            ProvidedParts.initPartsAndTypes(this, mod.getSubBlockSystem());
+        } else {
+            mod.getLogger().fatal("Failed to find subBlockSystem");
+        }
+
     }
 
-    public static void setupItem(MaterialPart materialPart) {
-        if (ITEM_MATERIAL_PART == null) {
-            ITEM_MATERIAL_PART = new ItemMaterialPart();
-            ITEM_MATERIAL_PART.setCreativeTab(materialCreativeTab);
-            Base.instance.getRegistry(ItemRegistry.class, "ITEM").register(ITEM_MATERIAL_PART);
+    public void setupItem(MaterialPart materialPart) {
+        if (itemMaterialPart == null) {
+            itemMaterialPart = new ItemMaterialPart(this);
+            itemMaterialPart.setCreativeTab(materialCreativeTab);
+            mod.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(itemMaterialPart);
         }
-        ITEM_MATERIAL_PART.addMaterialPart(MATERIAL_PARTS_IDS.inverse().get(materialPart), materialPart);
+        itemMaterialPart.addMaterialPart(materialPartBiMap.inverse().get(materialPart), materialPart);
     }
 
-    public static void finishUp() {
+    public void finishUp() {
         MaterialPartSave save = new MaterialPartSave();
-        save.setMaterialMappings(MATERIAL_PARTS_IDS);
-        SaveLoader.saveObject("material_parts", save);
+        save.setMaterialMappings(materialPartBiMap);
+        SaveLoader.saveObject("material_parts_" + mod.getID(), save);
     }
 
-    public static void registerPart(Part part) {
-        PART_MAP.put(part.getName(), part);
+    public void registerPart(Part part) {
+        partMap.put(part.getName(), part);
     }
 
-    public static void registerPartType(PartType partType) {
-        PART_TYPE_MAP.put(partType.getName(), partType);
+    public void registerPartType(PartType partType) {
+        partTypeMap.put(partType.getName(), partType);
     }
 
-    public static void registerMaterial(Material material) {
-        MATERIAL_MAP.put(material.getName(), material);
+    public void registerMaterial(Material material) {
+        materialMap.put(material.getName(), material);
     }
 
-    public static Part getPart(String name) {
-        return PART_MAP.get(name);
+    public Part getPart(String name) {
+        return partMap.get(name);
     }
 
-    public static PartType getPartType(String name) {
-        return PART_TYPE_MAP.get(name);
+    public PartType getPartType(String name) {
+        return partTypeMap.get(name);
     }
 
-    public static Material getMaterial(String name) {
-        return MATERIAL_MAP.get(name);
+    public Material getMaterial(String name) {
+        return materialMap.get(name);
     }
 
-    public static int getMaterialPartId(MaterialPart materialPart) {
-        return MATERIAL_PARTS_IDS.inverse().get(materialPart);
+    public int getMaterialPartId(MaterialPart materialPart) {
+        return materialPartBiMap.inverse().get(materialPart);
     }
 
-    public static MaterialPart getMaterialPart(int itemDamage) {
-        return MATERIAL_PARTS_IDS.get(itemDamage);
+    public MaterialPart getMaterialPart(int itemDamage) {
+        return materialPartBiMap.get(itemDamage);
     }
 
-    public static Map<Integer, MaterialPart> getMaterialParts() {
-        return MATERIAL_PARTS_IDS;
+    public Map<Integer, MaterialPart> getMaterialParts() {
+        return materialPartBiMap;
     }
 
-    public static List<MaterialPart> registerPartsForMaterial(Material material, String... partNames) throws MaterialException {
+    public List<MaterialPart> registerPartsForMaterial(Material material, String... partNames) throws MaterialException {
         List<MaterialPart> materialParts = Lists.newArrayList();
         for (String partName : partNames) {
-            Part part = PART_MAP.get(partName);
+            Part part = partMap.get(partName);
             if (part != null) {
-                MaterialPart materialPart = new MaterialPart(material, part);
+                MaterialPart materialPart = new MaterialPart(this, material, part);
                 int id = nextId;
-                if (NAME_MAPPING.containsKey(materialPart.getUnlocalizedName())) {
-                    id = NAME_MAPPING.get(materialPart.getUnlocalizedName());
+                if (nameMapping.containsKey(materialPart.getUnlocalizedName())) {
+                    id = nameMapping.get(materialPart.getUnlocalizedName());
                 }
-                MATERIAL_PARTS_IDS.put(id, materialPart);
+                materialPartBiMap.put(id, materialPart);
                 materialCreativeTab.addIconStacks(Lists.newArrayList(materialPart.getItemStack()));
                 part.getPartType().setup(materialPart);
                 materialParts.add(materialPart);
@@ -135,5 +139,9 @@ public class MaterialSystem {
             }
         }
         return materialParts;
+    }
+
+    public IBaseMod getMod() {
+        return mod;
     }
 }
