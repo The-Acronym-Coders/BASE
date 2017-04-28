@@ -1,7 +1,6 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.client.models.SafeModelLoader;
-import com.teamacronymcoders.base.featuresystem.FeatureHandler;
 import com.teamacronymcoders.base.guisystem.GuiHandler;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;

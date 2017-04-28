@@ -57,7 +57,7 @@ public class MaterialSystem {
         });
         materialCreativeTab = new CreativeTabCarousel("materials." + mod.getID());
         try {
-            MISSING_MATERIAL_PART = new MissingMaterialPart();
+            MISSING_MATERIAL_PART = new MissingMaterialPart(this);
         } catch (MaterialException e) {
             mod.getLogger().fatal("Failed to Create Missing Material Part, THIS IS BAD");
         }
