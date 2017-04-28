@@ -19,18 +19,23 @@ public class MaterialPart {
     private MaterialPartData data;
     private ItemStack itemStack;
     private MaterialSystem materialSystem;
+    private String variant;
 
     public MaterialPart(MaterialSystem materialSystem, Material material, Part part) {
+        this(materialSystem, material, part, null);
+    }
+    public MaterialPart(MaterialSystem materialSystem, Material material, Part part, String variant) {
         this.setMaterial(material);
         this.setPart(part);
         this.setTextureLocation(new ResourceLocation(Reference.MODID, part.getUnlocalizedName()));
         this.colorize = true;
         this.data = new MaterialPartData(part.getData());
         this.materialSystem = materialSystem;
+        this.variant = variant;
     }
 
     public String getUnlocalizedName() {
-        return material.getUnlocalizedName() + "_" + part.getUnlocalizedName();
+        return material.getUnlocalizedName() + "_" + part.getUnlocalizedName() + ((variant != null) ? "_" + variant : "");
     }
 
     public String getLocalizedName() {

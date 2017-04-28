@@ -6,7 +6,7 @@ import com.teamacronymcoders.base.materialsystem.parts.PartDataPiece;
 import java.util.*;
 
 public class MaterialPartData {
-    private Map<String, Object> data;
+    private Map<String, String> data;
     private List<PartDataPiece> dataPieces;
 
     public MaterialPartData(List<PartDataPiece> dataPieces) {
@@ -14,15 +14,19 @@ public class MaterialPartData {
         this.dataPieces = dataPieces;
     }
 
-    public Object getDataPiece(String name) {
+    public String getDataPiece(String name) {
         return this.data.get(name.toLowerCase(Locale.US));
     }
 
-    public void addDataPiece(String name, Object value) {
+    public boolean containsDataPiece(String name) {
+        return this.data.containsKey(name.toLowerCase(Locale.US));
+    }
+
+    public void addDataPiece(String name, String value) {
         data.put(name.toLowerCase(Locale.US), value);
     }
 
-    public void validate() throws MaterialException{
+    public void validate() throws MaterialException {
         for (PartDataPiece dataPiece : dataPieces) {
             if (dataPiece.isRequired() && !data.containsKey(dataPiece.getName())) {
                 throw new MaterialException("Missing required data piece: " + dataPiece.getName());

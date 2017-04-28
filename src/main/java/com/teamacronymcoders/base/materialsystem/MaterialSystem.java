@@ -62,7 +62,8 @@ public class MaterialSystem {
             mod.getLogger().fatal("Failed to Create Missing Material Part, THIS IS BAD");
         }
         if (mod.getSubBlockSystem() != null) {
-            ProvidedParts.initPartsAndTypes(this, mod.getSubBlockSystem());
+            ProvidedParts providedParts = new ProvidedParts(this.mod, this, this.mod.getSubBlockSystem());
+            providedParts.initPartsAndTypes();
         } else {
             mod.getLogger().fatal("Failed to find subBlockSystem");
         }

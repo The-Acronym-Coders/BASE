@@ -21,18 +21,21 @@ public class SubBlockPart extends SubBlockBase {
         super(materialPart.getUnlocalizedName());
         this.materialPart = materialPart;
         MaterialPartData data = this.materialPart.getData();
-        if (data.getDataPiece("hardness") instanceof Number) {
-            hardness = ((Number) data.getDataPiece("hardness")).intValue();
+        hardness = setField(data, "hardness", hardness);
+        resistance = setField(data, "resistance", resistance);
+        harvestLevel = setField(data, "harvestLevel", harvestLevel);
+
+        if (data.containsDataPiece("harvestTool")) {
+            harvestTool = data.getDataPiece("harvestTool");
         }
-        if (data.getDataPiece("resistance") instanceof Number) {
-            resistance = ((Number) data.getDataPiece("resistance")).intValue();
+    }
+
+    private int setField(MaterialPartData data, String fieldName, int currentLevel) {
+        if (data.containsDataPiece(fieldName)) {
+            currentLevel = Integer.parseInt(data.getDataPiece(fieldName));
         }
-        if (data.getDataPiece("harvestLevel") instanceof Number) {
-            harvestLevel = ((Number) data.getDataPiece("harvestLevel")).intValue();
-        }
-        if (data.getDataPiece("harvestTool") instanceof String) {
-            harvestTool = ((String) data.getDataPiece("harvestTool"));
-        }
+
+        return currentLevel;
     }
 
     public String getUnLocalizedName() {
