@@ -55,6 +55,7 @@ public class MaterialSystem {
     public void setup(ASMDataTable dataTable) {
         MaterialCompatLoader materialCompatLoader = new MaterialCompatLoader();
         materialCompatLoader.loadCompat(dataTable);
+        setupItem();
         nameMapping.putAll(SaveLoader.getSavedObject("material_part_ids_" + mod.getID(), MaterialPartSave.class).getMaterialMappings());
         nameMapping.values().forEach(id -> {
             if (id > nextId) {
@@ -78,12 +79,16 @@ public class MaterialSystem {
     }
 
     public void setupItem(MaterialPart materialPart) {
+        setupItem();
+        itemMaterialPart.addMaterialPart(materialPartBiMap.inverse().get(materialPart), materialPart);
+    }
+
+    public void setupItem() {
         if (itemMaterialPart == null) {
             itemMaterialPart = new ItemMaterialPart(this);
             itemMaterialPart.setCreativeTab(materialCreativeTab);
             mod.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(itemMaterialPart);
         }
-        itemMaterialPart.addMaterialPart(materialPartBiMap.inverse().get(materialPart), materialPart);
     }
 
     public void finishUp() {
