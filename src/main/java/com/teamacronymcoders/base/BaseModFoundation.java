@@ -79,7 +79,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
             SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
         }
-        if (materialSystem == null) {
+        if (materialSystem != null) {
             this.materialSystem.setup(event.getAsmData());
         }
         if (this.addOBJDomain()) {
