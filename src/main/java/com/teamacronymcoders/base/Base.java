@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.proxies.ModCommonProxy;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import com.teamacronymcoders.base.util.OreDictUtils;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -19,6 +20,10 @@ import static com.teamacronymcoders.base.Reference.*;
         dependencies = DEPENDENCIES)
 public class Base extends BaseModFoundation<Base> {
     public static final LanguageHelper languageHelper = new LanguageHelper(MODID);
+
+    static {
+        FluidRegistry.enableUniversalBucket();
+    }
 
     @Instance(MODID)
     public static Base instance;

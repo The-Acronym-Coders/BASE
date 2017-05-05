@@ -4,7 +4,9 @@ import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PartBuilder {
     private String name;
@@ -14,7 +16,8 @@ public class PartBuilder {
 
     public PartBuilder(MaterialSystem materialSystem) {
         materialSystem.partsNotBuilt.add(this);
-        data = Lists.newArrayList();
+        this.materialSystem = materialSystem;
+        this.data = Lists.newArrayList();
     }
 
     public PartBuilder setName(String name) {
@@ -29,6 +32,11 @@ public class PartBuilder {
 
     public PartBuilder setData(List<PartDataPiece> data) {
         this.data = data;
+        return this;
+    }
+
+    public PartBuilder setData(String... dataNames) {
+        this.setData(Arrays.stream(dataNames).map(PartDataPiece::new).collect(Collectors.toList()));
         return this;
     }
 

@@ -73,6 +73,13 @@ public class ProvidedParts {
         registerPart(new PartBuilder(materialSystem).setName("Ore").setPartType(ore).setData(oreDataPieces));
         registerPart(new PartBuilder(materialSystem).setName("Poor Ore").setPartType(ore).setData(oreDataPieces));
         registerPart(new PartBuilder(materialSystem).setName("Dense Ore").setPartType(ore).setData(oreDataPieces));
+
+        List<PartDataPiece> fluidDataPieces = Lists.newArrayList();
+        fluidDataPieces.add(new PartDataPiece("temperature"));
+        fluidDataPieces.add(new PartDataPiece("density"));
+        fluidDataPieces.add(new PartDataPiece("viscosity"));
+        fluidDataPieces.add(new PartDataPiece("vaporize"));
+        registerPart(new PartBuilder(materialSystem).setName("Fluid").setPartType(fluid).setData(fluidDataPieces));
     }
 
     private void registerPart(PartBuilder partBuilder) {
