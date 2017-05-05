@@ -1,11 +1,8 @@
 package com.teamacronymcoders.base.materialsystem.materials;
 
-import com.teamacronymcoders.base.materialsystem.MaterialException;
-import com.teamacronymcoders.base.materialsystem.MaterialSystem;
-import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.base.util.TextUtils;
 
 import java.awt.*;
-import java.util.List;
 
 public class Material {
     protected String name;
@@ -34,5 +31,9 @@ public class Material {
 
     public String getUnlocalizedName() {
         return unlocalizedName;
+    }
+
+    public String getOreDictSuffix() {
+        return TextUtils.removeSpecialCharacters(this.name);
     }
 }

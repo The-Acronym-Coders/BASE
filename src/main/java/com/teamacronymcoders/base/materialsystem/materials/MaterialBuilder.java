@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.materialsystem.materials;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.util.TextUtils;
 
 import java.awt.*;
 
@@ -19,7 +20,7 @@ public class MaterialBuilder {
 
     public MaterialBuilder setName(String name) {
         this.name = name;
-        return this;
+        return unlocalizedName == null ? this.setUnlocalizedName(TextUtils.toSnakeCase(name)) : this;
     }
 
     public MaterialBuilder setUnlocalizedName(String unlocalizedName) {

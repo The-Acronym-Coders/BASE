@@ -4,15 +4,17 @@ import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.blocks.BlockMaterialFluid;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockOrePart;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
+import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fluids.FluidRegistry;
 
 import java.util.List;
 
@@ -36,9 +38,18 @@ public class ProvidedParts {
         PartType block = new PartType("Block", materialPart ->
                 subBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
         PartType ore = new PartType("Ore", this::createOreSubBlocks);
+        PartType fluid = new PartType("Fluid", materialPart -> {
+            BlockMaterialFluid materialFluid = new BlockMaterialFluid(materialPart);
+            FluidRegistry.registerFluid(materialFluid.getFluid());
+            FluidRegistry.addBucketForFluid(materialFluid.getFluid());
+            materialSystem.getMaterialFluidMap().put(materialPart.getMaterial(), materialFluid.getFluid());
+            mod.getRegistryHolder().getRegistry(BlockRegistry.class, "BLOCK").register(materialFluid);
+        });
+
         materialSystem.registerPartType(item);
         materialSystem.registerPartType(block);
         materialSystem.registerPartType(ore);
+        materialSystem.registerPartType(fluid);
 
         registerPart(new PartBuilder(materialSystem).setName("Ingot").setPartType(item));
         registerPart(new PartBuilder(materialSystem).setName("Beam").setPartType(item));
@@ -47,7 +58,6 @@ public class ProvidedParts {
         registerPart(new PartBuilder(materialSystem).setName("Dust").setPartType(item));
         registerPart(new PartBuilder(materialSystem).setName("Plate").setPartType(item));
         registerPart(new PartBuilder(materialSystem).setName("Nugget").setPartType(item));
-
 
         List<PartDataPiece> blockDataPieces = Lists.newArrayList();
         blockDataPieces.add(new PartDataPiece("hardness", false));
@@ -151,5 +161,9 @@ public class ProvidedParts {
             this.mod.getLogger().fatal("Couldn't find block for variant string: " + blockString);
         }
         return variant;
+    }
+
+    private void createFluid(MaterialPart materialPart) {
+
     }
 }

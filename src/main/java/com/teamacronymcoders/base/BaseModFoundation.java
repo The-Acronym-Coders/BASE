@@ -64,6 +64,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     public void preInit(FMLPreInitializationEvent event) {
         BaseMods.addBaseMod(this);
+
         this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
                 "com.teamacronymcoders.base.proxies.LibServerProxy");
         this.getLibProxy().setMod(this);
@@ -78,7 +79,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
             SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
         }
-
+        if (materialSystem == null) {
+            this.materialSystem.setup(event.getAsmData());
+        }
         if (this.addOBJDomain()) {
             this.getLibProxy().addOBJDomain();
         }
@@ -110,6 +113,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     }
 
     public void init(FMLInitializationEvent event) {
+        if (this.getMaterialSystem() != null) {
+            this.getMaterialSystem().finishUp();
+        }
         this.getModuleHandler().init(event);
         this.getAllRegistries().forEach((name, registry) -> registry.init());
     }

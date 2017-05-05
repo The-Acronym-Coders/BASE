@@ -27,8 +27,8 @@ public class SubBlockOrePart extends SubBlockPart {
         super(materialPart);
         MaterialPartData data = materialPart.getData();
         this.mod = materialSystem.getMod();
-        if (data.getDataPiece("dropType") instanceof String) {
-            oreDictDrop = ((String) data.getDataPiece("dropType"));
+        if (data.containsDataPiece("dropType")) {
+            oreDictDrop = data.getDataPiece("dropType");
         }
 
         List<ResourceLocation> layers = Lists.newArrayList();

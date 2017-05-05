@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
+import com.teamacronymcoders.base.materialsystem.compat.MaterialCompatLoader;
 import com.teamacronymcoders.base.materialsystem.items.ItemMaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartSave;
@@ -19,6 +20,8 @@ import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import com.teamacronymcoders.base.registry.ItemRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +37,7 @@ public class MaterialSystem {
     private Map<String, PartType> partTypeMap = new HashMap<>();
     private BiMap<Integer, MaterialPart> materialPartBiMap = HashBiMap.create();
     private Map<String, Integer> nameMapping = Maps.newHashMap();
+    private Map<Material, Fluid> materialFluidMap = Maps.newHashMap();
 
     private int nextId = 0;
 
@@ -48,7 +52,9 @@ public class MaterialSystem {
         this.mod = mod;
     }
 
-    public void setup() {
+    public void setup(ASMDataTable dataTable) {
+        MaterialCompatLoader materialCompatLoader = new MaterialCompatLoader();
+        materialCompatLoader.loadCompat(dataTable);
         nameMapping.putAll(SaveLoader.getSavedObject("material_part_ids_" + mod.getID(), MaterialPartSave.class).getMaterialMappings());
         nameMapping.values().forEach(id -> {
             if (id > nextId) {
@@ -64,6 +70,7 @@ public class MaterialSystem {
         if (mod.getSubBlockSystem() != null) {
             ProvidedParts providedParts = new ProvidedParts(this.mod, this, this.mod.getSubBlockSystem());
             providedParts.initPartsAndTypes();
+            materialCompatLoader.doCompat(this);
         } else {
             mod.getLogger().fatal("Failed to find subBlockSystem");
         }
@@ -121,6 +128,7 @@ public class MaterialSystem {
         return materialPartBiMap;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public List<MaterialPart> registerPartsForMaterial(Material material, String... partNames) throws MaterialException {
         List<MaterialPart> materialParts = Lists.newArrayList();
         for (String partName : partNames) {
@@ -140,6 +148,10 @@ public class MaterialSystem {
             }
         }
         return materialParts;
+    }
+
+    public Map<Material, Fluid> getMaterialFluidMap() {
+        return materialFluidMap;
     }
 
     public IBaseMod getMod() {
