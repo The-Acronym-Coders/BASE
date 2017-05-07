@@ -55,7 +55,7 @@ public class MaterialSystem {
     public void setup(ASMDataTable dataTable) {
         MaterialCompatLoader materialCompatLoader = new MaterialCompatLoader();
         materialCompatLoader.loadCompat(dataTable);
-        setupItem();
+
         nameMapping.putAll(SaveLoader.getSavedObject("material_part_ids_" + mod.getID(), MaterialPartSave.class).getMaterialMappings());
         nameMapping.values().forEach(id -> {
             if (id > nextId) {
@@ -63,6 +63,7 @@ public class MaterialSystem {
             }
         });
         materialCreativeTab = new CreativeTabCarousel("materials." + mod.getID());
+        setupItem();
         try {
             MISSING_MATERIAL_PART = new MissingMaterialPart(this);
         } catch (MaterialException e) {

@@ -67,7 +67,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemMeshDefinition
     }
 
     public Map<Integer, MaterialPart> getItemMaterialParts() {
-        if (itemMaterialParts != null) {
+        if (itemMaterialParts == null) {
             itemMaterialParts = new HashMap<>();
         }
         return itemMaterialParts;

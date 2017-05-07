@@ -169,8 +169,4 @@ public class ProvidedParts {
         }
         return variant;
     }
-
-    private void createFluid(MaterialPart materialPart) {
-
-    }
 }

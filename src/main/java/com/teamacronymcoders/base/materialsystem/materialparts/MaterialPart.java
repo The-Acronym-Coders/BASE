@@ -27,10 +27,11 @@ public class MaterialPart {
     public MaterialPart(MaterialSystem materialSystem, Material material, Part part, String variant) {
         this.setMaterial(material);
         this.setPart(part);
+        this.materialSystem = materialSystem;
         this.setTextureLocation(new ResourceLocation(Reference.MODID, part.getUnlocalizedName()));
         this.colorize = true;
         this.data = new MaterialPartData(part.getData());
-        this.materialSystem = materialSystem;
+
         this.variant = variant;
     }
 
