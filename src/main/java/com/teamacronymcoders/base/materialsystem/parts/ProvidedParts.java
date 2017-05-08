@@ -1,7 +1,9 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
 import com.google.common.collect.Lists;
+import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.client.models.wrapped.WrappedBlockEntry;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.blocks.BlockMaterialFluid;
@@ -92,8 +94,8 @@ public class ProvidedParts {
 
     private void createOreSubBlocks(MaterialPart materialPart) {
         MaterialPartData data = materialPart.getData();
-        if (data.containsDataPiece("variant")) {
-            String[] variantNames = data.getDataPiece("variant").split(",");
+        if (data.containsDataPiece("variants")) {
+            String[] variantNames = data.getDataPiece("variants").split(",");
             int[] hardness = getArrayForField(data, "hardness");
             int[] resistance = getArrayForField(data, "resistance");
             int[] harvestLevel = getArrayForField(data, "harvestLevel");
@@ -122,6 +124,10 @@ public class ProvidedParts {
                 if (drops != null &&  drops.length > i) {
                     data.addDataValue("drops", drops[i]);
                 }
+                List<ResourceLocation> layers = Lists.newArrayList();
+                layers.add(new ResourceLocation(Base.instance.getID(), materialPart.getUnlocalizedName()));
+                WrappedBlockEntry entry = new WrappedBlockEntry(blockState, layers);
+                this.mod.getModelLoader().registerWrappedModel(variantMaterialPart.getTextureLocation(), entry);
                 subBlockSystem.registerSubBlock(new SubBlockOrePart(variantMaterialPart, blockState, this.materialSystem));
             }
         } else {
