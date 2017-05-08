@@ -13,7 +13,7 @@ public class Part {
 
     Part(String name, PartType partType, List<PartDataPiece> data) {
         this.name = name;
-        this.unlocalizedName = "base.part." + TextUtils.toSnakeCase(name);
+        this.unlocalizedName = TextUtils.toSnakeCase(name);
         this.partType = partType;
         this.data = data;
     }
