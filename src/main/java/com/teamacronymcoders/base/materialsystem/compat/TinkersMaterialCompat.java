@@ -18,7 +18,7 @@ public class TinkersMaterialCompat implements IMaterialCompat {
         this.materialSystem = materialSystem;
         PartType partType = new PartType("Tinkers", this::createTinkers);
         materialSystem.registerPartType(partType);
-        Part tinkers = new PartBuilder(materialSystem).setName("Tinkers").build();
+        Part tinkers = new PartBuilder(materialSystem).setName("Tinkers").setPartType(partType).build();
         materialSystem.registerPart(tinkers);
     }
 
