@@ -32,8 +32,12 @@ repositories {
         url 'http://maven.epoxide.xyz'
     }
     maven {
-        name 'Botania/Baubles'
+        name 'Baubles'
         url 'https://jitpack.io'
+    }
+    maven {
+        name 'The One Probe'
+        url 'http://maven.tterrag.com/'
     }
 }
 
@@ -60,7 +64,8 @@ dependencies {
     deobfCompile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}"
     deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
     deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
-    deobfCompile "com.github.Azanor:Baubles:1.10.2-SNAPSHOT"
+    deobfCompile "com.github.Azanor:Baubles:${minecraft_version}-SNAPSHOT"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.1x-${top_version}"
 }
 
 def commonManifest = {
