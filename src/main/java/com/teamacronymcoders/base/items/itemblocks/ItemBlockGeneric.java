@@ -33,6 +33,11 @@ public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHas
     }
 
     @Override
+    public int getMetadata(int damage) {
+        return Math.min(15, Math.max(0, damage));
+    }
+
+    @Override
     public Item getItem() {
         return this;
     }

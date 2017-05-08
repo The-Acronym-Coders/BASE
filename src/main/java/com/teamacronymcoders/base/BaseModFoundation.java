@@ -1,8 +1,8 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.client.models.SafeModelLoader;
-import com.teamacronymcoders.base.featuresystem.FeatureHandler;
 import com.teamacronymcoders.base.guisystem.GuiHandler;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -38,21 +39,32 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     protected SafeModelLoader modelLoader;
     protected ModuleHandler moduleHandler;
     protected LibCommonProxy libProxy;
+    protected MaterialSystem materialSystem;
+    protected SubBlockSystem subBlockSystem;
     private String modid;
     private String modName;
     private String version;
 
     public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab) {
+        this(modid, name, version, creativeTab, false);
+    }
+
+    public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab, boolean optionalSystems) {
         this.modid = modid;
         this.modName = name;
         this.version = version;
         this.creativeTab = creativeTab;
         this.logger = new ModLogger(modid);
         this.packetHandler = new PacketHandler(modid);
+        if (optionalSystems) {
+            materialSystem = new MaterialSystem(this);
+            subBlockSystem = new SubBlockSystem(this);
+        }
     }
 
     public void preInit(FMLPreInitializationEvent event) {
         BaseMods.addBaseMod(this);
+
         this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
                 "com.teamacronymcoders.base.proxies.LibServerProxy");
         this.getLibProxy().setMod(this);
@@ -60,6 +72,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.createRegistries(event, this.getRegistryPieces(event.getAsmData()));
 
+        if (materialSystem != null) {
+            this.materialSystem.setup(event.getAsmData());
+        }
         if (this.addOBJDomain()) {
             this.getLibProxy().addOBJDomain();
         }
@@ -74,8 +89,12 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.afterModuleHandlerInit(event);
 
-        if (FeatureHandler.didModRequestFeature("SUB_BLOCKS", this.getID())) {
-            SubBlockSystem.createBlocks(this);
+        if (this.getMaterialSystem() != null) {
+            this.getMaterialSystem().finishUp();
+        }
+
+        if (this.getSubBlockSystem() != null) {
+            this.getSubBlockSystem().createBlocks();
         }
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
@@ -178,6 +197,23 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Override
     public ModuleHandler getModuleHandler() {
         return this.moduleHandler;
+    }
+
+    @Override
+    public boolean addOBJDomain() {
+        return false;
+    }
+
+    @Nullable
+    @Override
+    public MaterialSystem getMaterialSystem() {
+        return this.materialSystem;
+    }
+
+    @Nullable
+    @Override
+    public SubBlockSystem getSubBlockSystem() {
+        return this.subBlockSystem;
     }
 
     public boolean useModAsConfigFolder() {

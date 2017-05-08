@@ -17,6 +17,6 @@ public class MaterialPartSave {
 
     public void setMaterialMappings(Map<Integer, MaterialPart> materialMappings) {
         this.materialMappings = HashBiMap.create();
-        materialMappings.forEach((id, materialPart) -> this.materialMappings.put(materialPart.getName(), id));
+        materialMappings.forEach((id, materialPart) -> this.materialMappings.put(materialPart.getUnlocalizedName(), id));
     }
 }
