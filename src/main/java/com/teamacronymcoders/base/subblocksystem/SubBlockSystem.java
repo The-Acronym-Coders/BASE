@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.subblocksystem;
 
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.registry.BlockRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
@@ -17,7 +18,7 @@ import java.util.Map.Entry;
 public class SubBlockSystem {
     private IBaseMod mod;
 
-    private Map<String, Map<String, ISubBlock>> subBlocks = new HashMap<>();
+    private Map<String, ISubBlock> subBlocks = Maps.newHashMap();
     public static final ISubBlock MISSING_SUB_BLOCK = new MissingSubBlock();
 
     public SubBlockSystem(IBaseMod mod) {
@@ -25,13 +26,10 @@ public class SubBlockSystem {
     }
 
     public void registerSubBlock(ISubBlock iSubBlock) {
-        subBlocks.computeIfAbsent(mod.getID(), value -> new HashMap<>());
-        subBlocks.get(mod.getID()).put(iSubBlock.getName(), iSubBlock);
+        subBlocks.put(iSubBlock.getName(), iSubBlock);
     }
 
     public void createBlocks() {
-        Map<String, ISubBlock> subBlocksToUse = new HashMap<>();
-        subBlocksToUse.putAll(subBlocks.get(mod.getID()));
         SubBlockInfo subBlockInfo = SaveLoader.getSavedObject("saved_sub_blocks_" + mod.getID(), SubBlockInfo.class);
         Map<Integer, Map<Integer, String>> listOfBlockNames = subBlockInfo.getSavedSubBlockNames();
         Map<Integer, Map<Integer, ISubBlock>> listOfSubBlocks = new HashMap<>();
@@ -39,7 +37,7 @@ public class SubBlockSystem {
             for (Entry<Integer, Map<Integer, String>> blockNames : listOfBlockNames.entrySet()) {
                 Map<Integer, ISubBlock> subBlocksForBlock = new HashMap<>();
                 for (Entry<Integer, String> subBlockName : blockNames.getValue().entrySet()) {
-                    ISubBlock subBlock = subBlocksToUse.remove(subBlockName.getValue());
+                    ISubBlock subBlock = subBlocks.remove(subBlockName.getValue());
                     if (subBlock == null) {
                         mod.getLogger().error("Could not find sub-block: " + subBlockName.getValue());
                     }
@@ -50,7 +48,7 @@ public class SubBlockSystem {
         }
         int blockToCheck = 0;
         int blockMetaToCheck = 0;
-        List<ISubBlock> remainingSubBlocks = new ArrayList<>(subBlocksToUse.values());
+        List<ISubBlock> remainingSubBlocks = new ArrayList<>(subBlocks.values());
         while (remainingSubBlocks.size() > 0) {
             listOfSubBlocks.computeIfAbsent(blockToCheck, value -> new HashMap<>());
             listOfSubBlocks.get(blockToCheck).computeIfAbsent(blockMetaToCheck, value -> remainingSubBlocks.remove(0));
