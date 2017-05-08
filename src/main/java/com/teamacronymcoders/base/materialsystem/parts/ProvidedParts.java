@@ -41,10 +41,8 @@ public class ProvidedParts {
                 subBlockSystem.registerSubBlock(new SubBlockPart(materialPart, materialSystem.materialCreativeTab)));
         PartType ore = new PartType("Ore", this::createOreSubBlocks);
         PartType fluid = new PartType("Fluid", materialPart -> {
-            BlockMaterialFluid materialFluid = new BlockMaterialFluid(materialPart);
-            if (!FluidRegistry.isFluidRegistered(materialFluid.getFluid())) {
-                FluidRegistry.registerFluid(materialFluid.getFluid());
-                FluidRegistry.addBucketForFluid(materialFluid.getFluid());
+            if (!FluidRegistry.isFluidRegistered(materialPart.getMaterial().getUnlocalizedName())) {
+                BlockMaterialFluid materialFluid = new BlockMaterialFluid(materialPart);
                 mod.getRegistryHolder().getRegistry(BlockRegistry.class, "BLOCK").register(materialFluid);
             }
         });

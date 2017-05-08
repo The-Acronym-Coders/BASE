@@ -109,9 +109,4 @@ public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasBloc
     public void setPartType(EnumPartType partType) {
         this.partType = partType;
     }
-
-    @Override
-    public Block getBlock() {
-        return this;
-    }
 }
