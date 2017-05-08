@@ -39,6 +39,10 @@ repositories {
         name 'The One Probe'
         url 'http://maven.tterrag.com/'
     }
+    maven {
+        name 'CompatLayer'
+        url 'http://maven.k-4u.nl'
+    }
 }
 
 
@@ -66,6 +70,7 @@ dependencies {
     deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
     deobfCompile "com.github.Azanor:Baubles:${minecraft_version}-SNAPSHOT"
     deobfCompile "mcjty.theoneprobe:TheOneProbe:1.1x-${top_version}"
+    deobfCompile "com.github.mcjty:compatlayer:${compat_version}"
 }
 
 def commonManifest = {
