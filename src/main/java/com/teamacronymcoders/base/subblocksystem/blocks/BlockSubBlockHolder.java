@@ -77,7 +77,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
 
     @Override
     @Nonnull
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
+    public List<ItemStack> getDrops(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull IBlockState state, int fortune) {
         List<ItemStack> itemStacks = Lists.newArrayList();
         this.getSubBlock(state).getDrops(state, fortune, itemStacks);
         return itemStacks;
@@ -123,6 +123,11 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     @Override
     public int colorMultiplier(IBlockState state, @Nullable IBlockAccess world, @Nullable BlockPos pos, int tintIndex) {
         return this.getSubBlock(state.getValue(SUB_BLOCK_NUMBER)).getColor();
+    }
+
+    @Override
+    public int damageDropped(@Nonnull IBlockState state) {
+        return state.getValue(SUB_BLOCK_NUMBER);
     }
 
     public Map<Integer, ISubBlock> getSubBlocks() {

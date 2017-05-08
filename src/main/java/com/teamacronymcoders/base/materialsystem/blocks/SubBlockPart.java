@@ -38,6 +38,12 @@ public class SubBlockPart extends SubBlockBase {
         return currentLevel;
     }
 
+    @Override
+    public String getLocalizedName() {
+        return this.materialPart.getLocalizedName();
+    }
+
+    @Override
     public String getUnLocalizedName() {
         return this.materialPart.getUnlocalizedName();
     }
