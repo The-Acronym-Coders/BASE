@@ -145,7 +145,7 @@ public class MaterialSystem {
             Part part = partMap.get(partName.toLowerCase(Locale.US));
             if (part != null) {
                 MaterialPart materialPart = new MaterialPart(this, material, part);
-                int id = nextId;
+                int id = nextId++;
                 if (nameMapping.containsKey(materialPart.getUnlocalizedName())) {
                     id = nameMapping.get(materialPart.getUnlocalizedName());
                 }
