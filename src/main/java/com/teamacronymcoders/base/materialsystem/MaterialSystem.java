@@ -20,6 +20,7 @@ import com.teamacronymcoders.base.materialsystem.parts.PartType;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import com.teamacronymcoders.base.registry.ItemRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
+import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
@@ -103,7 +104,7 @@ public class MaterialSystem {
     }
 
     public void registerPart(Part part) {
-        partMap.put(part.getName().toLowerCase(Locale.US), part);
+        partMap.put(TextUtils.toSnakeCase(part.getName()), part);
     }
 
     public void registerPartType(PartType partType) {
