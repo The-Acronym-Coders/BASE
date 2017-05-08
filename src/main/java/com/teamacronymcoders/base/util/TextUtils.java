@@ -8,7 +8,7 @@ public class TextUtils {
     }
 
     public static String removeSpecialCharacters(String input) {
-        return input.replace(" ", "").replace("'", "");
+        return input.replace(" ", "").replace("'", "").replace(":", "_");
     }
 
     public static String toSnakeCase(String input) {
@@ -20,7 +20,7 @@ public class TextUtils {
             if (Character.isUpperCase(currentChar)) {
                 output.append("_");
             }
-            output.append(currentChar);
+            output.append(Character.toLowerCase(currentChar));
         }
 
         return output.toString();

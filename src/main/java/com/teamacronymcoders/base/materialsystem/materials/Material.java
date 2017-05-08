@@ -10,9 +10,9 @@ public class Material {
     protected Color color;
     protected boolean hasEffect;
 
-    Material(String name, String unlocalizedName, Color color, boolean hasEffect) {
+    Material(String name, Color color, boolean hasEffect) {
         this.name = name;
-        this.unlocalizedName = unlocalizedName;
+        this.unlocalizedName = TextUtils.toSnakeCase(name);
         this.color = color;
         this.hasEffect = hasEffect;
     }

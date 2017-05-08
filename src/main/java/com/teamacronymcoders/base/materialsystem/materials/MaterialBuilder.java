@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class MaterialBuilder {
     private String name;
-    private String unlocalizedName;
     private Color color;
     private boolean hasEffect;
     private MaterialSystem materialSystem;
@@ -20,11 +19,6 @@ public class MaterialBuilder {
 
     public MaterialBuilder setName(String name) {
         this.name = name;
-        return unlocalizedName == null ? this.setUnlocalizedName(TextUtils.toSnakeCase(name)) : this;
-    }
-
-    public MaterialBuilder setUnlocalizedName(String unlocalizedName) {
-        this.unlocalizedName = unlocalizedName;
         return this;
     }
 
@@ -40,7 +34,7 @@ public class MaterialBuilder {
 
     public Material build() throws MaterialException {
         validate();
-        Material material = new Material(this.name, this.unlocalizedName, this.color, this.hasEffect);
+        Material material = new Material(this.name, this.color, this.hasEffect);
         materialSystem.registerMaterial(material);
         materialSystem.materialsNotBuilt.remove(this);
         return material;

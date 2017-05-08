@@ -1,5 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
+import com.teamacronymcoders.base.util.TextUtils;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -11,7 +13,7 @@ public class Part {
 
     Part(String name, PartType partType, List<PartDataPiece> data) {
         this.name = name;
-        this.unlocalizedName = name.substring(0, 1).toLowerCase(Locale.ROOT) + name.substring(1);
+        this.unlocalizedName = TextUtils.toSnakeCase(name);
         this.partType = partType;
         this.data = data;
     }
