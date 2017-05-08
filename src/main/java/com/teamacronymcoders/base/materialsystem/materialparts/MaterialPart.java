@@ -15,7 +15,7 @@ public class MaterialPart {
     private Material material;
     private Part part;
     private ResourceLocation textureLocation;
-    private boolean colorize;
+    private boolean colorized;
     private MaterialPartData data;
     private ItemStack itemStack;
     private MaterialSystem materialSystem;
@@ -29,7 +29,7 @@ public class MaterialPart {
         this.setPart(part);
         this.materialSystem = materialSystem;
         this.setTextureLocation(new ResourceLocation(Reference.MODID, part.getUnlocalizedName()));
-        this.colorize = true;
+        this.colorized = true;
         this.data = new MaterialPartData(part.getData());
 
         this.variant = variant;
@@ -82,15 +82,15 @@ public class MaterialPart {
     }
 
     public int getColor() {
-        return this.colorize ? this.getMaterial().getColor().getRGB() : -1;
+        return this.colorized ? this.getMaterial().getColor().getRGB() : -1;
     }
 
-    public boolean isColorize() {
-        return colorize;
+    public boolean isColorized() {
+        return colorized;
     }
 
-    public void setColorize(boolean colorize) {
-        this.colorize = colorize;
+    public void setColorized(boolean colorized) {
+        this.colorized = colorized;
     }
 
     public boolean matchesPartType(PartType partType) {
@@ -107,5 +107,9 @@ public class MaterialPart {
 
     public void setData(MaterialPartData data) {
         this.data = data;
+    }
+
+    public void setup() {
+        this.getPart().getPartType().setup(this);
     }
 }

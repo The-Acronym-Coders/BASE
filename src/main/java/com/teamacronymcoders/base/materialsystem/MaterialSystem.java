@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MaterialSystem {
@@ -93,13 +94,16 @@ public class MaterialSystem {
     }
 
     public void finishUp() {
+        for (MaterialPart materialPart : materialPartBiMap.values()) {
+            materialPart.setup();
+        }
         MaterialPartSave save = new MaterialPartSave();
         save.setMaterialMappings(materialPartBiMap);
         SaveLoader.saveObject("material_parts_" + mod.getID(), save);
     }
 
     public void registerPart(Part part) {
-        partMap.put(part.getName(), part);
+        partMap.put(part.getName().toLowerCase(Locale.US), part);
     }
 
     public void registerPartType(PartType partType) {
@@ -138,7 +142,7 @@ public class MaterialSystem {
     public List<MaterialPart> registerPartsForMaterial(Material material, String... partNames) throws MaterialException {
         List<MaterialPart> materialParts = Lists.newArrayList();
         for (String partName : partNames) {
-            Part part = partMap.get(partName);
+            Part part = partMap.get(partName.toLowerCase(Locale.US));
             if (part != null) {
                 MaterialPart materialPart = new MaterialPart(this, material, part);
                 int id = nextId;
@@ -147,7 +151,6 @@ public class MaterialSystem {
                 }
                 materialPartBiMap.put(id, materialPart);
                 materialCreativeTab.addIconStacks(Lists.newArrayList(materialPart.getItemStack()));
-                part.getPartType().setup(materialPart);
                 materialParts.add(materialPart);
             } else {
                 throw new MaterialException("Could not find part with name: " + partName);

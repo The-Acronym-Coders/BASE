@@ -22,7 +22,7 @@ public class MaterialPartData {
         return this.data.containsKey(name.toLowerCase(Locale.US));
     }
 
-    public void addDataPiece(String name, String value) {
+    public void addDataValue(String name, String value) {
         data.put(name.toLowerCase(Locale.US), value);
     }
 

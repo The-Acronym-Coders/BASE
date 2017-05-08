@@ -64,7 +64,7 @@ public class ProvidedParts {
         blockDataPieces.add(new PartDataPiece("resistance", false));
         blockDataPieces.add(new PartDataPiece("harvestLevel", false));
         blockDataPieces.add(new PartDataPiece("harvestTool", false));
-        registerPart(new PartBuilder(materialSystem).setName("Storage").setPartType(block).setData(blockDataPieces));
+        registerPart(new PartBuilder(materialSystem).setName("Block").setPartType(block).setData(blockDataPieces));
 
         List<PartDataPiece> oreDataPieces = Lists.newArrayList();
         oreDataPieces.addAll(blockDataPieces);
@@ -84,7 +84,7 @@ public class ProvidedParts {
 
     private void registerPart(PartBuilder partBuilder) {
         try {
-            partBuilder.createPart();
+            partBuilder.build();
         } catch (MaterialException e) {
             mod.getLogger().getLogger().error(e);
         }
@@ -117,10 +117,10 @@ public class ProvidedParts {
                 trySetData(resistance, i, "resistance", variantData);
                 trySetData(harvestLevel, i, "harvestTool", variantData);
                 if (harvestTool != null && harvestTool.length > i) {
-                    data.addDataPiece("harvestTool", harvestTool[i]);
+                    data.addDataValue("harvestTool", harvestTool[i]);
                 }
                 if (drops != null &&  drops.length > i) {
-                    data.addDataPiece("drops", drops[i]);
+                    data.addDataValue("drops", drops[i]);
                 }
                 subBlockSystem.registerSubBlock(new SubBlockOrePart(variantMaterialPart, blockState, this.materialSystem));
             }
@@ -131,7 +131,7 @@ public class ProvidedParts {
 
     private void trySetData(int[] numbers, int place, String fieldName, MaterialPartData data) {
         if (numbers != null && numbers.length > place) {
-            data.addDataPiece(fieldName, Integer.toString(numbers[place]));
+            data.addDataValue(fieldName, Integer.toString(numbers[place]));
         }
     }
 
