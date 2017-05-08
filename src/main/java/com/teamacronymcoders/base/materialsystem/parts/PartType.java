@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.base.materialsystem.materials.Material;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

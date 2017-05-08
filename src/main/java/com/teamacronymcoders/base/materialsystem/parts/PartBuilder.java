@@ -36,16 +36,10 @@ public class PartBuilder {
     }
 
     public PartBuilder setData(String... dataNames) {
-        this.setData(Arrays.stream(dataNames).map(PartDataPiece::new).collect(Collectors.toList()));
-        return this;
+        return this.setData(Arrays.stream(dataNames).map(PartDataPiece::new).collect(Collectors.toList()));
     }
 
-    public PartBuilder addData(PartDataPiece dataName) {
-        this.data.add(dataName);
-        return this;
-    }
-
-    public Part createPart() throws MaterialException {
+    public Part build() throws MaterialException {
         validate();
         Part part =  new Part(name, partType, data);
         this.materialSystem.registerPart(part);

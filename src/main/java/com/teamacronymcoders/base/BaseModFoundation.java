@@ -96,6 +96,10 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.afterModuleHandlerInit(event);
 
+        if (this.getMaterialSystem() != null) {
+            this.getMaterialSystem().finishUp();
+        }
+
         if (this.getSubBlockSystem() != null) {
             this.getSubBlockSystem().createBlocks();
         }
@@ -113,9 +117,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     }
 
     public void init(FMLInitializationEvent event) {
-        if (this.getMaterialSystem() != null) {
-            this.getMaterialSystem().finishUp();
-        }
         this.getModuleHandler().init(event);
         this.getAllRegistries().forEach((name, registry) -> registry.init());
     }
@@ -203,13 +204,13 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Nullable
     @Override
     public MaterialSystem getMaterialSystem() {
-        return null;
+        return this.materialSystem;
     }
 
     @Nullable
     @Override
     public SubBlockSystem getSubBlockSystem() {
-        return null;
+        return this.subBlockSystem;
     }
 
     public boolean useModAsConfigFolder() {

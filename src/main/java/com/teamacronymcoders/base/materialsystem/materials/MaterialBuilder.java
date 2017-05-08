@@ -38,7 +38,7 @@ public class MaterialBuilder {
         return this;
     }
 
-    public Material createMaterial() throws MaterialException {
+    public Material build() throws MaterialException {
         validate();
         Material material = new Material(this.name, this.unlocalizedName, this.color, this.hasEffect);
         materialSystem.registerMaterial(material);
