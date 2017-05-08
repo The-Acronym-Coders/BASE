@@ -49,4 +49,9 @@ public class SubBlockOrePart extends SubBlockPart {
             mod.getLogger().fatal("Couldn't drop null ItemStack for " + getMaterialPart().getLocalizedName());
         }
     }
+
+    @Override
+    public ResourceLocation getTextureLocation() {
+        return new ResourceLocation(this.mod.getID(), this.getUnLocalizedName());
+    }
 }

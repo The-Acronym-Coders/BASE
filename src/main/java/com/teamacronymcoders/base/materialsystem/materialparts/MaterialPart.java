@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
@@ -32,7 +33,10 @@ public class MaterialPart {
         this.colorized = true;
         this.data = new MaterialPartData(part.getData());
 
-        this.variant = variant;
+        if (variant != null) {
+            this.variant = TextUtils.toSnakeCase(variant);
+        }
+
     }
 
     public String getUnlocalizedName() {

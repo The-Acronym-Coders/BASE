@@ -124,10 +124,6 @@ public class ProvidedParts {
                 if (drops != null &&  drops.length > i) {
                     data.addDataValue("drops", drops[i]);
                 }
-                List<ResourceLocation> layers = Lists.newArrayList();
-                layers.add(new ResourceLocation(Base.instance.getID(), materialPart.getUnlocalizedName()));
-                WrappedBlockEntry entry = new WrappedBlockEntry(blockState, layers);
-                this.mod.getModelLoader().registerWrappedModel(variantMaterialPart.getTextureLocation(), entry);
                 subBlockSystem.registerSubBlock(new SubBlockOrePart(variantMaterialPart, blockState, this.materialSystem));
             }
         } else {
