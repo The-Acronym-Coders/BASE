@@ -3,21 +3,24 @@ package com.teamacronymcoders.base.materialsystem.blocks;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockBase;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 
 public class SubBlockPart extends SubBlockBase {
     private MaterialPart materialPart;
+    private CreativeTabs creativeTabs;
 
     private int hardness = 5;
     private int resistance = 30;
     private int harvestLevel = 1;
     private String harvestTool = "pickaxe";
 
-    public SubBlockPart(MaterialPart materialPart) {
+    public SubBlockPart(MaterialPart materialPart, CreativeTabs creativeTab) {
         super(materialPart.getUnlocalizedName());
         this.materialPart = materialPart;
         MaterialPartData data = this.materialPart.getData();
@@ -28,6 +31,7 @@ public class SubBlockPart extends SubBlockBase {
         if (data.containsDataPiece("harvestTool")) {
             harvestTool = data.getDataPiece("harvestTool");
         }
+        this.creativeTabs = creativeTab;
     }
 
     private int setField(MaterialPartData data, String fieldName, int currentLevel) {
@@ -77,6 +81,12 @@ public class SubBlockPart extends SubBlockBase {
     @Override
     public void setOreDict(Map<ItemStack, String> oreDict) {
         materialPart.setOreDict(oreDict);
+    }
+
+    @Nullable
+    @Override
+    public CreativeTabs getCreativeTab() {
+        return creativeTabs;
     }
 
     @Override

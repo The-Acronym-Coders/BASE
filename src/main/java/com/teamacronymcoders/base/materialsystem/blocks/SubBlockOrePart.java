@@ -24,7 +24,7 @@ public class SubBlockOrePart extends SubBlockPart {
     private IBaseMod mod;
 
     public SubBlockOrePart(MaterialPart materialPart, IBlockState variant, MaterialSystem materialSystem) {
-        super(materialPart);
+        super(materialPart, materialSystem.materialCreativeTab);
         MaterialPartData data = materialPart.getData();
         this.mod = materialSystem.getMod();
         if (data.containsDataPiece("dropType")) {

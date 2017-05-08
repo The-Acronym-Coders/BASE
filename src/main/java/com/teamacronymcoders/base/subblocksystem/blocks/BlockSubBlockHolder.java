@@ -13,7 +13,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.BlockRenderLayer;
@@ -25,6 +27,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,14 +56,23 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
+    public void getSubBlocks(@Nonnull Item block, @Nonnull CreativeTabs creativeTab, @Nonnull List<ItemStack> list) {
+        for (Map.Entry<Integer, ISubBlock> subBlock : this.getSubBlocks().entrySet()) {
+            if (subBlock.getValue().getCreativeTab() == creativeTab) {
+                list.add(new ItemStack(block, 1, subBlock.getKey()));
+            }
+        }
+    }
+
+    @Override
     @SuppressWarnings("deprecation")
-    public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
+    public float getBlockHardness(@Nonnull IBlockState blockState, @Nonnull World worldIn, @Nonnull BlockPos pos) {
         return this.getSubBlock(blockState.getValue(SUB_BLOCK_NUMBER)).getHardness();
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public float getExplosionResistance(World world, BlockPos pos, @Nonnull Entity exploder, Explosion explosion) {
+    public float getExplosionResistance(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull Entity exploder, @Nonnull Explosion explosion) {
         return this.getSubBlock(world.getBlockState(pos).getValue(SUB_BLOCK_NUMBER)).getResistance();
     }
 

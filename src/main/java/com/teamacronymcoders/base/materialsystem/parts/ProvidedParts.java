@@ -38,7 +38,7 @@ public class ProvidedParts {
     public void initPartsAndTypes() {
         PartType item = new PartType("Item", materialSystem::setupItem);
         PartType block = new PartType("Block", materialPart ->
-                subBlockSystem.registerSubBlock(new SubBlockPart(materialPart)));
+                subBlockSystem.registerSubBlock(new SubBlockPart(materialPart, materialSystem.materialCreativeTab)));
         PartType ore = new PartType("Ore", this::createOreSubBlocks);
         PartType fluid = new PartType("Fluid", materialPart -> {
             BlockMaterialFluid materialFluid = new BlockMaterialFluid(materialPart);
