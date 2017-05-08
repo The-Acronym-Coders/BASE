@@ -10,7 +10,7 @@ public class FluidMaterial extends Fluid {
     private boolean vaporize = false;
 
     public FluidMaterial(MaterialPart materialPart, ResourceLocation texture) {
-        super(materialPart.getUnlocalizedName(), texture, new ResourceLocation(texture.getResourceDomain(),
+        super(materialPart.getMaterial().getUnlocalizedName(), texture, new ResourceLocation(texture.getResourceDomain(),
                 texture.getResourcePath() + "_flowing"));
         this.materialPart = materialPart;
     }

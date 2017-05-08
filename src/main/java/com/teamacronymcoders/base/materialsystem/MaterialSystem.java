@@ -39,7 +39,6 @@ public class MaterialSystem {
     private Map<String, PartType> partTypeMap = new HashMap<>();
     private BiMap<Integer, MaterialPart> materialPartBiMap = HashBiMap.create();
     private Map<String, Integer> nameMapping = Maps.newHashMap();
-    private Map<Material, Fluid> materialFluidMap = Maps.newHashMap();
 
     private int nextId = 0;
 
@@ -158,10 +157,6 @@ public class MaterialSystem {
             }
         }
         return materialParts;
-    }
-
-    public Map<Material, Fluid> getMaterialFluidMap() {
-        return materialFluidMap;
     }
 
     public IBaseMod getMod() {
