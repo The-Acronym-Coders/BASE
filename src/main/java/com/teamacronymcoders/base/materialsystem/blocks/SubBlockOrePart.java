@@ -23,7 +23,7 @@ public class SubBlockOrePart extends SubBlockPart {
     private String oreDictDrop = "ore";
     private IBaseMod mod;
 
-    public SubBlockOrePart(MaterialPart materialPart, IBlockState variant, MaterialSystem materialSystem) {
+    public SubBlockOrePart(MaterialPart materialPart, ResourceLocation variantLocation, IBlockState variant, MaterialSystem materialSystem) {
         super(materialPart, materialSystem.materialCreativeTab);
         MaterialPartData data = materialPart.getData();
         this.mod = materialSystem.getMod();
@@ -32,9 +32,9 @@ public class SubBlockOrePart extends SubBlockPart {
         }
 
         List<ResourceLocation> layers = Lists.newArrayList();
-        layers.add(new ResourceLocation("base", materialPart.getPart().getName() + "_shadow"));
-        layers.add(new ResourceLocation("base", materialPart.getPart().getName()));
-        this.mod.getModelLoader().registerWrappedModel(this.getTextureLocation(), new WrappedBlockEntry(variant, layers));
+        //layers.add(new ResourceLocation("base", materialPart.getPart().getUnlocalizedName() + "_shadow"));
+        layers.add(new ResourceLocation("base", "blocks/" + materialPart.getPart().getUnlocalizedName()));
+        this.mod.getModelLoader().registerWrappedModel(this.getTextureLocation(), new WrappedBlockEntry(variant, variantLocation, layers));
     }
 
     @Override

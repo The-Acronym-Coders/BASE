@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.client.models.wrapped;
 
 import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.client.models.EmptyModelState;
 import net.minecraft.client.Minecraft;
@@ -9,6 +10,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,25 +28,24 @@ public class WrappedModel implements IModel {
 
     @Override
     public Collection<ResourceLocation> getDependencies() {
-        return Lists.newArrayList();
+        return ImmutableList.of();
     }
 
     @Override
     public Collection<ResourceLocation> getTextures() {
-        return blockEntry.getLayers();
+        Collection<ResourceLocation> textures = Lists.newArrayList();
+        textures.add(blockEntry.getResourceLocation());
+        textures.addAll(blockEntry.getLayers());
+        return textures;
     }
 
     @Override
     public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-        return new WrappedBakedModel(this.getModelForWrap(), this.blockEntry);
+        return new WrappedBakedModel(this.blockEntry);
     }
 
     @Override
     public IModelState getDefaultState() {
         return new EmptyModelState();
-    }
-
-    private IBakedModel getModelForWrap() {
-        return Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(blockEntry.getBlockState());
     }
 }
