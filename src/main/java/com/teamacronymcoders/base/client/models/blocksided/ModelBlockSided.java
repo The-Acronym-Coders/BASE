@@ -52,7 +52,7 @@ public class ModelBlockSided implements IRetexturableModel {
             for (SideType cfg : SideType.values()) {
                 ResourceLocation rl = textures.get(f.getName() + "_" + cfg.getName());
                 if (rl != null) {
-                    tex[f.ordinal()][cfg.ordinal()] = ModelUtils.getRegisterSprite(ClientHelper.mc().getTextureMapBlocks(), rl);
+                    tex[f.ordinal()][cfg.ordinal()] = ModelUtils.getBlockSprite(rl);
                 }
             }
         }

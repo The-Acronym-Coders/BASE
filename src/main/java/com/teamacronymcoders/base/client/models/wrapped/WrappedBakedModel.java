@@ -22,7 +22,6 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class WrappedBakedModel implements IBakedModel {
     private WrappedBlockEntry blockEntry;
-
     private List<BakedQuad> bakedQuads = null;
 
     public WrappedBakedModel(WrappedBlockEntry wrappedBlockEntry) {
@@ -34,19 +33,13 @@ public class WrappedBakedModel implements IBakedModel {
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
         if (bakedQuads == null) {
             bakedQuads = Lists.newArrayList();
+            bakedQuads.addAll(ModelUtils.bakeQuads(this.blockEntry.getBaseResource(), null));
             for (Map.Entry<ResourceLocation, Boolean> location : this.blockEntry.getLayers().entrySet()) {
                 Color color = location.getValue() ? this.blockEntry.getColor() : null;
                 bakedQuads.addAll(ModelUtils.bakeQuads(location.getKey(), color));
             }
         }
         return bakedQuads;
-    }
-
-    private TextureAtlasSprite getTexture(ResourceLocation resourceLocation) {
-        if (!resourceLocation.getResourcePath().contains("blocks/")) {
-            resourceLocation = new ResourceLocation(resourceLocation.getResourceDomain(), "blocks/" + resourceLocation.getResourcePath());
-        }
-        return ModelUtils.getBlockSprite(resourceLocation);
     }
 
     @Override
@@ -67,7 +60,7 @@ public class WrappedBakedModel implements IBakedModel {
     @Override
     @Nonnull
     public TextureAtlasSprite getParticleTexture() {
-        return ModelUtils.getBlockSprite(this.blockEntry.getResourceLocation());
+        return ModelUtils.getBlockSprite(this.blockEntry.getBaseResource());
     }
 
     @Override

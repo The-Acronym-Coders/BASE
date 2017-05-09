@@ -34,8 +34,8 @@ public class WrappedModel implements IModel {
     @Override
     public Collection<ResourceLocation> getTextures() {
         Collection<ResourceLocation> textures = Lists.newArrayList();
-        textures.add(blockEntry.getResourceLocation());
-        textures.addAll(blockEntry.getLayers());
+        textures.add(blockEntry.getBaseResource());
+        textures.addAll(blockEntry.getLayers().keySet());
         return textures;
     }
 

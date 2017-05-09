@@ -7,9 +7,15 @@ import java.util.Map;
 
 public class WrappedBlockEntry {
     private Color color;
+    private ResourceLocation baseResource;
     private Map<ResourceLocation, Boolean> layers;
 
-    public WrappedBlockEntry(Map<ResourceLocation, Boolean> layers, Color color) {
+    public WrappedBlockEntry(ResourceLocation baseResource, Map<ResourceLocation, Boolean> layers, int color) {
+        this(baseResource, layers, new Color(color));
+    }
+
+    public WrappedBlockEntry(ResourceLocation baseResource, Map<ResourceLocation, Boolean> layers, Color color) {
+        this.baseResource = baseResource;
         this.layers = layers;
         this.color = color;
     }
@@ -28,5 +34,13 @@ public class WrappedBlockEntry {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public ResourceLocation getBaseResource() {
+        return baseResource;
+    }
+
+    public void setBaseResource(ResourceLocation baseResource) {
+        this.baseResource = baseResource;
     }
 }
