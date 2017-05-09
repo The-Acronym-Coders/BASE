@@ -1,9 +1,12 @@
 package com.teamacronymcoders.base.client.models;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +17,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.util.vector.Vector3f;
 
-import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 //Borrowed from IE with Permission
 @SideOnly(Side.CLIENT)
@@ -74,23 +79,63 @@ public class ModelUtils {
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    public static TextureAtlasSprite getRegisterSprite(TextureMap map, String path) {
-        TextureAtlasSprite sprite = map.getTextureExtry(path);
-        if (sprite == null) {
-            map.registerSprite(new ResourceLocation(path));
-            sprite = map.getTextureExtry(path);
-        }
-        return sprite;
+    public static TextureAtlasSprite getBlockSprite(String path) {
+        return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(path);
     }
 
-    @SideOnly(Side.CLIENT)
-    public static TextureAtlasSprite getRegisterSprite(TextureMap map, ResourceLocation path) {
-        TextureAtlasSprite sprite = map.getTextureExtry(path.toString());
-        if (sprite == null) {
-            map.registerSprite(path);
-            sprite = map.getTextureExtry(path.toString());
+    public static TextureAtlasSprite getBlockSprite(ResourceLocation path) {
+        return getBlockSprite(path.toString());
+    }
+
+    @SuppressWarnings("deprecation")
+    private static final ItemCameraTransforms defaultTransforms = new ItemCameraTransforms(
+            new ItemTransformVec3f(new Vector3f(75, 45, 0), new Vector3f(0, .25f, 0), new Vector3f(0.375f, 0.375f, 0.375f)), //thirdperson left
+            new ItemTransformVec3f(new Vector3f(75, 45, 0), new Vector3f(0, .15625f, 0), new Vector3f(0.375f, 0.375f, 0.375f)), //thirdperson left
+
+            new ItemTransformVec3f(new Vector3f(0, 45, 0), new Vector3f(0, 0, 0), new Vector3f(.4f, .4f, .4f)), //firstperson left
+            new ItemTransformVec3f(new Vector3f(0, 225, 0), new Vector3f(0, 0, 0), new Vector3f(.4f, .4f, .4f)), //firstperson right
+
+            new ItemTransformVec3f(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1)), //head
+            new ItemTransformVec3f(new Vector3f(30, 225, 0), new Vector3f(0, 0, 0), new Vector3f(.625f, .625f, .625f)), //gui
+            new ItemTransformVec3f(new Vector3f(0, 0, 0), new Vector3f(0, .1875f, 0), new Vector3f(.25f, .25f, .25f)), //ground
+            new ItemTransformVec3f(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(.5f, .5f, .5f))); //fixed
+
+    public static ItemCameraTransforms getDefaultTransforms() {
+        return defaultTransforms;
+    }
+
+    public static List<BakedQuad> bakeQuads(ResourceLocation sprite, Color color) {
+        return bakeQuads(getBlockSprite(sprite), color);
+    }
+
+    public static List<BakedQuad> bakeQuads(TextureAtlasSprite sprite, Color color) {
+        TextureAtlasSprite[] sprites = new TextureAtlasSprite[6];
+        Arrays.fill(sprites, sprite);
+        return bakeQuads(sprites, color);
+    }
+
+    public static List<BakedQuad> bakeQuads(TextureAtlasSprite[] sprites, Color color) {
+        List<BakedQuad> quads = Lists.newArrayListWithExpectedSize(6);
+        float[] colorArray;
+        if (color != null) {
+            colorArray = color.getRGBComponents(new float[4]);
+        } else {
+            colorArray = new float[]{1, 1, 1, 1};
         }
-        return sprite;
+        Vector3f[] vertices = {new Vector3f(0, 0, 0), new Vector3f(0, 0, 1), new Vector3f(1, 0, 1), new Vector3f(1, 0, 0)};
+        quads.add(ModelUtils.createBakedQuad(DefaultVertexFormats.ITEM, vertices, EnumFacing.DOWN, sprites[0], new double[]{0, 16, 16, 0}, colorArray, true));
+        vertices = new Vector3f[]{new Vector3f(0, 1, 0), new Vector3f(0, 1, 1), new Vector3f(1, 1, 1), new Vector3f(1, 1, 0)};
+        quads.add(ModelUtils.createBakedQuad(DefaultVertexFormats.ITEM, vertices, EnumFacing.UP, sprites[1], new double[]{0, 0, 16, 16}, colorArray, false));
+
+        vertices = new Vector3f[]{new Vector3f(1, 0, 0), new Vector3f(1, 1, 0), new Vector3f(0, 1, 0), new Vector3f(0, 0, 0)};
+        quads.add(ModelUtils.createBakedQuad(DefaultVertexFormats.ITEM, vertices, EnumFacing.NORTH, sprites[2], new double[]{0, 16, 16, 0}, colorArray, true));
+        vertices = new Vector3f[]{new Vector3f(1, 0, 1), new Vector3f(1, 1, 1), new Vector3f(0, 1, 1), new Vector3f(0, 0, 1)};
+        quads.add(ModelUtils.createBakedQuad(DefaultVertexFormats.ITEM, vertices, EnumFacing.SOUTH, sprites[3], new double[]{16, 16, 0, 0}, colorArray, false));
+
+        vertices = new Vector3f[]{new Vector3f(0, 0, 0), new Vector3f(0, 1, 0), new Vector3f(0, 1, 1), new Vector3f(0, 0, 1)};
+        quads.add(ModelUtils.createBakedQuad(DefaultVertexFormats.ITEM, vertices, EnumFacing.WEST, sprites[4], new double[]{0, 16, 16, 0}, colorArray, true));
+        vertices = new Vector3f[]{new Vector3f(1, 0, 0), new Vector3f(1, 1, 0), new Vector3f(1, 1, 1), new Vector3f(1, 0, 1)};
+        quads.add(ModelUtils.createBakedQuad(DefaultVertexFormats.ITEM, vertices, EnumFacing.EAST, sprites[5], new double[]{16, 16, 0, 0}, colorArray, false));
+        return quads;
     }
 }
