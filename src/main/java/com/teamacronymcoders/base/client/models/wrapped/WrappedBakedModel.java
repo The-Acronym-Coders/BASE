@@ -49,7 +49,7 @@ public class WrappedBakedModel implements IBakedModel {
 
     @Override
     public boolean isGui3d() {
-        return false;
+        return true;
     }
 
     @Override
