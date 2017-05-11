@@ -1,9 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
 import com.google.common.collect.Lists;
-import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.client.models.wrapped.WrappedBlockEntry;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.blocks.BlockMaterialFluid;
@@ -11,7 +9,7 @@ import com.teamacronymcoders.base.materialsystem.blocks.SubBlockOrePart;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
-import com.teamacronymcoders.base.registry.BlockRegistry;
+import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -26,8 +24,6 @@ public class ProvidedParts {
     private IBaseMod mod;
     private MaterialSystem materialSystem;
     private SubBlockSystem subBlockSystem;
-
-    private IBlockState stone = BLOCKS.getValue(new ResourceLocation("stone")).getDefaultState();
 
     public ProvidedParts(IBaseMod mod, MaterialSystem materialSystem, SubBlockSystem subBlockSystem) {
         this.mod = mod;
@@ -123,10 +119,10 @@ public class ProvidedParts {
                 if (drops != null &&  drops.length > i) {
                     data.addDataValue("drops", drops[i]);
                 }
-                subBlockSystem.registerSubBlock(new SubBlockOrePart(variantMaterialPart, new ResourceLocation(variantName), blockState, this.materialSystem));
+                subBlockSystem.registerSubBlock(new SubBlockOrePart(variantMaterialPart, new ResourceLocation(variantName), this.materialSystem));
             }
         } else {
-            subBlockSystem.registerSubBlock(new SubBlockOrePart(materialPart, new ResourceLocation("stone"), stone, this.materialSystem));
+            subBlockSystem.registerSubBlock(new SubBlockOrePart(materialPart, new ResourceLocation("stone"), this.materialSystem));
         }
     }
 
