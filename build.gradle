@@ -66,7 +66,6 @@ dependencies {
 task srcJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'
-    manifest commonManifest
 }
 
 artifacts {
