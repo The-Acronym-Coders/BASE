@@ -63,15 +63,6 @@ dependencies {
     deobfCompile "com.github.Azanor:Baubles:${baubles_version}-SNAPSHOT"
 }
 
-def commonManifest = {
-    attributes 'Main-Class': 'com.acronym.base.Base'
-    attributes 'FMLAT': 'base_at.cfg'
-}
-
-jar {
-    manifest commonManifest
-}
-
 task srcJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'
