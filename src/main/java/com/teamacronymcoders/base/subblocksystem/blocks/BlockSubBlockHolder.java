@@ -6,7 +6,7 @@ import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.IHasRecipe;
-import com.teamacronymcoders.base.items.ItemBlockGeneric;
+import com.teamacronymcoders.base.items.itemblocks.ItemBlockGeneric;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.subblocksystem.items.ItemBlockSubBlockHolder;
 import net.minecraft.block.material.Material;
@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
@@ -27,7 +28,6 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +56,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
-    public void getSubBlocks(@Nonnull Item block, @Nonnull CreativeTabs creativeTab, @Nonnull List<ItemStack> list) {
+    public void getSubBlocks(@Nonnull Item block, @Nonnull CreativeTabs creativeTab, @Nonnull NonNullList<ItemStack> list) {
         for (Map.Entry<Integer, ISubBlock> subBlock : this.getSubBlocks().entrySet()) {
             if (subBlock.getValue().getCreativeTab() == creativeTab) {
                 list.add(new ItemStack(block, 1, subBlock.getKey()));

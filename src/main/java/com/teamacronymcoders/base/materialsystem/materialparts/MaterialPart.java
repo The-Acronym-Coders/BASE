@@ -71,7 +71,7 @@ public class MaterialPart {
 
     public ItemStack getItemStack() {
         if(!ItemStackUtils.isValid(itemStack)) {
-            itemStack = new ItemStack(MaterialsSystem.ITEM_MATERIAL_PART, 1, MaterialsSystem.getMaterialPartId(this));
+            itemStack = new ItemStack(materialSystem.itemMaterialPart, 1, materialSystem.getMaterialPartId(this));
         }
 
         return itemStack;
