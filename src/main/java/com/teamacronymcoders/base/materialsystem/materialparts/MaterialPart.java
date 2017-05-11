@@ -46,7 +46,7 @@ public class MaterialPart {
 
     public String getLocalizedName() {
         //noinspection deprecation
-        return String.format("%s %s", material.getName(), I18n.translateToLocal(part.getUnlocalizedName()));
+        return String.format("%s %s", material.getName(), I18n.translateToLocal("base.part." + part.getUnlocalizedName()));
     }
 
     public boolean hasEffect() {

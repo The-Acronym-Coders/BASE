@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.blocks;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.wrapped.WrappedBlockEntry;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
@@ -15,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
+import java.util.Map;
 
 import static net.minecraftforge.fml.common.registry.ForgeRegistries.BLOCKS;
 
@@ -23,7 +25,7 @@ public class SubBlockOrePart extends SubBlockPart {
     private String oreDictDrop = "ore";
     private IBaseMod mod;
 
-    public SubBlockOrePart(MaterialPart materialPart, IBlockState variant, MaterialSystem materialSystem) {
+    public SubBlockOrePart(MaterialPart materialPart, ResourceLocation variantLocation, IBlockState variant, MaterialSystem materialSystem) {
         super(materialPart, materialSystem.materialCreativeTab);
         MaterialPartData data = materialPart.getData();
         this.mod = materialSystem.getMod();
@@ -31,10 +33,10 @@ public class SubBlockOrePart extends SubBlockPart {
             oreDictDrop = data.getDataPiece("dropType");
         }
 
-        List<ResourceLocation> layers = Lists.newArrayList();
-        layers.add(new ResourceLocation("base", materialPart.getPart().getName() + "_shadow"));
-        layers.add(new ResourceLocation("base", materialPart.getPart().getName()));
-        this.mod.getModelLoader().registerWrappedModel(this.getTextureLocation(), new WrappedBlockEntry(variant, layers));
+        Map<ResourceLocation, Boolean> layers = Maps.newHashMap();
+        layers.put(new ResourceLocation("base", materialPart.getPart().getUnlocalizedName() + "_shadow"), true);
+        layers.put(new ResourceLocation("base", "blocks/" + materialPart.getPart().getUnlocalizedName()), true);
+        this.mod.getModelLoader().registerWrappedModel(this.getTextureLocation(), new WrappedBlockEntry(variantLocation, layers, materialPart.getColor()));
     }
 
     @Override

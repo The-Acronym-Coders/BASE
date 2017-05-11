@@ -1,32 +1,46 @@
 package com.teamacronymcoders.base.client.models.wrapped;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.List;
+import java.awt.*;
+import java.util.Map;
 
 public class WrappedBlockEntry {
-    private IBlockState blockState;
-    private List<ResourceLocation> layers;
+    private Color color;
+    private ResourceLocation baseResource;
+    private Map<ResourceLocation, Boolean> layers;
 
-    public WrappedBlockEntry(IBlockState blockState, List<ResourceLocation> layers) {
-        this.blockState = blockState;
+    public WrappedBlockEntry(ResourceLocation baseResource, Map<ResourceLocation, Boolean> layers, int color) {
+        this(baseResource, layers, new Color(color));
+    }
+
+    public WrappedBlockEntry(ResourceLocation baseResource, Map<ResourceLocation, Boolean> layers, Color color) {
+        this.baseResource = baseResource;
         this.layers = layers;
+        this.color = color;
     }
 
-    public IBlockState getBlockState() {
-        return blockState;
-    }
-
-    public void setBlockState(IBlockState blockState) {
-        this.blockState = blockState;
-    }
-
-    public List<ResourceLocation> getLayers() {
+    public Map<ResourceLocation, Boolean> getLayers() {
         return layers;
     }
 
-    public void setLayers(List<ResourceLocation> layers) {
+    public void setLayers(Map<ResourceLocation, Boolean> layers) {
         this.layers = layers;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public ResourceLocation getBaseResource() {
+        return baseResource;
+    }
+
+    public void setBaseResource(ResourceLocation baseResource) {
+        this.baseResource = baseResource;
     }
 }

@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 public class BlockMaterialFluid extends BlockFluidBase {
     public BlockMaterialFluid(MaterialPart materialPart) {
@@ -26,6 +27,8 @@ public class BlockMaterialFluid extends BlockFluidBase {
         if (data.containsDataPiece("vaporize")) {
             fluid.setVaporize(Boolean.parseBoolean(data.getDataPiece("vaporize")));
         }
+        FluidRegistry.registerFluid(fluid);
+        FluidRegistry.addBucketForFluid(fluid);
         return fluid;
     }
 }

@@ -32,12 +32,12 @@ public class WrappedModelLoader implements ICustomModelLoader {
 
     @Override
     public boolean accepts(ResourceLocation modelLocation) {
-        return models.containsKey(modelLocation);
+        return models.containsKey(new ResourceLocation(modelLocation.getResourceDomain(), modelLocation.getResourcePath()));
     }
 
     @Override
     public IModel loadModel(ResourceLocation modelLocation) throws Exception {
-        return new WrappedModel(models.get(modelLocation));
+        return new WrappedModel(models.get(new ResourceLocation(modelLocation.getResourceDomain(), modelLocation.getResourcePath())));
     }
 
     @Override
