@@ -108,7 +108,6 @@ public class ProvidedParts {
             for (int i = 0; i < variantNames.length; i++) {
                 String variantName = variantNames[i];
                 MaterialPart variantMaterialPart = new MaterialPart(materialSystem, materialPart.getMaterial(), materialPart.getPart(), variantName);
-                IBlockState blockState = getBlockStateFor(variantName);
                 MaterialPartData variantData = variantMaterialPart.getData();
                 trySetData(hardness, i, "hardness", variantData);
                 trySetData(resistance, i, "resistance", variantData);
@@ -142,28 +141,5 @@ public class ProvidedParts {
             }
         }
         return returned;
-    }
-
-    private IBlockState getBlockStateFor(String variantName) {
-        IBlockState variant = BLOCKS.getValue(new ResourceLocation("stone")).getDefaultState();
-        String[] variantArray = variantName.split(":");
-        String blockString;
-        int meta = 0;
-        if (variantArray.length < 2) {
-            blockString = variantArray[0];
-        } else {
-            blockString = variantArray[0] + ":" + variantArray[1];
-        }
-        if (variantArray.length == 3) {
-            meta = Integer.parseInt(variantArray[2]);
-        }
-        Block block = BLOCKS.getValue(new ResourceLocation(blockString));
-        if (block != null) {
-            //noinspection deprecation
-            variant = block.getStateFromMeta(meta);
-        } else {
-            this.mod.getLogger().fatal("Couldn't find block for variant string: " + blockString);
-        }
-        return variant;
     }
 }
