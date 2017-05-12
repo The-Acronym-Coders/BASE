@@ -21,6 +21,7 @@ import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import com.teamacronymcoders.base.registry.ItemRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.util.TextUtils;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
@@ -57,7 +58,7 @@ public class MaterialSystem {
         MaterialCompatLoader materialCompatLoader = new MaterialCompatLoader();
         materialCompatLoader.loadCompat(dataTable);
 
-        nameMapping.putAll(SaveLoader.getSavedObject("material_part_ids_" + mod.getID(), MaterialPartSave.class).getMaterialMappings());
+        nameMapping.putAll(SaveLoader.getSavedObject("material_parts_" + mod.getID(), MaterialPartSave.class).getMaterialMappings());
         nameMapping.values().forEach(id -> {
             if (id > nextId) {
                 nextId = id + 1;
