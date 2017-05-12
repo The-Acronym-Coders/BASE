@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockStateMapper, IHasBlockColor, IHasOreDict, IHasRecipe {
-    private static final PropertyInteger SUB_BLOCK_NUMBER = PropertyInteger.create("sub_block_number", 0, 15);
+    public static final PropertyInteger SUB_BLOCK_NUMBER = PropertyInteger.create("sub_block_number", 0, 15);
     private Map<Integer, ISubBlock> subBlocks;
 
     public BlockSubBlockHolder(int number, Map<Integer, ISubBlock> subBlocks) {
@@ -49,14 +49,14 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
         for (int x = 0; x < 16; x++) {
             if (getSubBlocks().get(x) != SubBlockSystem.MISSING_SUB_BLOCK) {
-                itemStacks.add(new ItemStack(this, 1, x));
+                itemStacks.add(new ItemStack(this.getItemBlock(), 1, x));
             }
         }
         return itemStacks;
     }
 
     @Override
-    public void getSubBlocks(@Nonnull Item block, @Nonnull CreativeTabs creativeTab, @Nonnull NonNullList<ItemStack> list) {
+    public void getSubBlocks(@Nonnull Item block, @Nullable CreativeTabs creativeTab, @Nonnull List<ItemStack> list) {
         for (Map.Entry<Integer, ISubBlock> subBlock : this.getSubBlocks().entrySet()) {
             if (subBlock.getValue().getCreativeTab() == creativeTab) {
                 list.add(new ItemStack(block, 1, subBlock.getKey()));
@@ -149,7 +149,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     @Nonnull
     @Override
     public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
-        this.getSubBlocks().values().forEach(subBlock -> subBlock.setOreDict(names));
+        this.getSubBlocks().entrySet().forEach((entry -> entry.getValue().setOreDict(this, entry.getKey(), names)));
         return names;
     }
 

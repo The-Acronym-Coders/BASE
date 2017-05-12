@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -39,7 +40,7 @@ public interface ISubBlock {
 
     void setRecipes(List<IRecipe> recipes);
 
-    void setOreDict(Map<ItemStack, String> oreDict);
+    void setOreDict(Block block, int number, Map<ItemStack, String> oreDict);
 
     @Nullable
     CreativeTabs getCreativeTab();

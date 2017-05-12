@@ -42,7 +42,7 @@ public class ItemBlockSubBlockHolder extends ItemBlockGeneric<BlockSubBlockHolde
     public CreativeTabs[] getCreativeTabs() {
         List<CreativeTabs> creativeTabsList = Lists.newArrayList();
         this.getActualBlock().getSubBlocks().values().forEach(subBlock -> {
-            if (!creativeTabsList.contains(subBlock.getCreativeTab())) {
+            if (subBlock.getCreativeTab() != null && !creativeTabsList.contains(subBlock.getCreativeTab())) {
                 creativeTabsList.add(subBlock.getCreativeTab());
             }
         });

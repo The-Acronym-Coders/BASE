@@ -52,7 +52,7 @@ public abstract class SubBlockBase implements ISubBlock {
     }
 
     @Override
-    public void setOreDict(Map<ItemStack, String> oreDict) {
+    public void setOreDict(Block block, int number, Map<ItemStack, String> oreDict) {
 
     }
 }

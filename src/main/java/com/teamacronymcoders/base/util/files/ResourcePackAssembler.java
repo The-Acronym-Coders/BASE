@@ -209,7 +209,7 @@ public class ResourcePackAssembler {
 
         private final String path;
 
-        private ModelType(String path) {
+        ModelType(String path) {
             this.path = path;
         }
 

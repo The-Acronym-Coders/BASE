@@ -44,6 +44,9 @@ public class OreDictUtils {
                     }
                 }
             }
+            if (preferredItemStack == null && !itemStackList.isEmpty()) {
+                preferredItemStack = itemStackList.get(0);
+            }
             preferredItemStacks.put(oreDictName, preferredItemStack);
         }
         ItemStack itemStack = preferredItemStacks.get(oreDictName);

@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class SubBlockOrePart extends SubBlockPart {
     private ItemStack itemStackToDrop = null;
-    private String oreDictDrop = "ore";
+    private String oreDictDrop;
     private IBaseMod mod;
 
     public SubBlockOrePart(MaterialPart materialPart, ResourceLocation variantLocation, MaterialSystem materialSystem) {
@@ -26,10 +26,12 @@ public class SubBlockOrePart extends SubBlockPart {
         this.mod = materialSystem.getMod();
         if (data.containsDataPiece("dropType")) {
             oreDictDrop = data.getDataPiece("dropType");
+        } else {
+            oreDictDrop = materialPart.getPart().getOreDictPrefix();
         }
 
         Map<ResourceLocation, Boolean> layers = Maps.newHashMap();
-        layers.put(new ResourceLocation("base", materialPart.getPart().getUnlocalizedName() + "_shadow"), true);
+        layers.put(new ResourceLocation("base", "blocks/" + materialPart.getPart().getUnlocalizedName() + "_shadow"), true);
         layers.put(new ResourceLocation("base", "blocks/" + materialPart.getPart().getUnlocalizedName()), true);
         this.mod.getModelLoader().registerWrappedModel(this.getTextureLocation(), new WrappedBlockEntry(variantLocation, layers, materialPart.getColor()));
     }
@@ -37,7 +39,7 @@ public class SubBlockOrePart extends SubBlockPart {
     @Override
     public void getDrops(IBlockState blockState, int fortune, List<ItemStack> itemStacks) {
         if (itemStackToDrop == null) {
-            String oreDictName = oreDictDrop + TextUtils.toSnakeCase(this.getMaterialPart().getMaterial().getName());
+            String oreDictName = oreDictDrop + this.getMaterialPart().getMaterial().getOreDictSuffix();
             itemStackToDrop = OreDictUtils.getPreferredItemStack(oreDictName);
         }
         if (itemStackToDrop != null) {

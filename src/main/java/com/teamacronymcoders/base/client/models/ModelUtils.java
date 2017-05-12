@@ -84,6 +84,9 @@ public class ModelUtils {
     }
 
     public static TextureAtlasSprite getBlockSprite(ResourceLocation path) {
+        if (!path.getResourcePath().contains("blocks/")) {
+            path = new ResourceLocation(path.getResourceDomain(), "blocks/" + path.getResourcePath());
+        }
         return getBlockSprite(path.toString());
     }
 

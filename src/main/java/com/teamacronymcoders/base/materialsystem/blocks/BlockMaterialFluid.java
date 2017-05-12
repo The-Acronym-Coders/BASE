@@ -1,13 +1,18 @@
 package com.teamacronymcoders.base.materialsystem.blocks;
 
+import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.blocks.BlockFluidBase;
+import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
-public class BlockMaterialFluid extends BlockFluidBase {
+public class BlockMaterialFluid extends BlockFluidBase implements IHasBlockStateMapper {
     public BlockMaterialFluid(MaterialPart materialPart) {
         super(materialPart.getUnlocalizedName(), createFluid(materialPart), Material.LAVA);
     }
@@ -30,5 +35,15 @@ public class BlockMaterialFluid extends BlockFluidBase {
         FluidRegistry.registerFluid(fluid);
         FluidRegistry.addBucketForFluid(fluid);
         return fluid;
+    }
+
+    @Override
+    public Block getBlock() {
+        return this;
+    }
+
+    @Override
+    public ResourceLocation getResourceLocation(IBlockState blockState) {
+        return new ResourceLocation(Reference.MODID, "fluid");
     }
 }
