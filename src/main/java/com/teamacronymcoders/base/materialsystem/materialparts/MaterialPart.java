@@ -82,7 +82,6 @@ public class MaterialPart {
 
     public void setTextureLocation(ResourceLocation textureLocation) {
         this.textureLocation = textureLocation;
-        this.materialSystem.itemMaterialPart.registerItemVariant(textureLocation);
     }
 
     public int getColor() {
@@ -101,8 +100,8 @@ public class MaterialPart {
         return this.getPart().getPartType() == partType;
     }
 
-    public void setOreDict(Map<ItemStack, String> oreDict) {
-        oreDict.put(itemStack, part.getUnlocalizedName() + material.getName());
+    public String getOreDictString() {
+        return this.getPart().getOreDictPrefix() + this.getMaterial().getOreDictSuffix();
     }
 
     public MaterialPartData getData() {

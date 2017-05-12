@@ -151,7 +151,6 @@ public class MaterialSystem {
                     id = nameMapping.get(materialPart.getUnlocalizedName());
                 }
                 materialPartBiMap.put(id, materialPart);
-                materialCreativeTab.addIconStacks(Lists.newArrayList(materialPart.getItemStack()));
                 materialParts.add(materialPart);
             } else {
                 throw new MaterialException("Could not find part with name: " + partName);

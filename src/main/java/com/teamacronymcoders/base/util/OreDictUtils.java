@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.util;
 
-import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.registry.config.ConfigEntry;
 import com.teamacronymcoders.base.registry.config.ConfigEntryBuilder;
@@ -44,6 +43,9 @@ public class OreDictUtils {
                         preferredItemStack = itemStack;
                     }
                 }
+            }
+            if (preferredItemStack == null && !itemStackList.isEmpty()) {
+                preferredItemStack = itemStackList.get(0);
             }
             preferredItemStacks.put(oreDictName, preferredItemStack);
         }

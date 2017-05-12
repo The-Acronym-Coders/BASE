@@ -123,10 +123,10 @@ public class ProvidedParts {
                 if (drops != null &&  drops.length > i) {
                     data.addDataValue("drops", drops[i]);
                 }
-                subBlockSystem.registerSubBlock(new SubBlockOrePart(variantMaterialPart, new ResourceLocation(variantName), blockState, this.materialSystem));
+                subBlockSystem.registerSubBlock(new SubBlockOrePart(variantMaterialPart, new ResourceLocation(variantName), this.materialSystem));
             }
         } else {
-            subBlockSystem.registerSubBlock(new SubBlockOrePart(materialPart, new ResourceLocation("stone"), stone, this.materialSystem));
+            subBlockSystem.registerSubBlock(new SubBlockOrePart(materialPart, new ResourceLocation("stone"), this.materialSystem));
         }
     }
 
