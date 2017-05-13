@@ -15,6 +15,9 @@ public class WrappedBlockEntry {
     }
 
     public WrappedBlockEntry(ResourceLocation baseResource, Map<ResourceLocation, Boolean> layers, Color color) {
+        if (!baseResource.getResourcePath().startsWith("blocks")) {
+            baseResource = new ResourceLocation(baseResource.getResourceDomain(), "blocks/" + baseResource.getResourcePath());
+        }
         this.baseResource = baseResource;
         this.layers = layers;
         this.color = color;
