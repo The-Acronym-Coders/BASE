@@ -146,26 +146,6 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
         return subBlocks;
     }
 
-    @Override
-    public boolean isFullCube(@Nonnull IBlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube(@Nonnull IBlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean isFullBlock(@Nonnull IBlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean isSideSolid(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
-        return true;
-    }
-
     @Nonnull
     @Override
     public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
