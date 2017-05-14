@@ -15,6 +15,7 @@ public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHas
     public ItemBlockGeneric(T block) {
         super(block);
         this.actualBlock = block;
+        this.setHasSubtypes(true);
     }
 
     public T getActualBlock() {
