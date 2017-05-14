@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -55,7 +56,7 @@ public class MissingSubBlock implements ISubBlock {
     }
 
     @Override
-    public void getDrops(IBlockState blockState, int fortune, List<ItemStack> itemStacks) {
+    public void getDrops(int fortune, List<ItemStack> itemStacks) {
 
     }
 
@@ -65,12 +66,17 @@ public class MissingSubBlock implements ISubBlock {
     }
 
     @Override
-    public void setOreDict(Block block, int number, Map<ItemStack, String> oreDict) {
-
+    public String getOreDict() {
+        return null;
     }
 
     @Override
     public CreativeTabs getCreativeTab() {
         return null;
+    }
+
+    @Override
+    public void setItemStack(ItemStack itemStack) {
+
     }
 }

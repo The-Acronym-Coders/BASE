@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
@@ -36,12 +37,12 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
 
     public BlockSubBlockHolder(int number, Map<Integer, ISubBlock> subBlocks) {
         super(Material.IRON, "sub_block_holder_" + number);
-        this.setItemBlock(new ItemBlockGeneric<>(this));
+        this.setItemBlock(new ItemBlockSubBlockHolder(this));
         this.subBlocks = subBlocks;
         for (int x = 0; x < 16; x++) {
             this.getSubBlocks().putIfAbsent(x, SubBlockSystem.MISSING_SUB_BLOCK);
+            this.getSubBlock(x).setItemStack(new ItemStack(this.getItemBlock(), 1, x));
         }
-        this.setItemBlock(new ItemBlockSubBlockHolder(this));
     }
 
     @Override
@@ -90,7 +91,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     @Nonnull
     public List<ItemStack> getDrops(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull IBlockState state, int fortune) {
         List<ItemStack> itemStacks = Lists.newArrayList();
-        this.getSubBlock(state).getDrops(state, fortune, itemStacks);
+        this.getSubBlock(state).getDrops(fortune, itemStacks);
         return itemStacks;
     }
 
@@ -145,10 +146,35 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
         return subBlocks;
     }
 
+    @Override
+    public boolean isFullCube(@Nonnull IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube(@Nonnull IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isFullBlock(@Nonnull IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isSideSolid(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
+        return true;
+    }
+
     @Nonnull
     @Override
     public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
-        this.getSubBlocks().entrySet().forEach((entry -> entry.getValue().setOreDict(this, entry.getKey(), names)));
+        this.getSubBlocks().forEach((key, value) -> {
+            String oreDict = value.getOreDict();
+            if (oreDict != null && !oreDict.isEmpty()) {
+                names.put(new ItemStack(this.getItemBlock(), 1, key), oreDict);
+            }
+        });
         return names;
     }
 

@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -15,6 +16,7 @@ import static com.teamacronymcoders.base.Reference.MODID;
 public abstract class SubBlockBase implements ISubBlock {
     private String name;
     private ResourceLocation textureLocation;
+    protected ItemStack itemStack;
 
     public SubBlockBase(String name) {
         this.name = name;
@@ -41,9 +43,8 @@ public abstract class SubBlockBase implements ISubBlock {
     }
 
     @Override
-    public void getDrops(IBlockState blockState, int fortune, List<ItemStack> itemStacks) {
-        Block block = blockState.getBlock();
-        itemStacks.add(new ItemStack(block, 1, block.getMetaFromState(blockState)));
+    public void getDrops( int fortune, List<ItemStack> itemStacks) {
+        itemStacks.add(this.itemStack);
     }
 
     @Override
@@ -52,7 +53,12 @@ public abstract class SubBlockBase implements ISubBlock {
     }
 
     @Override
-    public void setOreDict(Block block, int number, Map<ItemStack, String> oreDict) {
+    public String getOreDict() {
+        return null;
+    }
 
+    @Override
+    public void setItemStack(ItemStack itemStack) {
+        this.itemStack = itemStack;
     }
 }
