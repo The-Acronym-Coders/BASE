@@ -68,11 +68,6 @@ public class SubBlockOrePart extends SubBlockPart {
     }
 
     @Override
-    public int getColor() {
-        return -1;
-    }
-
-    @Override
     public ResourceLocation getTextureLocation() {
         return new ResourceLocation(this.mod.getID(), this.getUnLocalizedName());
     }

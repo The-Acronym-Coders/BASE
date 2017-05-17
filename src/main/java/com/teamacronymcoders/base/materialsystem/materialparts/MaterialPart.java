@@ -4,13 +4,11 @@ import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-
-import java.util.Map;
 
 public class MaterialPart {
     private Material material;
