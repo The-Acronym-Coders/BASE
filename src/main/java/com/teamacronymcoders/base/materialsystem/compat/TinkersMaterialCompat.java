@@ -36,7 +36,7 @@ public class TinkersMaterialCompat implements IMaterialCompat {
         Fluid fluid = FluidRegistry.getFluid(materialPart.getMaterial().getUnlocalizedName());
         if (fluid != null) {
             Material tinkerMaterial = new Material(materialPart.getUnlocalizedName(), materialPart.getColor());
-            tinkerMaterial.addCommonItems(materialPart.getMaterial().getUnlocalizedName());
+            tinkerMaterial.addCommonItems(materialPart.getMaterial().getOreDictSuffix());
         } else {
             materialSystem.getMod().getLogger().error("Could not create Fluid for Tinker's Compat");
         }
