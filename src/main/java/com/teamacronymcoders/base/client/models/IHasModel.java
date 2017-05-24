@@ -20,7 +20,7 @@ public interface IHasModel extends IHasSubItems {
         IBaseMod mod = Platform.getCurrentMod();
         if (mod != null) {
             getModelNames(new ArrayList<>()).forEach(modelName ->
-                    resourceLocations.add(new ResourceLocation(mod.getID(), modelName)));
+                    resourceLocations.add(new ResourceLocation(mod.getID(), modelName.replace(mod.getID() + ".", ""))));
         }
         return resourceLocations;
     }
