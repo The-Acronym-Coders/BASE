@@ -28,7 +28,7 @@ public class MaterialJsonGenerator {
             File file = null;
             switch(resource.getResourceType()) {
                 case BLOCKSTATE:
-                    file = new File(blockstates, resource.getName() + ".json");
+                    file = new File(materialBlockStates, resource.getName() + ".json");
                     break;
                 case BLOCK_MODEL:
                     break;

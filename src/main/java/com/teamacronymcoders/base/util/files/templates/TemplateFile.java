@@ -20,7 +20,7 @@ public class TemplateFile {
     private String fileContents;
 
     TemplateFile(ResourceLocation location) {
-        location = new ResourceLocation(location.getResourceDomain(), "/templates" + location.getResourcePath());
+        location = new ResourceLocation(location.getResourceDomain(), "templates/" + location.getResourcePath() + ".json");
         IResource resource = ClientHelper.getResource(location);
         if (resource != null) {
             InputStream inputStream = resource.getInputStream();
