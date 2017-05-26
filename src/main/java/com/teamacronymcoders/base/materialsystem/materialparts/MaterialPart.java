@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.materialsystem.materialparts;
 
 import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.json.resources.IResource;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
@@ -9,6 +10,10 @@ import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class MaterialPart {
     private Material material;
@@ -112,5 +117,10 @@ public class MaterialPart {
 
     public void setup() {
         this.getPart().getPartType().setup(this);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public List<IResource> generateResources() {
+        return this.getPart().getPartType().generateResources(this);
     }
 }

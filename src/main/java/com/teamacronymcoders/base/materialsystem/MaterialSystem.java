@@ -143,17 +143,21 @@ public class MaterialSystem {
             Part part = partMap.get(partName.toLowerCase(Locale.US));
             if (part != null) {
                 MaterialPart materialPart = new MaterialPart(this, material, part);
-                int id = nextId++;
-                if (nameMapping.containsKey(materialPart.getUnlocalizedName())) {
-                    id = nameMapping.get(materialPart.getUnlocalizedName());
-                }
-                materialPartBiMap.put(id, materialPart);
+                this.registerMaterialPart(materialPart);
                 materialParts.add(materialPart);
             } else {
                 throw new MaterialException("Could not find part with name: " + partName);
             }
         }
         return materialParts;
+    }
+
+    public void registerMaterialPart(MaterialPart materialPart) {
+        int id = nextId++;
+        if (nameMapping.containsKey(materialPart.getUnlocalizedName())) {
+            id = nameMapping.get(materialPart.getUnlocalizedName());
+        }
+        materialPartBiMap.put(id, materialPart);
     }
 
     public IBaseMod getMod() {

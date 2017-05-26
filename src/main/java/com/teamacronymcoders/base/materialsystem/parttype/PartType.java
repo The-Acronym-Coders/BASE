@@ -1,11 +1,15 @@
 package com.teamacronymcoders.base.materialsystem.parttype;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.json.resources.IResource;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class PartType {
     private final MaterialSystem materialSystem;
@@ -26,8 +30,9 @@ public class PartType {
     public void setup(@Nonnull MaterialPart materialPart) {
     }
 
-    public IResource createJson(MaterialPart materialPart) {
-        return null;
+    @SideOnly(Side.CLIENT)
+    public List<IResource> generateResources(MaterialPart materialPart) {
+        return Lists.newArrayList();
     }
 
     protected IBaseMod getMod() {

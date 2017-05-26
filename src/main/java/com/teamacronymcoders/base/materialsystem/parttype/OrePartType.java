@@ -1,12 +1,23 @@
 package com.teamacronymcoders.base.materialsystem.parttype;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockOrePart;
+import com.teamacronymcoders.base.materialsystem.json.resources.IResource;
+import com.teamacronymcoders.base.materialsystem.json.resources.Resource;
+import com.teamacronymcoders.base.materialsystem.json.resources.ResourceType;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
 
 public class OrePartType extends BlockPartType {
     public OrePartType(IBaseMod mod) {
@@ -37,6 +48,7 @@ public class OrePartType extends BlockPartType {
 
             for (int i = 0; i < variantNames.length; i++) {
                 String variantName = variantNames[i];
+                data.addDataValue("variants", variantName);
                 MaterialPart variantMaterialPart = new MaterialPart(this.getMaterialSystem(), materialPart.getMaterial(), materialPart.getPart(), variantName);
                 MaterialPartData variantData = variantMaterialPart.getData();
                 trySetData(hardness, i, "hardness", variantData);
@@ -49,6 +61,7 @@ public class OrePartType extends BlockPartType {
                     data.addDataValue("drops", drops[i]);
                 }
                 this.getSubBlockSystem().registerSubBlock(new SubBlockOrePart(variantMaterialPart, new ResourceLocation(variantName), this.getMaterialSystem()));
+                this.getMaterialSystem().registerMaterialPart(variantMaterialPart);
             }
         } else {
             this.getSubBlockSystem().registerSubBlock(new SubBlockOrePart(materialPart, new ResourceLocation("stone"), this.getMaterialSystem()));
@@ -71,5 +84,24 @@ public class OrePartType extends BlockPartType {
             }
         }
         return returned;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public List<IResource> generateResources(MaterialPart materialPart) {
+        List<IResource> resources = Lists.newArrayList();
+        TemplateFile templateFile = TemplateManager.getTemplateFile("ore_block_state");
+        Map<String, String> replacements = Maps.newHashMap();
+        MaterialPartData data = materialPart.getData();
+
+        String texture = data.containsDataPiece("variants") ? data.getDataPiece("variants") : "minecraft:stone";
+        replacements.put("texture", texture);
+        replacements.put("particle", texture);
+        replacements.put("ore_shadow", "blocks/" + materialPart.getPart().getUnlocalizedName() + "_shadow");
+        replacements.put("ore", "blocks/" + materialPart.getPart().getUnlocalizedName());
+        templateFile.replaceContents(replacements);
+
+        resources.add(new Resource(materialPart.getUnlocalizedName(), ResourceType.BLOCKSTATE, templateFile.getFileContents()));
+        return resources;
     }
 }
