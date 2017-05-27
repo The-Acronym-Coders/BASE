@@ -10,6 +10,10 @@ import net.minecraft.util.ResourceLocation;
 
 @RegistryPiece
 public class CreativeTabRegistryPiece extends RegistryPieceBase {
+    public CreativeTabRegistryPiece() {
+        super();
+    }
+
     @Override
     public boolean acceptsRegistry(Registry registry) {
         return "ITEM".equalsIgnoreCase(registry.getName()) || "BLOCK".equalsIgnoreCase(registry.getName());

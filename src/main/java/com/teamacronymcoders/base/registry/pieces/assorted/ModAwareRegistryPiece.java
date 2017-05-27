@@ -7,9 +7,8 @@ import net.minecraft.util.ResourceLocation;
 
 @RegistryPiece
 public class ModAwareRegistryPiece extends RegistryPieceBase<IModAware> {
-    @Override
-    public boolean acceptsEntry(ResourceLocation name, Object entry) {
-        return entry instanceof IModAware;
+    public ModAwareRegistryPiece() {
+        super(IModAware.class);
     }
 
     @Override

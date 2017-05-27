@@ -8,9 +8,12 @@ import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
 import com.teamacronymcoders.base.registry.pieces.RegistrySide;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static net.minecraftforge.fml.common.eventhandler.EventPriority.LOW;
 
+@SideOnly(Side.CLIENT)
 @RegistryPiece(value = RegistrySide.CLIENT, priority = LOW)
 public class ColorRegistryPiece extends RegistryPieceBase {
     @Override

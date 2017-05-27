@@ -1,12 +1,16 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
 import com.google.common.collect.Lists;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import com.google.common.collect.Maps;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 
 import java.util.List;
 import java.util.Map;
@@ -60,5 +64,17 @@ public abstract class SubBlockBase implements ISubBlock {
     @Override
     public void setItemStack(ItemStack itemStack) {
         this.itemStack = itemStack;
+    }
+
+    @Override
+    public IGeneratedModel getGeneratedModel() {
+        TemplateFile templateFile = TemplateManager.getTemplateFile("sub_block_state");
+        Map<String, String> replacements = Maps.newHashMap();
+
+        replacements.put("texture", new ResourceLocation(this.getTextureLocation().getResourceDomain(),
+                "blocks/" + this.getTextureLocation().getResourcePath()).toString());
+        templateFile.replaceContents(replacements);
+
+        return new GeneratedModel(this.getUnLocalizedName(), ModelType.BLOCKSTATE, templateFile.getFileContents());
     }
 }

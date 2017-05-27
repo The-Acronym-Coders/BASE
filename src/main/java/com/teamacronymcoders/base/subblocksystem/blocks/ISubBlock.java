@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -43,4 +44,6 @@ public interface ISubBlock {
     CreativeTabs getCreativeTab();
 
     void setItemStack(ItemStack itemStack);
+
+    IGeneratedModel getGeneratedModel();
 }

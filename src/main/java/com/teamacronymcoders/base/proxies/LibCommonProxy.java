@@ -88,4 +88,8 @@ public abstract class LibCommonProxy {
     public void registerWrappedModel(ResourceLocation resourceLocation, WrappedBlockEntry wrappedBlockEntry) {
         // Only done Client Side;
     }
+
+    public String getFileContents(ResourceLocation resourceLocation) {
+        return "";
+    }
 }

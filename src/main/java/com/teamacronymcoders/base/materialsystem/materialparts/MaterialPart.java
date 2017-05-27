@@ -1,8 +1,8 @@
 package com.teamacronymcoders.base.materialsystem.materialparts;
 
 import com.teamacronymcoders.base.Reference;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
-import com.teamacronymcoders.base.materialsystem.json.resources.IResource;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
@@ -120,7 +120,7 @@ public class MaterialPart {
     }
 
     @SideOnly(Side.CLIENT)
-    public List<IResource> generateResources() {
+    public List<IGeneratedModel> generateResources() {
         return this.getPart().getPartType().generateResources(this);
     }
 }

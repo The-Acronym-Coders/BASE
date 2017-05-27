@@ -2,14 +2,14 @@ package com.teamacronymcoders.base.materialsystem.blocks;
 
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.client.models.wrapped.WrappedBlockEntry;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
-import com.teamacronymcoders.base.subblocksystem.blocks.BlockSubBlockHolder;
-import com.teamacronymcoders.base.util.OreDictUtils;
-import com.teamacronymcoders.base.util.TextUtils;
-import net.minecraft.block.state.IBlockState;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -22,6 +22,7 @@ public class SubBlockOrePart extends SubBlockPart {
     private ItemStack itemStackToDrop = null;
     private String itemDrop;
     private IBaseMod mod;
+    private ResourceLocation variantLocation;
 
     public SubBlockOrePart(MaterialPart materialPart, ResourceLocation variantLocation, MaterialSystem materialSystem) {
         super(materialPart, materialSystem.materialCreativeTab);
@@ -30,11 +31,7 @@ public class SubBlockOrePart extends SubBlockPart {
         if (data.containsDataPiece("drop")) {
             itemDrop = data.getDataPiece("drop");
         }
-
-        Map<ResourceLocation, Boolean> layers = Maps.newHashMap();
-        layers.put(new ResourceLocation("base", "blocks/" + materialPart.getPart().getUnlocalizedName() + "_shadow"), true);
-        layers.put(new ResourceLocation("base", "blocks/" + materialPart.getPart().getUnlocalizedName()), true);
-        this.mod.getModelLoader().registerWrappedModel(this.getTextureLocation(), new WrappedBlockEntry(variantLocation, layers, materialPart.getColor()));
+        this.variantLocation = variantLocation;
     }
 
     @Override
@@ -71,4 +68,21 @@ public class SubBlockOrePart extends SubBlockPart {
     public ResourceLocation getTextureLocation() {
         return new ResourceLocation(this.mod.getID(), this.getUnLocalizedName());
     }
+
+    @Override
+    public IGeneratedModel getGeneratedModel() {
+        TemplateFile templateFile = TemplateManager.getTemplateFile("ore_block_state");
+        Map<String, String> replacements = Maps.newHashMap();
+
+        String unlocalizedName = this.getMaterialPart().getPart().getUnlocalizedName();
+        replacements.put("texture", variantLocation.toString());
+        replacements.put("particle", variantLocation.toString());
+        replacements.put("ore_shadow", "blocks/" + unlocalizedName + "_shadow");
+        replacements.put("ore", "blocks/" + unlocalizedName);
+        templateFile.replaceContents(replacements);
+
+        return new GeneratedModel(this.getMaterialPart().getUnlocalizedName(), ModelType.BLOCKSTATE, templateFile.getFileContents());
+    }
+
+
 }

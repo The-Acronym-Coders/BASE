@@ -4,9 +4,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockOrePart;
-import com.teamacronymcoders.base.materialsystem.json.resources.IResource;
-import com.teamacronymcoders.base.materialsystem.json.resources.Resource;
-import com.teamacronymcoders.base.materialsystem.json.resources.ResourceType;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
@@ -84,24 +84,5 @@ public class OrePartType extends BlockPartType {
             }
         }
         return returned;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public List<IResource> generateResources(MaterialPart materialPart) {
-        List<IResource> resources = Lists.newArrayList();
-        TemplateFile templateFile = TemplateManager.getTemplateFile("ore_block_state");
-        Map<String, String> replacements = Maps.newHashMap();
-        MaterialPartData data = materialPart.getData();
-
-        String texture = data.containsDataPiece("variants") ? data.getDataPiece("variants") : "minecraft:stone";
-        replacements.put("texture", texture);
-        replacements.put("particle", texture);
-        replacements.put("ore_shadow", "blocks/" + materialPart.getPart().getUnlocalizedName() + "_shadow");
-        replacements.put("ore", "blocks/" + materialPart.getPart().getUnlocalizedName());
-        templateFile.replaceContents(replacements);
-
-        resources.add(new Resource(materialPart.getUnlocalizedName(), ResourceType.BLOCKSTATE, templateFile.getFileContents()));
-        return resources;
     }
 }
