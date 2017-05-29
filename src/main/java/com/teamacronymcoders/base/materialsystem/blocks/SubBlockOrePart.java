@@ -66,7 +66,7 @@ public class SubBlockOrePart extends SubBlockPart {
 
     @Override
     public ResourceLocation getTextureLocation() {
-        return new ResourceLocation(this.mod.getID(), this.getUnLocalizedName());
+        return new ResourceLocation(this.mod.getID(), "materials/" + this.getUnLocalizedName());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class SubBlockOrePart extends SubBlockPart {
         replacements.put("ore", "blocks/" + unlocalizedName);
         templateFile.replaceContents(replacements);
 
-        return new GeneratedModel(this.getMaterialPart().getUnlocalizedName(), ModelType.BLOCKSTATE, templateFile.getFileContents());
+        return new GeneratedModel("materials/" + this.getMaterialPart().getUnlocalizedName(), ModelType.BLOCKSTATE, templateFile.getFileContents());
     }
 
 

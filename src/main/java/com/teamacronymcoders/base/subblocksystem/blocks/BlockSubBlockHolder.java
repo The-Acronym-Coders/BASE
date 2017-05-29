@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.blocks.BlockBaseNoModel;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
+import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.items.ItemBlockGeneric;
@@ -30,8 +32,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockStateMapper, IHasBlockColor, IHasOreDict, IHasRecipe {
+public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockStateMapper, IHasBlockColor, IHasOreDict, IHasRecipe, IHasGeneratedModel {
     public static final PropertyInteger SUB_BLOCK_NUMBER = PropertyInteger.create("sub_block_number", 0, 15);
     private Map<Integer, ISubBlock> subBlocks;
 
@@ -162,5 +166,10 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     public List<IRecipe> getRecipes(List<IRecipe> recipes) {
         this.getSubBlocks().values().forEach(subBlock -> subBlock.setRecipes(recipes));
         return recipes;
+    }
+
+    @Override
+    public List<IGeneratedModel> getGeneratedModels() {
+        return this.getSubBlocks().values().stream().map(ISubBlock::getGeneratedModel).filter(Objects::nonNull).collect(Collectors.toList());
     }
 }

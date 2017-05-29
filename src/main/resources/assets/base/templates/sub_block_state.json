@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "##ALL##"
+      "all": "##TEXTURE##"
     },
     "model": "cube_all",
     "uvlock": true,

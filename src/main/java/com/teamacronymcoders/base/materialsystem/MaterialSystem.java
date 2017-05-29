@@ -22,10 +22,7 @@ import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class MaterialSystem {
     public static MissingMaterialPart MISSING_MATERIAL_PART;
@@ -92,7 +89,8 @@ public class MaterialSystem {
     }
 
     public void finishUp() {
-        for (MaterialPart materialPart : materialPartBiMap.values()) {
+        List<MaterialPart> parts = Lists.newArrayList(materialPartBiMap.values());
+        for (MaterialPart materialPart : parts) {
             materialPart.setup();
         }
         MaterialPartSave save = new MaterialPartSave();

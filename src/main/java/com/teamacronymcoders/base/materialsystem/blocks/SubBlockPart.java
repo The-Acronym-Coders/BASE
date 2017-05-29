@@ -89,7 +89,13 @@ public class SubBlockPart extends SubBlockBase {
 
     @Override
     public ResourceLocation getTextureLocation() {
-        return materialPart.getTextureLocation();
+        ResourceLocation location = materialPart.getTextureLocation();
+        return new ResourceLocation(location.getResourceDomain(), this.getModelPrefix() + this.getUnLocalizedName());
+    }
+
+    @Override
+    protected String getModelPrefix() {
+        return "materials/";
     }
 
     public MaterialPart getMaterialPart() {

@@ -1,11 +1,9 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
-import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.item.ItemStack;
@@ -24,7 +22,7 @@ public abstract class SubBlockBase implements ISubBlock {
 
     public SubBlockBase(String name) {
         this.name = name;
-        this.textureLocation = new ResourceLocation(MODID, name);
+        this.textureLocation = new ResourceLocation(MODID, this.getModelPrefix() + name);
     }
 
     public String getName() {
@@ -75,6 +73,11 @@ public abstract class SubBlockBase implements ISubBlock {
                 "blocks/" + this.getTextureLocation().getResourcePath()).toString());
         templateFile.replaceContents(replacements);
 
-        return new GeneratedModel(this.getUnLocalizedName(), ModelType.BLOCKSTATE, templateFile.getFileContents());
+        return new GeneratedModel(this.getModelPrefix() + this.getUnLocalizedName(), ModelType.BLOCKSTATE,
+                templateFile.getFileContents());
+    }
+
+    protected String getModelPrefix() {
+        return "";
     }
 }

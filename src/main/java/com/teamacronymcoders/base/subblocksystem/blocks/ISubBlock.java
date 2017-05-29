@@ -45,5 +45,6 @@ public interface ISubBlock {
 
     void setItemStack(ItemStack itemStack);
 
+    @Nullable
     IGeneratedModel getGeneratedModel();
 }

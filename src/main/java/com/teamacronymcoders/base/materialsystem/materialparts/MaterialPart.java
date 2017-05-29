@@ -32,7 +32,7 @@ public class MaterialPart {
         this.setMaterial(material);
         this.setPart(part);
         this.materialSystem = materialSystem;
-        this.setTextureLocation(new ResourceLocation(Reference.MODID, part.getUnlocalizedName()));
+        this.setTextureLocation(new ResourceLocation(materialSystem.getMod().getID(), part.getUnlocalizedName()));
         this.colorized = true;
         this.data = new MaterialPartData(part.getData());
 
@@ -117,10 +117,5 @@ public class MaterialPart {
 
     public void setup() {
         this.getPart().getPartType().setup(this);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public List<IGeneratedModel> generateResources() {
-        return this.getPart().getPartType().generateResources(this);
     }
 }
