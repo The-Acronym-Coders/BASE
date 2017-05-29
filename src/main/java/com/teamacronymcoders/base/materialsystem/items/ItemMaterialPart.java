@@ -1,10 +1,18 @@
 package com.teamacronymcoders.base.materialsystem.items;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -13,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOreDict {
+public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOreDict, IHasGeneratedModel {
     private Map<Integer, MaterialPart> itemMaterialParts;
     private MaterialSystem materialSystem;
 
@@ -78,7 +86,21 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
 
     @Override
     public List<ResourceLocation> getResourceLocations(List<ResourceLocation> resourceLocations) {
-        this.getItemMaterialParts().forEach((id, materialPart) -> resourceLocations.add(materialPart.getTextureLocation()));
+        this.getItemMaterialParts().forEach((id, materialPart) -> resourceLocations.add(
+                new ResourceLocation(this.materialSystem.getMod().getID(), materialPart.getUnlocalizedName())));
         return resourceLocations;
+    }
+
+    @Override
+    public List<IGeneratedModel> getGeneratedModels() {
+        List<IGeneratedModel> models = Lists.newArrayList();
+        for (MaterialPart materialPart : this.getItemMaterialParts().values()) {
+            TemplateFile templateFile = TemplateManager.getTemplateFile("item_model");
+            Map<String, String> replacements = Maps.newHashMap();
+            replacements.put("texture", "base:items/" + materialPart.getPart().getUnlocalizedName());
+            templateFile.replaceContents(replacements);
+            models.add(new GeneratedModel(materialPart.getUnlocalizedName(), ModelType.ITEM_MODEL, templateFile.getFileContents()));
+        }
+        return models;
     }
 }
