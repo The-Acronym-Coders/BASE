@@ -15,6 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +86,7 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     }
 
     @Override
-    public void getSubBlocks(@Nonnull Item block, @Nonnull CreativeTabs creativeTab, @Nonnull List<ItemStack> list) {
+    public void getSubBlocks(@Nonnull Item block, @Nullable CreativeTabs creativeTab, @Nonnull List<ItemStack> list) {
         list.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 
