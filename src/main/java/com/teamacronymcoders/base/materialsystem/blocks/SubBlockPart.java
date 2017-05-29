@@ -102,7 +102,7 @@ public class SubBlockPart extends SubBlockBase {
 
     @Override
     public IGeneratedModel getGeneratedModel() {
-        TemplateFile templateFile = TemplateManager.getTemplateFile("sub_block_state");
+        TemplateFile templateFile = TemplateManager.getTemplateFile("block");
         Map<String, String> replacements = Maps.newHashMap();
 
         replacements.put("texture", "base:blocks/block");
