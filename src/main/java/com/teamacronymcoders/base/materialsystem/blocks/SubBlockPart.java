@@ -1,13 +1,20 @@
 package com.teamacronymcoders.base.materialsystem.blocks;
 
+import com.google.common.collect.Maps;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockBase;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Map;
 
 public class SubBlockPart extends SubBlockBase {
     private MaterialPart materialPart;
@@ -91,6 +98,18 @@ public class SubBlockPart extends SubBlockBase {
     public ResourceLocation getTextureLocation() {
         ResourceLocation location = materialPart.getTextureLocation();
         return new ResourceLocation(location.getResourceDomain(), this.getModelPrefix() + this.getUnLocalizedName());
+    }
+
+    @Override
+    public IGeneratedModel getGeneratedModel() {
+        TemplateFile templateFile = TemplateManager.getTemplateFile("sub_block_state");
+        Map<String, String> replacements = Maps.newHashMap();
+
+        replacements.put("texture", "base:blocks/block");
+        templateFile.replaceContents(replacements);
+
+        return new GeneratedModel(this.getModelPrefix() + this.getUnLocalizedName(), ModelType.BLOCKSTATE,
+                templateFile.getFileContents());
     }
 
     @Override

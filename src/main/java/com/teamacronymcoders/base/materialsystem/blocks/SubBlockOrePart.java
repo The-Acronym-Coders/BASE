@@ -75,10 +75,12 @@ public class SubBlockOrePart extends SubBlockPart {
         Map<String, String> replacements = Maps.newHashMap();
 
         String unlocalizedName = this.getMaterialPart().getPart().getUnlocalizedName();
-        replacements.put("texture", variantLocation.toString());
-        replacements.put("particle", variantLocation.toString());
-        replacements.put("ore_shadow", "blocks/" + unlocalizedName + "_shadow");
-        replacements.put("ore", "blocks/" + unlocalizedName);
+        String variantTexture = new ResourceLocation(variantLocation.getResourceDomain(),
+                "blocks/" + variantLocation.getResourcePath()).toString();
+        replacements.put("texture", variantTexture);
+        replacements.put("particle", variantTexture);
+        replacements.put("ore_shadow", "base:blocks/" + unlocalizedName + "_shadow");
+        replacements.put("ore", "base:blocks/" + unlocalizedName);
         templateFile.replaceContents(replacements);
 
         return new GeneratedModel("materials/" + this.getMaterialPart().getUnlocalizedName(), ModelType.BLOCKSTATE, templateFile.getFileContents());

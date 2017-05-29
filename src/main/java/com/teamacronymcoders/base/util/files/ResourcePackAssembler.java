@@ -6,6 +6,8 @@ import net.minecraft.client.resources.FileResourcePack;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -24,8 +26,7 @@ import java.util.Locale;
  * dir or elsewhere.
  * <p>
  * To use, first construct an instance of this class, then add all your assets
- * using {@link #addIcon(File)}, {@link #addLang(File)}, and
- * {@link #addCustomFile(String, File)}.
+ * {@link #addFile(String, File)}.
  * <p>
  * Once all files have been added, {@link #assemble()} Will create a zip of all
  * the files in the {@link File directory} passed into the constructor.
@@ -34,13 +35,13 @@ import java.util.Locale;
  * <p>
  * Also, {@link #setHasPackPng(Class)} allows your resource pack to have a logo.
  */
+@SideOnly(Side.CLIENT)
 public class ResourcePackAssembler {
     private static final String MC_META_BASE = "{\"pack\":{\"pack_format\":1,\"description\":\"%s\"}}";
     private static List<IResourcePack> defaultResourcePacks;
     private List<CustomFile> files = new ArrayList<CustomFile>();
     private File dir;
     private File zip;
-    private String name;
     private String mcmeta;
     private String modid;
     private String assetsPath;
@@ -58,9 +59,8 @@ public class ResourcePackAssembler {
     public ResourcePackAssembler(File directory, String packName, String modid) {
         this.dir = directory;
         this.zip = new File(dir.getAbsolutePath() + ".zip");
-        this.name = packName;
         this.modid = modid.toLowerCase(Locale.US);
-        this.mcmeta = String.format(MC_META_BASE, this.name);
+        this.mcmeta = String.format(MC_META_BASE, packName);
         this.assetsPath = "/assets/" + modid + "/";
     }
 
@@ -80,52 +80,24 @@ public class ResourcePackAssembler {
     }
 
     /**
-     * Adds an icon file. This file will be inserted into both the block and item
-     * texture folders.
-     *
-     * @param icon The icon file.
-     */
-    public void addIcon(File icon) {
-        files.add(new CustomFile(assetsPath + "textures/items/", icon));
-        files.add(new CustomFile(assetsPath + "textures/blocks/", icon));
-    }
-
-    /**
-     * Adds a language file. This file will be inserted into the lang dir only.
-     *
-     * @param lang A language file (e.g. en_US.lang)
-     */
-    public void addLang(File lang) {
-        files.add(new CustomFile(assetsPath + "lang/", lang));
-    }
-
-    /**
-     * Adds a model json file. This file will be inserted into the models dir only.
-     */
-    public void addModel(File model, ModelType type) {
-        String path = assetsPath + type.getPath() + "/";
-        files.add(new CustomFile(path, model));
-    }
-
-    /**
      * Adds a custom file to the pack. This can be added into any folder in the
      * pack you desire. Useful for one-off files such as sounds.json.
      *
      * @param path The path inside the resource pack to this file.
      * @param file The file to add.
      */
-    public void addCustomFile(String path, File file) {
-        files.add(new CustomFile(path, file));
+    public void addFile(String path, File file) {
+        files.add(new CustomFile(assetsPath + path, file));
     }
 
     /**
      * Adds the custom file at the base directory.
      *
      * @param file The file to add.
-     * @see #addCustomFile(String, File)
+     * @see #addFile(String, File)
      */
     public void addCustomFile(File file) {
-        addCustomFile(null, file);
+        addFile(null, file);
     }
 
     /**
@@ -200,22 +172,6 @@ public class ResourcePackAssembler {
         fw.write(defaultText);
         fw.flush();
         fw.close();
-    }
-
-    public enum ModelType {
-        BLOCK("models/block"),
-        ITEM("models/item"),
-        BLOCKSTATE("blockstates");
-
-        private final String path;
-
-        ModelType(String path) {
-            this.path = path;
-        }
-
-        String getPath() {
-            return path;
-        }
     }
 
     private class CustomFile {

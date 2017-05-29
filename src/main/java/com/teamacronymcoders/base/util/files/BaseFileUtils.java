@@ -132,6 +132,7 @@ public class BaseFileUtils {
         boolean exists = file.exists();
         if (!exists) {
             try {
+                file.getParentFile().mkdirs();
                 exists = file.createNewFile();
             } catch (IOException e) {
                 Platform.attemptLogExceptionToCurrentMod(e);
