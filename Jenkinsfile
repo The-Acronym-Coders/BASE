@@ -29,7 +29,7 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 echo 'Building and Deploying to Maven'
-                sh './gradlew build ' + branch + '--refresh-dependencies uploadArchives'
+                sh './gradlew build --refresh-dependencies uploadArchives'
             }
         }
     }
