@@ -12,11 +12,14 @@ pipeline {
             steps {
                 echo 'Setting up Workspace'
                 sh './gradlew setupdecompworkspace'
+                if (BRANCH_NAME.contains("dev")) {
+                    env.BRANCH = "Snapshot"
+                }
             }
         }
-        stage('Build') {
+        stage('Build and Deploy') {
             steps {
-                echo 'Building'
+                echo 'Building and Deploying to Maven'
                 sh './gradlew build --refresh-dependencies'
             }
         }
