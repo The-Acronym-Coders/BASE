@@ -9,7 +9,9 @@ pipeline {
                     return env.BRANCH_NAME.contains("dev")
                 }
             }
-            sh 'export BRANCH=Snapshot'
+            steps {
+                sh 'export BRANCH=Snapshot'
+            }
         }
         stage('Clean') {
             steps {
