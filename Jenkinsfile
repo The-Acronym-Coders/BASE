@@ -2,8 +2,8 @@
 
 pipeline {
     agent any
+    def branch = ""
     stages {
-        def branch = ""
         stage('Set Dev Variable') {
             when {
                 expression {
