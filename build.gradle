@@ -127,7 +127,7 @@ processResources {
 
 String getVersion() {
     String version = "${base_version}"
-    String branch = project.hasProperty("branch") ? project.branch : ""
+    String branch = System.getenv("BRANCH") != null ? System.getenv("BRANCH") : ""
 
     if(branch != "") {
         version += "-" + branch

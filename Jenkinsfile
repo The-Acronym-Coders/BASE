@@ -2,7 +2,6 @@
 
 pipeline {
     agent any
-    def branch = ""
     stages {
         stage('Set Dev Variable') {
             when {
@@ -10,7 +9,7 @@ pipeline {
                     return env.BRANCH_NAME.contains("dev")
                 }
             }
-            branch = '-Pbranch=Snapshot'
+            sh 'export BRANCH=Snapshot'
         }
         stage('Clean') {
             steps {
