@@ -1,13 +1,16 @@
+#!/usr/bin/env groovy
+
 pipeline {
     agent any
     stages {
+        def branch = ""
         stage('Set Dev Variable') {
             when {
                 expression {
                     return env.BRANCH_NAME.contains("dev")
                 }
             }
-            env.BRANCH="Snapshoot"
+            branch = '-Pbranch=Snapshot'
         }
         stage('Clean') {
             steps {
@@ -25,13 +28,7 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 echo 'Building and Deploying to Maven'
-                sh './gradlew build --refresh-dependencies'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying to Maven'
-                sh './gradlew uploadArchives'
+                sh './gradlew build ' + branch + '--refresh-dependencies uploadArchives'
             }
         }
     }
