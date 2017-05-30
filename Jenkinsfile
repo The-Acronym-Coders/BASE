@@ -1,6 +1,14 @@
 pipeline {
     agent any
     stages {
+        stage('Set Dev Variable') {
+            when {
+                expression {
+                    return env.BRANCH_NAME.contains("dev")
+                }
+            }
+            env.BRANCH="Snapshoot"
+        }
         stage('Clean') {
             steps {
                 echo 'Cleaning Project'
@@ -12,9 +20,6 @@ pipeline {
             steps {
                 echo 'Setting up Workspace'
                 sh './gradlew setupdecompworkspace'
-                if (BRANCH_NAME.contains("dev")) {
-                    env.BRANCH = "Snapshot"
-                }
             }
         }
         stage('Build and Deploy') {
