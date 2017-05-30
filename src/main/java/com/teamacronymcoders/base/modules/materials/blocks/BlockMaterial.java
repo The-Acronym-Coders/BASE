@@ -18,6 +18,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -58,18 +59,23 @@ public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasBloc
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
+    public boolean isFullCube(@Nonnull IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(@Nonnull IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullBlock(IBlockState state) {
+    public boolean isFullBlock(@Nonnull IBlockState state) {
         return false;
+    }
+
+    @Override
+    public boolean isSideSolid(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
+        return true;
     }
 
     @Override
@@ -102,10 +108,5 @@ public class BlockMaterial extends BlockBase implements IHasBlockColor, IHasBloc
 
     public void setPartType(EnumPartType partType) {
         this.partType = partType;
-    }
-
-    @Override
-    public Block getBlock() {
-        return this;
     }
 }

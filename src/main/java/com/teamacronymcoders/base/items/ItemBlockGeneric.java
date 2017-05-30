@@ -15,6 +15,7 @@ public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHas
     public ItemBlockGeneric(T block) {
         super(block);
         this.actualBlock = block;
+        this.setHasSubtypes(true);
     }
 
     public T getActualBlock() {
@@ -29,6 +30,11 @@ public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHas
             itemStacks.add(new ItemStack(this));
         }
         return itemStacks;
+    }
+
+    @Override
+    public int getMetadata(int damage) {
+        return Math.min(15, Math.max(0, damage));
     }
 
     @Override

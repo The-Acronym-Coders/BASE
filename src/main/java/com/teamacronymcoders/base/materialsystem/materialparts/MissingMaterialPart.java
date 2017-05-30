@@ -1,21 +1,24 @@
 package com.teamacronymcoders.base.materialsystem.materialparts;
 
 import com.teamacronymcoders.base.Base;
-import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import com.teamacronymcoders.base.materialsystem.parts.Part;
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.materialsystem.MaterialException;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
+import com.teamacronymcoders.base.materialsystem.parttype.NullPartType;
+import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 public class MissingMaterialPart extends MaterialPart {
-    public MissingMaterialPart() {
-        super(null, new Part("Missing", new PartType("Missing")));
+    public MissingMaterialPart(IBaseMod mod, MaterialSystem materialSystem) throws MaterialException {
+        super(materialSystem, null, new PartBuilder(materialSystem).setName("Missing").setPartType(new NullPartType(mod)).build());
     }
 
     @Override
-    public String getName() {
+    public String getUnlocalizedName() {
         return "Missing Part";
     }
 

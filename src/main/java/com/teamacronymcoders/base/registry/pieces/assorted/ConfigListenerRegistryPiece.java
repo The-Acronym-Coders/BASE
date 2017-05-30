@@ -10,10 +10,10 @@ import net.minecraft.util.ResourceLocation;
 public class ConfigListenerRegistryPiece extends RegistryPieceBase<IConfigListener> {
     private ConfigRegistry configRegistry;
 
-    @Override
-    public boolean acceptsEntry(ResourceLocation name, Object entry) {
-        return entry instanceof IConfigListener;
+    public ConfigListenerRegistryPiece() {
+        super(IConfigListener.class);
     }
+
 
     @Override
     public void addEntry(ResourceLocation name, IConfigListener listener) {

@@ -14,7 +14,7 @@ public class SaveLoader {
 
     public static <T> T getSavedObject(String name, Class<T> clazz) {
         createSaveFolder();
-        File savedFile = new File(saveFolder, name);
+        File savedFile = new File(saveFolder, name + ".json");
         T savedObject = null;
         if (savedFile.exists()) {
             String json = BaseFileUtils.readFileToString(savedFile);

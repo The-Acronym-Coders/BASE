@@ -36,7 +36,7 @@ public class BaseFileUtils {
      * @param directory The directory to zip the contents of. Content structure will be
      *                  preserved.
      * @param zipfile   The zip file to output to.
-     * @throws IOException
+     * @throws IOException if any file activity fails
      * @author McDowell - http://stackoverflow.com/questions/1399126/java-util-zip
      * -recreating-directory-structure
      */
@@ -52,16 +52,19 @@ public class BaseFileUtils {
             res = zout;
             while (!queue.isEmpty()) {
                 directory = queue.pop();
-                for (File child : directory.listFiles()) {
-                    String name = base.relativize(child.toURI()).getPath();
-                    if (child.isDirectory()) {
-                        queue.push(child);
-                        name = name.endsWith("/") ? name : name + "/";
-                        zout.putNextEntry(new ZipEntry(name));
-                    } else {
-                        zout.putNextEntry(new ZipEntry(name));
-                        copy(child, zout);
-                        zout.closeEntry();
+                File[] files = directory.listFiles();
+                if (files != null) {
+                    for (File child : files) {
+                        String name = base.relativize(child.toURI()).getPath();
+                        if (child.isDirectory()) {
+                            queue.push(child);
+                            name = name.endsWith("/") ? name : name + "/";
+                            zout.putNextEntry(new ZipEntry(name));
+                        } else {
+                            zout.putNextEntry(new ZipEntry(name));
+                            copy(child, zout);
+                            zout.closeEntry();
+                        }
                     }
                 }
             }
@@ -126,13 +129,23 @@ public class BaseFileUtils {
     }
 
     public static void writeStringToFile(String string, File file) {
-        if (!file.exists()) {
+        boolean exists = file.exists();
+        if (!exists) {
             try {
-                file.createNewFile();
+                file.getParentFile().mkdirs();
+                exists = file.createNewFile();
+            } catch (IOException e) {
+                Platform.attemptLogExceptionToCurrentMod(e);
+            }
+        }
+        if (exists) {
+            try {
                 FileUtils.writeStringToFile(file, string);
             } catch (IOException e) {
                 Platform.attemptLogExceptionToCurrentMod(e);
             }
+        } else {
+            Platform.attemptLogErrorToCurrentMod("Couldn't create File: " + file.getName());
         }
     }
 }

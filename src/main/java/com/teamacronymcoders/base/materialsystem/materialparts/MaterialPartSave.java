@@ -1,20 +1,22 @@
 package com.teamacronymcoders.base.materialsystem.materialparts;
 
-import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
+import java.util.Map;
+
 public class MaterialPartSave {
-    private BiMap<Integer, MaterialPart> materialParts;
+    private Map<String, Integer> materialMappings;
 
     public MaterialPartSave() {
-        materialParts = HashBiMap.create();
+        materialMappings = HashBiMap.create();
     }
 
-    public BiMap<Integer, MaterialPart> getMaterialParts() {
-        return materialParts;
+    public Map<String, Integer> getMaterialMappings() {
+        return materialMappings;
     }
 
-    public void setMaterialParts(BiMap<Integer, MaterialPart> materialParts) {
-        this.materialParts = materialParts;
+    public void setMaterialMappings(Map<Integer, MaterialPart> materialMappings) {
+        this.materialMappings = HashBiMap.create();
+        materialMappings.forEach((id, materialPart) -> this.materialMappings.put(materialPart.getUnlocalizedName(), id));
     }
 }

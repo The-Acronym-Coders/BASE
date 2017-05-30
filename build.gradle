@@ -24,7 +24,7 @@ repositories {
         url 'http://maven.blamejared.com'
     }
     maven {
-        name 'JEI'
+        name 'JEI/Tinkers'
         url 'http://dvs1.progwml6.com/files/maven'
     }
     maven {
@@ -32,8 +32,16 @@ repositories {
         url 'http://maven.epoxide.xyz'
     }
     maven {
-        name 'Botania/Baubles'
+        name 'Baubles'
         url 'https://jitpack.io'
+    }
+    maven {
+        name 'The One Probe'
+        url 'http://maven.tterrag.com/'
+    }
+    maven {
+        name 'CompatLayer'
+        url 'http://maven.k-4u.nl'
     }
 }
 
@@ -58,7 +66,11 @@ dependencies {
     deobfCompile "MineTweaker3:MineTweaker3-MC1102-Main:${minecraft_version}-${minetweaker_version}"
     deobfCompile "net.darkhax.tesla:Tesla:${minecraft_version}-${tesla_version}"
     deobfCompile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}"
-    deobfCompile "com.github.Azanor:Baubles:1.10.2-SNAPSHOT"
+    deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
+    deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
+    deobfCompile "com.github.Azanor:Baubles:${minecraft_version}-SNAPSHOT"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.1x-${top_version}"
+    deobfCompile "com.github.mcjty:compatlayer:${compat_version}"
 }
 
 def commonManifest = {

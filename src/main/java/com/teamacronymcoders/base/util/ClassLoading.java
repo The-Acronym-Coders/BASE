@@ -63,9 +63,9 @@ public class ClassLoading {
     public static <T> List<T> getInstances(@Nonnull ASMDataTable asmDataTable, Class annotationClass,
                                            Class<T> instanceClass, Function<Class<? extends T>, Boolean> createInstance) {
         String annotationClassName = annotationClass.getCanonicalName();
-        Set<ASMDataTable.ASMData> asmDatas = asmDataTable.getAll(annotationClassName);
+        Set<ASMDataTable.ASMData> asmDataSet = asmDataTable.getAll(annotationClassName);
         List<T> instances = new ArrayList<>();
-        for (ASMDataTable.ASMData asmData : asmDatas) {
+        for (ASMDataTable.ASMData asmData : asmDataSet) {
             try {
                 Class<?> asmClass = Class.forName(asmData.getClassName());
                 Class<? extends T> asmInstanceClass = asmClass.asSubclass(instanceClass);
@@ -73,9 +73,11 @@ public class ClassLoading {
                     T instance = asmInstanceClass.newInstance();
                     instances.add(instance);
                 }
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException exception) {
+            } catch (IllegalAccessException | InstantiationException exception) {
                 Platform.attemptLogErrorToCurrentMod("Failed to load: " + asmData.getClassName());
                 Platform.attemptLogExceptionToCurrentMod(exception);
+            } catch (ClassNotFoundException e) {
+                //Silence for some things are side only....
             }
         }
         return instances;

@@ -1,4 +1,3 @@
-tile.test.name=Test
 itemGroup.base=B.A.S.E
 error.base.null_part=Null Part
 
@@ -12,6 +11,7 @@ base.part.bolt=Bolt
 base.part.block=Block
 base.part.ore=Ore
 base.part.poor_ore=Poor Ore
+base.part.dense_ore=Dense Ore
 
 item.wrench.name=Wrench
 

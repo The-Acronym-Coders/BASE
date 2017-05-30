@@ -1,14 +1,11 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.entities.dataserializers.BaseDataSerializers;
-import com.teamacronymcoders.base.featuresystem.FeatureHandler;
-import com.teamacronymcoders.base.materialsystem.FeatureMaterials;
-import com.teamacronymcoders.base.materialsystem.commands.CommandOreDictDump;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
-import com.teamacronymcoders.base.subblocksystem.FeatureSubBlocks;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import com.teamacronymcoders.base.util.OreDictUtils;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -16,7 +13,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 import static com.teamacronymcoders.base.Reference.*;
 
@@ -24,6 +20,10 @@ import static com.teamacronymcoders.base.Reference.*;
         dependencies = DEPENDENCIES)
 public class Base extends BaseModFoundation<Base> {
     public static final LanguageHelper languageHelper = new LanguageHelper(MODID);
+
+    static {
+        FluidRegistry.enableUniversalBucket();
+    }
 
     @Instance(MODID)
     public static Base instance;
@@ -40,12 +40,7 @@ public class Base extends BaseModFoundation<Base> {
         super.preInit(event);
         OreDictUtils.setup();
         BaseDataSerializers.registerSerializers();
-    }
-
-    @Override
-    public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
-        FeatureHandler.registerFeature("MATERIALS", new FeatureMaterials());
-        FeatureHandler.registerFeature("SUB_BLOCKS", new FeatureSubBlocks());
+        Capabilities.register();
     }
 
     @EventHandler

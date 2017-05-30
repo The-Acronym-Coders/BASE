@@ -3,26 +3,34 @@ package com.teamacronymcoders.base.proxies;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.BlockStateMappers;
+import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.client.Colors;
 import com.teamacronymcoders.base.client.Models;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.client.models.wrapped.WrappedBlockEntry;
+import com.teamacronymcoders.base.client.models.wrapped.WrappedModelLoader;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registry.pieces.RegistrySide;
+import com.teamacronymcoders.base.util.Platform;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
+import net.minecraft.client.resources.IResource;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.io.IOUtils;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
+import java.io.InputStream;
 
 @SideOnly(Side.CLIENT)
 public class LibClientProxy extends LibCommonProxy {
@@ -90,5 +98,27 @@ public class LibClientProxy extends LibCommonProxy {
     @Override
     public void registerModelVariant(Item item, ResourceLocation resourceLocation) {
         ModelBakery.registerItemVariants(item, resourceLocation);
+    }
+
+    @Override
+    public void registerWrappedModel(ResourceLocation resourceLocation, WrappedBlockEntry wrappedBlockEntry) {
+        WrappedModelLoader.addModel(resourceLocation, wrappedBlockEntry);
+    }
+
+    @Override
+    public String getFileContents(ResourceLocation location) {
+        location = new ResourceLocation(location.getResourceDomain(), "templates/" + location.getResourcePath() + ".json");
+        IResource resource = ClientHelper.getResource(location);
+        String fileContents = "";
+        if (resource != null) {
+            InputStream inputStream = resource.getInputStream();
+            try {
+                fileContents = IOUtils.toString(inputStream);
+            } catch (IOException e) {
+                Platform.attemptLogExceptionToCurrentMod(e);
+            }
+        }
+
+        return fileContents;
     }
 }

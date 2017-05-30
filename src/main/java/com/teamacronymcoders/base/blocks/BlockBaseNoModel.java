@@ -15,6 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,18 +37,17 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     @Override
     public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         world.updateComparatorOutputLevel(pos, this);
-
         super.breakBlock(world, pos, state);
     }
 
     @Override
-    public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
+    public void onBlockAdded(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
         this.updateState(world, pos, state);
         super.onBlockAdded(world, pos, state);
     }
 
     @Override
-    public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighborPos) {
+    public void onNeighborChange(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull BlockPos neighborPos) {
         this.updateState(world, pos, world.getBlockState(neighborPos));
         super.onNeighborChange(world, pos, neighborPos);
     }
@@ -86,7 +86,7 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     }
 
     @Override
-    public void getSubBlocks(@Nonnull Item block, CreativeTabs creativeTab, List<ItemStack> list) {
+    public void getSubBlocks(@Nonnull Item block, @Nullable CreativeTabs creativeTab, @Nonnull List<ItemStack> list) {
         list.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 

@@ -1,18 +1,50 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 
-import java.util.Map;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public interface ISubBlock {
     String getName();
 
-    String getLocalizedName();
+    String getUnLocalizedName();
+
+    default String getLocalizedName() {
+        //noinspection deprecation
+        return I18n.translateToLocal(this.getUnLocalizedName());
+    }
 
     ResourceLocation getTextureLocation();
 
     int getColor();
 
-    void setOreDict(Map<ItemStack, String> oreDict);
+    int getHardness();
+
+    int getResistance();
+
+    int getHarvestLevel();
+
+    @Nonnull
+    String getHarvestTool();
+
+    void getDrops(int fortune, List<ItemStack> itemStacks);
+
+    void setRecipes(List<IRecipe> recipes);
+
+    String getOreDict();
+
+    @Nullable
+    CreativeTabs getCreativeTab();
+
+    void setItemStack(ItemStack itemStack);
+
+    @Nullable
+    IGeneratedModel getGeneratedModel();
 }
