@@ -17,6 +17,7 @@ import java.io.File;
 public interface IBaseMod<T> {
     T getInstance();
 
+    @Nullable
     CreativeTabs getCreativeTab();
 
     String getID();
