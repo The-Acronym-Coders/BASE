@@ -4,7 +4,6 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
 import com.teamacronymcoders.base.materialsystem.compat.MaterialCompatLoader;
@@ -16,19 +15,14 @@ import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.materials.MaterialBuilder;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.base.materialsystem.parts.ProvidedParts;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.util.TextUtils;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class MaterialSystem {
     public static MissingMaterialPart MISSING_MATERIAL_PART;
@@ -67,7 +61,7 @@ public class MaterialSystem {
         materialCreativeTab = new CreativeTabCarousel("materials." + mod.getID());
         setupItem();
         try {
-            MISSING_MATERIAL_PART = new MissingMaterialPart(this);
+            MISSING_MATERIAL_PART = new MissingMaterialPart(this.getMod(), this);
         } catch (MaterialException e) {
             mod.getLogger().fatal("Failed to Create Missing Material Part, THIS IS BAD");
         }
@@ -95,7 +89,8 @@ public class MaterialSystem {
     }
 
     public void finishUp() {
-        for (MaterialPart materialPart : materialPartBiMap.values()) {
+        List<MaterialPart> parts = Lists.newArrayList(materialPartBiMap.values());
+        for (MaterialPart materialPart : parts) {
             materialPart.setup();
         }
         MaterialPartSave save = new MaterialPartSave();
@@ -146,17 +141,21 @@ public class MaterialSystem {
             Part part = partMap.get(partName.toLowerCase(Locale.US));
             if (part != null) {
                 MaterialPart materialPart = new MaterialPart(this, material, part);
-                int id = nextId++;
-                if (nameMapping.containsKey(materialPart.getUnlocalizedName())) {
-                    id = nameMapping.get(materialPart.getUnlocalizedName());
-                }
-                materialPartBiMap.put(id, materialPart);
+                this.registerMaterialPart(materialPart);
                 materialParts.add(materialPart);
             } else {
                 throw new MaterialException("Could not find part with name: " + partName);
             }
         }
         return materialParts;
+    }
+
+    public void registerMaterialPart(MaterialPart materialPart) {
+        int id = nextId++;
+        if (nameMapping.containsKey(materialPart.getUnlocalizedName())) {
+            id = nameMapping.get(materialPart.getUnlocalizedName());
+        }
+        materialPartBiMap.put(id, materialPart);
     }
 
     public IBaseMod getMod() {

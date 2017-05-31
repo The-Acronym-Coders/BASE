@@ -1,14 +1,15 @@
 package com.teamacronymcoders.base.materialsystem.blocks;
 
+import com.google.common.collect.Maps;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
-import com.teamacronymcoders.base.subblocksystem.blocks.BlockSubBlockHolder;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockBase;
-import com.teamacronymcoders.base.util.TextUtils;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -83,9 +84,8 @@ public class SubBlockPart extends SubBlockBase {
     }
 
     @Override
-    public void setOreDict(Block block, int number, Map<ItemStack, String> oreDict) {
-        oreDict.put(new ItemStack(block, 1, number), this.materialPart.getPart().getOreDictPrefix() +
-                this.materialPart.getMaterial().getOreDictSuffix());
+    public String getOreDict() {
+        return this.materialPart.getOreDictString();
     }
 
     @Nullable
@@ -96,7 +96,25 @@ public class SubBlockPart extends SubBlockBase {
 
     @Override
     public ResourceLocation getTextureLocation() {
-        return materialPart.getTextureLocation();
+        ResourceLocation location = materialPart.getTextureLocation();
+        return new ResourceLocation(location.getResourceDomain(), this.getModelPrefix() + this.getUnLocalizedName());
+    }
+
+    @Override
+    public IGeneratedModel getGeneratedModel() {
+        TemplateFile templateFile = TemplateManager.getTemplateFile("block");
+        Map<String, String> replacements = Maps.newHashMap();
+
+        replacements.put("texture", "base:blocks/block");
+        templateFile.replaceContents(replacements);
+
+        return new GeneratedModel(this.getModelPrefix() + this.getUnLocalizedName(), ModelType.BLOCKSTATE,
+                templateFile.getFileContents());
+    }
+
+    @Override
+    protected String getModelPrefix() {
+        return "materials/";
     }
 
     public MaterialPart getMaterialPart() {

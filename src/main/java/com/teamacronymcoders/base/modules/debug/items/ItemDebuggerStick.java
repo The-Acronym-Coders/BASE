@@ -25,10 +25,11 @@ public class ItemDebuggerStick extends ItemBase {
 
     @Override
     @Nonnull
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, @Nonnull EnumHand hand) {
+    @ParametersAreNonnullByDefault
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, EnumHand hand) {
         RayTraceResult result = ProjectileHelper.forwardsRaycast(entityPlayer, true, true, entityPlayer);
-        EnumActionResult enumActionResult = EnumActionResult.PASS;
-        boolean wroteOutput = false;
+
+        EnumActionResult actionResult = EnumActionResult.SUCCESS;
         switch (result.typeOfHit) {
             case BLOCK:
                 TileEntity tileEntity = world.getTileEntity(result.getBlockPos());
@@ -38,30 +39,26 @@ public class ItemDebuggerStick extends ItemBase {
                 } else if (block instanceof IDebuggable) {
                     writeDebug((IDebuggable) block);
                 } else {
-                    if (block.getRegistryName() != null) {
-                        this.getMod().getLogger().info(block.getRegistryName().toString());
-                    }
+                    this.getMod().getLogger().info(block.getRegistryName().toString());
                 }
-                wroteOutput = true;
                 break;
             case ENTITY:
                 Entity entity = result.entityHit;
                 if (entity instanceof IDebuggable) {
                     writeDebug((IDebuggable) entity);
                 } else if (entity != null) {
-                    this.getMod().getLogger().info(entity.getName());
+                    this.getMod().getLogger().info(entity.getName() + ":" + entity.getUniqueID());
                 }
-                wroteOutput = true;
                 break;
             case MISS:
+                actionResult = EnumActionResult.PASS;
                 break;
         }
         if (wroteOutput) {
             enumActionResult = EnumActionResult.SUCCESS;
         }
 
-
-        return ActionResult.newResult(enumActionResult, entityPlayer.getHeldItem(hand));
+        return ActionResult.newResult(actionResult, itemStack);
     }
 
     public void writeDebug(IDebuggable debuggable) {

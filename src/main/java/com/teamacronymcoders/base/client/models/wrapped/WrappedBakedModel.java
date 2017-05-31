@@ -23,6 +23,7 @@ import java.util.Map;
 public class WrappedBakedModel implements IBakedModel {
     private WrappedBlockEntry blockEntry;
     private List<BakedQuad> bakedQuads = null;
+    private TextureAtlasSprite particleTexture;
 
     public WrappedBakedModel(WrappedBlockEntry wrappedBlockEntry) {
         this.blockEntry = wrappedBlockEntry;
@@ -44,7 +45,7 @@ public class WrappedBakedModel implements IBakedModel {
 
     @Override
     public boolean isAmbientOcclusion() {
-        return false;
+        return true;
     }
 
     @Override
@@ -60,7 +61,10 @@ public class WrappedBakedModel implements IBakedModel {
     @Override
     @Nonnull
     public TextureAtlasSprite getParticleTexture() {
-        return ModelUtils.getBlockSprite(this.blockEntry.getBaseResource());
+        if (this.particleTexture == null) {
+            this.particleTexture = ModelUtils.getBlockSprite(this.blockEntry.getBaseResource());
+        }
+        return this.particleTexture;
     }
 
     @Override

@@ -66,8 +66,9 @@ public class ModelUtils {
                     builder.put(e, d * colour[0], d * colour[1], d * colour[2], 1 * colour[3] * alpha);
                     break;
                 case UV:
-                    if (sprite == null)//Double Safety. I have no idea how it even happens, but it somehow did .-.
+                    if (sprite == null) {//Double Safety. I have no idea how it even happens, but it somehow did .-.
                         sprite = Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
+                    }
                     builder.put(e, sprite.getInterpolatedU(u), sprite.getInterpolatedV((v)), 0, 1);
                     break;
                 case NORMAL:
@@ -79,15 +80,11 @@ public class ModelUtils {
         }
     }
 
-    public static TextureAtlasSprite getBlockSprite(String path) {
-        return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(path);
-    }
-
     public static TextureAtlasSprite getBlockSprite(ResourceLocation path) {
         if (!path.getResourcePath().contains("blocks/")) {
             path = new ResourceLocation(path.getResourceDomain(), "blocks/" + path.getResourcePath());
         }
-        return getBlockSprite(path.toString());
+        return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(path.toString());
     }
 
     @SuppressWarnings("deprecation")

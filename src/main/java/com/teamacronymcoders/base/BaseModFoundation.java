@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nullable;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -150,11 +151,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     }
 
     @Override
-    public String getPrefix() {
-        return this.getID() + ":";
-    }
-
-    @Override
     public boolean hasConfig() {
         return true;
     }
@@ -214,6 +210,11 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Override
     public SubBlockSystem getSubBlockSystem() {
         return this.subBlockSystem;
+    }
+
+    @Nullable
+    public File getResourceFolder() {
+        return null;
     }
 
     public boolean useModAsConfigFolder() {

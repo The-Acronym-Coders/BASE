@@ -12,10 +12,12 @@ import com.teamacronymcoders.base.util.logging.ILogger;
 import net.minecraft.creativetab.CreativeTabs;
 
 import javax.annotation.Nullable;
+import java.io.File;
 
 public interface IBaseMod<T> {
     T getInstance();
 
+    @Nullable
     CreativeTabs getCreativeTab();
 
     String getID();
@@ -23,8 +25,6 @@ public interface IBaseMod<T> {
     String getName();
 
     String getVersion();
-
-    String getPrefix();
 
     boolean hasConfig();
 
@@ -51,4 +51,7 @@ public interface IBaseMod<T> {
 
     @Nullable
     SubBlockSystem getSubBlockSystem();
+
+    @Nullable
+    File getResourceFolder();
 }

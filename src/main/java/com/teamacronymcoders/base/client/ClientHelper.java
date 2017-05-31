@@ -1,5 +1,7 @@
 package com.teamacronymcoders.base.client;
 
+import com.teamacronymcoders.base.util.Platform;
+import com.teamacronymcoders.base.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -10,14 +12,19 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.resources.IResource;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
+
+import javax.annotation.Nullable;
+import java.io.IOException;
 
 /**
  * @author Surseance
@@ -81,5 +88,16 @@ public class ClientHelper {
 
     public static ItemModelMesher getItemModelMesher() {
         return mc().getRenderItem().getItemModelMesher();
+    }
+
+    @Nullable
+    public static IResource getResource(ResourceLocation resourceLocation) {
+        IResource iResource = null;
+        try {
+            iResource = mc().getResourceManager().getResource(resourceLocation);
+        } catch (IOException e) {
+            Platform.attemptLogExceptionToCurrentMod(e);
+        }
+        return iResource;
     }
 }

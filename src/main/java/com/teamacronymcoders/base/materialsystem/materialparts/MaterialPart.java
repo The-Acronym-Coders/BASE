@@ -1,17 +1,20 @@
 package com.teamacronymcoders.base.materialsystem.materialparts;
 
 import com.teamacronymcoders.base.Reference;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
-import com.teamacronymcoders.base.materialsystem.parts.PartType;
+import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.base.util.TextUtils;
 import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Map;
+import java.util.List;
 
 public class MaterialPart {
     private Material material;
@@ -30,7 +33,7 @@ public class MaterialPart {
         this.setMaterial(material);
         this.setPart(part);
         this.materialSystem = materialSystem;
-        this.setTextureLocation(new ResourceLocation(Reference.MODID, part.getUnlocalizedName()));
+        this.setTextureLocation(new ResourceLocation(materialSystem.getMod().getID(), part.getUnlocalizedName()));
         this.colorized = true;
         this.data = new MaterialPartData(part.getData());
 

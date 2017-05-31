@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.blocks.BlockBaseNoModel;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
+import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.items.itemblocks.ItemBlockGeneric;
@@ -30,19 +32,21 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockStateMapper, IHasBlockColor, IHasOreDict, IHasRecipe {
+public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockStateMapper, IHasBlockColor, IHasOreDict, IHasRecipe, IHasGeneratedModel {
     public static final PropertyInteger SUB_BLOCK_NUMBER = PropertyInteger.create("sub_block_number", 0, 15);
     private Map<Integer, ISubBlock> subBlocks;
 
     public BlockSubBlockHolder(int number, Map<Integer, ISubBlock> subBlocks) {
         super(Material.IRON, "sub_block_holder_" + number);
-        this.setItemBlock(new ItemBlockGeneric<>(this));
+        this.setItemBlock(new ItemBlockSubBlockHolder(this));
         this.subBlocks = subBlocks;
         for (int x = 0; x < 16; x++) {
             this.getSubBlocks().putIfAbsent(x, SubBlockSystem.MISSING_SUB_BLOCK);
+            this.getSubBlock(x).setItemStack(new ItemStack(this.getItemBlock(), 1, x));
         }
-        this.setItemBlock(new ItemBlockSubBlockHolder(this));
     }
 
     @Override
@@ -91,7 +95,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     @Nonnull
     public List<ItemStack> getDrops(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull IBlockState state, int fortune) {
         List<ItemStack> itemStacks = Lists.newArrayList();
-        this.getSubBlock(state).getDrops(state, fortune, itemStacks);
+        this.getSubBlock(state).getDrops(fortune, itemStacks);
         return itemStacks;
     }
 
@@ -149,7 +153,12 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     @Nonnull
     @Override
     public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
-        this.getSubBlocks().entrySet().forEach((entry -> entry.getValue().setOreDict(this, entry.getKey(), names)));
+        this.getSubBlocks().forEach((key, value) -> {
+            String oreDict = value.getOreDict();
+            if (oreDict != null && !oreDict.isEmpty()) {
+                names.put(new ItemStack(this.getItemBlock(), 1, key), oreDict);
+            }
+        });
         return names;
     }
 
@@ -157,5 +166,10 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     public List<IRecipe> getRecipes(List<IRecipe> recipes) {
         this.getSubBlocks().values().forEach(subBlock -> subBlock.setRecipes(recipes));
         return recipes;
+    }
+
+    @Override
+    public List<IGeneratedModel> getGeneratedModels() {
+        return this.getSubBlocks().values().stream().map(ISubBlock::getGeneratedModel).filter(Objects::nonNull).collect(Collectors.toList());
     }
 }

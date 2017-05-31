@@ -12,6 +12,7 @@ import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.pipeline.*;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 
 //Borrowed from IE with Permission
@@ -54,7 +55,7 @@ public class SmartLightingQuad extends BakedQuad {
     }
 
     @Override
-    public void pipe(IVertexConsumer consumer) {
+    public void pipe(@Nonnull IVertexConsumer consumer) {
         IBlockAccess world = null;
         BlockInfo info;
         if (consumer instanceof VertexLighterFlat) {

@@ -1,0 +1,21 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block",
+    "model": "base:ore",
+    "textures": {
+      "particle": "##PARTICLE##",
+      "texture": "##TEXTURE##",
+      "ore": "##ORE##",
+      "ore_shadow": "##ORE_SHADOW##"
+    }
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ]
+  }
+}

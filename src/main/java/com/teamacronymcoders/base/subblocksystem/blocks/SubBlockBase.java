@@ -1,11 +1,14 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import com.google.common.collect.Maps;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 
 import java.util.List;
 import java.util.Map;
@@ -15,10 +18,11 @@ import static com.teamacronymcoders.base.Reference.MODID;
 public abstract class SubBlockBase implements ISubBlock {
     private String name;
     private ResourceLocation textureLocation;
+    protected ItemStack itemStack;
 
     public SubBlockBase(String name) {
         this.name = name;
-        this.textureLocation = new ResourceLocation(MODID, name);
+        this.textureLocation = new ResourceLocation(MODID, this.getModelPrefix() + name);
     }
 
     public String getName() {
@@ -41,9 +45,8 @@ public abstract class SubBlockBase implements ISubBlock {
     }
 
     @Override
-    public void getDrops(IBlockState blockState, int fortune, List<ItemStack> itemStacks) {
-        Block block = blockState.getBlock();
-        itemStacks.add(new ItemStack(block, 1, block.getMetaFromState(blockState)));
+    public void getDrops( int fortune, List<ItemStack> itemStacks) {
+        itemStacks.add(this.itemStack);
     }
 
     @Override
@@ -52,7 +55,29 @@ public abstract class SubBlockBase implements ISubBlock {
     }
 
     @Override
-    public void setOreDict(Block block, int number, Map<ItemStack, String> oreDict) {
+    public String getOreDict() {
+        return null;
+    }
 
+    @Override
+    public void setItemStack(ItemStack itemStack) {
+        this.itemStack = itemStack;
+    }
+
+    @Override
+    public IGeneratedModel getGeneratedModel() {
+        TemplateFile templateFile = TemplateManager.getTemplateFile("sub_block_state");
+        Map<String, String> replacements = Maps.newHashMap();
+
+        replacements.put("texture", new ResourceLocation(this.getTextureLocation().getResourceDomain(),
+                "blocks/" + this.getTextureLocation().getResourcePath()).toString());
+        templateFile.replaceContents(replacements);
+
+        return new GeneratedModel(this.getModelPrefix() + this.getUnLocalizedName(), ModelType.BLOCKSTATE,
+                templateFile.getFileContents());
+    }
+
+    protected String getModelPrefix() {
+        return "";
     }
 }

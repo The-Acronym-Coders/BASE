@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
+import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.base.util.TextUtils;
 
 import java.util.List;

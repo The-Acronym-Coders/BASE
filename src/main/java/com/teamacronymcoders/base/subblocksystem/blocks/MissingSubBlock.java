@@ -1,7 +1,6 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -9,8 +8,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Map;
 
 public class MissingSubBlock implements ISubBlock {
     @Override
@@ -55,7 +54,7 @@ public class MissingSubBlock implements ISubBlock {
     }
 
     @Override
-    public void getDrops(IBlockState blockState, int fortune, List<ItemStack> itemStacks) {
+    public void getDrops(int fortune, List<ItemStack> itemStacks) {
 
     }
 
@@ -65,12 +64,23 @@ public class MissingSubBlock implements ISubBlock {
     }
 
     @Override
-    public void setOreDict(Block block, int number, Map<ItemStack, String> oreDict) {
-
+    public String getOreDict() {
+        return null;
     }
 
     @Override
     public CreativeTabs getCreativeTab() {
+        return null;
+    }
+
+    @Override
+    public void setItemStack(ItemStack itemStack) {
+
+    }
+
+    @Override
+    @Nullable
+    public IGeneratedModel getGeneratedModel() {
         return null;
     }
 }
