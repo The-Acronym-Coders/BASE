@@ -7,6 +7,7 @@ import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.items.itemblocks.ItemBlockModel;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.block.material.Material;

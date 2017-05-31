@@ -9,7 +9,7 @@ import com.teamacronymcoders.base.materialsystem.blocks.SubBlockOrePart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
 import com.teamacronymcoders.base.materialsystem.parttype.*;
-import com.teamacronymcoders.base.registry.BlockRegistry;
+import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

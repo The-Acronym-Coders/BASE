@@ -15,6 +15,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -28,8 +29,7 @@ public class ItemDebuggerStick extends ItemBase {
     @ParametersAreNonnullByDefault
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, EnumHand hand) {
         RayTraceResult result = ProjectileHelper.forwardsRaycast(entityPlayer, true, true, entityPlayer);
-
-        EnumActionResult actionResult = EnumActionResult.SUCCESS;
+        EnumActionResult actionResult = EnumActionResult.PASS;
         switch (result.typeOfHit) {
             case BLOCK:
                 TileEntity tileEntity = world.getTileEntity(result.getBlockPos());
@@ -39,7 +39,9 @@ public class ItemDebuggerStick extends ItemBase {
                 } else if (block instanceof IDebuggable) {
                     writeDebug((IDebuggable) block);
                 } else {
-                    this.getMod().getLogger().info(block.getRegistryName().toString());
+                    if (block.getRegistryName() != null) {
+                        this.getMod().getLogger().info(block.getRegistryName().toString());
+                    }
                 }
                 break;
             case ENTITY:
@@ -54,11 +56,8 @@ public class ItemDebuggerStick extends ItemBase {
                 actionResult = EnumActionResult.PASS;
                 break;
         }
-        if (wroteOutput) {
-            enumActionResult = EnumActionResult.SUCCESS;
-        }
 
-        return ActionResult.newResult(actionResult, itemStack);
+        return ActionResult.newResult(actionResult, entityPlayer.getHeldItem(hand));
     }
 
     public void writeDebug(IDebuggable debuggable) {

@@ -3,7 +3,7 @@ package com.teamacronymcoders.base.materialsystem.parttype;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.materialsystem.blocks.BlockMaterialFluid;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import com.teamacronymcoders.base.registry.BlockRegistry;
+import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import javax.annotation.Nonnull;

@@ -1,8 +1,8 @@
 package com.teamacronymcoders.base.client.models.generator;
 
-import com.teamacronymcoders.base.registry.pieces.RegistryPiece;
-import com.teamacronymcoders.base.registry.pieces.RegistryPieceBase;
-import com.teamacronymcoders.base.registry.pieces.RegistrySide;
+import com.teamacronymcoders.base.registrysystem.pieces.RegistryPiece;
+import com.teamacronymcoders.base.registrysystem.pieces.RegistryPieceBase;
+import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.relauncher.Side;

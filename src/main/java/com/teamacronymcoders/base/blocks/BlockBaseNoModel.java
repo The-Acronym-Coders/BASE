@@ -26,11 +26,15 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     private ItemBlock itemBlock;
     private String name;
 
+    public BlockBaseNoModel(Material material) {
+        super(material);
+        this.setHardness(1F);
+    }
+
     public BlockBaseNoModel(Material mat, String name) {
-        super(mat);
+        this(mat);
         this.name = name;
         this.setUnlocalizedName(name);
-        this.setHardness(1F);
     }
 
     @Override

@@ -12,8 +12,7 @@ import com.teamacronymcoders.base.client.models.wrapped.WrappedModelLoader;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
-import com.teamacronymcoders.base.registry.pieces.RegistrySide;
-import com.teamacronymcoders.base.util.Platform;
+import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -115,7 +114,7 @@ public class LibClientProxy extends LibCommonProxy {
             try {
                 fileContents = IOUtils.toString(inputStream);
             } catch (IOException e) {
-                this.getMod().getLogger().getLogger().log(e);
+                this.getMod().getLogger().getLogger().error("Failed to get File: " + location + " Exception: " + e);
             }
         }
 
