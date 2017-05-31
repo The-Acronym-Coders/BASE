@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.entities;
 
+import com.teamacronymcoders.base.Base;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.item.ItemMinecart;
 import net.minecraft.item.ItemStack;
@@ -7,6 +8,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class EntityMinecartBase extends EntityMinecart {
     public EntityMinecartBase(World world) {
@@ -27,13 +29,14 @@ public abstract class EntityMinecartBase extends EntityMinecart {
     }
 
     @Override
-    public void killMinecart(DamageSource damageSource) {
+    public void killMinecart(@Nonnull DamageSource damageSource) {
         this.setDead();
     }
 
     @Override
     @Nonnull
     public EntityMinecart.Type getType() {
+        Base.instance.getLogger().fatal("Someone called EntityMinecart.getType(). This doesn't work for Modded Entities");
         return Type.TNT;
     }
 

@@ -17,6 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 
 //TODO Railcraft api
 public abstract class ItemMinecartBase extends ItemMinecart implements /*IMinecartItem,*/ IHasModel {
@@ -28,8 +30,9 @@ public abstract class ItemMinecartBase extends ItemMinecart implements /*IMineca
 
     @Override
     @Nonnull
-    public EnumActionResult onItemUse(@Nonnull EntityPlayer player, World world, @Nonnull BlockPos blockPos,
-                                      @Nonnull EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    @ParametersAreNonnullByDefault
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand,
+                                      EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack itemStack = player.getHeldItem(hand);
         return placeCart(itemStack, world, blockPos, this.getEntityFromItem(world, itemStack));
     }
