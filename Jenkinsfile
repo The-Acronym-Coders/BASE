@@ -3,16 +3,6 @@
 pipeline {
     agent any
     stages {
-        stage('Set Dev Variable') {
-            when {
-                expression {
-                    return env.BRANCH_NAME.contains("dev")
-                }
-            }
-            steps {
-                sh 'export BRANCH=Snapshot'
-            }
-        }
         stage('Clean') {
             steps {
                 echo 'Cleaning Project'
@@ -29,7 +19,15 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 echo 'Building and Deploying to Maven'
-                sh './gradlew build --refresh-dependencies uploadArchives'
+                script {
+                    if (env.BRANCH_NAME.contains("develop")) {
+                        sh './gradlew build --refresh-dependencies -Pbranch=Snapshot uploadArchives'
+                    } else if (env.BRANCH_NAME.contains("release")) {
+                        sh './gradlew build --refresh-dependencies uploadArchives'
+                    } else {
+                        sh './gradlew build --refresh-dependencies -Pbranch=' + env.BRANCH_NAME + ' uploadArchives'
+                    }
+                }
             }
         }
     }
