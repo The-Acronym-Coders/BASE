@@ -3,16 +3,6 @@
 pipeline {
     agent any
     stages {
-        stage('Set Dev Variable') {
-            when {
-                expression {
-                    return env.BRANCH_NAME.contains("dev")
-                }
-            }
-            steps {
-                sh 'export BRANCH=Snapshot'
-            }
-        }
         stage('Clean') {
             steps {
                 echo 'Cleaning Project'
