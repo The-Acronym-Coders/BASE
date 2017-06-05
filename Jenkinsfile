@@ -20,10 +20,12 @@ pipeline {
             steps {
                 echo 'Building and Deploying to Maven'
                 script {
-                    if (env.BRANCH_NAME.contains("dev")) {
+                    if (env.BRANCH_NAME.contains("develop")) {
                         sh './gradlew build --refresh-dependencies -Pbranch=Snapshot uploadArchives'
-                    } else {
+                    } else if (env.BRANCH_NAME.contains("release")) {
                         sh './gradlew build --refresh-dependencies uploadArchives'
+                    } else {
+                        sh './gradlew build --refresh-dependencies -Pbranch=' + env.BRANCH_NAME + ' uploadArchives'
                     }
                 }
             }
