@@ -6,10 +6,13 @@ import com.teamacronymcoders.base.client.models.IHasModel;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +69,9 @@ public class ItemBase extends Item implements IHasModel, IModAware {
     }
 
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> subItems) {
+    @Override
+    @ParametersAreNonnullByDefault
+    public void getSubItems(Item item, @Nullable CreativeTabs tab, NonNullList<ItemStack> subItems) {
         subItems.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 
