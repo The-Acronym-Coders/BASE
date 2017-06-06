@@ -39,7 +39,6 @@ repositories {
 
 
 version = "${minecraft_version}-" + getVersion()
-
 group = "com.teamacronymcoders.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "base"
 
@@ -49,7 +48,7 @@ minecraft {
 
     mappings = "${mappings_version}"
 
-    replace "@VERSION@", project.version
+    replace "@VERSION@", "${base_version}"
     replaceIn "Reference.java"
 }
 
