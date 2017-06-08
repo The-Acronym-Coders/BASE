@@ -6,6 +6,7 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGenera
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -62,6 +63,11 @@ public abstract class SubBlockBase implements ISubBlock {
     @Override
     public void setItemStack(ItemStack itemStack) {
         this.itemStack = itemStack;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return Material.IRON;
     }
 
     @Override
