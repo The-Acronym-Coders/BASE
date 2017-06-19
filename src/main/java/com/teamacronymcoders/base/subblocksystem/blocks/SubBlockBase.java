@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +65,13 @@ public abstract class SubBlockBase implements ISubBlock {
     public void setItemStack(ItemStack itemStack) {
         this.itemStack = itemStack;
     }
+
+    @Override
+    @Nonnull
+    public ItemStack getItemStack() {
+        return this.itemStack.copy();
+    }
+
 
     @Override
     public Material getMaterial() {

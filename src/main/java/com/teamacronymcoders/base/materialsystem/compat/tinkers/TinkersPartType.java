@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.compat.tinkers;
 
-import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import net.minecraftforge.fluids.Fluid;
@@ -11,8 +11,8 @@ import slimeknights.tconstruct.library.materials.Material;
 import javax.annotation.Nonnull;
 
 public class TinkersPartType extends PartType {
-    public TinkersPartType(IBaseMod mod) {
-        super("Tinkers", mod);
+    public TinkersPartType() {
+        super("Tinkers");
     }
 
     public void setup(@Nonnull MaterialPart materialPart) {
@@ -20,11 +20,12 @@ public class TinkersPartType extends PartType {
     }
 
     private void createTinkers(MaterialPart materialPart) {
+        MaterialUser materialUser = materialPart.getMaterialUser();
         if (!FluidRegistry.isFluidRegistered(materialPart.getMaterial().getUnlocalizedName())) {
             try {
-                this.getMaterialSystem().registerPartsForMaterial(materialPart.getMaterial(), "fluid");
+                materialUser.registerPartsForMaterial(materialPart.getMaterial(), "fluid");
             } catch (MaterialException e) {
-                this.getMod().getLogger().error("Could not register fluid for " + materialPart.getLocalizedName());
+                materialUser.getMod().getLogger().error("Could not register fluid for " + materialPart.getLocalizedName());
             }
         }
         Fluid fluid = FluidRegistry.getFluid(materialPart.getMaterial().getUnlocalizedName());
@@ -32,7 +33,7 @@ public class TinkersPartType extends PartType {
             Material tinkerMaterial = new Material(materialPart.getUnlocalizedName(), materialPart.getColor());
             tinkerMaterial.addCommonItems(materialPart.getMaterial().getUnlocalizedName());
         } else {
-            this.getMod().getLogger().error("Could not create Fluid for Tinker's Compat");
+            materialUser.getMod().getLogger().error("Could not create Fluid for Tinker's Compat");
         }
     }
 }

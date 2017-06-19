@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.materialsystem.compat;
 
+import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.util.ClassLoading;
@@ -14,12 +15,12 @@ public class MaterialCompatLoader {
         materialCompatList = ClassLoading.getInstances(dataTable, MaterialCompat.class, IMaterialCompat.class);
     }
 
-    public void doCompat(MaterialSystem materialSystem) {
+    public void doCompat() {
         materialCompatList.forEach(materialCompat -> {
             try {
-                materialCompat.doCompat(materialSystem);
+                materialCompat.doCompat();
             } catch (MaterialException e) {
-                materialSystem.getMod().getLogger().warning(e.getMessage());
+                Base.instance.getLogger().warning(e.getMessage());
             }
         });
     }

@@ -13,8 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 public class MissingMaterialPart extends MaterialPart {
-    public MissingMaterialPart(IBaseMod mod, MaterialSystem materialSystem) throws MaterialException {
-        super(materialSystem, null, new PartBuilder(materialSystem).setName("Missing").setPartType(new NullPartType(mod)).build());
+    public MissingMaterialPart() throws MaterialException {
+        super(null, null, new PartBuilder().setName("Missing").setPartType(new NullPartType()).build());
     }
 
     @Override

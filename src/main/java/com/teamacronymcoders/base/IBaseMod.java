@@ -3,6 +3,7 @@ package com.teamacronymcoders.base;
 import com.teamacronymcoders.base.client.models.SafeModelLoader;
 import com.teamacronymcoders.base.guisystem.GuiHandler;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
@@ -47,7 +48,7 @@ public interface IBaseMod<T> {
     boolean addOBJDomain();
 
     @Nullable
-    MaterialSystem getMaterialSystem();
+    MaterialUser getMaterialUser();
 
     @Nullable
     SubBlockSystem getSubBlockSystem();

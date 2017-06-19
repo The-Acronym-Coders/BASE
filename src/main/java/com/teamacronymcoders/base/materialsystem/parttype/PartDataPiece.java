@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.materialsystem.parts;
+package com.teamacronymcoders.base.materialsystem.parttype;
 
 public class PartDataPiece {
     private String name;

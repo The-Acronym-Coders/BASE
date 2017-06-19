@@ -50,4 +50,7 @@ public interface ISubBlock {
     IGeneratedModel getGeneratedModel();
 
     Material getMaterial();
+
+    @Nonnull
+    ItemStack getItemStack();
 }

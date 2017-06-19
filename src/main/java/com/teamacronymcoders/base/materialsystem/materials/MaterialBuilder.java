@@ -10,11 +10,9 @@ public class MaterialBuilder {
     private String name;
     private Color color;
     private boolean hasEffect;
-    private MaterialSystem materialSystem;
 
-    public MaterialBuilder(MaterialSystem materialSystem) {
-        materialSystem.materialsNotBuilt.add(this);
-        this.materialSystem = materialSystem;
+    public MaterialBuilder() {
+        MaterialSystem.materialsNotBuilt.add(this);
     }
 
     public MaterialBuilder setName(String name) {
@@ -35,8 +33,8 @@ public class MaterialBuilder {
     public Material build() throws MaterialException {
         validate();
         Material material = new Material(this.name, this.color, this.hasEffect);
-        materialSystem.registerMaterial(material);
-        materialSystem.materialsNotBuilt.remove(this);
+        MaterialSystem.registerMaterial(material);
+        MaterialSystem.materialsNotBuilt.remove(this);
         return material;
     }
 

@@ -89,4 +89,10 @@ public class MissingSubBlock implements ISubBlock {
     public Material getMaterial() {
         return Material.IRON;
     }
+
+    @Nonnull
+    @Override
+    public ItemStack getItemStack() {
+        return ItemStack.EMPTY;
+    }
 }

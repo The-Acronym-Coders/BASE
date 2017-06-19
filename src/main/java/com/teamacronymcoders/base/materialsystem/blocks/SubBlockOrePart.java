@@ -6,6 +6,7 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.Generat
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
@@ -24,10 +25,10 @@ public class SubBlockOrePart extends SubBlockPart {
     private IBaseMod mod;
     private ResourceLocation variantLocation;
 
-    public SubBlockOrePart(MaterialPart materialPart, ResourceLocation variantLocation, MaterialSystem materialSystem) {
-        super(materialPart, materialSystem.materialCreativeTab);
+    public SubBlockOrePart(MaterialPart materialPart, ResourceLocation variantLocation, MaterialUser materialUser) {
+        super(materialPart, MaterialSystem.materialCreativeTab);
         MaterialPartData data = materialPart.getData();
-        this.mod = materialSystem.getMod();
+        this.mod = materialUser.getMod();
         if (data.containsDataPiece("drop")) {
             itemDrop = data.getDataPiece("drop");
         }

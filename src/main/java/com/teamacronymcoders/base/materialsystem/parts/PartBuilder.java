@@ -1,24 +1,15 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
-import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class PartBuilder {
     private String name;
     private PartType partType;
-    private List<PartDataPiece> data;
-    private MaterialSystem materialSystem;
 
-    public PartBuilder(MaterialSystem materialSystem) {
-        materialSystem.partsNotBuilt.add(this);
-        this.materialSystem = materialSystem;
-        this.data = Lists.newArrayList();
+    public PartBuilder() {
+        MaterialSystem.partsNotBuilt.add(this);
     }
 
     public PartBuilder setName(String name) {
@@ -31,20 +22,11 @@ public class PartBuilder {
         return this;
     }
 
-    public PartBuilder setData(List<PartDataPiece> data) {
-        this.data = data;
-        return this;
-    }
-
-    public PartBuilder setData(String... dataNames) {
-        return this.setData(Arrays.stream(dataNames).map(PartDataPiece::new).collect(Collectors.toList()));
-    }
-
     public Part build() throws MaterialException {
         validate();
-        Part part =  new Part(name, partType, data);
-        this.materialSystem.registerPart(part);
-        this.materialSystem.partsNotBuilt.remove(this);
+        Part part =  new Part(name, partType);
+        MaterialSystem.registerPart(part);
+        MaterialSystem.partsNotBuilt.remove(this);
         return part;
     }
 

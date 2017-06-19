@@ -62,4 +62,8 @@ public class SubBlockSystem {
         BlockRegistry blockRegistry = mod.getRegistryHolder().getRegistry(BlockRegistry.class, "BLOCK");
         listOfSubBlocks.forEach((id, subBlocks) -> blockRegistry.register(new BlockSubBlockHolder(id, subBlocks)));
     }
+
+    public ISubBlock getSubBlock(String name) {
+        return subBlocks.get(name);
+    }
 }
