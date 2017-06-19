@@ -25,7 +25,7 @@ public class ProvidedParts {
     private MaterialSystem materialSystem;
 
 
-    public ProvidedParts(IBaseMod mod, MaterialSystem materialSystem, SubBlockSystem subBlockSystem) {
+    public ProvidedParts(IBaseMod mod, MaterialSystem materialSystem) {
         this.mod = mod;
         this.materialSystem = materialSystem;
     }
@@ -48,6 +48,8 @@ public class ProvidedParts {
         registerPart(new PartBuilder(materialSystem).setName("Dust").setPartType(item));
         registerPart(new PartBuilder(materialSystem).setName("Plate").setPartType(item));
         registerPart(new PartBuilder(materialSystem).setName("Nugget").setPartType(item));
+        registerPart(new PartBuilder(materialSystem).setName("Rod").setPartType(item));
+        registerPart(new PartBuilder(materialSystem).setName("Dense Plate").setPartType(item));
 
         List<PartDataPiece> blockDataPieces = Lists.newArrayList();
         blockDataPieces.add(new PartDataPiece("hardness", false));

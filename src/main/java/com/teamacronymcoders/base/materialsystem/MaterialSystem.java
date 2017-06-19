@@ -66,7 +66,7 @@ public class MaterialSystem {
             mod.getLogger().fatal("Failed to Create Missing Material Part, THIS IS BAD");
         }
         if (mod.getSubBlockSystem() != null) {
-            ProvidedParts providedParts = new ProvidedParts(this.mod, this, this.mod.getSubBlockSystem());
+            ProvidedParts providedParts = new ProvidedParts(this.mod, this);
             providedParts.initPartsAndTypes();
             materialCompatLoader.doCompat(this);
         } else {
