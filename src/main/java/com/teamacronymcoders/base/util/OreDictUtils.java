@@ -7,6 +7,7 @@ import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -27,8 +28,7 @@ public class OreDictUtils {
         preferredModIds = Arrays.asList(preferredMods.getStringArray());
     }
 
-    @Nullable
-    //TODO: Change in MC 1.11
+    @Nonnull
     public static ItemStack getPreferredItemStack(String oreDictName) {
         if (!preferredItemStacks.containsKey(oreDictName)) {
             int bestMatchLevel = preferredModIds.size();
@@ -44,12 +44,12 @@ public class OreDictUtils {
                     }
                 }
             }
-            if (preferredItemStack == null && !itemStackList.isEmpty()) {
+            if (preferredItemStack.isEmpty() && !itemStackList.isEmpty()) {
                 preferredItemStack = itemStackList.get(0);
             }
             preferredItemStacks.put(oreDictName, preferredItemStack);
         }
         ItemStack itemStack = preferredItemStacks.get(oreDictName);
-        return ItemStackUtils.isValid(itemStack) ? itemStack.copy() : null;
+        return ItemStackUtils.isValid(itemStack) ? itemStack.copy() : ItemStack.EMPTY;
     }
 }
