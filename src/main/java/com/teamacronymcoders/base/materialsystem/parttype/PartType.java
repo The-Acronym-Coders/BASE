@@ -29,6 +29,10 @@ public class PartType {
         return this.data;
     }
 
+    public void setData(List<PartDataPiece> partDataPieces) {
+        this.data = partDataPieces;
+    }
+
     public void setup(@Nonnull MaterialPart materialPart) {
     }
 
