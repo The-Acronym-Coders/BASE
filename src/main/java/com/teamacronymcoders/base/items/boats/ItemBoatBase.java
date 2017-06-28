@@ -66,16 +66,15 @@ public abstract class ItemBoatBase<BOAT extends EntityBoat> extends ItemBoat imp
         } else {
             Vec3d vec3d2 = entityPlayer.getLook(f);
             boolean flag = false;
-            List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(entityPlayer,
-                    entityPlayer.getEntityBoundingBox()
-                            .addCoord(vec3d2.xCoord * d3, vec3d2.yCoord * d3, vec3d2.zCoord * d3).expandXyz(1.0D));
+            List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(entityPlayer, entityPlayer.getEntityBoundingBox()
+                    .expand(vec3d2.x * 5.0D, vec3d2.y * 5.0D, vec3d2.z * 5.0D).grow(1.0D));
 
             for (Entity entity : list) {
                 if (entity.canBeCollidedWith()) {
                     AxisAlignedBB axisalignedbb =
-                            entity.getEntityBoundingBox().expandXyz((double) entity.getCollisionBorderSize());
+                            entity.getEntityBoundingBox().grow((double) entity.getCollisionBorderSize());
 
-                    if (axisalignedbb.isVecInside(vec3d)) {
+                    if (axisalignedbb.contains(vec3d)) {
                         flag = true;
                     }
                 }
@@ -89,14 +88,14 @@ public abstract class ItemBoatBase<BOAT extends EntityBoat> extends ItemBoat imp
                 Block block = world.getBlockState(raytraceresult.getBlockPos()).getBlock();
                 boolean isWater = block == Blocks.WATER || block == Blocks.FLOWING_WATER;
                 BOAT entityBoat = this.getBoatToPlace(world, itemStack);
-                double boatPosX = raytraceresult.hitVec.xCoord;
-                double boatPosY = isWater ? raytraceresult.hitVec.yCoord - 0.12D : raytraceresult.hitVec.yCoord;
-                double boatPosZ = raytraceresult.hitVec.zCoord;
+                double boatPosX = raytraceresult.hitVec.x;
+                double boatPosY = isWater ? raytraceresult.hitVec.y - 0.12D : raytraceresult.hitVec.y;
+                double boatPosZ = raytraceresult.hitVec.z;
                 entityBoat.setPosition(boatPosX, boatPosY, boatPosZ);
                 entityBoat.setBoatType(this.getType(itemStack));
                 entityBoat.rotationYaw = entityPlayer.rotationYaw;
 
-                if (!world.getCollisionBoxes(entityBoat, entityBoat.getEntityBoundingBox().expandXyz(-0.1D))
+                if (!world.getCollisionBoxes(entityBoat, entityBoat.getEntityBoundingBox().grow(-0.1D))
                         .isEmpty()) {
                     return new ActionResult<>(EnumActionResult.FAIL, itemStack);
                 } else {
