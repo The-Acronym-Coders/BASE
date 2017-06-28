@@ -25,7 +25,7 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
         configurationFiles = new HashMap<>();
         if (suggestConfigFile.isDirectory()) {
             String configFileName = this.mod.getID();
-            this.tacFolder = new File(suggestConfigFile, "ACRONYM");
+            this.tacFolder = new File(suggestConfigFile, "acronym");
             boolean folderExists = getTacFolder().exists();
             if (!folderExists) {
                 folderExists = getTacFolder().mkdir();

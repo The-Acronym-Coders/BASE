@@ -159,7 +159,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     @Override
     public String getConfigFolderName() {
-        return this.getID().toUpperCase(Locale.ENGLISH);
+        return this.getID();
     }
 
     @Override
