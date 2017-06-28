@@ -27,7 +27,9 @@ public class MaterialPart {
         this.setMaterial(material);
         this.setPart(part);
         this.materialUser = materialUser;
-        this.setTextureLocation(new ResourceLocation(materialUser.getMod().getID(), part.getUnlocalizedName()));
+        if (materialUser != null) {
+            this.setTextureLocation(new ResourceLocation(materialUser.getMod().getID(), part.getUnlocalizedName()));
+        }
         this.colorized = true;
         this.data = new MaterialPartData(part.getPartType().getData());
 
