@@ -1,5 +1,7 @@
 package com.teamacronymcoders.base.items.minecarts;
 
+import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
 import com.teamacronymcoders.base.util.BlockUtils;
@@ -21,7 +23,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 //TODO Railcraft api
-public abstract class ItemMinecartBase extends ItemMinecart implements /*IMinecartItem,*/ IHasModel {
+public abstract class ItemMinecartBase extends ItemMinecart implements /*IMinecartItem,*/ IHasModel, IModAware {
+    private IBaseMod mod;
+
     public ItemMinecartBase(String name) {
         super(EntityMinecart.Type.TNT);
         this.setUnlocalizedName(name);
@@ -58,6 +62,16 @@ public abstract class ItemMinecartBase extends ItemMinecart implements /*IMineca
     @Override
     public Item getItem() {
         return this;
+    }
+
+    @Override
+    public IBaseMod getMod() {
+        return this.mod;
+    }
+
+    @Override
+    public void setMod(IBaseMod mod) {
+        this.mod = mod;
     }
 
     @Nonnull

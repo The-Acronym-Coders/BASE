@@ -70,7 +70,7 @@ public class MaterialUser {
     }
 
     public MaterialPart getMaterialPart(int itemDamage) {
-        return materialPartBiMap.get(itemDamage);
+        return materialPartBiMap.getOrDefault(itemDamage, MaterialSystem.MISSING_MATERIAL_PART);
     }
 
     public int getMaterialPartId(MaterialPart materialPart) {
@@ -103,5 +103,9 @@ public class MaterialUser {
             id = nameMapping.get(materialPart.getUnlocalizedName());
         }
         materialPartBiMap.put(id, materialPart);
+    }
+
+    public String getId() {
+        return this.getMod().getID();
     }
 }

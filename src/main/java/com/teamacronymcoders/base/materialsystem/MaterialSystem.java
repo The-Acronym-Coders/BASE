@@ -1,16 +1,21 @@
 package com.teamacronymcoders.base.materialsystem;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
+import com.teamacronymcoders.base.materialsystem.capabilities.MaterialPartCapability;
+import com.teamacronymcoders.base.materialsystem.capabilities.MaterialPartHolderProvider;
 import com.teamacronymcoders.base.materialsystem.compat.MaterialCompatLoader;
 import com.teamacronymcoders.base.materialsystem.materialparts.MissingMaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.materials.MaterialBuilder;
+import com.teamacronymcoders.base.materialsystem.parts.GatherPartsEvent;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.base.util.TextUtils;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 import java.util.HashMap;
@@ -21,16 +26,18 @@ public class MaterialSystem {
     public static MissingMaterialPart MISSING_MATERIAL_PART;
     public static CreativeTabCarousel materialCreativeTab;
 
-    private static Map<String, Part> partMap = new HashMap<>();
-    private static Map<String, Material> materialMap = new HashMap<>();
-    private static Map<String, PartType> partTypeMap = new HashMap<>();
+    private static Map<String, Part> partMap = Maps.newHashMap();
+    private static Map<String, Material> materialMap = Maps.newHashMap();
+    private static Map<String, PartType> partTypeMap = Maps.newHashMap();
+    private static Map<String, MaterialUser> users = Maps.newHashMap();
 
     public static List<MaterialBuilder> materialsNotBuilt = Lists.newArrayList();
     public static List<PartBuilder> partsNotBuilt = Lists.newArrayList();
 
     private static boolean isSetup = false;
 
-    public static void setup(ASMDataTable dataTable) {
+
+    public static void setup(MaterialUser user, ASMDataTable dataTable) {
         if (!isSetup) {
             MaterialCompatLoader materialCompatLoader = new MaterialCompatLoader();
             materialCompatLoader.loadCompat(dataTable);
@@ -43,8 +50,16 @@ public class MaterialSystem {
                 Base.instance.getLogger().fatal("Failed to Create Missing Material Part, THIS IS BAD");
             }
             materialCompatLoader.doCompat();
+
+            GatherPartsEvent gatherPartsEvent = new GatherPartsEvent();
+            MinecraftForge.EVENT_BUS.post(gatherPartsEvent);
+            gatherPartsEvent.getPartList().forEach(MaterialSystem::registerPart);
+            gatherPartsEvent.getPartTypeList().forEach(MaterialSystem::registerPartType);
+
+            MaterialPartCapability.register();
             isSetup = true;
         }
+        users.put(user.getId(), user);
     }
 
     public static void registerPart(Part part) {
@@ -69,5 +84,9 @@ public class MaterialSystem {
 
     public static Material getMaterial(String name) {
         return materialMap.get(name);
+    }
+
+    public static MaterialUser getUser(String name) {
+        return users.get(name);
     }
 }

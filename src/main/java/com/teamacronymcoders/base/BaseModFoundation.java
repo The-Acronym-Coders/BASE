@@ -75,7 +75,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.createRegistries(event, this.getRegistryPieces(event.getAsmData()));
 
         if (this.getMaterialUser() != null) {
-            MaterialSystem.setup(event.getAsmData());
+            MaterialSystem.setup(this.getMaterialUser(), event.getAsmData());
             this.getMaterialUser().setup();
         }
         if (this.addOBJDomain()) {

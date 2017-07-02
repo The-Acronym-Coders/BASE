@@ -39,6 +39,10 @@ public class MaterialPart {
 
     }
 
+    public int getId() {
+        return this.getMaterialUser().getMaterialPartId(this);
+    }
+
     public String getUnlocalizedName() {
         return material.getUnlocalizedName() + "_" + part.getUnlocalizedName() + ((variant != null) ? "_" + variant : "");
     }
