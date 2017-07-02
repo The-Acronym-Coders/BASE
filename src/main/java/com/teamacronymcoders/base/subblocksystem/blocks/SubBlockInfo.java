@@ -22,7 +22,8 @@ public class SubBlockInfo {
         Map<Integer, Map<Integer, String>> savedNames = new HashMap<>();
         savedSubBlocks.forEach((blockNumber, subBlocksForBlock) -> {
             Map<Integer, String> subBlockNames = new HashMap<>();
-            subBlocksForBlock.forEach((subBlockNumber, subBlock) -> subBlockNames.put(subBlockNumber, subBlock.getName()));
+            subBlocksForBlock.forEach((subBlockNumber, subBlock) -> subBlockNames.put(subBlockNumber,
+                    subBlock != null ? subBlock.getName(), null));
             savedNames.put(blockNumber, subBlockNames);
         });
         this.setSavedSubBlocksName(savedNames);
