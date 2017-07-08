@@ -52,7 +52,7 @@ public class FileLogger implements ILogger {
     }
 
     public void logError(String message) {
-        this.logError(message, (Throwable) null);
+        this.logError(message, null);
     }
 
     public void logError(String message, Throwable exception) {

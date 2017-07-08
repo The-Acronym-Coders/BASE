@@ -7,8 +7,6 @@ import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.client.Colors;
 import com.teamacronymcoders.base.client.Models;
 import com.teamacronymcoders.base.client.models.IHasModel;
-import com.teamacronymcoders.base.client.models.wrapped.WrappedBlockEntry;
-import com.teamacronymcoders.base.client.models.wrapped.WrappedModelLoader;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
@@ -97,11 +95,6 @@ public class LibClientProxy extends LibCommonProxy {
     @Override
     public void registerModelVariant(Item item, ResourceLocation resourceLocation) {
         ModelBakery.registerItemVariants(item, resourceLocation);
-    }
-
-    @Override
-    public void registerWrappedModel(ResourceLocation resourceLocation, WrappedBlockEntry wrappedBlockEntry) {
-        WrappedModelLoader.addModel(resourceLocation, wrappedBlockEntry);
     }
 
     @Override

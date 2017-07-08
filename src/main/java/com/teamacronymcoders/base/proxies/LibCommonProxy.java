@@ -4,7 +4,6 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.models.IHasModel;
-import com.teamacronymcoders.base.client.models.wrapped.WrappedBlockEntry;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
@@ -83,10 +82,6 @@ public abstract class LibCommonProxy {
 
     public void registerModelVariant(Item item, ResourceLocation resourceLocation) {
         // Only done Client RegistrySide
-    }
-
-    public void registerWrappedModel(ResourceLocation resourceLocation, WrappedBlockEntry wrappedBlockEntry) {
-        // Only done Client Side;
     }
 
     public String getFileContents(ResourceLocation resourceLocation) {

@@ -103,7 +103,7 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     }
 
     @Override
-    public void getSubBlocks(@Nonnull Item block, @Nullable CreativeTabs creativeTab, @Nonnull NonNullList<ItemStack> list) {
+    public void getSubBlocks(@Nullable CreativeTabs creativeTab, @Nonnull NonNullList<ItemStack> list) {
         list.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 

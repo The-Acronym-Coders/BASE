@@ -67,10 +67,10 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
-    public void getSubBlocks(@Nonnull Item block, @Nullable CreativeTabs creativeTab, @Nonnull NonNullList<ItemStack> list) {
+    public void getSubBlocks(@Nullable CreativeTabs creativeTab, @Nonnull NonNullList<ItemStack> list) {
         for (Map.Entry<Integer, ISubBlock> subBlock : this.getSubBlocks().entrySet()) {
-            if (subBlock.getValue().getCreativeTab() == creativeTab) {
-                list.add(new ItemStack(block, 1, subBlock.getKey()));
+            if (subBlock.getValue().getCreativeTab() == creativeTab || creativeTab == CreativeTabs.SEARCH) {
+                list.add(new ItemStack(this, 1, subBlock.getKey()));
             }
         }
     }

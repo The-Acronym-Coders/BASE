@@ -42,19 +42,18 @@ public class ItemTool extends ItemBase implements IHasRecipe {
         }
 
         @Override
-        public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
             return capability == Capabilities.TOOL;
         }
 
         @Override
-        public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+        public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
             return capability == Capabilities.TOOL ? Capabilities.TOOL.cast(spanner) : null;
         }
     }
 
     @Override
     public List<IRecipe> getRecipes(List<IRecipe> recipes) {
-        recipes.add(new ShapedOreRecipe(this, "I I", "ISI", " S ", 'I', "ingotIron", 'S', "stickWood"));
         return recipes;
     }
 

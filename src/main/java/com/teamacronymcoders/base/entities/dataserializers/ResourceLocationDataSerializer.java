@@ -26,4 +26,10 @@ public class ResourceLocationDataSerializer implements DataSerializer<ResourceLo
     public DataParameter<ResourceLocation> createKey(int id) {
         return new DataParameter<>(id, this);
     }
+
+    @Override
+    @Nonnull
+    public ResourceLocation copyValue(@Nonnull ResourceLocation value) {
+        return new ResourceLocation(value.getResourceDomain(), value.getResourcePath());
+    }
 }

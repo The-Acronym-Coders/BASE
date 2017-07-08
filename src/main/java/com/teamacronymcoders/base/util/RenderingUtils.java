@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -53,7 +53,7 @@ public class RenderingUtils {
     /**
      * Renders a Translucent
      *
-     * @param vertex    vertexBuffer
+     * @param vertex    BufferBuilder
      * @param startX    startX
      * @param startY    startY
      * @param startZ    startZ
@@ -64,7 +64,7 @@ public class RenderingUtils {
      * @param rotationY rotationY
      * @param rotationZ rotationZ
      */
-    private static void renderTranslucent(VertexBuffer vertex, double startX, double startY, double startZ, double endX, double endY, double endZ, double rotationX, double rotationY, double rotationZ) {
+    private static void renderTranslucent(BufferBuilder vertex, double startX, double startY, double startZ, double endX, double endY, double endZ, double rotationX, double rotationY, double rotationZ) {
         glPushMatrix();
         glRotated(rotationX, 1, 0, 0);
         glRotated(rotationY, 0, 1, 0);
@@ -82,7 +82,7 @@ public class RenderingUtils {
     /**
      * draws a translucent
      *
-     * @param vertex vertexBuffer
+     * @param vertex BufferBuilder
      * @param startX startX
      * @param startY startY
      * @param startZ startZ
@@ -90,7 +90,7 @@ public class RenderingUtils {
      * @param endY   endY
      * @param endZ   endZ
      */
-    private static void drawTranslucent(VertexBuffer vertex, double startX, double startY, double startZ, double endX, double endY, double endZ) {
+    private static void drawTranslucent(BufferBuilder vertex, double startX, double startY, double startZ, double endX, double endY, double endZ) {
         vertex.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
         vertex.pos(-startX, startY, -startZ).color(100, 0, 0, 255).endVertex();
         vertex.pos(startX, startY, -startZ).color(0, 100, 0, 255).endVertex();
@@ -120,7 +120,7 @@ public class RenderingUtils {
         setupGlTranslucent();
         glTranslatef(0.5f, 0, 0.5f);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertex = tessellator.getBuffer();
+        BufferBuilder vertex = tessellator.getBuffer();
         renderTranslucent(vertex, startX, startY, startZ, endX, endY, endZ, rotationX, rotationY, rotationZ);
         glPopAttrib();
         glPopMatrix();
@@ -143,7 +143,7 @@ public class RenderingUtils {
         float alpha = 0.3F + MathHelper.sin((float) (existed + x)) * 0.3F + 0.3F;
 
         Tessellator tess = Tessellator.getInstance();
-        VertexBuffer buff = tess.getBuffer();
+        BufferBuilder buff = tess.getBuffer();
 
         GL11.glPushMatrix();
         GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS | GL11.GL_LIGHTING_BIT);
@@ -182,7 +182,7 @@ public class RenderingUtils {
         float alpha = 0.3F + MathHelper.sin((float) (count + x)) * 0.3F + 0.3F;
 
         Tessellator tess = Tessellator.getInstance();
-        VertexBuffer buff = tess.getBuffer();
+        BufferBuilder buff = tess.getBuffer();
 
         GL11.glPushMatrix();
         GL11.glLineWidth(lineWidth);
@@ -214,7 +214,7 @@ public class RenderingUtils {
      */
     public static void drawLineNoFade(double x, double y, double x2, double y2, float red, float green, float blue, float lineWidth, float alpha) {
         Tessellator tess = Tessellator.getInstance();
-        VertexBuffer buff = tess.getBuffer();
+        BufferBuilder buff = tess.getBuffer();
 
         GL11.glPushMatrix();
         GL11.glLineWidth(lineWidth);
@@ -248,7 +248,7 @@ public class RenderingUtils {
      */
     public static void drawLineNoFade(double x, double y, double z, double x2, double y2, double z2, float red, float green, float blue, float lineWidth, float alpha) {
         Tessellator tess = Tessellator.getInstance();
-        VertexBuffer buff = tess.getBuffer();
+        BufferBuilder buff = tess.getBuffer();
 
         GL11.glPushMatrix();
         GL11.glLineWidth(lineWidth);
@@ -283,7 +283,7 @@ public class RenderingUtils {
         float alpha = fadeSpeed + MathHelper.sin((float) (count + x)) * 0.3F + 0.3F;
 
         Tessellator tess = Tessellator.getInstance();
-        VertexBuffer buff = tess.getBuffer();
+        BufferBuilder buff = tess.getBuffer();
 
         GL11.glPushMatrix();
         GL11.glLineWidth(lineWidth);
@@ -320,7 +320,7 @@ public class RenderingUtils {
         float alpha = 0.3F + MathHelper.sin((float) (existed + x)) * 0.3F + 0.3F;
 
         Tessellator tess = Tessellator.getInstance();
-        VertexBuffer buff = tess.getBuffer();
+        BufferBuilder buff = tess.getBuffer();
 
         GL11.glPushMatrix();
         GL11.glLineWidth(lineWidth);

@@ -8,7 +8,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
@@ -28,8 +28,12 @@ repositories {
         url 'http://maven.epoxide.xyz'
     }
     maven {
-        name 'CompatLayer/The One Probe'
+        name 'The One Probe'
         url 'http://modmaven.k-4u.nl'
+    }
+    maven {
+        name 'Redstone Flux'
+        url "http://maven.covers1624.net/"
     }
     maven {
         name 'Baubles'
@@ -54,12 +58,11 @@ minecraft {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.1x-${top_version}"
-    deobfCompile "com.github.mcjty:compatlayer:${minecraft_version}-${compat_version}"
-    deobfCompile "net.darkhax.tesla:Tesla:${tesla_version}"
-    deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
-    deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
-    deobfCompile "com.github.Azanor:Baubles:${baubles_version}-SNAPSHOT"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe-${minecraft_version}:${minecraft_version}-${top_version}"
+    deobfCompile "net.darkhax.tesla:Tesla-${minecraft_version}:${tesla_version}"
+    //deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
+    //deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
+    //deobfCompile "com.github.Azanor:Baubles:${baubles_version}-SNAPSHOT"
 }
 
 task srcJar(type: Jar) {

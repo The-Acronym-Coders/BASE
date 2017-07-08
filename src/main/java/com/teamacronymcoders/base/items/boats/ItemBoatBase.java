@@ -149,9 +149,10 @@ public abstract class ItemBoatBase<BOAT extends EntityBoat> extends ItemBoat imp
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item item, @Nullable CreativeTabs tab, @Nonnull NonNullList<ItemStack> itemStacks) {
-        itemStacks.addAll(this.getAllSubItems(Lists.newArrayList()));
+    public void getSubItems(@Nullable CreativeTabs tab, @Nonnull NonNullList<ItemStack> itemStacks) {
+        if (tab != null && tab == this.getCreativeTab() || tab == CreativeTabs.SEARCH) {
+            itemStacks.addAll(this.getAllSubItems(Lists.newArrayList()));
+        }
     }
 
     @Override

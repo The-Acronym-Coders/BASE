@@ -19,6 +19,7 @@ import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.StringUtils;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -73,7 +74,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.modelLoader = new SafeModelLoader(this);
 
         this.createRegistries(event, this.getRegistryPieces(event.getAsmData()));
-
+        MinecraftForge.EVENT_BUS.register(new RegistryEventHandler(this));
         if (this.getMaterialUser() != null) {
             MaterialSystem.setup(this.getMaterialUser(), event.getAsmData());
             this.getMaterialUser().setup();

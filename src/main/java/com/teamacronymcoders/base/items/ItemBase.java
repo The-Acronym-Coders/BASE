@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.items;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.IHasModel;
@@ -68,11 +69,12 @@ public class ItemBase extends Item implements IHasModel, IModAware {
         return this;
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
     @ParametersAreNonnullByDefault
-    public void getSubItems(Item item, @Nullable CreativeTabs tab, NonNullList<ItemStack> subItems) {
-        subItems.addAll(this.getAllSubItems(new ArrayList<>()));
+    public void getSubItems(@Nullable CreativeTabs tab, NonNullList<ItemStack> subItems) {
+        if (tab != null && tab == this.getCreativeTab() || tab == CreativeTabs.SEARCH) {
+            subItems.addAll(this.getAllSubItems(Lists.newArrayList()));
+        }
     }
 
     @Override
