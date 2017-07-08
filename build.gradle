@@ -70,6 +70,14 @@ task srcJar(type: Jar) {
     classifier = 'sources'
 }
 
+sourceSets {
+    main {
+        java {
+            exclude 'com/teamacronymcoders/base/materialsystem/compat/tinkers/**'
+        }
+    }
+}
+
 artifacts {
     archives srcJar
 }
