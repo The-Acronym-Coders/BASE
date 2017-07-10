@@ -1,27 +1,25 @@
 package com.teamacronymcoders.base.materialsystem.parttype;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockOrePart;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
-import com.teamacronymcoders.base.util.files.templates.TemplateFile;
-import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.Map;
 
 public class OrePartType extends BlockPartType {
-    public OrePartType(IBaseMod mod) {
-        super("Ore", mod);
+    public OrePartType() {
+        super("Ore", setupOreData());
+    }
+
+    private static List<PartDataPiece> setupOreData() {
+        List<PartDataPiece> oreDataPieces = Lists.newArrayList();
+        oreDataPieces.add(new PartDataPiece("variants", false));
+        oreDataPieces.add(new PartDataPiece("dropType", false));
+        return oreDataPieces;
     }
 
     public void setup(@Nonnull MaterialPart materialPart) {
@@ -30,6 +28,7 @@ public class OrePartType extends BlockPartType {
 
     private void createOreSubBlocks(MaterialPart materialPart) {
         MaterialPartData data = materialPart.getData();
+        MaterialUser materialUser = materialPart.getMaterialUser();
         if (data.containsDataPiece("variants")) {
             String[] variantNames = data.getDataPiece("variants").split(",");
             int[] hardness = getArrayForField(data, "hardness");
@@ -49,7 +48,8 @@ public class OrePartType extends BlockPartType {
             for (int i = 0; i < variantNames.length; i++) {
                 String variantName = variantNames[i];
                 data.addDataValue("variants", variantName);
-                MaterialPart variantMaterialPart = new MaterialPart(this.getMaterialSystem(), materialPart.getMaterial(), materialPart.getPart(), variantName);
+                MaterialPart variantMaterialPart = new MaterialPart(materialPart.getMaterialUser(),
+                        materialPart.getMaterial(), materialPart.getPart(), variantName);
                 MaterialPartData variantData = variantMaterialPart.getData();
                 trySetData(hardness, i, "hardness", variantData);
                 trySetData(resistance, i, "resistance", variantData);
@@ -60,11 +60,13 @@ public class OrePartType extends BlockPartType {
                 if (drops != null && drops.length > i) {
                     data.addDataValue("drops", drops[i]);
                 }
-                this.getSubBlockSystem().registerSubBlock(new SubBlockOrePart(variantMaterialPart, new ResourceLocation(variantName), this.getMaterialSystem()));
-                this.getMaterialSystem().registerMaterialPart(variantMaterialPart);
+                registerSubBlock(materialPart, new SubBlockOrePart(variantMaterialPart,
+                        new ResourceLocation(variantName), materialUser));
+                materialUser.registerMaterialPart(variantMaterialPart);
             }
         } else {
-            this.getSubBlockSystem().registerSubBlock(new SubBlockOrePart(materialPart, new ResourceLocation("stone"), this.getMaterialSystem()));
+            registerSubBlock(materialPart, new SubBlockOrePart(materialPart, new ResourceLocation("stone"),
+                    materialUser));
         }
     }
 

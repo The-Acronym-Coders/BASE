@@ -1,28 +1,24 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
-import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.teamacronymcoders.base.util.TextUtils;
 
 public class PartBuilder {
     private String name;
+    private String unlocalizedName;
     private PartType partType;
-    private List<PartDataPiece> data;
-    private MaterialSystem materialSystem;
 
-    public PartBuilder(MaterialSystem materialSystem) {
-        materialSystem.partsNotBuilt.add(this);
-        this.materialSystem = materialSystem;
-        this.data = Lists.newArrayList();
+    public PartBuilder() {
+        MaterialSystem.partsNotBuilt.add(this);
     }
 
     public PartBuilder setName(String name) {
         this.name = name;
+        if (unlocalizedName == null) {
+            this.setUnlocalizedName("base.part." + TextUtils.toSnakeCase(name));
+        }
         return this;
     }
 
@@ -31,20 +27,16 @@ public class PartBuilder {
         return this;
     }
 
-    public PartBuilder setData(List<PartDataPiece> data) {
-        this.data = data;
+    public PartBuilder setUnlocalizedName(String unlocalizedName) {
+        this.unlocalizedName = unlocalizedName;
         return this;
-    }
-
-    public PartBuilder setData(String... dataNames) {
-        return this.setData(Arrays.stream(dataNames).map(PartDataPiece::new).collect(Collectors.toList()));
     }
 
     public Part build() throws MaterialException {
         validate();
-        Part part =  new Part(name, partType, data);
-        this.materialSystem.registerPart(part);
-        this.materialSystem.partsNotBuilt.remove(this);
+        Part part =  new Part(name, unlocalizedName, partType);
+        MaterialSystem.registerPart(part);
+        MaterialSystem.partsNotBuilt.remove(this);
         return part;
     }
 
@@ -54,6 +46,8 @@ public class PartBuilder {
             missingField = "name";
         } else if (this.partType == null) {
             missingField = "part type";
+        } else if (this.unlocalizedName == null) {
+            missingField = "unlocalizedName";
         }
         if (missingField != null) {
             String message = "Field " + missingField + " is not set";

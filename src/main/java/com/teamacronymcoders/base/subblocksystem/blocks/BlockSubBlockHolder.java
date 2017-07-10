@@ -50,6 +50,13 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
+    public Material getMaterial(@Nonnull IBlockState state) {
+        return this.getSubBlock(state).getMaterial();
+    }
+
+    @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
         for (int x = 0; x < 16; x++) {
             if (getSubBlocks().get(x) != SubBlockSystem.MISSING_SUB_BLOCK) {

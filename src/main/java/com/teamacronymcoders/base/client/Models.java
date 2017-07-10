@@ -29,12 +29,12 @@ public class Models {
                         locationsIndex = 0;
                     }
                 } else {
-                    Platform.attemptLogErrorToCurrentMod("Found IHasModel with null Itemstack or ResourceLocation");
+                    Platform.attemptLogErrorToCurrentMod("Found IHasModel with Empty Itemstack or ResourceLocation");
                 }
             }
         } else {
             ItemStack itemStack;
-            if (!allSubItems.isEmpty() && (itemStack = allSubItems.get(0)) != null) {
+            if (!allSubItems.isEmpty() && !(itemStack = allSubItems.get(0)).isEmpty()) {
                 Platform.attemptLogErrorToCurrentMod(itemStack.getUnlocalizedName() + " has no models");
             } else {
                 Platform.attemptLogErrorToCurrentMod("There's an issue with an IHasModel.");

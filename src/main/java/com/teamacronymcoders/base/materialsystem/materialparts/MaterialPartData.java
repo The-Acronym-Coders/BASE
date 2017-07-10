@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.materialparts;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
-import com.teamacronymcoders.base.materialsystem.parts.PartDataPiece;
+import com.teamacronymcoders.base.materialsystem.parttype.PartDataPiece;
 
 import java.util.*;
 

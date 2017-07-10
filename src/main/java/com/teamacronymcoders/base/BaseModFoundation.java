@@ -3,6 +3,7 @@ package com.teamacronymcoders.base;
 import com.teamacronymcoders.base.client.models.SafeModelLoader;
 import com.teamacronymcoders.base.guisystem.GuiHandler;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
@@ -40,7 +41,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     protected SafeModelLoader modelLoader;
     protected ModuleHandler moduleHandler;
     protected LibCommonProxy libProxy;
-    protected MaterialSystem materialSystem;
+    protected MaterialUser materialUser;
     protected SubBlockSystem subBlockSystem;
     private String modid;
     private String modName;
@@ -58,7 +59,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.logger = new ModLogger(modid);
         this.packetHandler = new PacketHandler(modid);
         if (optionalSystems) {
-            materialSystem = new MaterialSystem(this);
+            materialUser = new MaterialUser(this);
             subBlockSystem = new SubBlockSystem(this);
         }
     }
@@ -73,8 +74,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.createRegistries(event, this.getRegistryPieces(event.getAsmData()));
 
-        if (materialSystem != null) {
-            this.materialSystem.setup(event.getAsmData());
+        if (this.getMaterialUser() != null) {
+            MaterialSystem.setup(this.getMaterialUser(), event.getAsmData());
+            this.getMaterialUser().setup();
         }
         if (this.addOBJDomain()) {
             this.getLibProxy().addOBJDomain();
@@ -90,8 +92,8 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.afterModuleHandlerInit(event);
 
-        if (this.getMaterialSystem() != null) {
-            this.getMaterialSystem().finishUp();
+        if (this.getMaterialUser() != null) {
+            this.getMaterialUser().finishUp();
         }
 
         if (this.getSubBlockSystem() != null) {
@@ -157,7 +159,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     @Override
     public String getConfigFolderName() {
-        return this.getID().toUpperCase(Locale.ENGLISH);
+        return this.getID();
     }
 
     @Override
@@ -202,8 +204,8 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     @Nullable
     @Override
-    public MaterialSystem getMaterialSystem() {
-        return this.materialSystem;
+    public MaterialUser getMaterialUser() {
+        return this.materialUser;
     }
 
     @Nullable

@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.items.IHasSubItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -69,6 +70,19 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
         return this;
     }
 
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean causesSuffocation(@Nonnull IBlockState state) {
+        return state.getMaterial().blocksMovement() && state.isFullCube();
+    }
+
+    @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
+    public EnumPushReaction getMobilityFlag(@Nonnull IBlockState state) {
+        return state.getMaterial().getMobilityFlag();
+    }
+
     public void setItemBlock(ItemBlock itemBlock) {
         this.itemBlock = itemBlock;
     }
@@ -89,7 +103,7 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     }
 
     @Override
-    public void getSubBlocks(@Nonnull Item block, CreativeTabs creativeTab, NonNullList<ItemStack> list) {
+    public void getSubBlocks(@Nonnull Item block, @Nullable CreativeTabs creativeTab, @Nonnull NonNullList<ItemStack> list) {
         list.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 

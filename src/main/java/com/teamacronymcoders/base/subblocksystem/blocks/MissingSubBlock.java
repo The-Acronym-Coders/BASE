@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -82,5 +83,16 @@ public class MissingSubBlock implements ISubBlock {
     @Nullable
     public IGeneratedModel getGeneratedModel() {
         return null;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return Material.IRON;
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack getItemStack() {
+        return ItemStack.EMPTY;
     }
 }

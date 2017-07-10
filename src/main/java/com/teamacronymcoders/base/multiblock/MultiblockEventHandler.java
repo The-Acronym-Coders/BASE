@@ -17,7 +17,7 @@ public final class MultiblockEventHandler {
 
         Chunk chunk = loadEvent.getChunk();
 
-        MultiblockRegistry.INSTANCE.onChunkLoaded(loadEvent.getWorld(), chunk.xPosition, chunk.zPosition);
+        MultiblockRegistry.INSTANCE.onChunkLoaded(loadEvent.getWorld(), chunk.x, chunk.z);
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)

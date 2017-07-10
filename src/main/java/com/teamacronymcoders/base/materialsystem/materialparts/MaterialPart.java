@@ -1,20 +1,14 @@
 package com.teamacronymcoders.base.materialsystem.materialparts;
 
-import com.teamacronymcoders.base.Reference;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
-import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
-import com.teamacronymcoders.base.util.TextUtils;
 import com.teamacronymcoders.base.util.ItemStackUtils;
+import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 public class MaterialPart {
     private Material material;
@@ -23,19 +17,21 @@ public class MaterialPart {
     private boolean colorized;
     private MaterialPartData data;
     private String variant;
-    private MaterialSystem materialSystem;
+    private MaterialUser materialUser;
     private ItemStack itemStack = ItemStack.EMPTY;
 
-    public MaterialPart(MaterialSystem materialSystem, Material material, Part part) {
-        this(materialSystem, material, part, null);
+    public MaterialPart(MaterialUser materialUser, Material material, Part part) {
+        this(materialUser, material, part, null);
     }
-    public MaterialPart(MaterialSystem materialSystem, Material material, Part part, String variant) {
+    public MaterialPart(MaterialUser materialUser, Material material, Part part, String variant) {
         this.setMaterial(material);
         this.setPart(part);
-        this.materialSystem = materialSystem;
-        this.setTextureLocation(new ResourceLocation(materialSystem.getMod().getID(), part.getUnlocalizedName()));
+        this.materialUser = materialUser;
+        if (materialUser != null) {
+            this.setTextureLocation(new ResourceLocation(materialUser.getMod().getID(), part.getTextureName()));
+        }
         this.colorized = true;
-        this.data = new MaterialPartData(part.getData());
+        this.data = new MaterialPartData(part.getPartType().getData());
 
         if (variant != null) {
             this.variant = TextUtils.toSnakeCase(variant);
@@ -43,13 +39,17 @@ public class MaterialPart {
 
     }
 
+    public int getId() {
+        return this.getMaterialUser().getMaterialPartId(this);
+    }
+
     public String getUnlocalizedName() {
-        return material.getUnlocalizedName() + "_" + part.getUnlocalizedName() + ((variant != null) ? "_" + variant : "");
+        return material.getUnlocalizedName() + "_" + part.getTextureName() + ((variant != null) ? "_" + variant : "");
     }
 
     public String getLocalizedName() {
         //noinspection deprecation
-        return String.format("%s %s", material.getName(), I18n.translateToLocal("base.part." + part.getUnlocalizedName()));
+        return String.format("%s %s", material.getName(), I18n.translateToLocal(part.getUnlocalizedName()));
     }
 
     public boolean hasEffect() {
@@ -74,7 +74,8 @@ public class MaterialPart {
 
     public ItemStack getItemStack() {
         if(!ItemStackUtils.isValid(itemStack)) {
-            itemStack = new ItemStack(materialSystem.itemMaterialPart, 1, materialSystem.getMaterialPartId(this));
+            //TODO: Fix this
+            itemStack = this.getPartType().getItemStack(this);
         }
 
         return itemStack;
@@ -101,7 +102,7 @@ public class MaterialPart {
     }
 
     public boolean matchesPartType(PartType partType) {
-        return this.getPart().getPartType() == partType;
+        return this.getPartType() == partType;
     }
 
     public String getOreDictString() {
@@ -118,5 +119,13 @@ public class MaterialPart {
 
     public void setup() {
         this.getPart().getPartType().setup(this);
+    }
+
+    public MaterialUser getMaterialUser() {
+        return this.materialUser;
+    }
+
+    public PartType getPartType() {
+        return this.getPart().getPartType();
     }
 }

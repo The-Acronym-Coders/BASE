@@ -1,25 +1,23 @@
 package com.teamacronymcoders.base.materialsystem.parttype;
 
 import com.google.common.collect.Lists;
-import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.materialsystem.MaterialSystem;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 public class PartType {
-    private final MaterialSystem materialSystem;
-    private final IBaseMod mod;
     private String name;
+    private List<PartDataPiece> data;
 
-    public PartType(@Nonnull String name, IBaseMod mod) {
+    public PartType(@Nonnull String name) {
+        this(name, Lists.newArrayList());
+    }
+
+    public PartType(@Nonnull String name, List<PartDataPiece> data) {
         this.name = name;
-        this.mod = mod;
-        this.materialSystem = mod.getMaterialSystem();
+        this.data = data;
     }
 
     @Nonnull
@@ -27,14 +25,18 @@ public class PartType {
         return this.name;
     }
 
+    public List<PartDataPiece> getData() {
+        return this.data;
+    }
+
+    public void setData(List<PartDataPiece> partDataPieces) {
+        this.data = partDataPieces;
+    }
+
     public void setup(@Nonnull MaterialPart materialPart) {
     }
 
-    protected IBaseMod getMod() {
-        return mod;
-    }
-
-    protected MaterialSystem getMaterialSystem() {
-        return materialSystem;
+    public ItemStack getItemStack(MaterialPart materialPart) {
+        return ItemStack.EMPTY;
     }
 }

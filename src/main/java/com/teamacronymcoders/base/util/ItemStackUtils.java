@@ -28,6 +28,13 @@ public class ItemStackUtils {
 
     @Nonnull
     public static String getModIdFromItemStack(@Nonnull ItemStack itemStack) {
-        return itemStack.getItem().getRegistryName().getResourceDomain();
+        String modid = "";
+        Item item = itemStack.getItem();
+        if (item.getRegistryName() != null) {
+            modid = item.getRegistryName().getResourceDomain();
+        } else {
+            Platform.attemptLogErrorToCurrentMod("Could not find modid for Item: " + item.getUnlocalizedName());
+        }
+        return modid;
     }
 }
