@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 
 public class ItemPartType extends PartType {
     public ItemPartType() {
-        super("Item");
+        super("base.parts.item");
     }
 
     @Override

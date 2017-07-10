@@ -4,7 +4,7 @@
     "textures": {
       "all": "##TEXTURE##"
     },
-    "model": "cube_all",
+    "model": "base:storage",
     "uvlock": true,
     "transform": "forge:default-block"
   },

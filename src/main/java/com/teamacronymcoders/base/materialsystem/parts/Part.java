@@ -10,13 +10,19 @@ public class Part {
     private String unlocalizedName;
     private String oreDictName;
     private PartType partType;
+    private String textureName;
 
-    Part(String name, PartType partType) {
+    Part(String name, String unlocalizedName, String textureName, PartType partType) {
         this.name = name;
-        this.unlocalizedName = TextUtils.toSnakeCase(name);
+        this.unlocalizedName = unlocalizedName;
+        this.textureName = textureName;
         String oreDict = name.substring(0, 1).toLowerCase(Locale.US) + name.substring(1);
         this.oreDictName = TextUtils.removeSpecialCharacters(oreDict);
         this.partType = partType;
+    }
+
+    Part(String name, String unlocalizedName, PartType partType) {
+        this(name, unlocalizedName, TextUtils.toSnakeCase(name), partType);
     }
 
     public String getName() {
@@ -37,5 +43,9 @@ public class Part {
 
     public String getOreDictPrefix() {
         return this.oreDictName;
+    }
+
+    public String getTextureName() {
+        return textureName;
     }
 }

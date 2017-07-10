@@ -28,7 +28,7 @@ public class MaterialPart {
         this.setPart(part);
         this.materialUser = materialUser;
         if (materialUser != null) {
-            this.setTextureLocation(new ResourceLocation(materialUser.getMod().getID(), part.getUnlocalizedName()));
+            this.setTextureLocation(new ResourceLocation(materialUser.getMod().getID(), part.getTextureName()));
         }
         this.colorized = true;
         this.data = new MaterialPartData(part.getPartType().getData());
@@ -44,13 +44,12 @@ public class MaterialPart {
     }
 
     public String getUnlocalizedName() {
-        return material.getUnlocalizedName() + "_" + part.getUnlocalizedName() + ((variant != null) ? "_" + variant : "");
+        return material.getUnlocalizedName() + "_" + part.getTextureName() + ((variant != null) ? "_" + variant : "");
     }
 
     public String getLocalizedName() {
         //noinspection deprecation
-        return String.format("%s %s", material.getName(), I18n.translateToLocal(this.materialUser.getMod().getID() +
-                ".part." + part.getUnlocalizedName()));
+        return String.format("%s %s", material.getName(), I18n.translateToLocal(part.getUnlocalizedName()));
     }
 
     public boolean hasEffect() {

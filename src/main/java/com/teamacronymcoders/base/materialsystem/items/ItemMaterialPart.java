@@ -98,7 +98,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
         for (MaterialPart materialPart : this.getItemMaterialParts().values()) {
             TemplateFile templateFile = TemplateManager.getTemplateFile("item_model");
             Map<String, String> replacements = Maps.newHashMap();
-            replacements.put("texture", "base:items/" + materialPart.getPart().getUnlocalizedName());
+            replacements.put("texture", "base:items/" + materialPart.getPart().getTextureName());
             templateFile.replaceContents(replacements);
             models.add(new GeneratedModel(materialPart.getUnlocalizedName(), ModelType.ITEM_MODEL, templateFile.getFileContents()));
         }
