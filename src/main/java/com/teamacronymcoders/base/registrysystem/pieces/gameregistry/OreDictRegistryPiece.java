@@ -1,22 +1,23 @@
 package com.teamacronymcoders.base.registrysystem.pieces.gameregistry;
 
-import com.teamacronymcoders.base.items.IHasOreDict;
-import com.teamacronymcoders.base.registrysystem.pieces.RegistryPiece;
-import com.teamacronymcoders.base.registrysystem.pieces.RegistryPieceBase;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.oredict.OreDictionary;
+import static net.minecraftforge.fml.common.eventhandler.EventPriority.LOW;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.minecraftforge.fml.common.eventhandler.EventPriority.LOW;
+import com.teamacronymcoders.base.items.IHasOreDict;
+import com.teamacronymcoders.base.registrysystem.pieces.RegistryPiece;
+import com.teamacronymcoders.base.registrysystem.pieces.RegistryPieceBase;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.oredict.OreDictionary;
 
 @RegistryPiece(priority = LOW)
 public class OreDictRegistryPiece extends RegistryPieceBase<IHasOreDict> {
-    public OreDictRegistryPiece() {
-        super(IHasOreDict.class);
-    }
+	public OreDictRegistryPiece() {
+		super(IHasOreDict.class);
+	}
 
     @Override
     public void onRegistryEvent(ResourceLocation name, IHasOreDict entry) {
