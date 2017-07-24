@@ -7,10 +7,13 @@ import com.teamacronymcoders.base.registrysystem.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistryPieceBase;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static net.minecraftforge.fml.common.eventhandler.EventPriority.LOW;
 
 @RegistryPiece(value = RegistrySide.CLIENT, priority = LOW)
+@SideOnly(Side.CLIENT)
 public class BlockStateMapperRegistryPiece extends RegistryPieceBase<IHasBlockStateMapper> {
     public BlockStateMapperRegistryPiece() {
         super(IHasBlockStateMapper.class);
@@ -22,7 +25,7 @@ public class BlockStateMapperRegistryPiece extends RegistryPieceBase<IHasBlockSt
     }
 
     @Override
-    public void preInit(ResourceLocation name, IHasBlockStateMapper entry) {
+    public void onRegistryEvent(ResourceLocation name, IHasBlockStateMapper entry) {
         BlockStateMappers.registerStateMapper(entry);
     }
 }

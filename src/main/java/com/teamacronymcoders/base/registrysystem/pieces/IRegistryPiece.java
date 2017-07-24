@@ -15,4 +15,6 @@ public interface IRegistryPiece<ENTRY> {
     void postInit(ResourceLocation name, ENTRY entry);
 
     void addEntry(ResourceLocation name, ENTRY entry);
+
+    void onRegistryEvent(ResourceLocation name, ENTRY entry);
 }

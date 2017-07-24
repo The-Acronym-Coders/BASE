@@ -28,6 +28,15 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public void registryEvent() {
+        super.registryEvent();
+        entries.forEach((entryName, entryValue) -> registryPieces.stream()
+                .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
+                .forEach(registryPiece -> registryPiece.onRegistryEvent(entryName, entryValue)));
+    }
+
+    @Override
     @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#init()
     public void init() {
         super.init();

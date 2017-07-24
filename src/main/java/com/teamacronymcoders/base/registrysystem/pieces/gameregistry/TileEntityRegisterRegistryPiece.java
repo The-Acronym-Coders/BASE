@@ -19,7 +19,7 @@ public class TileEntityRegisterRegistryPiece extends RegistryPieceBase<IHasTileE
     }
 
     @Override
-    public void preInit(ResourceLocation name, IHasTileEntity entry) {
+    public void onRegistryEvent(ResourceLocation name, IHasTileEntity entry) {
         GameRegistry.registerTileEntity(entry.getTileEntityClass(), name.toString());
     }
 }

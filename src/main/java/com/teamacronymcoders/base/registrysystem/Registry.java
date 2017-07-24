@@ -20,6 +20,10 @@ public abstract class Registry<T> {
     }
 
     public void preInit() {
+        setLoadingStage(LoadingStage.REGISTER);
+    }
+
+    public void registryEvent() {
         setLoadingStage(LoadingStage.INIT);
     }
 

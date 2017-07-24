@@ -19,7 +19,7 @@ public class OreDictRegistryPiece extends RegistryPieceBase<IHasOreDict> {
     }
 
     @Override
-    public void preInit(ResourceLocation name, IHasOreDict entry) {
+    public void onRegistryEvent(ResourceLocation name, IHasOreDict entry) {
         Map<ItemStack, String> oreDict = entry.getOreDictNames(new HashMap<>());
         oreDict.forEach((itemStack, string) -> OreDictionary.registerOre(string, itemStack));
     }

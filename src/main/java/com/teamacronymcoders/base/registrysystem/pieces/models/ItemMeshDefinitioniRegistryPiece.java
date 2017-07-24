@@ -7,9 +7,12 @@ import com.teamacronymcoders.base.registrysystem.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistryPieceBase;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static net.minecraftforge.fml.common.eventhandler.EventPriority.LOW;
 
+@SideOnly(Side.CLIENT)
 @RegistryPiece(value = RegistrySide.CLIENT, priority = LOW)
 public class ItemMeshDefinitioniRegistryPiece extends RegistryPieceBase<IHasItemMeshDefinition> {
     public ItemMeshDefinitioniRegistryPiece() {
@@ -22,7 +25,7 @@ public class ItemMeshDefinitioniRegistryPiece extends RegistryPieceBase<IHasItem
     }
 
     @Override
-    public void preInit(ResourceLocation name, IHasItemMeshDefinition entry) {
+    public void onRegistryEvent(ResourceLocation name, IHasItemMeshDefinition entry) {
         ItemMeshDefinitions.registerItemMeshDefinitions(entry);
     }
 }

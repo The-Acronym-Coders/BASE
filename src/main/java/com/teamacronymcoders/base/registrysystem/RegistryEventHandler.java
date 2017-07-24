@@ -22,21 +22,26 @@ public class RegistryEventHandler {
     }
 
     @SubscribeEvent
-    public void registerBlocks(RegistryEvent.Register<Block> blockRegistry) {
-        this.mod.getRegistryHolder().getRegistry(BlockRegistry.class, "BLOCK").getEntries().forEach(
-                (name, block) -> blockRegistry.getRegistry().register(block.setRegistryName(name)));
+    public void registerBlocks(RegistryEvent.Register<Block> blockRegistryEvent) {
+        BlockRegistry blockRegistry = this.mod.getRegistryHolder().getRegistry(BlockRegistry.class, "BLOCK");
+        blockRegistry.getEntries().forEach((name, block) ->
+                blockRegistryEvent.getRegistry().register(block.setRegistryName(name)));
+        blockRegistry.registryEvent();
     }
 
     @SubscribeEvent
-    public void registerItems(RegistryEvent.Register<Item> itemRegistry) {
-        this.mod.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").getEntries().forEach(
-                (name, item) -> itemRegistry.getRegistry().register(item.setRegistryName(name)));
+    public void registerItems(RegistryEvent.Register<Item> itemRegistryEvent) {
+        ItemRegistry itemRegistry = this.mod.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM");
+        itemRegistry.getEntries().forEach((name, item) ->
+                itemRegistryEvent.getRegistry().register(item.setRegistryName(name)));
+        itemRegistry.registryEvent();
     }
 
     @SubscribeEvent
     @SuppressWarnings("unchecked")
-    public void registerEntities(RegistryEvent.Register<EntityEntry> entityRegistry) {
-        this.mod.getRegistryHolder().getRegistry(EntityRegistry.class, "ENTITY").getEntries().forEach(
+    public void registerEntities(RegistryEvent.Register<EntityEntry> entityRegistryEvent) {
+        EntityRegistry entityRegistry = this.mod.getRegistryHolder().getRegistry(EntityRegistry.class, "ENTITY");
+        entityRegistry.getEntries().forEach(
                 (name, entityEntry) -> {
                     Class<? extends Entity> entityClass = entityEntry.getEntityClass();
                     UpdateInfo updateInfo = entityEntry.getUpdateInfo();
@@ -56,9 +61,8 @@ public class RegistryEventHandler {
                         }
 
                     }
-                    entityRegistry.getRegistry().register(entityEntry);
+                    entityRegistryEvent.getRegistry().register(entityEntry);
                 });
+        entityRegistry.registryEvent();
     }
-
-
 }
