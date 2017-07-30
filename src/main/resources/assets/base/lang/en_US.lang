@@ -1,4 +1,4 @@
-itemGroup.base=B.A.S.E
+itemGroup.materials.base=B.A.S.E Materials
 error.base.null_part=Null Part
 
 base.part.gear=Gear
