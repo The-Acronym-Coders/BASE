@@ -132,8 +132,8 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
         return name;
     }
 
-	@Override
-	public Map<ItemStack, String> getOreDictNames(Map<ItemStack, String> names) {
-		return names;
-	}
+    @Override
+    public Map<ItemStack, String> getOreDictNames(Map<ItemStack, String> names) {
+        return names;
+    }
 }

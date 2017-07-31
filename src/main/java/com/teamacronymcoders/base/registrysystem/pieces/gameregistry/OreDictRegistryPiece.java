@@ -16,15 +16,15 @@ import net.minecraftforge.oredict.OreDictionary;
 
 @RegistryPiece(priority = LOW)
 public class OreDictRegistryPiece extends RegistryPieceBase<IHasOreDict> {
-	public OreDictRegistryPiece() {
-		super(IHasOreDict.class);
-	}
+    public OreDictRegistryPiece() {
+        super(IHasOreDict.class);
+    }
 
-	@Override
+    @Override
     public boolean acceptsRegistry(Registry registry) {
         return "ITEM".equalsIgnoreCase(registry.getName());
     }
-	
+
     @Override
     public void onRegistryEvent(ResourceLocation name, IHasOreDict entry) {
         Map<ItemStack, String> oreDict = entry.getOreDictNames(new HashMap<>());

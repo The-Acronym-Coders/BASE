@@ -46,8 +46,12 @@ public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHas
         return this;
     }
 
-	@Override
-	public Map<ItemStack, String> getOreDictNames(Map<ItemStack, String> names) {
-		return ((IHasOreDict) actualBlock).getOreDictNames(names);
-	}
+    @Override
+    public Map<ItemStack, String> getOreDictNames(Map<ItemStack, String> names) {
+        if (actualBlock instanceof IHasOreDict) {
+            return ((IHasOreDict) actualBlock).getOreDictNames(names);
+        } else {
+            return names;
+        }
+    }
 }

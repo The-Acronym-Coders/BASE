@@ -15,10 +15,8 @@ public class ItemRegistry extends ModularRegistry<Item> {
 
     public void register(Item item) {
         String unlocalizedName = item.getUnlocalizedName();
-        boolean removedItem = false;
         if (unlocalizedName.startsWith("item.")) {
             unlocalizedName = unlocalizedName.substring(5);
-            removedItem = true;
         }
         if (!unlocalizedName.contains(mod.getID())) {
             item.setUnlocalizedName(mod.getID() + "." + unlocalizedName);
