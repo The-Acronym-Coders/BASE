@@ -1,16 +1,19 @@
 package com.teamacronymcoders.base.items.itemblocks;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.IHasSubItems;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHasModel {
+public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHasModel, IHasOreDict {
     private T actualBlock;
 
     public ItemBlockGeneric(T block) {
@@ -42,4 +45,9 @@ public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHas
     public Item getItem() {
         return this;
     }
+
+	@Override
+	public Map<ItemStack, String> getOreDictNames(Map<ItemStack, String> names) {
+		return ((IHasOreDict) actualBlock).getOreDictNames(names);
+	}
 }
