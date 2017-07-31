@@ -15,3 +15,13 @@ base.part.dense_ore=Dense Ore
 
 item.wrench.name=Wrench
 
+base:api.multiblock.validation.success=Machine validation was successful.
+base:api.multiblock.validation.too_few_parts=Machine is too small.
+base:api.multiblock.validation.machine_too_large=Machine is too large, it may be at most %1$d blocks in the %2$s dimension.
+base:api.multiblock.validation.machine_too_small=Machine is too small, it must be at least %1$d blocks in the %2$s dimension.
+base:api.multiblock.validation.invalid_part=Part at %1$d, %2$d, %3$d is incompatible with this machine
+base:api.multiblock.validation.invalid_part_for_frame=Block at %1$d, %2$d, %3$d is not valid for use in the machine's frame
+base:api.multiblock.validation.invalid_part_for_bottom=Block at %1$d, %2$d, %3$d is not valid for use in the machine's bottom layer
+base:api.multiblock.validation.invalid_part_for_top=Block at %1$d, %2$d, %3$d is not valid for use in the machine's top layer
+base:api.multiblock.validation.invalid_part_for_sides=Block at %1$d, %2$d, %3$d is not valid for use in the machine's sides
+base:api.multiblock.validation.invalid_part_for_interior=Block at %1$d, %2$d, %3$d is not valid for use in the machine's interior
