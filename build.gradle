@@ -28,10 +28,6 @@ repositories {
         url 'http://maven.epoxide.xyz'
     }
     maven {
-        name 'The One Probe'
-        url 'http://modmaven.k-4u.nl'
-    }
-    maven {
         name 'Redstone Flux'
         url "http://maven.covers1624.net/"
     }
@@ -58,7 +54,6 @@ minecraft {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe-${minecraft_version}:${minecraft_version}-${top_version}"
     deobfCompile "net.darkhax.tesla:Tesla-${minecraft_version}:${tesla_version}"
     deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
     deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
