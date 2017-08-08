@@ -37,7 +37,7 @@ import java.util.Locale;
  */
 @SideOnly(Side.CLIENT)
 public class ResourcePackAssembler {
-    private static final String MC_META_BASE = "{\"pack\":{\"pack_format\":1,\"description\":\"%s\"}}";
+    private static final String MC_META_BASE = "{\"pack\":{\"pack_format\":3,\"description\":\"%s\"}}";
     private static List<IResourcePack> defaultResourcePacks;
     private List<CustomFile> files = new ArrayList<CustomFile>();
     private File dir;
@@ -54,14 +54,13 @@ public class ResourcePackAssembler {
      *                  created on the same level as the folder. This folder will be
      *                  <strong>WIPED</strong> on every call of {@link #assemble()} .
      * @param packName  The name of the resource pack.
-     * @param modid     Your mod's mod ID.
      */
-    public ResourcePackAssembler(File directory, String packName, String modid) {
+    public ResourcePackAssembler(File directory, String packName) {
         this.dir = directory;
         this.zip = new File(dir.getAbsolutePath() + ".zip");
         this.modid = modid.toLowerCase(Locale.US);
         this.mcmeta = String.format(MC_META_BASE, packName);
-        this.assetsPath = "/assets/" + modid + "/";
+        this.assetsPath = "/assets/";
     }
 
     /**

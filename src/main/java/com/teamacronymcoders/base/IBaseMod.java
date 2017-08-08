@@ -47,6 +47,10 @@ public interface IBaseMod<T> {
 
     boolean addOBJDomain();
 
+    default boolean hasExternalResources() {
+        return false;
+    }
+
     @Nullable
     MaterialUser getMaterialUser();
 

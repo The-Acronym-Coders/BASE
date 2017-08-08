@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
+import java.io.File;
 
 public abstract class LibCommonProxy {
     private IBaseMod mod;
@@ -86,5 +87,13 @@ public abstract class LibCommonProxy {
 
     public String getFileContents(ResourceLocation resourceLocation) {
         return "";
+    }
+
+    public void createResourceLoader(String modid, File minecraftFolder) {
+
+    }
+
+    public void assembleResourcePack() {
+
     }
 }

@@ -6,6 +6,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.zip.ZipEntry;
@@ -15,6 +16,7 @@ import java.util.zip.ZipOutputStream;
  * Borrowed From EnderCore
  * (https://github.com/SleepyTrousers/EnderCore/blob/1.10/src/main/java/com/enderio/core/common/util/EnderFileUtils.java)
  */
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class BaseFileUtils {
     /**
      * @param jarClass - A class from the jar in question
@@ -121,7 +123,7 @@ public class BaseFileUtils {
     public static String readFileToString(File file) {
         String string = null;
         try {
-            string = FileUtils.readFileToString(file);
+            string = FileUtils.readFileToString(file, Charset.defaultCharset());
         } catch (IOException e) {
             Platform.attemptLogExceptionToCurrentMod(e);
         }
@@ -140,12 +142,21 @@ public class BaseFileUtils {
         }
         if (exists) {
             try {
-                FileUtils.writeStringToFile(file, string);
+                FileUtils.writeStringToFile(file, string, Charset.defaultCharset());
             } catch (IOException e) {
                 Platform.attemptLogExceptionToCurrentMod(e);
             }
         } else {
             Platform.attemptLogErrorToCurrentMod("Couldn't create File: " + file.getName());
+        }
+    }
+
+    public static void createFile(File file) {
+        file.mkdirs();
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            Platform.attemptLogErrorToCurrentMod("Couldn't create File " + file.getName());
         }
     }
 }

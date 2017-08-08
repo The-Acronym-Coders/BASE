@@ -15,6 +15,8 @@ import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.util.ClassLoading;
+import com.teamacronymcoders.base.util.Platform;
+import com.teamacronymcoders.base.util.files.ResourceLoader;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
 import net.minecraft.creativetab.CreativeTabs;
@@ -47,9 +49,15 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     private String modid;
     private String modName;
     private String version;
+    private File resourceFolder;
+
+    public static int externalResourceUsers = 0;
 
     public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab) {
         this(modid, name, version, creativeTab, false);
+        if (hasExternalResources()) {
+            externalResourceUsers++;
+        }
     }
 
     public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab, boolean optionalSystems) {
@@ -99,6 +107,15 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         if (this.getSubBlockSystem() != null) {
             this.getSubBlockSystem().createBlocks();
+        }
+
+        if (hasExternalResources()) {
+            resourceFolder = new File(event.getModConfigurationDirectory().getParentFile(), "resources");
+            this.getLibProxy().createResourceLoader(modid, resourceFolder);
+            externalResourceUsers--;
+            if (externalResourceUsers <= 0) {
+                this.getLibProxy().assembleResourcePack();
+            }
         }
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
@@ -217,7 +234,15 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     @Nullable
     public File getResourceFolder() {
-        return null;
+        File returnFolder = null;
+        if (hasExternalResources()) {
+            returnFolder = new File(resourceFolder, modid);
+        } else if (Platform.isDevEnv()) {
+            //Kinda nasty but makes the template system work.
+            returnFolder = new File(resourceFolder.getParentFile().getParentFile(),
+                    "/src/main/resources/assets/" + modid + "/");
+        }
+        return returnFolder;
     }
 
     public boolean useModAsConfigFolder() {
