@@ -112,13 +112,16 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         if (hasExternalResources()) {
             resourceFolder = new File(event.getModConfigurationDirectory().getParentFile(), "resources");
             this.getLibProxy().createResourceLoader(modid, resourceFolder);
+        }
+
+        this.getAllRegistries().forEach((name, registry) -> registry.preInit());
+
+        if (hasExternalResources()) {
             externalResourceUsers--;
             if (externalResourceUsers <= 0) {
                 this.getLibProxy().assembleResourcePack();
             }
         }
-
-        this.getAllRegistries().forEach((name, registry) -> registry.preInit());
     }
 
     public void createRegistries(FMLPreInitializationEvent event, List<IRegistryPiece> registryPieces) {
