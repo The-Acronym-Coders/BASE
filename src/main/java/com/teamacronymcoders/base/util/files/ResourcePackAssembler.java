@@ -43,7 +43,6 @@ public class ResourcePackAssembler {
     private File dir;
     private File zip;
     private String mcmeta;
-    private String modid;
     private String assetsPath;
     private boolean hasPackPng = false;
     private Class<?> jarClass;
@@ -58,7 +57,6 @@ public class ResourcePackAssembler {
     public ResourcePackAssembler(File directory, String packName) {
         this.dir = directory;
         this.zip = new File(dir.getAbsolutePath() + ".zip");
-        this.modid = modid.toLowerCase(Locale.US);
         this.mcmeta = String.format(MC_META_BASE, packName);
         this.assetsPath = "/assets/";
     }
@@ -115,10 +113,6 @@ public class ResourcePackAssembler {
 
         try {
             writeNewFile(metaFile, mcmeta);
-
-            if (hasPackPng) {
-                BaseFileUtils.copyFromJar(jarClass, modid + "/" + "pack.png", new File(dir.getAbsolutePath() + "/pack.png"));
-            }
 
             for (CustomFile custom : files) {
                 File directory = new File(pathToDir + (custom.ext != null ? "/" + custom.ext : ""));
