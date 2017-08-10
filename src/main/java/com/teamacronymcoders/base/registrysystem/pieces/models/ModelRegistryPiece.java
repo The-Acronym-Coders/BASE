@@ -21,7 +21,7 @@ public class ModelRegistryPiece extends RegistryPieceBase<IHasModel> {
 
     @Override
     public boolean acceptsRegistry(Registry registry) {
-        return "ITEM".equalsIgnoreCase(registry.getName()) || "BLOCK".equalsIgnoreCase(registry.getName());
+        return "ITEM".equalsIgnoreCase(registry.getName());
     }
 
     @Override
