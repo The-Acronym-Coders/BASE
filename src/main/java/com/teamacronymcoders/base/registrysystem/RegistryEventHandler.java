@@ -61,7 +61,7 @@ public class RegistryEventHandler {
                         }
 
                     }
-                    entityRegistryEvent.getRegistry().register(entityEntry.setRegistryName(name));
+                    //entityRegistryEvent.getRegistry().register(entityEntry.setRegistryName(name));
                 });
         entityRegistry.registryEvent();
     }
