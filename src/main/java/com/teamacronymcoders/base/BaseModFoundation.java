@@ -82,7 +82,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.modelLoader = new SafeModelLoader(this);
 
         this.createRegistries(event, this.getRegistryPieces(event.getAsmData()));
-        MinecraftForge.EVENT_BUS.register(new RegistryEventHandler(this));
+        if (this.useDefaultRegistryEventHandler()) {
+            MinecraftForge.EVENT_BUS.register(new RegistryEventHandler(this));
+        }
         if (this.getMaterialUser() != null) {
             MaterialSystem.setup(this.getMaterialUser(), event.getAsmData());
             this.getMaterialUser().setup();
@@ -246,6 +248,10 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
                     "/src/main/resources/assets/" + modid + "/");
         }
         return returnFolder;
+    }
+
+    public boolean useDefaultRegistryEventHandler() {
+        return true;
     }
 
     public boolean useModAsConfigFolder() {
