@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "powered=false": { "model": "generic_wooden_pressure_plate_up" },
+        "powered=true": { "model": "generic_wooden_pressure_plate_down" }
+    }
+}
