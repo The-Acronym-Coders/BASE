@@ -41,7 +41,7 @@ public class ResourceLoader {
         File lang = new File(modFolder, "lang");
         BaseFileUtils.createFolder(lang);
         File enUsLang = new File(lang, "en_us.lang");
-        BaseFileUtils.createFile(enUsLang);
+        BaseFileUtils.writeStringToFile("", enUsLang);
         File textures = new File(modFolder, "textures");
         BaseFileUtils.createFolder(textures);
         BaseFileUtils.createFolder(new File(textures, "blocks"));
