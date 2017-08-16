@@ -115,7 +115,7 @@ public class BaseFileUtils {
     }
 
     public static void createFolder(File file) {
-        if (!file.exists() && !file.mkdir()) {
+        if (!file.exists() && !file.mkdirs()) {
             Platform.attemptLogErrorToCurrentMod("Couldn't create folder called: " + file.getName());
         }
     }

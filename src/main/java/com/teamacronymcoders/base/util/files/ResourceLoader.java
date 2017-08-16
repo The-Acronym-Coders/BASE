@@ -37,6 +37,7 @@ public class ResourceLoader {
 
     public void createImportantFolders(String modid) {
         File modFolder = new File(resourceFolder, modid);
+        BaseFileUtils.createFolder(modFolder);
         File lang = new File(modFolder, "lang");
         BaseFileUtils.createFolder(lang);
         File enUsLang = new File(lang, "en_us.lang");
