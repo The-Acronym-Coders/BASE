@@ -118,7 +118,6 @@ public class ResourcePackAssembler {
             }
 
             BaseFileUtils.zipFolderContents(dir, zip);
-            BaseFileUtils.safeDeleteDirectory(dir);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
