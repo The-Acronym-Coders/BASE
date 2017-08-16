@@ -105,9 +105,6 @@ public class ResourcePackAssembler {
      * @return The {@link ResourcePackAssembler} instance.
      */
     public ResourcePackAssembler assemble() {
-        BaseFileUtils.safeDeleteDirectory(dir);
-        dir.mkdirs();
-
         String pathToDir = dir.getAbsolutePath();
         File metaFile = new File(pathToDir + "/pack.mcmeta");
 
