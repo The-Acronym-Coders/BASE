@@ -12,6 +12,7 @@ public class ResourceLoader {
 
     public ResourceLoader(File resourceFolder) {
         this.resourceFolder = resourceFolder;
+        BaseFileUtils.createFolder(this.resourceFolder);
     }
 
     public void assembleResourcePack() {
