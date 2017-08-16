@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.client.models;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.items.IHasSubItems;
 import com.teamacronymcoders.base.util.Platform;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -11,13 +12,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface IHasModel extends IHasSubItems {
+public interface IHasModel extends IHasSubItems, IModAware {
     default List<String> getModelNames(List<String> modelNames) {
         return modelNames;
     }
 
     default List<ResourceLocation> getResourceLocations(List<ResourceLocation> resourceLocations) {
-        IBaseMod mod = Platform.getCurrentMod();
+        IBaseMod mod = this.getMod();
         if (mod != null) {
             getModelNames(new ArrayList<>()).forEach(modelName ->
                     resourceLocations.add(new ResourceLocation(mod.getID(), modelName.replace(mod.getID() + ".", ""))));
