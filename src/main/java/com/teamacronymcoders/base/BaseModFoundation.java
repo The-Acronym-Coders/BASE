@@ -102,14 +102,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getModuleHandler().preInit(event);
 
         this.afterModuleHandlerInit(event);
-
-        if (this.getMaterialUser() != null) {
-            this.getMaterialUser().finishUp();
-        }
-
-        if (this.getSubBlockSystem() != null) {
-            this.getSubBlockSystem().createBlocks();
-        }
+        this.finalizeOptionalSystems();
 
         if (hasExternalResources()) {
             resourceFolder = new File(event.getModConfigurationDirectory().getParentFile(), "resources");
@@ -142,6 +135,17 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     }
 
     public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
+
+    }
+
+    public void finalizeOptionalSystems() {
+        if (this.getMaterialUser() != null) {
+            this.getMaterialUser().finishUp();
+        }
+
+        if (this.getSubBlockSystem() != null) {
+            this.getSubBlockSystem().createBlocks();
+        }
 
     }
 
