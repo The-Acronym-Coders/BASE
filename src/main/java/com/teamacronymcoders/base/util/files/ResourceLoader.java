@@ -42,14 +42,14 @@ public class ResourceLoader {
         BaseFileUtils.createFolder(lang);
         File enUsLang = new File(lang, "en_us.lang");
         BaseFileUtils.createFile(enUsLang);
-        File textures = new File(resourceFolder, "textures");
+        File textures = new File(modFolder, "textures");
         BaseFileUtils.createFolder(textures);
         BaseFileUtils.createFolder(new File(textures, "blocks"));
         BaseFileUtils.createFolder(new File(textures, "items"));
 
-        BaseFileUtils.createFolder(new File(resourceFolder, "blockstates"));
+        BaseFileUtils.createFolder(new File(modFolder, "blockstates"));
 
-        File models = new File(resourceFolder, "models");
+        File models = new File(modFolder, "models");
         BaseFileUtils.createFolder(models);
         BaseFileUtils.createFolder(new File(models, "block"));
         BaseFileUtils.createFolder(new File(models, "item"));
