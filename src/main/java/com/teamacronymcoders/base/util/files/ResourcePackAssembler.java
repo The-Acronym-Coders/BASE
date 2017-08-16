@@ -144,7 +144,7 @@ public class ResourcePackAssembler {
                     defaultResourcePacks = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "defaultResourcePacks", "field_110449_ao", "ap");
                 }
 
-                File dest = new File(dir.getParent() + "/resourcepack/" + zip.getName());
+                File dest = new File(dir.getParent() + "/resourcepacks/" + zip.getName());
                 BaseFileUtils.safeDelete(dest);
                 FileUtils.copyFile(zip, dest);
                 BaseFileUtils.safeDelete(zip);
