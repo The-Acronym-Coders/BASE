@@ -110,13 +110,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         }
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
-
-        if (hasExternalResources()) {
-            externalResourceUsers--;
-            if (externalResourceUsers <= 0) {
-                this.getLibProxy().assembleResourcePack();
-            }
-        }
     }
 
     public void createRegistries(FMLPreInitializationEvent event, List<IRegistryPiece> registryPieces) {
@@ -147,6 +140,12 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.getSubBlockSystem().createBlocks();
         }
 
+        if (hasExternalResources()) {
+            externalResourceUsers--;
+            if (externalResourceUsers <= 0) {
+                this.getLibProxy().assembleResourcePack();
+            }
+        }
     }
 
     public void init(FMLInitializationEvent event) {
