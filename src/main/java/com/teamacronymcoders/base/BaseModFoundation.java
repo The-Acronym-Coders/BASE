@@ -77,6 +77,12 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     public void preInit(FMLPreInitializationEvent event) {
         BaseMods.addBaseMod(this);
 
+        this.minecraftFolder = event.getModConfigurationDirectory().getParentFile();
+
+        if (hasExternalResources()) {
+            this.resourceFolder = new File(minecraftFolder, "resources");
+        }
+        
         this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
                 "com.teamacronymcoders.base.proxies.LibServerProxy");
         this.getLibProxy().setMod(this);
@@ -94,10 +100,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.getLibProxy().addOBJDomain();
         }
 
-        this.minecraftFolder = event.getModConfigurationDirectory().getParentFile();
-        if (hasExternalResources()) {
-            this.resourceFolder = new File(minecraftFolder, "resources");
-        }
 
         this.guiHandler = new GuiHandler(this);
 
