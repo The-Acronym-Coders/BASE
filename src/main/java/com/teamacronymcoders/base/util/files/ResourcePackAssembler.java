@@ -104,8 +104,10 @@ public class ResourcePackAssembler {
      *
      * @return The {@link ResourcePackAssembler} instance.
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public ResourcePackAssembler assemble() {
-        String pathToDir = dir.getAbsolutePath();
+        File temp = new File(dir, "temp");
+        String pathToDir = temp.getAbsolutePath();
         File metaFile = new File(pathToDir + "/pack.mcmeta");
 
         try {
@@ -117,8 +119,8 @@ public class ResourcePackAssembler {
                 FileUtils.copyFile(custom.file, new File(directory.getAbsolutePath() + "/" + custom.file.getName()));
             }
 
-            BaseFileUtils.safeDelete(new File(dir, "/assets"));
-            BaseFileUtils.zipFolderContents(dir, zip);
+            BaseFileUtils.zipFolderContents(temp, zip);
+            BaseFileUtils.safeDeleteDirectory(temp);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -152,6 +154,7 @@ public class ResourcePackAssembler {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void writeNewFile(File file, String defaultText) throws IOException {
         BaseFileUtils.safeDelete(file);
         file.delete();
