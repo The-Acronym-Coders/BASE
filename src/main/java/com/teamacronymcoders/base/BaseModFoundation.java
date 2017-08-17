@@ -93,6 +93,10 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.getLibProxy().addOBJDomain();
         }
 
+        if (hasExternalResources()) {
+            resourceFolder = new File(event.getModConfigurationDirectory().getParentFile(), "resources");
+        }
+
         this.guiHandler = new GuiHandler(this);
 
         this.beforeModuleHandlerInit(event);
@@ -105,7 +109,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.finalizeOptionalSystems();
 
         if (hasExternalResources()) {
-            resourceFolder = new File(event.getModConfigurationDirectory().getParentFile(), "resources");
             this.getLibProxy().createResourceLoader(modid, resourceFolder);
         }
 
