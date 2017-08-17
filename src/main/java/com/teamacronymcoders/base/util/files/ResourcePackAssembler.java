@@ -117,6 +117,7 @@ public class ResourcePackAssembler {
                 FileUtils.copyFile(custom.file, new File(directory.getAbsolutePath() + "/" + custom.file.getName()));
             }
 
+            BaseFileUtils.safeDelete(new File(dir, "/assets"));
             BaseFileUtils.zipFolderContents(dir, zip);
         } catch (IOException e) {
             throw new RuntimeException(e);
