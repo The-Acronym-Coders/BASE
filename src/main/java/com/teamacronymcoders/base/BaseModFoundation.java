@@ -50,14 +50,12 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     private String modName;
     private String version;
     private File resourceFolder;
+    private File minecraftFolder;
 
     public static int externalResourceUsers = 0;
 
     public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab) {
         this(modid, name, version, creativeTab, false);
-        if (hasExternalResources()) {
-            externalResourceUsers++;
-        }
     }
 
     public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab, boolean optionalSystems) {
@@ -70,6 +68,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         if (optionalSystems) {
             materialUser = new MaterialUser(this);
             subBlockSystem = new SubBlockSystem(this);
+        }
+        if (hasExternalResources()) {
+            externalResourceUsers++;
         }
     }
 
@@ -93,8 +94,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.getLibProxy().addOBJDomain();
         }
 
+        this.minecraftFolder = event.getModConfigurationDirectory().getParentFile();
         if (hasExternalResources()) {
-            resourceFolder = new File(event.getModConfigurationDirectory().getParentFile(), "resources");
+            this.resourceFolder = new File(minecraftFolder, "resources");
         }
 
         this.guiHandler = new GuiHandler(this);
@@ -305,5 +307,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             }
         });
         return registryPieces;
+    }
+
+    public File getMinecraftFolder() {
+        return minecraftFolder;
     }
 }
