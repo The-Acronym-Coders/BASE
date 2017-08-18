@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "##TEXTURE##"
+      "texture": "##TEXTURE##"
     },
     "model": "base:storage",
     "uvlock": true,
