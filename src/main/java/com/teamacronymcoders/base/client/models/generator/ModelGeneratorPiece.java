@@ -17,7 +17,7 @@ public class ModelGeneratorPiece extends RegistryPieceBase<IHasGeneratedModel> {
     }
 
     @Override
-    public void onRegistryEvent(ResourceLocation name, IHasGeneratedModel entry) {
+    public void preInit(ResourceLocation name, IHasGeneratedModel entry) {
         ModelGenerator.generate(entry);
     }
 }

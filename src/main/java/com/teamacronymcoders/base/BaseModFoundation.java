@@ -118,6 +118,13 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.finalizeOptionalSystems();
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
+
+        if (hasExternalResources()) {
+            externalResourceUsers--;
+            if (externalResourceUsers <= 0) {
+                this.getLibProxy().assembleResourcePack();
+            }
+        }
     }
 
     public void createRegistries(FMLPreInitializationEvent event, List<IRegistryPiece> registryPieces) {
@@ -129,8 +136,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
         }
     }
-
-
+    
     public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
 
     }
@@ -146,13 +152,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         if (this.getSubBlockSystem() != null) {
             this.getSubBlockSystem().createBlocks();
-        }
-
-        if (hasExternalResources()) {
-            externalResourceUsers--;
-            if (externalResourceUsers <= 0) {
-                this.getLibProxy().assembleResourcePack();
-            }
         }
     }
 
