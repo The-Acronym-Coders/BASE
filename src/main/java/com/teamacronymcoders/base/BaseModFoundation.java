@@ -136,7 +136,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
         }
     }
-    
+
     public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
 
     }
