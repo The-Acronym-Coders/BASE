@@ -110,11 +110,12 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getModuleHandler().preInit(event);
 
         this.afterModuleHandlerInit(event);
-        this.finalizeOptionalSystems();
 
         if (hasExternalResources()) {
             this.getLibProxy().createResourceLoader(modid, resourceFolder);
         }
+
+        this.finalizeOptionalSystems();
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
     }
