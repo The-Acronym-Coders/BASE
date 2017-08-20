@@ -1,19 +1,25 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.base.util.TextUtils;
+import net.minecraft.client.resources.I18n;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Locale;
 
 public class Part {
     private String name;
+    private String shortUnlocalizedName;
     private String unlocalizedName;
     private String oreDictName;
     private PartType partType;
 
-    Part(String name, PartType partType) {
+    Part(String name, PartType partType, MaterialUser materialUser) {
         this.name = name;
-        this.unlocalizedName = TextUtils.toSnakeCase(name);
+        this.shortUnlocalizedName = TextUtils.toSnakeCase(name);
+        this.unlocalizedName = materialUser.getId() + ".part." + this.shortUnlocalizedName;
         String oreDict = name.substring(0, 1).toLowerCase(Locale.US) + name.substring(1);
         this.oreDictName = TextUtils.removeSpecialCharacters(oreDict);
         this.partType = partType;
@@ -21,6 +27,10 @@ public class Part {
 
     public String getName() {
         return name;
+    }
+
+    public String getShortUnlocalizedName() {
+        return shortUnlocalizedName;
     }
 
     public String getUnlocalizedName() {
