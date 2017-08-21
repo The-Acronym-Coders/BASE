@@ -3,6 +3,7 @@ error.base.null_part=Null Part
 
 base.part.gear=Gear
 base.part.plate=Plate
+base.part.dense_plate=Dense Plate
 base.part.dust=Dust
 base.part.ingot=Ingot
 base.part.nugget=Nugget
