@@ -2,14 +2,17 @@ package com.teamacronymcoders.base.materialsystem.parts;
 
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 
 public class PartBuilder {
     private String name;
     private PartType partType;
+    private MaterialUser materialUser;
 
-    public PartBuilder() {
+    public PartBuilder(MaterialUser user) {
         MaterialSystem.partsNotBuilt.add(this);
+        this.materialUser = user;
     }
 
     public PartBuilder setName(String name) {
@@ -24,7 +27,7 @@ public class PartBuilder {
 
     public Part build() throws MaterialException {
         validate();
-        Part part =  new Part(name, partType);
+        Part part =  new Part(name, partType, materialUser);
         MaterialSystem.registerPart(part);
         MaterialSystem.partsNotBuilt.remove(this);
         return part;

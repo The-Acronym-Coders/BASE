@@ -5,7 +5,7 @@ import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.BlockStateMappers;
 import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.client.Colors;
-import com.teamacronymcoders.base.client.Models;
+import com.teamacronymcoders.base.client.models.handler.ModelHandler;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
@@ -34,6 +34,7 @@ import java.io.InputStream;
 @SideOnly(Side.CLIENT)
 public class LibClientProxy extends LibCommonProxy {
     private static ResourceLoader resourceLoader;
+    private ModelHandler modelHandler;
 
     @Override
     public void addOBJDomain() {
@@ -41,13 +42,8 @@ public class LibClientProxy extends LibCommonProxy {
     }
 
     @Override
-    public void setItemModel(Item item, int metadata, ResourceLocation resourceLocation) {
-        ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(resourceLocation, ""));
-    }
-
-    @Override
-    public void setAllItemModels(Item item, IHasModel model) {
-        Models.registerModels(model);
+    public void setAllItemModels(IHasModel model) {
+        this.getModelHandler().registerModels(model);
     }
 
     @Override
@@ -82,7 +78,7 @@ public class LibClientProxy extends LibCommonProxy {
     }
 
     @Override
-    public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
+    public void registerBlockStateMapper(IHasBlockStateMapper stateMapper) {
         BlockStateMappers.registerStateMapper(stateMapper);
     }
 
@@ -124,6 +120,13 @@ public class LibClientProxy extends LibCommonProxy {
             resourceLoader = new ResourceLoader(minecraftFolder);
         }
         resourceLoader.createImportantFolders(modid);
+    }
+
+    private ModelHandler getModelHandler() {
+        if (modelHandler == null) {
+            this.modelHandler = new ModelHandler(this.getMod());
+        }
+        return modelHandler;
     }
 
     @Override

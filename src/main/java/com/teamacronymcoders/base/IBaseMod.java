@@ -1,8 +1,6 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.client.models.SafeModelLoader;
 import com.teamacronymcoders.base.guisystem.GuiHandler;
-import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
@@ -40,8 +38,6 @@ public interface IBaseMod<T> {
     PacketHandler getPacketHandler();
 
     IRegistryHolder getRegistryHolder();
-
-    SafeModelLoader getModelLoader();
 
     ModuleHandler getModuleHandler();
 

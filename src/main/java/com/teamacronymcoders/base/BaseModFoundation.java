@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.client.models.SafeModelLoader;
 import com.teamacronymcoders.base.guisystem.GuiHandler;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
@@ -16,7 +15,6 @@ import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.Platform;
-import com.teamacronymcoders.base.util.files.ResourceLoader;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
 import net.minecraft.creativetab.CreativeTabs;
@@ -32,7 +30,6 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T>, IRegistryHolder {
@@ -41,7 +38,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     protected GuiHandler guiHandler;
     protected PacketHandler packetHandler;
     protected Map<String, Registry> registries;
-    protected SafeModelLoader modelLoader;
     protected ModuleHandler moduleHandler;
     protected LibCommonProxy libProxy;
     protected MaterialUser materialUser;
@@ -86,7 +82,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
                 "com.teamacronymcoders.base.proxies.LibServerProxy");
         this.getLibProxy().setMod(this);
-        this.modelLoader = new SafeModelLoader(this);
 
         this.createRegistries(event, this.getRegistryPieces(event.getAsmData()));
         if (this.useDefaultRegistryEventHandler()) {
@@ -218,11 +213,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Override
     public LibCommonProxy getLibProxy() {
         return this.libProxy;
-    }
-
-    @Override
-    public SafeModelLoader getModelLoader() {
-        return this.modelLoader;
     }
 
     @Override

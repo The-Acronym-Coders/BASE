@@ -19,7 +19,11 @@ public class Part {
     Part(String name, PartType partType, MaterialUser materialUser) {
         this.name = name;
         this.shortUnlocalizedName = TextUtils.toSnakeCase(name);
-        this.unlocalizedName = materialUser.getId() + ".part." + this.shortUnlocalizedName;
+        String modid = "base";
+        if (materialUser != null) {
+            modid = materialUser.getId();
+        }
+        this.unlocalizedName = modid + ".part." + this.shortUnlocalizedName;
         String oreDict = name.substring(0, 1).toLowerCase(Locale.US) + name.substring(1);
         this.oreDictName = TextUtils.removeSpecialCharacters(oreDict);
         this.partType = partType;
