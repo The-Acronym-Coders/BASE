@@ -24,7 +24,7 @@ public class ModelRegistryPiece extends RegistryPieceBase<IHasModel> {
     }
 
     @Override
-    public void addEntry(ResourceLocation name, IHasModel entry) {
+    public void onRegistryEvent(ResourceLocation name, IHasModel entry) {
         this.getMod().getLibProxy().setAllItemModels(entry);
     }
 }
