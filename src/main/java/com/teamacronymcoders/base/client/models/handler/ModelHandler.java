@@ -25,7 +25,7 @@ public class ModelHandler {
     public ModelHandler(IBaseMod mod) {
         this.logger = mod.getLogger();
         this.models = Maps.newHashMap();
-        MinecraftForge.EVENT_BUS.register(new ModelEventHandler(this, mod));
+        MinecraftForge.EVENT_BUS.register(new ModelEventHandler(this));
     }
 
     public void registerModels(IHasModel model) {

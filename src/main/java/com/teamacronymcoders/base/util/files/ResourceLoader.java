@@ -1,38 +1,44 @@
 package com.teamacronymcoders.base.util.files;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IResourcePack;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.nio.charset.MalformedInputException;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class ResourceLoader {
-    private ResourcePackAssembler assembler;
     private File resourceFolder;
 
-    public ResourceLoader(File resourceFolder) {
-        this.resourceFolder = resourceFolder;
-        BaseFileUtils.createFolder(this.resourceFolder);
+    public ResourceLoader() {
+
     }
 
-    public void assembleResourcePack() {
-        assembler = new ResourcePackAssembler(resourceFolder, "Resources");
+    public void setup() throws NoSuchFieldException, IllegalAccessException {
+        Field minecraftDirField = Loader.class.getDeclaredField("minecraftDir");
+        minecraftDirField.setAccessible(true);
+        Object minecraftDirObject = minecraftDirField.get(null);
+        if (minecraftDirObject instanceof File) {
+            File minecraftDir = (File)minecraftDirObject;
+            this.resourceFolder = new File(minecraftDir, "resources");
+            BaseFileUtils.createFolder(this.resourceFolder);
 
-        copyFilesFromFolder("", resourceFolder);
-        assembler.assemble().inject();
-    }
-
-    private void copyFilesFromFolder(String path, File folder) {
-        File[] files = folder.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    copyFilesFromFolder(path + "/" + file.getName(), file);
-                } else {
-                    assembler.addFile(path, file);
-                }
-            }
+            List<IResourcePack> defaultResourcePacks = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "defaultResourcePacks", "field_110449_ao", "ap");
+            defaultResourcePacks.add(new DirectoryResourcePack(this.resourceFolder));
         }
+
+        createPackMcMeta();
+    }
+
+    private void createPackMcMeta() {
+        String mcMeta = "{\"pack\":{\"pack_format\":3,\"description\":\"B.A.S.E External Resources\"}}";
+        BaseFileUtils.writeStringToFile(mcMeta, new File(this.resourceFolder, "pack.mcmeta"));
     }
 
     public void createImportantFolders(String modid) {

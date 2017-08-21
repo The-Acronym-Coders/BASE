@@ -85,11 +85,7 @@ public abstract class LibCommonProxy {
         return "";
     }
 
-    public void createResourceLoader(String modid, File minecraftFolder) {
-
-    }
-
-    public void assembleResourcePack() {
+    public void createResourceLoader(String modid) {
 
     }
 }

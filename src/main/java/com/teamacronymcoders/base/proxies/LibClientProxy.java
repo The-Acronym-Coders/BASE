@@ -115,11 +115,17 @@ public class LibClientProxy extends LibCommonProxy {
     }
 
     @Override
-    public void createResourceLoader(String modid, File minecraftFolder) {
+    public void createResourceLoader(String modid) {
         if (resourceLoader == null) {
-            resourceLoader = new ResourceLoader(minecraftFolder);
+            resourceLoader = new ResourceLoader();
+            try {
+                resourceLoader.setup();
+                resourceLoader.createImportantFolders(modid);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                this.getMod().getLogger().getLogger().error(e);
+            }
         }
-        resourceLoader.createImportantFolders(modid);
+
     }
 
     private ModelHandler getModelHandler() {
@@ -127,10 +133,5 @@ public class LibClientProxy extends LibCommonProxy {
             this.modelHandler = new ModelHandler(this.getMod());
         }
         return modelHandler;
-    }
-
-    @Override
-    public void assembleResourcePack() {
-        resourceLoader.assembleResourcePack();
     }
 }

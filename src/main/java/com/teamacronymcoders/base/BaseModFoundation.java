@@ -28,6 +28,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,8 +66,14 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             materialUser = new MaterialUser(this);
             subBlockSystem = new SubBlockSystem(this);
         }
+
+        this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
+                "com.teamacronymcoders.base.proxies.LibServerProxy");
+        this.getLibProxy().setMod(this);
+
         if (hasExternalResources()) {
             externalResourceUsers++;
+            this.libProxy.createResourceLoader(modid);
         }
     }
 
@@ -74,14 +81,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         BaseMods.addBaseMod(this);
 
         this.minecraftFolder = event.getModConfigurationDirectory().getParentFile();
-
-        if (hasExternalResources()) {
-            this.resourceFolder = new File(minecraftFolder, "resources");
-        }
-        
-        this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
-                "com.teamacronymcoders.base.proxies.LibServerProxy");
-        this.getLibProxy().setMod(this);
+        this.resourceFolder = new File(minecraftFolder, "resources");
 
         this.createRegistries(event, this.getRegistryPieces(event.getAsmData()));
         if (this.useDefaultRegistryEventHandler()) {
@@ -95,7 +95,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.getLibProxy().addOBJDomain();
         }
 
-
         this.guiHandler = new GuiHandler(this);
 
         this.beforeModuleHandlerInit(event);
@@ -105,11 +104,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getModuleHandler().preInit(event);
 
         this.afterModuleHandlerInit(event);
-
-        if (hasExternalResources()) {
-            this.getLibProxy().createResourceLoader(modid, resourceFolder);
-        }
-
         this.finalizeOptionalSystems();
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
