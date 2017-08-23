@@ -80,8 +80,9 @@ public class SubBlockOrePart extends SubBlockPart {
                 "blocks/" + variantLocation.getResourcePath()).toString();
         replacements.put("texture", variantTexture);
         replacements.put("particle", variantTexture);
-        replacements.put("ore_shadow", "base:blocks/" + unlocalizedName + "_shadow");
-        replacements.put("ore", "base:blocks/" + unlocalizedName);
+        String modid = this.getMaterialPart().getPart().getOwnerId();
+        replacements.put("ore_shadow", modid + ":blocks/" + unlocalizedName + "_shadow");
+        replacements.put("ore", modid + ":blocks/" + unlocalizedName);
         templateFile.replaceContents(replacements);
 
         return new GeneratedModel("materials/" + this.getMaterialPart().getUnlocalizedName(), ModelType.BLOCKSTATE, templateFile.getFileContents());

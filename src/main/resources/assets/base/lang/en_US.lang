@@ -14,6 +14,7 @@ base.part.block=Block
 base.part.ore=Ore
 base.part.poor_ore=Poor Ore
 base.part.dense_ore=Dense Ore
+base.part.molten=Molten
 
 item.wrench.name=Wrench
 

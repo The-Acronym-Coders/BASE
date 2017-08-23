@@ -14,16 +14,17 @@ public class Part {
     private String shortUnlocalizedName;
     private String unlocalizedName;
     private String oreDictName;
+    private String ownerId;
     private PartType partType;
 
-    Part(String name, PartType partType, MaterialUser materialUser) {
+    Part(String name, PartType partType, String ownerId) {
         this.name = name;
         this.shortUnlocalizedName = TextUtils.toSnakeCase(name);
-        String modid = "base";
-        if (materialUser != null) {
-            modid = materialUser.getId();
+        this.ownerId = "base";
+        if (ownerId != null) {
+            this.ownerId = ownerId;
         }
-        this.unlocalizedName = modid + ".part." + this.shortUnlocalizedName;
+        this.unlocalizedName = this.ownerId + ".part." + this.shortUnlocalizedName;
         String oreDict = name.substring(0, 1).toLowerCase(Locale.US) + name.substring(1);
         this.oreDictName = TextUtils.removeSpecialCharacters(oreDict);
         this.partType = partType;
@@ -51,5 +52,9 @@ public class Part {
 
     public String getOreDictPrefix() {
         return this.oreDictName;
+    }
+
+    public String getOwnerId() {
+        return this.ownerId;
     }
 }

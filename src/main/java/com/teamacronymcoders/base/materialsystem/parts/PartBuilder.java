@@ -7,12 +7,11 @@ import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 
 public class PartBuilder {
     private String name;
+    private String ownerId;
     private PartType partType;
-    private MaterialUser materialUser;
 
-    public PartBuilder(MaterialUser user) {
+    public PartBuilder() {
         MaterialSystem.partsNotBuilt.add(this);
-        this.materialUser = user;
     }
 
     public PartBuilder setName(String name) {
@@ -25,9 +24,14 @@ public class PartBuilder {
         return this;
     }
 
+    public PartBuilder setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+        return this;
+    }
+
     public Part build() throws MaterialException {
         validate();
-        Part part =  new Part(name, partType, materialUser);
+        Part part =  new Part(name, partType, ownerId);
         MaterialSystem.registerPart(part);
         MaterialSystem.partsNotBuilt.remove(this);
         return part;

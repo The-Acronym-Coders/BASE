@@ -14,7 +14,7 @@ import net.minecraft.util.text.TextFormatting;
 
 public class MissingMaterialPart extends MaterialPart {
     public MissingMaterialPart() throws MaterialException {
-        super(null, null, new PartBuilder(null).setName("Missing").setPartType(new NullPartType()).build());
+        super(null, null, new PartBuilder().setName("Missing").setPartType(new NullPartType()).build());
     }
 
     @Override
