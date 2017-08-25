@@ -49,7 +49,7 @@ public class MaterialPart {
 
     public String getLocalizedName() {
         //noinspection deprecation
-        return String.format("%s %s", material.getName(), I18n.translateToLocal(part.getUnlocalizedName()));
+        return I18n.translateToLocalFormatted(part.getUnlocalizedName(), material.getName());
     }
 
     public boolean hasEffect() {
