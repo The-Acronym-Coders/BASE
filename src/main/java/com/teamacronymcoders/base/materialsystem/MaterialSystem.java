@@ -20,6 +20,7 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MaterialSystem {
@@ -67,7 +68,7 @@ public class MaterialSystem {
     }
 
     public static void registerPartType(PartType partType) {
-        partTypeMap.put(partType.getName(), partType);
+        partTypeMap.put(partType.getName().toLowerCase(Locale.US), partType);
     }
 
     public static void registerMaterial(Material material) {
@@ -75,11 +76,11 @@ public class MaterialSystem {
     }
 
     public static Part getPart(String name) {
-        return partMap.get(name);
+        return partMap.get(name.toLowerCase(Locale.US));
     }
 
     public static PartType getPartType(String name) {
-        return partTypeMap.get(name);
+        return partTypeMap.get(name.toLowerCase(Locale.US));
     }
 
     public static Material getMaterial(String name) {

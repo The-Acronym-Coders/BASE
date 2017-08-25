@@ -48,29 +48,29 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
         int minZSize = this.getMinimumZSize();
 
         if (maxXSize > 0 && deltaX > maxXSize) {
-            validatorCallback.setLastError("base:api.multiblock.validation.machine_too_large", maxXSize, "X");
+            validatorCallback.setLastError("base.api.multiblock.validation.machine_too_large", maxXSize, "X");
             return false;
         }
         if (maxYSize > 0 && deltaY > maxYSize) {
-            validatorCallback.setLastError("base:api.multiblock.validation.machine_too_large", maxYSize, "Y");
+            validatorCallback.setLastError("base.api.multiblock.validation.machine_too_large", maxYSize, "Y");
             return false;
         }
         if (maxZSize > 0 && deltaZ > maxZSize) {
-            validatorCallback.setLastError("base:api.multiblock.validation.machine_too_large", maxZSize, "Z");
+            validatorCallback.setLastError("base.api.multiblock.validation.machine_too_large", maxZSize, "Z");
             return false;
         }
         if (deltaX < minXSize) {
-            validatorCallback.setLastError("base:base:api.multiblock.validation.machine_too_small", minXSize,
+            validatorCallback.setLastError("base.api.multiblock.validation.machine_too_small", minXSize,
                     "X");
             return false;
         }
         if (deltaY < minYSize) {
-            validatorCallback.setLastError("base:base:api.multiblock.validation.machine_too_small", minYSize,
+            validatorCallback.setLastError("base.api.multiblock.validation.machine_too_small", minYSize,
                     "Y");
             return false;
         }
         if (deltaZ < minZSize) {
-            validatorCallback.setLastError("base:base:api.multiblock.validation.machine_too_small", minZSize,
+            validatorCallback.setLastError("base.api.multiblock.validation.machine_too_small", minZSize,
                     "Z");
             return false;
         }
@@ -95,7 +95,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
                         // Ensure this part should actually be allowed within a cube of this controller's type
                         if (!myClass.equals(part.getMultiblockControllerType())) {
 
-                            validatorCallback.setLastError("base:api.multiblock.validation.invalid_part", x, y, z);
+                            validatorCallback.setLastError("base.api.multiblock.validation.invalid_part", x, y, z);
                             return false;
                         }
                     } else {
@@ -135,7 +135,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
 
                             if (null == validatorCallback.getLastError())
                                 validatorCallback.setLastError(
-                                        "base:api.multiblock.validation.invalid_part_for_frame", x, y, z);
+                                        "base.api.multiblock.validation.invalid_part_for_frame", x, y, z);
 
                             return false;
                         }
@@ -149,7 +149,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
 
                                 if (null == validatorCallback.getLastError())
                                     validatorCallback.setLastError(
-                                            "base:api.multiblock.validation.invalid_part_for_top", x, y, z);
+                                            "base.api.multiblock.validation.invalid_part_for_top", x, y, z);
 
                                 return false;
                             }
@@ -162,7 +162,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
 
                                 if (null == validatorCallback.getLastError())
                                     validatorCallback.setLastError(
-                                            "base:api.multiblock.validation.invalid_part_for_bottom", x, y, z);
+                                            "base.api.multiblock.validation.invalid_part_for_bottom", x, y, z);
 
                                 return false;
                             }
@@ -175,7 +175,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
 
                                 if (null == validatorCallback.getLastError())
                                     validatorCallback.setLastError(
-                                            "base:api.multiblock.validation.invalid_part_for_sides", x, y, z);
+                                            "base.api.multiblock.validation.invalid_part_for_sides", x, y, z);
 
                                 return false;
                             }
@@ -189,7 +189,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
 
                             if (null == validatorCallback.getLastError())
                                 validatorCallback.setLastError(
-                                        "base:api.multiblock.validation.invalid_part_for_interior", x, y,
+                                        "base.api.multiblock.validation.invalid_part_for_interior", x, y,
                                         z);
 
                             return false;

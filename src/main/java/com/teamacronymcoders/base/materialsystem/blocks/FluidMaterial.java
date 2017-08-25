@@ -28,4 +28,9 @@ public class FluidMaterial extends Fluid {
     public boolean doesVaporize(FluidStack fluidStack) {
         return this.vaporize;
     }
+
+    @Override
+    public String getUnlocalizedName() {
+        return materialPart.getPart().getUnlocalizedName();
+    }
 }

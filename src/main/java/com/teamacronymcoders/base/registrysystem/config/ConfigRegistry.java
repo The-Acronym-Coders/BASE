@@ -154,7 +154,7 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
     }
 
     @Override
-    public boolean requiresPreInitRegister() {
+    public boolean requiresBeforeRegister() {
         return false;
     }
 

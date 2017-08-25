@@ -5,12 +5,13 @@ import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.BlockStateMappers;
 import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.client.Colors;
-import com.teamacronymcoders.base.client.Models;
+import com.teamacronymcoders.base.client.models.handler.ModelHandler;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
+import com.teamacronymcoders.base.util.files.ResourceLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -26,24 +27,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.io.IOUtils;
 
 import javax.annotation.Nonnull;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 @SideOnly(Side.CLIENT)
 public class LibClientProxy extends LibCommonProxy {
+    private static ResourceLoader resourceLoader;
+    private ModelHandler modelHandler;
+
     @Override
     public void addOBJDomain() {
         OBJLoader.INSTANCE.addDomain(getMod().getID());
     }
 
     @Override
-    public void setItemModel(Item item, int metadata, ResourceLocation resourceLocation) {
-        ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(resourceLocation, ""));
-    }
-
-    @Override
-    public void setAllItemModels(Item item, IHasModel model) {
-        Models.registerModels(model);
+    public void setAllItemModels(IHasModel model) {
+        this.getModelHandler().registerModels(model);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class LibClientProxy extends LibCommonProxy {
     }
 
     @Override
-    public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
+    public void registerBlockStateMapper(IHasBlockStateMapper stateMapper) {
         BlockStateMappers.registerStateMapper(stateMapper);
     }
 
@@ -112,5 +112,26 @@ public class LibClientProxy extends LibCommonProxy {
         }
 
         return fileContents;
+    }
+
+    @Override
+    public void createResourceLoader(String modid) {
+        if (resourceLoader == null) {
+            resourceLoader = new ResourceLoader();
+            try {
+                resourceLoader.setup();
+                resourceLoader.createImportantFolders(modid);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                this.getMod().getLogger().getLogger().error(e);
+            }
+        }
+
+    }
+
+    private ModelHandler getModelHandler() {
+        if (modelHandler == null) {
+            this.modelHandler = new ModelHandler(this.getMod());
+        }
+        return modelHandler;
     }
 }

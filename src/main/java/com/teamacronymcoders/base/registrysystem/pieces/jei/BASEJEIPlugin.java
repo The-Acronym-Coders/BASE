@@ -1,16 +1,13 @@
 package com.teamacronymcoders.base.registrysystem.pieces.jei;
 
 import com.teamacronymcoders.base.items.IHasSubItems;
-import mezz.jei.api.BlankModPlugin;
-import mezz.jei.api.IJeiHelpers;
-import mezz.jei.api.IModRegistry;
-import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.*;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 
 @JEIPlugin
-public class BASEJEIPlugin extends BlankModPlugin {
+public class BASEJEIPlugin implements IModPlugin {
     private static IJeiHelpers jeiHelpers;
 
     @Override

@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.client.models.SafeModelLoader;
 import com.teamacronymcoders.base.guisystem.GuiHandler;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
@@ -15,6 +14,7 @@ import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.util.ClassLoading;
+import com.teamacronymcoders.base.util.Platform;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
 import net.minecraft.creativetab.CreativeTabs;
@@ -28,9 +28,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T>, IRegistryHolder {
@@ -39,7 +39,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     protected GuiHandler guiHandler;
     protected PacketHandler packetHandler;
     protected Map<String, Registry> registries;
-    protected SafeModelLoader modelLoader;
     protected ModuleHandler moduleHandler;
     protected LibCommonProxy libProxy;
     protected MaterialUser materialUser;
@@ -47,6 +46,10 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     private String modid;
     private String modName;
     private String version;
+    private File resourceFolder;
+    private File minecraftFolder;
+
+    public static int externalResourceUsers = 0;
 
     public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab) {
         this(modid, name, version, creativeTab, false);
@@ -63,18 +66,27 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             materialUser = new MaterialUser(this);
             subBlockSystem = new SubBlockSystem(this);
         }
+
+        this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
+                "com.teamacronymcoders.base.proxies.LibServerProxy");
+        this.getLibProxy().setMod(this);
+
+        if (hasExternalResources()) {
+            externalResourceUsers++;
+            this.libProxy.createResourceLoader(modid);
+        }
     }
 
     public void preInit(FMLPreInitializationEvent event) {
         BaseMods.addBaseMod(this);
 
-        this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
-                "com.teamacronymcoders.base.proxies.LibServerProxy");
-        this.getLibProxy().setMod(this);
-        this.modelLoader = new SafeModelLoader(this);
+        this.minecraftFolder = event.getModConfigurationDirectory().getParentFile();
+        this.resourceFolder = new File(minecraftFolder, "resources");
 
         this.createRegistries(event, this.getRegistryPieces(event.getAsmData()));
-        MinecraftForge.EVENT_BUS.register(new RegistryEventHandler(this));
+        if (this.useDefaultRegistryEventHandler()) {
+            MinecraftForge.EVENT_BUS.register(new RegistryEventHandler(this));
+        }
         if (this.getMaterialUser() != null) {
             MaterialSystem.setup(this.getMaterialUser(), event.getAsmData());
             this.getMaterialUser().setup();
@@ -92,14 +104,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getModuleHandler().preInit(event);
 
         this.afterModuleHandlerInit(event);
-
-        if (this.getMaterialUser() != null) {
-            this.getMaterialUser().finishUp();
-        }
-
-        if (this.getSubBlockSystem() != null) {
-            this.getSubBlockSystem().createBlocks();
-        }
+        this.finalizeOptionalSystems();
 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
     }
@@ -114,13 +119,22 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         }
     }
 
-
     public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
 
     }
 
     public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
 
+    }
+
+    public void finalizeOptionalSystems() {
+        if (this.getMaterialUser() != null) {
+            this.getMaterialUser().finishUp();
+        }
+
+        if (this.getSubBlockSystem() != null) {
+            this.getSubBlockSystem().createBlocks();
+        }
     }
 
     public void init(FMLInitializationEvent event) {
@@ -189,11 +203,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     }
 
     @Override
-    public SafeModelLoader getModelLoader() {
-        return this.modelLoader;
-    }
-
-    @Override
     public ModuleHandler getModuleHandler() {
         return this.moduleHandler;
     }
@@ -217,7 +226,19 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     @Nullable
     public File getResourceFolder() {
-        return null;
+        File returnFolder = null;
+        if (hasExternalResources()) {
+            returnFolder = new File(resourceFolder, modid);
+        } else if (Platform.isDevEnv()) {
+            //Kinda nasty but makes the template system work.
+            returnFolder = new File(resourceFolder.getParentFile().getParentFile(),
+                    "/src/main/resources/assets/" + modid + "/");
+        }
+        return returnFolder;
+    }
+
+    public boolean useDefaultRegistryEventHandler() {
+        return true;
     }
 
     public boolean useModAsConfigFolder() {
@@ -265,5 +286,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             }
         });
         return registryPieces;
+    }
+
+    public File getMinecraftFolder() {
+        return minecraftFolder;
     }
 }

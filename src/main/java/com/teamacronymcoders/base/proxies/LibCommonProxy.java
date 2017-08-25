@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
+import java.io.File;
 
 public abstract class LibCommonProxy {
     private IBaseMod mod;
@@ -22,11 +23,7 @@ public abstract class LibCommonProxy {
         // Only add Client RegistrySide
     }
 
-    public void setItemModel(Item item, int metadata, ResourceLocation location) {
-        // Only set Client RegistrySide
-    }
-
-    public void setAllItemModels(Item item, IHasModel model) {
+    public void setAllItemModels(IHasModel model) {
         // Only set Client RegistrySide
     }
 
@@ -76,7 +73,7 @@ public abstract class LibCommonProxy {
         // Only done Client RegistrySide
     }
 
-    public void registerBlockStateMapper(Block block, IHasBlockStateMapper stateMapper) {
+    public void registerBlockStateMapper(IHasBlockStateMapper stateMapper) {
         // Only done Client RegistrySide
     }
 
@@ -86,5 +83,9 @@ public abstract class LibCommonProxy {
 
     public String getFileContents(ResourceLocation resourceLocation) {
         return "";
+    }
+
+    public void createResourceLoader(String modid) {
+
     }
 }

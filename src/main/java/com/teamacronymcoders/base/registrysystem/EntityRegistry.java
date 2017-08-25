@@ -14,8 +14,7 @@ public class EntityRegistry extends ModularRegistry<ExtendedEntityEntry> {
     }
 
     public void register(Class<? extends Entity> entityClass) {
-
-        ResourceLocation name = new ResourceLocation(this.mod.getID(), entityClass.getName());
+        ResourceLocation name = new ResourceLocation(this.mod.getID(), entityClass.getSimpleName());
         ExtendedEntityEntry extendedEntityEntry = new ExtendedEntityEntry(entityClass, name.toString());
         register(name, extendedEntityEntry);
     }

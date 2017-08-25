@@ -3,9 +3,12 @@ package com.teamacronymcoders.base.savesystem;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.teamacronymcoders.base.util.ClassLoading;
+import com.teamacronymcoders.base.util.Platform;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
 
 public class SaveLoader {
     private static File configFolder;
@@ -15,6 +18,11 @@ public class SaveLoader {
     public static <T> T getSavedObject(String name, Class<T> clazz) {
         createSaveFolder();
         File savedFile = new File(saveFolder, name + ".json");
+        try {
+            FileUtils.copyFile(savedFile, new File(saveFolder, savedFile.getName().replace(".json", "-original.json")));
+        } catch (IOException e) {
+            Platform.attemptLogErrorToCurrentMod("Tried to create original version of file, failed");
+        }
         T savedObject = null;
         if (savedFile.exists()) {
             String json = BaseFileUtils.readFileToString(savedFile);

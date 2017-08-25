@@ -6,7 +6,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 public class ValidationError {
 
     public static final ValidationError VALIDATION_ERROR_TOO_FEW_PARTS =
-            new ValidationError("base:api.multiblock.validation.too_few_parts");
+            new ValidationError("base.api.multiblock.validation.too_few_parts");
 
     public ValidationError(String messageFormatStringResourceKey, Object... messageParameters) {
         this._resourceKey = messageFormatStringResourceKey;

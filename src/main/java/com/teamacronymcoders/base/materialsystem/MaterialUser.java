@@ -85,7 +85,7 @@ public class MaterialUser {
     public List<MaterialPart> registerPartsForMaterial(Material material, String... partNames) throws MaterialException {
         List<MaterialPart> materialParts = Lists.newArrayList();
         for (String partName : partNames) {
-            Part part = MaterialSystem.getPart(partName.toLowerCase(Locale.US));
+            Part part = MaterialSystem.getPart(partName);
             if (part != null) {
                 MaterialPart materialPart = new MaterialPart(this, material, part);
                 this.registerMaterialPart(materialPart);

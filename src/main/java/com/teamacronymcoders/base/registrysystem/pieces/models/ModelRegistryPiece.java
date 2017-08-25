@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.registrysystem.pieces.models;
 
-import com.teamacronymcoders.base.client.Models;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.registrysystem.Registry;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistryPiece;
@@ -21,11 +20,11 @@ public class ModelRegistryPiece extends RegistryPieceBase<IHasModel> {
 
     @Override
     public boolean acceptsRegistry(Registry registry) {
-        return "ITEM".equalsIgnoreCase(registry.getName()) || "BLOCK".equalsIgnoreCase(registry.getName());
+        return "ITEM".equalsIgnoreCase(registry.getName());
     }
 
     @Override
     public void onRegistryEvent(ResourceLocation name, IHasModel entry) {
-        Models.registerModels(entry);
+        this.getMod().getLibProxy().setAllItemModels(entry);
     }
 }

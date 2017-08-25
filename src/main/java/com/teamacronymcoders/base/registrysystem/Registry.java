@@ -40,8 +40,8 @@ public abstract class Registry<T> {
     }
 
     public void register(ResourceLocation name, T entry) {
-        if (requiresPreInitRegister() && getLoadingStage() != LoadingStage.PREINIT) {
-            throw new TooLateException("ALL REGISTERING MUST HAPPEN IN PREINIT");
+        if (requiresBeforeRegister() && getLoadingStage().ordinal() > LoadingStage.REGISTER.ordinal()) {
+            throw new TooLateException("ALL REGISTERING MUST HAPPEN BEFORE REGISTRY EVENT");
         }
         if (!this.entries.containsKey(name)) {
             this.entries.put(name, entry);
@@ -50,7 +50,7 @@ public abstract class Registry<T> {
         }
     }
 
-    public boolean requiresPreInitRegister() {
+    public boolean requiresBeforeRegister() {
         return true;
     }
 
