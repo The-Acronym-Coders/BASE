@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.materialsystem.blocks;
 
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -27,6 +28,11 @@ public class FluidMaterial extends Fluid {
     @Override
     public boolean doesVaporize(FluidStack fluidStack) {
         return this.vaporize;
+    }
+
+    @Override
+    public String getLocalizedName(FluidStack stack) {
+        return materialPart.getLocalizedName();
     }
 
     @Override

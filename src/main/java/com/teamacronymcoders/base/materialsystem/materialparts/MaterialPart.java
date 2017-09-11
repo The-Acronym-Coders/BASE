@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.materialsystem.materialparts;
 
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
+import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.base.util.ItemStackUtils;
@@ -31,7 +32,7 @@ public class MaterialPart {
             this.setTextureLocation(new ResourceLocation(materialUser.getMod().getID(), part.getShortUnlocalizedName()));
         }
         this.colorized = true;
-        this.data = new MaterialPartData(part.getPartType().getData());
+        this.data = new MaterialPartData(this, part.getPartType().getData());
 
         if (variant != null) {
             this.variant = TextUtils.toSnakeCase(variant);
@@ -49,7 +50,7 @@ public class MaterialPart {
 
     public String getLocalizedName() {
         //noinspection deprecation
-        return String.format("%s %s", material.getName(), I18n.translateToLocal(part.getUnlocalizedName()));
+        return I18n.translateToLocalFormatted(part.getUnlocalizedName(), material.getName());
     }
 
     public boolean hasEffect() {

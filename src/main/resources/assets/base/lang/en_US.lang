@@ -1,20 +1,20 @@
 itemGroup.materials.base=B.A.S.E Materials
 error.base.null_part=Null Part
 
-base.part.gear=Gear
-base.part.plate=Plate
-base.part.dense_plate=Dense Plate
-base.part.dust=Dust
-base.part.ingot=Ingot
-base.part.nugget=Nugget
-base.part.beam=Beam
-base.part.bolt=Bolt
-base.part.rod=Rod
-base.part.block=Block
-base.part.ore=Ore
-base.part.poor_ore=Poor Ore
-base.part.dense_ore=Dense Ore
-base.part.molten=Molten
+base.part.gear=%s Gear
+base.part.plate=%s Plate
+base.part.dense_plate=Dense %s Plate
+base.part.dust=%s Dust
+base.part.ingot=%s Ingot
+base.part.nugget=%s Nugget
+base.part.beam=%s Beam
+base.part.bolt=%s Bolt
+base.part.rod=%s Rod
+base.part.block=Block of %s
+base.part.ore=%s Ore
+base.part.poor_ore=Poor %s Ore
+base.part.dense_ore=Dense %s Ore
+base.part.molten=Molten %s
 
 item.wrench.name=Wrench
 

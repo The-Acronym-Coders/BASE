@@ -108,4 +108,8 @@ public class MaterialUser {
     public String getId() {
         return this.getMod().getID();
     }
+
+    public void logError(String errorMessage) {
+        this.getMod().getLogger().warning(errorMessage);
+    }
 }

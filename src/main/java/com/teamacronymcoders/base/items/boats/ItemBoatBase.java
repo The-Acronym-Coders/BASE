@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.items.boats;
 
 import com.google.common.collect.Lists;
+import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.multiblock.rectangular.PartPosition;
 import net.minecraft.block.Block;
@@ -31,7 +32,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class ItemBoatBase<BOAT extends EntityBoat> extends ItemBoat implements IHasModel {
-    boolean creativeTabSet = false;
+    private boolean creativeTabSet = false;
+    private IBaseMod mod;
 
     public ItemBoatBase(String unlocalizedName) {
         super(EntityBoat.Type.OAK);
@@ -164,5 +166,15 @@ public abstract class ItemBoatBase<BOAT extends EntityBoat> extends ItemBoat imp
     @Override
     public Item getItem() {
         return this;
+    }
+
+    @Override
+    public IBaseMod getMod() {
+        return this.mod;
+    }
+
+    @Override
+    public void setMod(IBaseMod mod) {
+        this.mod = mod;
     }
 }
