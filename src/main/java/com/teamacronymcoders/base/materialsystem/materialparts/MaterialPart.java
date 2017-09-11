@@ -32,7 +32,7 @@ public class MaterialPart {
             this.setTextureLocation(new ResourceLocation(materialUser.getMod().getID(), part.getShortUnlocalizedName()));
         }
         this.colorized = true;
-        this.data = new MaterialPartData(part.getPartType().getData());
+        this.data = new MaterialPartData(this, part.getPartType().getData());
 
         if (variant != null) {
             this.variant = TextUtils.toSnakeCase(variant);
