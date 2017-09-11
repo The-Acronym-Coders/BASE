@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockOrePart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartData;
+import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
