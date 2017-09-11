@@ -43,7 +43,7 @@ public class SubBlockOrePart extends SubBlockPart {
                 String itemString = itemDropArray[0];
                 int meta = 0;
                 if (itemDropArray.length > 1) {
-                    itemString += itemDropArray[1];
+                    itemString += ":" + itemDropArray[1];
                     if (itemDropArray.length > 2) {
                         meta = Integer.parseInt(itemDropArray[2]);
                     }
