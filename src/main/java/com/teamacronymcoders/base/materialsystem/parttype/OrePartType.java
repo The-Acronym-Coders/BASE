@@ -62,6 +62,7 @@ public class OrePartType extends BlockPartType {
                 }
                 registerSubBlock(materialPart, new SubBlockOrePart(variantMaterialPart,
                         new ResourceLocation(variantName), materialUser));
+                variantMaterialPart.setColorized(materialPart.isColorized());
                 materialUser.registerMaterialPart(variantMaterialPart);
             }
         } else {
