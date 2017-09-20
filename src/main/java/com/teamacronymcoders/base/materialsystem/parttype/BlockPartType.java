@@ -22,10 +22,10 @@ public class BlockPartType extends PartType {
     }
 
     public BlockPartType(String name, List<PartDataPiece> dataPieces) {
-        super(name, dataPieces);
+        super(name, setupData(dataPieces));
     }
 
-    protected static List<PartDataPiece> setupData(List<PartDataPiece> blockDataPieces) {
+    private static List<PartDataPiece> setupData(List<PartDataPiece> blockDataPieces) {
         blockDataPieces.add(new PartDataPiece("hardness", false));
         blockDataPieces.add(new PartDataPiece("resistance", false));
         blockDataPieces.add(new PartDataPiece("harvestLevel", false));
@@ -33,6 +33,7 @@ public class BlockPartType extends PartType {
         return blockDataPieces;
     }
 
+    @Override
     public void setup(@Nonnull MaterialPart materialPart) {
         registerSubBlock(materialPart, new SubBlockPart(materialPart, MaterialSystem.materialCreativeTab));
     }
@@ -44,6 +45,7 @@ public class BlockPartType extends PartType {
         }
     }
 
+    @Override
     public ItemStack getItemStack(MaterialPart materialPart) {
         SubBlockSystem subBlockSystem = materialPart.getMaterialUser().getMod().getSubBlockSystem();
         ItemStack itemStack = ItemStack.EMPTY;
