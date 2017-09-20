@@ -80,7 +80,7 @@ public class MaterialPartData {
             boolean hasDataPiece = false;
             Iterator<PartDataPiece> dataPiecesIterable = dataPieces.iterator();
             while(dataPiecesIterable.hasNext() && !hasDataPiece) {
-                if (dataPiecesIterable.next().getName().equals(dataName)) {
+                if (dataPiecesIterable.next().getName().equalsIgnoreCase(dataName)) {
                     hasDataPiece = true;
                 }
             }

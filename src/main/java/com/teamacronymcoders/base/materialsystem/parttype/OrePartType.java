@@ -11,14 +11,17 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class OrePartType extends BlockPartType {
+    public static final String DROP_DATA_NAME = "drops";
+    public static final String VARIANT_DATA_NAME = "variants";
+
     public OrePartType() {
         super("Ore", setupOreData());
     }
 
     private static List<PartDataPiece> setupOreData() {
         List<PartDataPiece> oreDataPieces = Lists.newArrayList();
-        oreDataPieces.add(new PartDataPiece("variants", false));
-        oreDataPieces.add(new PartDataPiece("dropType", false));
+        oreDataPieces.add(new PartDataPiece(VARIANT_DATA_NAME, false));
+        oreDataPieces.add(new PartDataPiece(DROP_DATA_NAME, false));
         return oreDataPieces;
     }
 
@@ -29,8 +32,8 @@ public class OrePartType extends BlockPartType {
     private void createOreSubBlocks(MaterialPart materialPart) {
         MaterialPartData data = materialPart.getData();
         MaterialUser materialUser = materialPart.getMaterialUser();
-        if (data.containsDataPiece("variants")) {
-            String[] variantNames = data.getDataPiece("variants").split(",");
+        if (data.containsDataPiece(VARIANT_DATA_NAME)) {
+            String[] variantNames = data.getDataPiece(VARIANT_DATA_NAME).split(",");
             int[] hardness = getArrayForField(data, "hardness");
             int[] resistance = getArrayForField(data, "resistance");
             int[] harvestLevel = getArrayForField(data, "harvestLevel");
@@ -41,27 +44,30 @@ public class OrePartType extends BlockPartType {
                 harvestTool = data.getDataPiece("harvestTool").split(",");
             }
 
-            if (data.containsDataPiece("drops")) {
-                drops = data.getDataPiece("drops").split(",");
+            if (data.containsDataPiece(DROP_DATA_NAME)) {
+                drops = data.getDataPiece(DROP_DATA_NAME).split(",");
             }
 
             for (int i = 0; i < variantNames.length; i++) {
                 String variantName = variantNames[i];
-                data.addDataValue("variants", variantName);
+
                 MaterialPart variantMaterialPart = new MaterialPart(materialPart.getMaterialUser(),
                         materialPart.getMaterial(), materialPart.getPart(), variantName);
+
                 MaterialPartData variantData = variantMaterialPart.getData();
+                variantData.addDataValue(VARIANT_DATA_NAME, variantName);
                 trySetData(hardness, i, "hardness", variantData);
                 trySetData(resistance, i, "resistance", variantData);
-                trySetData(harvestLevel, i, "harvestTool", variantData);
+                trySetData(harvestLevel, i, "harvestLevel", variantData);
                 if (harvestTool != null && harvestTool.length > i) {
-                    data.addDataValue("harvestTool", harvestTool[i]);
+                    variantData.addDataValue("harvestTool", harvestTool[i]);
                 }
                 if (drops != null && drops.length > i) {
-                    data.addDataValue("drops", drops[i]);
+                    variantData.addDataValue(DROP_DATA_NAME, drops[i]);
                 }
                 registerSubBlock(materialPart, new SubBlockOrePart(variantMaterialPart,
                         new ResourceLocation(variantName), materialUser));
+                variantMaterialPart.setColorized(materialPart.isColorized());
                 materialUser.registerMaterialPart(variantMaterialPart);
             }
         } else {

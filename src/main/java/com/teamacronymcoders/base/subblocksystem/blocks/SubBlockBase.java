@@ -20,7 +20,7 @@ import static com.teamacronymcoders.base.Reference.MODID;
 public abstract class SubBlockBase implements ISubBlock {
     private String name;
     private ResourceLocation textureLocation;
-    protected ItemStack itemStack;
+    private ItemStack itemStack;
 
     public SubBlockBase(String name) {
         this.name = name;
