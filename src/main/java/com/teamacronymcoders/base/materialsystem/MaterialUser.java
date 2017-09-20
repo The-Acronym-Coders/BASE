@@ -41,6 +41,12 @@ public class MaterialUser {
     public void finishUp() {
         List<MaterialPart> parts = Lists.newArrayList(materialPartBiMap.values());
         for (MaterialPart materialPart : parts) {
+            try {
+                materialPart.getData().validate();
+            } catch (MaterialException e) {
+                this.logError("MaterialPart with name " + materialPart.getLocalizedName() +
+                        " had an error when validating data. Error: " + e.getMessage());
+            }
             materialPart.setup();
         }
         MaterialPartSave save = new MaterialPartSave();
