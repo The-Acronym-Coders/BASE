@@ -16,11 +16,13 @@ public class BaseCompat implements IMaterialCompat {
         PartType block = new BlockPartType();
         PartType ore = new OrePartType();
         PartType fluid = new FluidPartType();
+        PartType armor = new ArmorPartType();
 
         MaterialSystem.registerPartType(item);
         MaterialSystem.registerPartType(block);
         MaterialSystem.registerPartType(ore);
         MaterialSystem.registerPartType(fluid);
+        MaterialSystem.registerPartType(armor);
 
         registerPart(new PartBuilder().setName("Ingot").setPartType(item));
         registerPart(new PartBuilder().setName("Beam").setPartType(item));
@@ -39,6 +41,8 @@ public class BaseCompat implements IMaterialCompat {
         registerPart(new PartBuilder().setName("Dense Ore").setPartType(ore));
 
         registerPart(new PartBuilder().setName("Molten").setPartType(fluid));
+
+        registerPart(new PartBuilder().setName("Armor").setPartType(armor));
     }
 
     private void registerPart(PartBuilder partBuilder) {

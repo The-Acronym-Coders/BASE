@@ -17,6 +17,9 @@ public class ItemRegistry extends ModularRegistry<Item> {
         String unlocalizedName = item.getUnlocalizedName();
         if (unlocalizedName.startsWith("item.")) {
             unlocalizedName = unlocalizedName.substring(5);
+            if (unlocalizedName.equalsIgnoreCase("null")) {
+                throw new RuntimeException("Unlocalized Name cannot be null");
+            }
         }
         if (!unlocalizedName.contains(mod.getID())) {
             item.setUnlocalizedName(mod.getID() + "." + unlocalizedName);

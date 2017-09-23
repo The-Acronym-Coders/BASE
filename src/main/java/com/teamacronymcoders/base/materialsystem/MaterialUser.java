@@ -12,9 +12,9 @@ import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
+import net.minecraft.item.Item;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class MaterialUser {
@@ -54,11 +54,10 @@ public class MaterialUser {
         SaveLoader.saveObject("material_parts_" + mod.getID(), save);
     }
 
-    public void setupItem() {
+    public void setupMaterPartItem() {
         if (itemMaterialPart == null) {
             itemMaterialPart = new ItemMaterialPart(this);
-            itemMaterialPart.setCreativeTab(MaterialSystem.materialCreativeTab);
-            mod.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(itemMaterialPart);
+            registerItem(itemMaterialPart);
         }
     }
 
@@ -71,7 +70,7 @@ public class MaterialUser {
     }
 
     public void registerItemMaterialPart(MaterialPart materialPart) {
-        setupItem();
+        setupMaterPartItem();
         itemMaterialPart.addMaterialPart(materialPartBiMap.inverse().get(materialPart), materialPart);
     }
 
@@ -109,6 +108,12 @@ public class MaterialUser {
             id = nameMapping.get(materialPart.getUnlocalizedName());
         }
         materialPartBiMap.put(id, materialPart);
+    }
+
+    public void registerItem(Item item) {
+        item.setCreativeTab(MaterialSystem.materialCreativeTab);
+        mod.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(item);
+
     }
 
     public String getId() {

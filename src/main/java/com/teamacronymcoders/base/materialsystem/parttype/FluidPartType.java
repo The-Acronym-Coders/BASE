@@ -5,11 +5,9 @@ import com.teamacronymcoders.base.materialsystem.blocks.BlockMaterialFluid;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.UniversalBucket;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -29,10 +27,8 @@ public class FluidPartType extends PartType {
     }
 
     public void setup(@Nonnull MaterialPart materialPart) {
-        if (!FluidRegistry.isFluidRegistered(materialPart.getMaterial().getUnlocalizedName())) {
-            BlockMaterialFluid materialFluid = new BlockMaterialFluid(materialPart);
-            materialPart.getMaterialUser().getMod().getRegistryHolder().getRegistry(BlockRegistry.class, "BLOCK").register(materialFluid);
-        }
+        BlockMaterialFluid materialFluid = new BlockMaterialFluid(materialPart);
+        materialPart.getMaterialUser().getMod().getRegistryHolder().getRegistry(BlockRegistry.class, "BLOCK").register(materialFluid);
     }
 
     @Override

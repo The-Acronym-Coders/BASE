@@ -15,6 +15,10 @@ base.part.ore=%s Ore
 base.part.poor_ore=Poor %s Ore
 base.part.dense_ore=Dense %s Ore
 base.part.molten=Molten %s
+base.part.armor.head=%s Helmet
+base.part.armor.chest=%s Chestplate
+base.part.armor.legs=%s Leggings
+base.part.armor.feet=%s Boots
 
 item.wrench.name=Wrench
 
