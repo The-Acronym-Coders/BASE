@@ -1,8 +1,16 @@
 package com.teamacronymcoders.base.materialsystem.items;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.base.util.files.templates.TemplateFile;
+import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -10,9 +18,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
-public class ItemMaterialArmor extends ItemArmor implements IHasModel {
+public class ItemMaterialArmor extends ItemArmor implements IHasModel, IHasGeneratedModel {
     private MaterialPart materialPart;
     private IBaseMod mod;
 
@@ -37,7 +47,7 @@ public class ItemMaterialArmor extends ItemArmor implements IHasModel {
     public String getItemStackDisplayName(@Nonnull ItemStack itemStack) {
         //noinspection deprecation
         return I18n.translateToLocalFormatted(this.materialPart.getPart()
-                .getUnlocalizedName() + "." + this.armorType.getName(),
+                        .getUnlocalizedName() + "." + this.armorType.getName(),
                 this.materialPart.getMaterial().getName());
     }
 
@@ -54,5 +64,25 @@ public class ItemMaterialArmor extends ItemArmor implements IHasModel {
     @Override
     public Item getItem() {
         return this;
+    }
+
+    @Override
+    public List<String> getModelNames(List<String> modelNames) {
+        modelNames.add(materialPart.getMaterial().getUnlocalizedName() + "_" + this.armorType.getName().toLowerCase(Locale.US));
+        return modelNames;
+    }
+
+    @Override
+    public List<IGeneratedModel> getGeneratedModels() {
+        List<IGeneratedModel> models = Lists.newArrayList();
+
+        TemplateFile templateFile = TemplateManager.getTemplateFile("item_model");
+        Map<String, String> replacements = Maps.newHashMap();
+        replacements.put("texture", "base:items/" + this.armorType.getName().toLowerCase(Locale.US));
+        templateFile.replaceContents(replacements);
+        models.add(new GeneratedModel(materialPart.getMaterial().getUnlocalizedName() + "_" +
+                this.armorType.getName().toLowerCase(Locale.US), ModelType.ITEM_MODEL, templateFile.getFileContents()));
+
+        return models;
     }
 }
