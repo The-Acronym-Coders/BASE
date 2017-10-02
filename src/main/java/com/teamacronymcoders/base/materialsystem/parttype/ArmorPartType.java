@@ -7,21 +7,15 @@ import com.teamacronymcoders.base.materialsystem.items.ItemMaterialArmor;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.partdata.DataPartParsers;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
-import io.netty.util.internal.EmptyPriorityQueue;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.util.EnumHelper;
-import scala.tools.nsc.backend.icode.TypeKinds;
 
 import javax.annotation.Nonnull;
-import javax.swing.text.html.parser.Entity;
-import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ArmorPartType extends PartType {
     private Map<Integer, ItemStack> chestPlates;

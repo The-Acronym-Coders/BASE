@@ -33,6 +33,7 @@ public class BaseCompat implements IMaterialCompat {
         registerPart(new PartBuilder().setName("Rod").setPartType(item));
         registerPart(new PartBuilder().setName("Plate").setPartType(item));
         registerPart(new PartBuilder().setName("Dense Plate").setPartType(item));
+        registerPart(new PartBuilder().setName("Casing").setPartType(item));
 
         registerPart(new PartBuilder().setName("Block").setPartType(block));
 

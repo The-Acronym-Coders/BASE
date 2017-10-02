@@ -13,9 +13,11 @@ import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
 import net.minecraft.item.Item;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MaterialUser {
     private final IBaseMod mod;
@@ -39,6 +41,8 @@ public class MaterialUser {
     }
 
     public void finishUp() {
+        MaterialPartSave save;
+
         List<MaterialPart> parts = Lists.newArrayList(materialPartBiMap.values());
         for (MaterialPart materialPart : parts) {
             try {
@@ -49,9 +53,20 @@ public class MaterialUser {
             }
             materialPart.setup();
         }
-        MaterialPartSave save = new MaterialPartSave();
-        save.setMaterialMappings(materialPartBiMap);
+
+        if (hasErred()) {
+            this.logError("Found Errors with Material System Loading. Saving Back up");
+            save = MaterialPartSave.of(nameMapping);
+        } else {
+            save = MaterialPartSave.of(materialPartBiMap.inverse().entrySet().stream()
+                    .map(entry -> Pair.of(entry.getKey().getUnlocalizedName(), entry.getValue()))
+                    .collect(Collectors.toMap(Pair::getLeft, Pair::getRight)));
+        }
         SaveLoader.saveObject("material_parts_" + mod.getID(), save);
+    }
+
+    protected boolean hasErred() {
+        return false;
     }
 
     public void setupMaterPartItem() {

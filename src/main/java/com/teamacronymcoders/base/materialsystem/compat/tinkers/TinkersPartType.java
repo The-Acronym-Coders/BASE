@@ -6,7 +6,7 @@ import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import slimeknights.tconstruct.library.materials.Material;
+//import slimeknights.tconstruct.library.materials.Material;
 
 import javax.annotation.Nonnull;
 
@@ -30,8 +30,8 @@ public class TinkersPartType extends PartType {
         }
         Fluid fluid = FluidRegistry.getFluid(materialPart.getMaterial().getUnlocalizedName());
         if (fluid != null) {
-            Material tinkerMaterial = new Material(materialPart.getUnlocalizedName(), materialPart.getColor());
-            tinkerMaterial.addCommonItems(materialPart.getMaterial().getUnlocalizedName());
+            //Material tinkerMaterial = new Material(materialPart.getUnlocalizedName(), materialPart.getColor());
+            //tinkerMaterial.addCommonItems(materialPart.getMaterial().getUnlocalizedName());
         } else {
             materialUser.getMod().getLogger().error("Could not create Fluid for Tinker's Compat");
         }
