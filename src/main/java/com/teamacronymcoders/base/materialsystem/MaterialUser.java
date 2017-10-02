@@ -108,6 +108,7 @@ public class MaterialUser {
             id = nameMapping.get(materialPart.getUnlocalizedName());
         }
         materialPartBiMap.put(id, materialPart);
+        MaterialSystem.registerMaterialPart(materialPart);
     }
 
     public void registerItem(Item item) {

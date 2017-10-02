@@ -5,8 +5,8 @@ import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.creativetabs.CreativeTabCarousel;
 import com.teamacronymcoders.base.materialsystem.capabilities.MaterialPartCapability;
-import com.teamacronymcoders.base.materialsystem.capabilities.MaterialPartHolderProvider;
 import com.teamacronymcoders.base.materialsystem.compat.MaterialCompatLoader;
+import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MissingMaterialPart;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.materials.MaterialBuilder;
@@ -18,7 +18,6 @@ import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -31,6 +30,7 @@ public class MaterialSystem {
     private static Map<String, Material> materialMap = Maps.newHashMap();
     private static Map<String, PartType> partTypeMap = Maps.newHashMap();
     private static Map<String, MaterialUser> users = Maps.newHashMap();
+    private static Map<String, MaterialPart> materialPartMap = Maps.newHashMap();
 
     public static List<MaterialBuilder> materialsNotBuilt = Lists.newArrayList();
     public static List<PartBuilder> partsNotBuilt = Lists.newArrayList();
@@ -89,5 +89,14 @@ public class MaterialSystem {
 
     public static MaterialUser getUser(String name) {
         return users.get(name);
+    }
+
+    public static void registerMaterialPart(MaterialPart materialPart) {
+        materialPartMap.put(materialPart.getMaterial().getName().toLowerCase(Locale.US) + ":" +
+                materialPart.getPart().getName().toUpperCase(Locale.US), materialPart);
+    }
+
+    public static MaterialPart getMaterialPart(String name) {
+        return materialPartMap.get(name.toLowerCase(Locale.US));
     }
 }
