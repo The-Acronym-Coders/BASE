@@ -6,6 +6,7 @@ import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
@@ -44,7 +45,7 @@ public class BlockMaterialFluid extends BlockFluidBase implements IHasBlockState
 
     @Override
     public ResourceLocation getResourceLocation(IBlockState blockState) {
-        return new ResourceLocation(this.materialPart.getMaterialUser().getId(), "/materials/" +
+        return new ResourceLocation(this.materialPart.getMaterialUser().getId(), "materials/" +
                 this.materialPart.getUnlocalizedName());
     }
 }
