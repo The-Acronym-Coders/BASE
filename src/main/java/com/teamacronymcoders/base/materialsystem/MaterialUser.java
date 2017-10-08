@@ -102,7 +102,7 @@ public class MaterialUser {
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public List<MaterialPart> registerPartsForMaterial(Material material, String... partNames) throws MaterialException {
+    public List<MaterialPart> registerPartsForMaterial(Material material, String... partNames) {
         List<MaterialPart> materialParts = Lists.newArrayList();
         for (String partName : partNames) {
             Part part = MaterialSystem.getPart(partName);
@@ -111,7 +111,7 @@ public class MaterialUser {
                 this.registerMaterialPart(materialPart);
                 materialParts.add(materialPart);
             } else {
-                throw new MaterialException("Could not find part with name: " + partName);
+                this.logError("Could not find part " + partName + " for " + material.getName());
             }
         }
         return materialParts;
