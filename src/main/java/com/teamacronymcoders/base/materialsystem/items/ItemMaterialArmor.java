@@ -109,11 +109,6 @@ public class ItemMaterialArmor extends ItemArmor implements IHasModel, IHasItemC
         return String.format("%s:textures/models/armor/material_layer_%d.png", Reference.MODID, (isLegSlot(slot) ? 2 : 1));
     }
 
-    @Override
-    public boolean hasOverlay(@Nonnull ItemStack stack) {
-        return false;
-    }
-
     private boolean isLegSlot(EntityEquipmentSlot slot) {
         return slot == EntityEquipmentSlot.LEGS;
     }
