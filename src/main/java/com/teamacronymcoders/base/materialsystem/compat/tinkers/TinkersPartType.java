@@ -1,14 +1,14 @@
 package com.teamacronymcoders.base.materialsystem.compat.tinkers;
 
-import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-//import slimeknights.tconstruct.library.materials.Material;
 
 import javax.annotation.Nonnull;
+
+//import slimeknights.tconstruct.library.materials.Material;
 
 public class TinkersPartType extends PartType {
     public TinkersPartType() {
@@ -22,11 +22,7 @@ public class TinkersPartType extends PartType {
     private void createTinkers(MaterialPart materialPart) {
         MaterialUser materialUser = materialPart.getMaterialUser();
         if (!FluidRegistry.isFluidRegistered(materialPart.getMaterial().getUnlocalizedName())) {
-            try {
-                materialUser.registerPartsForMaterial(materialPart.getMaterial(), "fluid");
-            } catch (MaterialException e) {
-                materialUser.getMod().getLogger().error("Could not register fluid for " + materialPart.getLocalizedName());
-            }
+            materialUser.registerPartsForMaterial(materialPart.getMaterial(), "fluid");
         }
         Fluid fluid = FluidRegistry.getFluid(materialPart.getMaterial().getUnlocalizedName());
         if (fluid != null) {
