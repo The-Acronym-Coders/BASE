@@ -93,7 +93,7 @@ public class MaterialSystem {
 
     public static void registerMaterialPart(MaterialPart materialPart) {
         materialPartMap.put(materialPart.getMaterial().getName().toLowerCase(Locale.US) + ":" +
-                materialPart.getPart().getName().toUpperCase(Locale.US), materialPart);
+                materialPart.getPart().getName().toLowerCase(Locale.US), materialPart);
     }
 
     public static MaterialPart getMaterialPart(String name) {
