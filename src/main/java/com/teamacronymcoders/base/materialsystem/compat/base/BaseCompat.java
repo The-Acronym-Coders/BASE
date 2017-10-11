@@ -6,7 +6,12 @@ import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.compat.IMaterialCompat;
 import com.teamacronymcoders.base.materialsystem.compat.MaterialCompat;
 import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
-import com.teamacronymcoders.base.materialsystem.parttype.*;
+import com.teamacronymcoders.base.materialsystem.parttype.ArmorPartType;
+import com.teamacronymcoders.base.materialsystem.parttype.BlockPartType;
+import com.teamacronymcoders.base.materialsystem.parttype.FluidPartType;
+import com.teamacronymcoders.base.materialsystem.parttype.ItemPartType;
+import com.teamacronymcoders.base.materialsystem.parttype.OrePartType;
+import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 
 @MaterialCompat("base")
 public class BaseCompat implements IMaterialCompat {
@@ -33,6 +38,7 @@ public class BaseCompat implements IMaterialCompat {
         registerPart(new PartBuilder().setName("Rod").setPartType(item));
         registerPart(new PartBuilder().setName("Plate").setPartType(item));
         registerPart(new PartBuilder().setName("Dense Plate").setPartType(item));
+        registerPart(new PartBuilder().setName("Crystal").setPartType(item));
         registerPart(new PartBuilder().setName("Casing").setPartType(item));
 
         registerPart(new PartBuilder().setName("Block").setPartType(block));

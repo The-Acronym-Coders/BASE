@@ -20,6 +20,7 @@ base.part.armor.chest=%s Chestplate
 base.part.armor.legs=%s Leggings
 base.part.armor.feet=%s Boots
 base.part.casing=%s Casing
+base.part.crystal=%s Crystal
 
 item.wrench.name=Wrench
 
