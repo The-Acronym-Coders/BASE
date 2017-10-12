@@ -118,12 +118,19 @@ public class MaterialUser {
     }
 
     public void registerMaterialPart(MaterialPart materialPart) {
-        int id = nextId++;
+        int id;
         if (nameMapping.containsKey(materialPart.getUnlocalizedName())) {
             id = nameMapping.get(materialPart.getUnlocalizedName());
+        } else {
+            id = nextId++;
         }
-        materialPartBiMap.put(id, materialPart);
-        MaterialSystem.registerMaterialPart(materialPart);
+        if (!MaterialSystem.hasMaterialPart(materialPart)) {
+            materialPartBiMap.put(id, materialPart);
+            MaterialSystem.registerMaterialPart( materialPart);
+        } else {
+            this.logError(materialPart.getUnlocalizedName() + " is already registered.");
+
+        }
     }
 
     public void registerItem(Item item) {

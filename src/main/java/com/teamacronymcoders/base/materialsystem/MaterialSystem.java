@@ -37,7 +37,6 @@ public class MaterialSystem {
 
     private static boolean isSetup = false;
 
-
     public static void setup(MaterialUser user, ASMDataTable dataTable) {
         if (!isSetup) {
             MaterialCompatLoader materialCompatLoader = new MaterialCompatLoader();
@@ -92,11 +91,16 @@ public class MaterialSystem {
     }
 
     public static void registerMaterialPart(MaterialPart materialPart) {
-        materialPartMap.put(materialPart.getMaterial().getName().toLowerCase(Locale.US) + ":" +
-                materialPart.getPart().getName().toLowerCase(Locale.US), materialPart);
+        if (!materialPartMap.containsKey(materialPart.getUnlocalizedName())) {
+            materialPartMap.put(materialPart.getUnlocalizedName(), materialPart);
+        }
     }
 
     public static MaterialPart getMaterialPart(String name) {
         return materialPartMap.get(name.toLowerCase(Locale.US));
+    }
+
+    public static boolean hasMaterialPart(MaterialPart materialPart) {
+        return materialPartMap.containsKey(materialPart.getUnlocalizedName());
     }
 }
