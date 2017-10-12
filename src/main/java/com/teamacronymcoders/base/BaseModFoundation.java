@@ -49,8 +49,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     private File resourceFolder;
     private File minecraftFolder;
 
-    public static int externalResourceUsers = 0;
-
     public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab) {
         this(modid, name, version, creativeTab, false);
     }
@@ -72,7 +70,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getLibProxy().setMod(this);
 
         if (hasExternalResources()) {
-            externalResourceUsers++;
             this.libProxy.createResourceLoader(modid);
         }
     }
