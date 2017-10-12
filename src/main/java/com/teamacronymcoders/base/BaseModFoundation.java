@@ -14,6 +14,7 @@ import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.util.ClassLoading;
+import com.teamacronymcoders.base.util.OreDictUtils;
 import com.teamacronymcoders.base.util.Platform;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
@@ -63,6 +64,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         if (optionalSystems) {
             materialUser = new MaterialUser(this);
             subBlockSystem = new SubBlockSystem(this);
+            OreDictUtils.addDefaultModId(modid);
         }
 
         this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
