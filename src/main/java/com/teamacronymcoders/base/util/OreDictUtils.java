@@ -26,12 +26,12 @@ public class OreDictUtils {
     }
 
     public static void addDefaultModId(String modid) {
-        addDefaultModId(preferredModIds.size() - 1, modid);
+        addDefaultModId(defaultModIds.size() - 1, modid);
     }
 
     public static void addDefaultModId(int position, String modid) {
-        if (position > preferredModIds.size()) {
-            position = preferredModIds.size();
+        if (position > defaultModIds.size()) {
+            position = defaultModIds.size();
         }
         defaultModIds.add(position, modid);
     }
