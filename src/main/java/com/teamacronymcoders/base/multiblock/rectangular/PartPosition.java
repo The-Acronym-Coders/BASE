@@ -5,12 +5,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 
 public enum PartPosition implements IStringSerializable {
-    Unknown(null, Type.Unknown), Interior(null, Type.Unknown), FrameCorner(null, Type.Frame),
-    FrameEastWest(null, Type.Frame), FrameSouthNorth(null, Type.Frame), FrameUpDown(null, Type.Frame),
-    TopFace(EnumFacing.UP, Type.Face), BottomFace(EnumFacing.DOWN, Type.Face), NorthFace(EnumFacing.NORTH, Type.Face),
-    SouthFace(EnumFacing.SOUTH, Type.Face), EastFace(EnumFacing.EAST, Type.Face), WestFace(EnumFacing.WEST, Type.Face);
+    Unknown(null, Type.Unknown), 
+    Interior(null, Type.Unknown), 
+    FrameCorner(null, Type.Frame),
+    FrameEastWest(null, Type.Frame), 
+    FrameSouthNorth(null, Type.Frame), 
+    FrameUpDown(null, Type.Frame),
+    TopFace(EnumFacing.UP, Type.Face), 
+    BottomFace(EnumFacing.DOWN, Type.Face), 
+    NorthFace(EnumFacing.NORTH, Type.Face),
+    SouthFace(EnumFacing.SOUTH, Type.Face), 
+    EastFace(EnumFacing.EAST, Type.Face), 
+    WestFace(EnumFacing.WEST, Type.Face);
 
-    public enum Type {
+    public static enum Type {
         Unknown, Interior, Frame, Face
     }
 
@@ -37,12 +45,10 @@ public enum PartPosition implements IStringSerializable {
 
     @Override
     public String getName() {
-
-        return this.toString();
+        return this.name().toLowerCase();
     }
 
     PartPosition(EnumFacing facing, Type type) {
-
         this._facing = facing;
         this._type = type;
     }
