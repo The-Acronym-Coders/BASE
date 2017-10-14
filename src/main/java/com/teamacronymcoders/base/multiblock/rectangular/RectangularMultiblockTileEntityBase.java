@@ -113,7 +113,6 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
     }
 
     // Positional helpers
-
     public void recalculateOutwardsDirection(BlockPos minCoord, BlockPos maxCoord) {
         BlockPos myPosition = this.getPos();
         int myX = myPosition.getX();
@@ -148,6 +147,7 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
         if (facesMatching <= 0) {
             this.position = PartPosition.INTERIOR;
         }
+      //TODO Clean up position logic based on new granularity
         else if (facesMatching >= 3) {
             if(upFacing) {
                 if(southFacing) {
@@ -190,18 +190,38 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
 
             if (!eastFacing && !westFacing) {
                 if(upFacing) {
-                    this.position = PartPosition.FRAME_EAST_WEST_TOP;
+                    if(northFacing) {
+                    this.position = PartPosition.FRAME_NORTH_TOP;
+                    }
+                    else if(southFacing) {
+                        this.position = PartPosition.FRAME_SOUTH_TOP;
+                    }
                     }
                     else if(downFacing) {
-                        this.position = PartPosition.FRAME_EAST_WEST_BOTTOM;
+                        if(northFacing) {
+                            this.position = PartPosition.FRAME_NORTH_BOTTOM;
+                            }
+                            else if(southFacing) {
+                                this.position = PartPosition.FRAME_SOUTH_BOTTOM;
+                            }
                     }
             }
             else if (!southFacing && !northFacing) {
                 if(upFacing) {
-                    this.position = PartPosition.FRAME_SOUTH_NORTH_TOP;
+                    if(eastFacing) {
+                    this.position = PartPosition.FRAME_EAST_TOP;
+                    }
+                    else if(westFacing) {
+                        this.position = PartPosition.FRAME_WEST_TOP;
+                    }
                     }
                     else if(downFacing) {
-                        this.position = PartPosition.FRAME_SOUTH_NORTH_BOTTOM;
+                        if(eastFacing) {
+                            this.position = PartPosition.FRAME_EAST_BOTTOM;
+                            }
+                            else if(westFacing) {
+                                this.position = PartPosition.FRAME_WEST_BOTTOM;
+                            }
                     }
             }
             else {
@@ -229,27 +249,27 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
 
             if (eastFacing) {
 
-                this.position = PartPosition.EastFace;
+                this.position = PartPosition.EAST_FACE;
 
             } else if (westFacing) {
 
-                this.position = PartPosition.WestFace;
+                this.position = PartPosition.WEST_FACE;
 
             } else if (southFacing) {
 
-                this.position = PartPosition.SouthFace;
+                this.position = PartPosition.SOUTH_FACE;
 
             } else if (northFacing) {
 
-                this.position = PartPosition.NorthFace;
+                this.position = PartPosition.NORTH_FACE;
 
             } else if (upFacing) {
 
-                this.position = PartPosition.TopFace;
+                this.position = PartPosition.TOP_FACE;
 
             } else {
 
-                this.position = PartPosition.BottomFace;
+                this.position = PartPosition.BOTTOM_FACE;
             }
         }
     }
