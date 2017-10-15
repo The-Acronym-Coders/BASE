@@ -21,6 +21,7 @@ base.part.armor.legs=%s Leggings
 base.part.armor.feet=%s Boots
 base.part.casing=%s Casing
 base.part.crystal=%s Crystal
+base.part.crushed_ore=Crushed %s Ore
 
 item.wrench.name=Wrench
 
