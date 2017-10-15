@@ -43,7 +43,7 @@ public class BaseCompat implements IMaterialCompat {
         registerPart(new PartBuilder().setName("Poor Ore").setPartType(ore));
         registerPart(new PartBuilder().setName("Dense Ore").setPartType(ore));
 
-        registerPart(new PartBuilder().setName("Molten").setPartType(fluid));
+        registerPart(new PartBuilder().setName("Molten").setPartType(fluid).setOreDictName(""));
 
         registerPart(new PartBuilder().setName("Armor").setPartType(armor));
     }

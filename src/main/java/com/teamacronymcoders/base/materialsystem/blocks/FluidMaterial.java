@@ -1,8 +1,8 @@
 package com.teamacronymcoders.base.materialsystem.blocks;
 
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -11,7 +11,7 @@ public class FluidMaterial extends Fluid {
     private boolean vaporize = false;
 
     public FluidMaterial(MaterialPart materialPart, ResourceLocation texture) {
-        super(materialPart.getMaterial().getUnlocalizedName(), texture, new ResourceLocation(texture.getResourceDomain(),
+        super(materialPart.getMaterial().getName() + materialPart.getPart().getOreDictPrefix(), texture, new ResourceLocation(texture.getResourceDomain(),
                 texture.getResourcePath() + "_flowing"));
         this.materialPart = materialPart;
     }
