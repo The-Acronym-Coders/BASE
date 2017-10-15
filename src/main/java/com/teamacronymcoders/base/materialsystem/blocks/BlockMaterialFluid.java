@@ -12,7 +12,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.FMLLog;
 
 public class BlockMaterialFluid extends BlockFluidBase implements IHasBlockStateMapper, IHasGeneratedModel {
     private MaterialPart materialPart;
@@ -26,7 +25,6 @@ public class BlockMaterialFluid extends BlockFluidBase implements IHasBlockState
         Part part = materialPart.getPart();
         ResourceLocation texture = new ResourceLocation(part.getOwnerId(), "fluids/" + part.getShortUnlocalizedName());
         FluidMaterial fluid = new FluidMaterial(materialPart, texture);
-        FMLLog.warning(fluid.getName());
         MaterialPartData data = materialPart.getData();
         if (data.containsDataPiece("density")) {
             fluid.setDensity(Integer.parseInt(data.getDataPiece("density")));
