@@ -18,13 +18,13 @@ public class SaveLoader {
     public static <T> T getSavedObject(String name, Class<T> clazz) {
         createSaveFolder();
         File savedFile = new File(saveFolder, name + ".json");
-        try {
-            FileUtils.copyFile(savedFile, new File(saveFolder, savedFile.getName().replace(".json", "-original.json")));
-        } catch (IOException e) {
-            Platform.attemptLogErrorToCurrentMod("Tried to create original version of file, failed");
-        }
         T savedObject = null;
         if (savedFile.exists()) {
+            try {
+                FileUtils.copyFile(savedFile, new File(saveFolder, savedFile.getName().replace(".json", "-original.json")));
+            } catch (IOException e) {
+                Platform.attemptLogErrorToCurrentMod("Tried to create original version of file, failed");
+            }
             String json = BaseFileUtils.readFileToString(savedFile);
             if (json != null) {
                 savedObject = gson.fromJson(json, clazz);

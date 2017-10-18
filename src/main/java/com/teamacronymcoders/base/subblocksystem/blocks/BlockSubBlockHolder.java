@@ -30,6 +30,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -99,11 +100,9 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
-    @Nonnull
-    public List<ItemStack> getDrops(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull IBlockState state, int fortune) {
-        List<ItemStack> itemStacks = Lists.newArrayList();
-        this.getSubBlock(state).getDrops(fortune, itemStacks);
-        return itemStacks;
+    @ParametersAreNonnullByDefault
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        this.getSubBlock(state).getDrops(fortune, drops);
     }
 
     @Override

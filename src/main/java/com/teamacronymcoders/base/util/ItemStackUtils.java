@@ -1,10 +1,10 @@
 package com.teamacronymcoders.base.util;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-
-import javax.annotation.Nonnull;
 
 public class ItemStackUtils {
     private ItemStackUtils() {
@@ -36,5 +36,9 @@ public class ItemStackUtils {
             Platform.attemptLogErrorToCurrentMod("Could not find modid for Item: " + item.getUnlocalizedName());
         }
         return modid;
+    }
+
+    public static boolean containsItemStack(ItemStack stack, ItemStack inputStack) {
+        return ItemStack.areItemsEqual(stack, inputStack) && stack.getCount() >= inputStack.getCount();
     }
 }

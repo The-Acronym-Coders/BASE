@@ -1,27 +1,17 @@
 package com.teamacronymcoders.base.materialsystem.blocks;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.blocks.BlockFluidBase;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
-import com.teamacronymcoders.base.util.files.templates.TemplateFile;
-import com.teamacronymcoders.base.util.files.templates.TemplateManager;
-import net.minecraft.block.Block;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-
-import java.util.List;
-import java.util.Map;
 
 public class BlockMaterialFluid extends BlockFluidBase implements IHasBlockStateMapper, IHasGeneratedModel {
     private MaterialPart materialPart;
@@ -48,36 +38,17 @@ public class BlockMaterialFluid extends BlockFluidBase implements IHasBlockState
         if (data.containsDataPiece("vaporize")) {
             fluid.setVaporize(Boolean.parseBoolean(data.getDataPiece("vaporize")));
         }
+
+        fluid.setLuminosity(data.getValue("luminosity", 0, Integer::parseInt));
+
         FluidRegistry.registerFluid(fluid);
         FluidRegistry.addBucketForFluid(fluid);
         return fluid;
     }
 
     @Override
-    public Block getBlock() {
-        return this;
-    }
-
-    @Override
     public ResourceLocation getResourceLocation(IBlockState blockState) {
-        return new ResourceLocation(this.materialPart.getMaterialUser().getId(), "/materials/" +
+        return new ResourceLocation(this.materialPart.getMaterialUser().getId(), "materials/" +
                 this.materialPart.getUnlocalizedName());
-    }
-
-    @Override
-    public String getVariant(IBlockState blockState) {
-        return "normal";
-    }
-
-    @Override
-    public List<IGeneratedModel> getGeneratedModels() {
-        TemplateFile templateFile = TemplateManager.getTemplateFile("fluid");
-        Map<String, String> replacements = Maps.newHashMap();
-        replacements.put("FLUID", this.fluidName);
-        templateFile.replaceContents(replacements);
-
-        return Lists.newArrayList(new GeneratedModel("materials/" + this.materialPart.getUnlocalizedName(),
-                ModelType.BLOCKSTATE, templateFile.getFileContents()));
-
     }
 }

@@ -1,14 +1,13 @@
 package com.teamacronymcoders.base.multiblock.rectangular;
 
-import com.teamacronymcoders.base.multiblock.BlockFacings;
-import com.teamacronymcoders.base.multiblock.MultiblockControllerBase;
-import com.teamacronymcoders.base.multiblock.MultiblockTileEntityBase;
-import com.teamacronymcoders.base.multiblock.validation.IMultiblockValidator;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.teamacronymcoders.base.multiblock.*;
+import com.teamacronymcoders.base.multiblock.validation.IMultiblockValidator;
+
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
 public abstract class RectangularMultiblockTileEntityBase<T extends RectangularMultiblockControllerBase>
         extends MultiblockTileEntityBase<T> {
@@ -18,7 +17,7 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
 
     public RectangularMultiblockTileEntityBase() {
 
-        position = PartPosition.Unknown;
+        position = PartPosition.UNKNOWN;
         outwardFacings = BlockFacings.NONE;
     }
 
@@ -109,12 +108,11 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
 
     @Override
     public void onMachineBroken() {
-        position = PartPosition.Unknown;
+        position = PartPosition.UNKNOWN;
         outwardFacings = BlockFacings.NONE;
     }
 
     // Positional helpers
-
     public void recalculateOutwardsDirection(BlockPos minCoord, BlockPos maxCoord) {
         BlockPos myPosition = this.getPos();
         int myX = myPosition.getX();
@@ -146,20 +144,104 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
 
         // what is our position in the multiblock structure?
 
-        if (facesMatching <= 0)
-            this.position = PartPosition.Interior;
-
-        else if (facesMatching >= 3)
-            this.position = PartPosition.FrameCorner;
-
+        if (facesMatching <= 0) {
+            this.position = PartPosition.INTERIOR;
+        }
+      //TODO Clean up position logic based on new granularity
+        else if (facesMatching >= 3) {
+            if(upFacing) {
+                if(southFacing) {
+                    if(eastFacing) {
+                    this.position = PartPosition.FRAME_CORNER_SOUTH_EAST_TOP;
+                    }
+                    else if(westFacing) {
+                        this.position = PartPosition.FRAME_CORNER_SOUTH_WEST_TOP;
+                    }
+                }
+                else if(northFacing) {
+                    if(eastFacing) {
+                    this.position = PartPosition.FRAME_CORNER_NORTH_EAST_TOP;
+                    }
+                    else if(westFacing) {
+                        this.position = PartPosition.FRAME_CORNER_NORTH_WEST_TOP;
+                    }
+                }
+            }
+            else if(downFacing) {
+                if(southFacing) {
+                    if(eastFacing) {
+                    this.position = PartPosition.FRAME_CORNER_SOUTH_EAST_BOTTOM;
+                    }
+                    else if(westFacing) {
+                        this.position = PartPosition.FRAME_CORNER_SOUTH_WEST_BOTTOM;
+                    }
+                }
+                else if(northFacing) {
+                    if(eastFacing) {
+                    this.position = PartPosition.FRAME_CORNER_NORTH_EAST_BOTTOM;
+                    }
+                    else if(westFacing) {
+                        this.position = PartPosition.FRAME_CORNER_NORTH_WEST_BOTTOM;
+                    }
+                }
+            }
+        }
         else if (facesMatching == 2) {
 
-            if (!eastFacing && !westFacing)
-                this.position = PartPosition.FrameEastWest;
-            else if (!southFacing && !northFacing)
-                this.position = PartPosition.FrameSouthNorth;
-            else
-                this.position = PartPosition.FrameUpDown;
+            if (!eastFacing && !westFacing) {
+                if(upFacing) {
+                    if(northFacing) {
+                    this.position = PartPosition.FRAME_NORTH_TOP;
+                    }
+                    else if(southFacing) {
+                        this.position = PartPosition.FRAME_SOUTH_TOP;
+                    }
+                    }
+                    else if(downFacing) {
+                        if(northFacing) {
+                            this.position = PartPosition.FRAME_NORTH_BOTTOM;
+                            }
+                            else if(southFacing) {
+                                this.position = PartPosition.FRAME_SOUTH_BOTTOM;
+                            }
+                    }
+            }
+            else if (!southFacing && !northFacing) {
+                if(upFacing) {
+                    if(eastFacing) {
+                    this.position = PartPosition.FRAME_EAST_TOP;
+                    }
+                    else if(westFacing) {
+                        this.position = PartPosition.FRAME_WEST_TOP;
+                    }
+                    }
+                    else if(downFacing) {
+                        if(eastFacing) {
+                            this.position = PartPosition.FRAME_EAST_BOTTOM;
+                            }
+                            else if(westFacing) {
+                                this.position = PartPosition.FRAME_WEST_BOTTOM;
+                            }
+                    }
+            }
+            else {
+                if(southFacing) {
+                    if(eastFacing) {
+                    this.position = PartPosition.FRAME_VERTICAL_SOUTH_EAST;
+                    }
+                    else if(westFacing) {
+                        this.position = PartPosition.FRAME_VERTICAL_SOUTH_WEST;
+                    }
+                }
+                else if(northFacing) {
+                    if(eastFacing) {
+                    this.position = PartPosition.FRAME_VERTICAL_NORTH_EAST;
+                    }
+                    else if(westFacing) {
+                        this.position = PartPosition.FRAME_VERTICAL_NORTH_WEST;
+                    }
+                }
+            }
 
         } else {
 
@@ -167,27 +249,27 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
 
             if (eastFacing) {
 
-                this.position = PartPosition.EastFace;
+                this.position = PartPosition.EAST_FACE;
 
             } else if (westFacing) {
 
-                this.position = PartPosition.WestFace;
+                this.position = PartPosition.WEST_FACE;
 
             } else if (southFacing) {
 
-                this.position = PartPosition.SouthFace;
+                this.position = PartPosition.SOUTH_FACE;
 
             } else if (northFacing) {
 
-                this.position = PartPosition.NorthFace;
+                this.position = PartPosition.NORTH_FACE;
 
             } else if (upFacing) {
 
-                this.position = PartPosition.TopFace;
+                this.position = PartPosition.TOP_FACE;
 
             } else {
 
-                this.position = PartPosition.BottomFace;
+                this.position = PartPosition.BOTTOM_FACE;
             }
         }
     }

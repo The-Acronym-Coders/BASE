@@ -12,10 +12,12 @@ import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.base.savesystem.SaveLoader;
+import net.minecraft.item.Item;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MaterialUser {
     private final IBaseMod mod;
@@ -39,6 +41,8 @@ public class MaterialUser {
     }
 
     public void finishUp() {
+        MaterialPartSave save;
+
         List<MaterialPart> parts = Lists.newArrayList(materialPartBiMap.values());
         for (MaterialPart materialPart : parts) {
             try {
@@ -49,16 +53,26 @@ public class MaterialUser {
             }
             materialPart.setup();
         }
-        MaterialPartSave save = new MaterialPartSave();
-        save.setMaterialMappings(materialPartBiMap);
+
+        if (hasErred()) {
+            this.logError("Found Errors with Material System Loading. Saving Back up");
+            save = MaterialPartSave.of(nameMapping);
+        } else {
+            save = MaterialPartSave.of(materialPartBiMap.inverse().entrySet().stream()
+                    .map(entry -> Pair.of(entry.getKey().getUnlocalizedName(), entry.getValue()))
+                    .collect(Collectors.toMap(Pair::getLeft, Pair::getRight)));
+        }
         SaveLoader.saveObject("material_parts_" + mod.getID(), save);
     }
 
-    public void setupItem() {
+    protected boolean hasErred() {
+        return false;
+    }
+
+    public void setupMaterPartItem() {
         if (itemMaterialPart == null) {
             itemMaterialPart = new ItemMaterialPart(this);
-            itemMaterialPart.setCreativeTab(MaterialSystem.materialCreativeTab);
-            mod.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(itemMaterialPart);
+            registerItem(itemMaterialPart);
         }
     }
 
@@ -71,7 +85,7 @@ public class MaterialUser {
     }
 
     public void registerItemMaterialPart(MaterialPart materialPart) {
-        setupItem();
+        setupMaterPartItem();
         itemMaterialPart.addMaterialPart(materialPartBiMap.inverse().get(materialPart), materialPart);
     }
 
@@ -88,7 +102,7 @@ public class MaterialUser {
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public List<MaterialPart> registerPartsForMaterial(Material material, String... partNames) throws MaterialException {
+    public List<MaterialPart> registerPartsForMaterial(Material material, String... partNames) {
         List<MaterialPart> materialParts = Lists.newArrayList();
         for (String partName : partNames) {
             Part part = MaterialSystem.getPart(partName);
@@ -97,18 +111,32 @@ public class MaterialUser {
                 this.registerMaterialPart(materialPart);
                 materialParts.add(materialPart);
             } else {
-                throw new MaterialException("Could not find part with name: " + partName);
+                this.logError("Could not find part " + partName + " for " + material.getName());
             }
         }
         return materialParts;
     }
 
     public void registerMaterialPart(MaterialPart materialPart) {
-        int id = nextId++;
+        int id;
         if (nameMapping.containsKey(materialPart.getUnlocalizedName())) {
             id = nameMapping.get(materialPart.getUnlocalizedName());
+        } else {
+            id = nextId++;
         }
-        materialPartBiMap.put(id, materialPart);
+        if (!MaterialSystem.hasMaterialPart(materialPart)) {
+            materialPartBiMap.put(id, materialPart);
+            MaterialSystem.registerMaterialPart( materialPart);
+        } else {
+            this.logError(materialPart.getUnlocalizedName() + " is already registered.");
+
+        }
+    }
+
+    public void registerItem(Item item) {
+        item.setCreativeTab(MaterialSystem.materialCreativeTab);
+        mod.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(item);
+
     }
 
     public String getId() {
