@@ -5,15 +5,23 @@ import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import org.apache.logging.log4j.util.Strings;
 
 public class FluidMaterial extends Fluid {
     private MaterialPart materialPart;
     private boolean vaporize = false;
 
     public FluidMaterial(MaterialPart materialPart, ResourceLocation texture) {
-        super(materialPart.getMaterial().getUnlocalizedName() + "_" + materialPart.getPart().getOreDictPrefix(),
-                texture, new ResourceLocation(texture.getResourceDomain(), texture.getResourcePath() + "_flowing"));
+        super(createFluidName(materialPart), texture, new ResourceLocation(texture.getResourceDomain(), texture.getResourcePath() + "_flowing"));
         this.materialPart = materialPart;
+    }
+
+    private static String createFluidName(MaterialPart materialPart) {
+        String name = materialPart.getMaterial().getUnlocalizedName();
+        if (!Strings.isBlank(materialPart.getPart().getOreDictPrefix())) {
+            name += "_" + materialPart.getPart().getOreDictPrefix();
+        }
+        return name;
     }
 
     @Override
