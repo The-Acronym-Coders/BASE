@@ -38,6 +38,9 @@ public class BlockMaterialFluid extends BlockFluidBase implements IHasBlockState
         if (data.containsDataPiece("vaporize")) {
             fluid.setVaporize(Boolean.parseBoolean(data.getDataPiece("vaporize")));
         }
+
+        fluid.setLuminosity(data.getValue("luminosity", 0, Integer::parseInt));
+
         FluidRegistry.registerFluid(fluid);
         FluidRegistry.addBucketForFluid(fluid);
         return fluid;

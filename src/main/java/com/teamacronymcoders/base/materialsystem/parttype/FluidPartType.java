@@ -23,6 +23,7 @@ public class FluidPartType extends PartType {
         fluidDataPieces.add(new PartDataPiece("density"));
         fluidDataPieces.add(new PartDataPiece("viscosity"));
         fluidDataPieces.add(new PartDataPiece("vaporize"));
+        fluidDataPieces.add(new PartDataPiece("luminosity"));
         return fluidDataPieces;
     }
 
