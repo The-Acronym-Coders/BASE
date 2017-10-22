@@ -6,7 +6,9 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGenera
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -20,8 +22,9 @@ import static com.teamacronymcoders.base.Reference.MODID;
 public abstract class SubBlockBase implements ISubBlock {
     private String name;
     private ResourceLocation textureLocation;
-    private ItemStack itemStack;
-
+    private Block block;
+    private int meta;
+    
     public SubBlockBase(String name) {
         this.name = name;
         this.textureLocation = new ResourceLocation(MODID, this.getModelPrefix() + name);
@@ -48,7 +51,7 @@ public abstract class SubBlockBase implements ISubBlock {
 
     @Override
     public void getDrops( int fortune, List<ItemStack> itemStacks) {
-        itemStacks.add(this.itemStack);
+        itemStacks.add(this.getItemStack());
     }
 
     @Override
@@ -62,22 +65,32 @@ public abstract class SubBlockBase implements ISubBlock {
     }
 
     @Override
-    public void setItemStack(ItemStack itemStack) {
-        this.itemStack = itemStack;
-    }
-
-    @Override
     @Nonnull
     public ItemStack getItemStack() {
-        return this.itemStack.copy();
+        return new ItemStack(block, 1, meta);
     }
-
-
+    
     @Override
     public Material getMaterial() {
         return Material.IRON;
     }
-
+    
+    @Nonnull
+    @Override
+    public IBlockState getBlockState() {
+        return this.block.getDefaultState().withProperty(BlockSubBlockHolder.SUB_BLOCK_NUMBER, meta);
+    }
+    
+    @Override
+    public void setBlock(Block block) {
+        this.block = block;
+    }
+    
+    @Override
+    public void setMeta(int meta) {
+        this.meta = meta;
+    }
+    
     @Override
     public IGeneratedModel getGeneratedModel() {
         TemplateFile templateFile = TemplateManager.getTemplateFile("sub_block_state");
