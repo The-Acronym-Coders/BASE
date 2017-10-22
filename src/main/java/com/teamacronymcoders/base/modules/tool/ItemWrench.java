@@ -16,9 +16,9 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemTool extends ItemBase implements IHasRecipe {
+public class ItemWrench extends ItemBase implements IHasRecipe {
 
-    public ItemTool() {
+    public ItemWrench() {
         super("wrench");
         this.setCreativeTab(CreativeTabs.TOOLS);
         this.setMaxStackSize(1);
