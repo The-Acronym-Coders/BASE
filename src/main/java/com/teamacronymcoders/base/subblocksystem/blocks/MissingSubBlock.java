@@ -1,7 +1,9 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -75,11 +77,6 @@ public class MissingSubBlock implements ISubBlock {
     }
 
     @Override
-    public void setItemStack(ItemStack itemStack) {
-
-    }
-
-    @Override
     @Nullable
     public IGeneratedModel getGeneratedModel() {
         return null;
@@ -94,5 +91,21 @@ public class MissingSubBlock implements ISubBlock {
     @Override
     public ItemStack getItemStack() {
         return ItemStack.EMPTY;
+    }
+    
+    @Nonnull
+    @Override
+    public IBlockState getBlockState() {
+        return Blocks.BEDROCK.getDefaultState();
+    }
+    
+    @Override
+    public void setMeta(int x) {
+    
+    }
+    
+    @Override
+    public void setBlock(Block block) {
+    
     }
 }

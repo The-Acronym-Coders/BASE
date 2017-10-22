@@ -1,7 +1,9 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -44,8 +46,6 @@ public interface ISubBlock {
     @Nullable
     CreativeTabs getCreativeTab();
 
-    void setItemStack(ItemStack itemStack);
-
     @Nullable
     IGeneratedModel getGeneratedModel();
 
@@ -53,4 +53,11 @@ public interface ISubBlock {
 
     @Nonnull
     ItemStack getItemStack();
+    
+    @Nonnull
+    IBlockState getBlockState();
+    
+    void setMeta(int x);
+    
+    void setBlock(Block block);
 }

@@ -9,10 +9,7 @@ import com.teamacronymcoders.base.subblocksystem.blocks.ISubBlock;
 import com.teamacronymcoders.base.subblocksystem.blocks.MissingSubBlock;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockInfo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 public class SubBlockSystem {
@@ -30,6 +27,7 @@ public class SubBlockSystem {
     }
 
     public void createBlocks() {
+        Map<String, ISubBlock> subBlocksToCreate = Maps.newHashMap(subBlocks);
         SubBlockInfo subBlockInfo = SaveLoader.getSavedObject("saved_sub_blocks_" + mod.getID(), SubBlockInfo.class);
         Map<Integer, Map<Integer, String>> listOfBlockNames = subBlockInfo.getSavedSubBlockNames();
         Map<Integer, Map<Integer, ISubBlock>> listOfSubBlocks = new HashMap<>();
@@ -37,7 +35,7 @@ public class SubBlockSystem {
             for (Entry<Integer, Map<Integer, String>> blockNames : listOfBlockNames.entrySet()) {
                 Map<Integer, ISubBlock> subBlocksForBlock = new HashMap<>();
                 for (Entry<Integer, String> subBlockName : blockNames.getValue().entrySet()) {
-                    ISubBlock subBlock = subBlocks.remove(subBlockName.getValue());
+                    ISubBlock subBlock = subBlocksToCreate.remove(subBlockName.getValue());
                     if (subBlock == null) {
                         mod.getLogger().error("Could not find sub-block: " + subBlockName.getValue());
                     }
@@ -48,7 +46,7 @@ public class SubBlockSystem {
         }
         int blockToCheck = 0;
         int blockMetaToCheck = 0;
-        List<ISubBlock> remainingSubBlocks = new ArrayList<>(subBlocks.values());
+        List<ISubBlock> remainingSubBlocks = new ArrayList<>(subBlocksToCreate.values());
         while (remainingSubBlocks.size() > 0) {
             listOfSubBlocks.computeIfAbsent(blockToCheck, value -> new HashMap<>());
             listOfSubBlocks.get(blockToCheck).computeIfAbsent(blockMetaToCheck, value -> remainingSubBlocks.remove(0));
@@ -64,6 +62,6 @@ public class SubBlockSystem {
     }
 
     public ISubBlock getSubBlock(String name) {
-        return subBlocks.get(name);
+        return subBlocks.get(name.toLowerCase(Locale.US));
     }
 }
