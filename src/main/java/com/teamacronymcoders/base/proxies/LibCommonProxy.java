@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.proxies;
 
+import com.google.common.base.Strings;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
@@ -14,7 +15,6 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
-import java.io.File;
 
 public abstract class LibCommonProxy {
     private IBaseMod mod;
@@ -37,7 +37,7 @@ public abstract class LibCommonProxy {
     protected IModuleProxy getModuleProxy(String path) {
         IModuleProxy moduleProxy = null;
 
-        if (path != null && !path.isEmpty()) {
+        if (!Strings.isNullOrEmpty(path.trim())){
             moduleProxy = ClassLoading.createInstanceOf(IModuleProxy.class, path);
         }
 

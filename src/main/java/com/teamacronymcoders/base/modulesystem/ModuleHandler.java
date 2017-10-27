@@ -90,10 +90,6 @@ public class ModuleHandler {
         return modules;
     }
 
-    public void addModule(IModule module) {
-        modules.put(module.getName(), module);
-    }
-
     public IModule getModule(String name) {
         return modules.get(name);
     }

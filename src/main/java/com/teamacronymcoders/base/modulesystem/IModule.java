@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
 
 public interface IModule extends Comparable<IModule> {
     String getName();
@@ -30,8 +31,8 @@ public interface IModule extends Comparable<IModule> {
     @Nullable
     String getServerProxyPath();
 
-    @Nullable
-    IModuleProxy getModuleProxy();
+    @Nonnull
+    Optional<IModuleProxy> getModuleProxy();
 
     void setModuleProxy(IModuleProxy moduleProxy);
 
