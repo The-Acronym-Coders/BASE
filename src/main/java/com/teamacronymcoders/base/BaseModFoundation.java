@@ -30,6 +30,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -204,6 +205,11 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Override
     public ModuleHandler getModuleHandler() {
         return this.moduleHandler;
+    }
+
+    @Override
+    public List<ModuleHandler> getOtherModuleHandlers() {
+        return Collections.emptyList();
     }
 
     @Override

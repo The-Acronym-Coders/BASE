@@ -12,6 +12,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.util.List;
 
 public interface IBaseMod<T> {
     T getInstance();
@@ -40,6 +41,8 @@ public interface IBaseMod<T> {
     IRegistryHolder getRegistryHolder();
 
     ModuleHandler getModuleHandler();
+
+    List<ModuleHandler> getOtherModuleHandlers();
 
     boolean addOBJDomain();
 
