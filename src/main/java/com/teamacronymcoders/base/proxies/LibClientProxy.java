@@ -7,8 +7,10 @@ import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.client.Colors;
 import com.teamacronymcoders.base.client.models.handler.ModelHandler;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.client.renderer.entity.EntityRendererLoader;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
+import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import com.teamacronymcoders.base.util.files.ResourceLoader;
@@ -22,6 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.io.IOUtils;
@@ -133,5 +136,10 @@ public class LibClientProxy extends LibCommonProxy {
             this.modelHandler = new ModelHandler(this.getMod());
         }
         return modelHandler;
+    }
+
+    @Override
+    public void loadEntityRenderers(ASMDataTable table, ModuleHandler moduleHandler) {
+        EntityRendererLoader.loadRenderersFor(table, moduleHandler);
     }
 }

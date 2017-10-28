@@ -33,6 +33,7 @@ public class ModuleHandler {
         this.handlerName = handlerName;
         this.registryHolder = mod.getRegistryHolder();
         this.modules = MapUtils.sortByValue(this.loadModules(asmDataTable));
+        mod.getLibProxy().loadEntityRenderers(asmDataTable, this);
     }
 
     public void preInit(FMLPreInitializationEvent event) {
@@ -109,7 +110,7 @@ public class ModuleHandler {
             boolean load = false;
             if (moduleAnnotation != null) {
                 String modid = moduleAnnotation.value().trim();
-                load = modid.equalsIgnoreCase("") || modid.equalsIgnoreCase(handlerName);
+                load = modid.isEmpty() || modid.equalsIgnoreCase(getName());
                 load &= this.mod.getLibProxy().isRightSide(moduleAnnotation.side());
             }
 
@@ -122,6 +123,10 @@ public class ModuleHandler {
             }
         });
         return moduleMap;
+    }
+
+    public String getName() {
+        return handlerName;
     }
 
     private static class ModuleConfigEntry extends ConfigEntry {
