@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-//TODO Railcraft api
 public abstract class ItemMinecartBase extends ItemMinecart implements /*IMinecartItem,*/ IHasModel, IModAware {
     private IBaseMod mod;
 

@@ -101,7 +101,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.moduleHandler = new ModuleHandler(this, event.getAsmData());
         this.getModuleHandler().setupModules();
+        this.getOtherModuleHandlers().forEach(ModuleHandler::setupModules);
         this.getModuleHandler().preInit(event);
+        this.getOtherModuleHandlers().forEach(otherHandler -> otherHandler.preInit(event));
 
         this.afterModuleHandlerInit(event);
         this.finalizeOptionalSystems();
@@ -139,11 +141,15 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     public void init(FMLInitializationEvent event) {
         this.getModuleHandler().init(event);
+        this.getOtherModuleHandlers().forEach(otherHandler -> otherHandler.init(event));
+
         this.getAllRegistries().forEach((name, registry) -> registry.init());
     }
 
     public void postInit(FMLPostInitializationEvent event) {
         this.getModuleHandler().postInit(event);
+        this.getOtherModuleHandlers().forEach(otherHandler -> otherHandler.postInit(event));
+
         this.getAllRegistries().forEach((name, registry) -> registry.postInit());
     }
 
