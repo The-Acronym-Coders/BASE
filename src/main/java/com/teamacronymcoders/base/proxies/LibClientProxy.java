@@ -7,7 +7,7 @@ import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.client.Colors;
 import com.teamacronymcoders.base.client.models.handler.ModelHandler;
 import com.teamacronymcoders.base.client.models.IHasModel;
-import com.teamacronymcoders.base.client.renderer.entity.EntityRendererLoader;
+import com.teamacronymcoders.base.renderer.entity.loader.EntityRendererLoader;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
@@ -30,7 +30,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.io.IOUtils;
 
 import javax.annotation.Nonnull;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 

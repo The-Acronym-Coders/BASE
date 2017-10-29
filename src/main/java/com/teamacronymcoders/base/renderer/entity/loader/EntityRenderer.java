@@ -1,4 +1,6 @@
-package com.teamacronymcoders.base.client.renderer.entity;
+package com.teamacronymcoders.base.renderer.entity.loader;
+
+import net.minecraft.entity.Entity;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
