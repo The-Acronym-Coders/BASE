@@ -47,14 +47,17 @@ public class ModelGenerator {
 
     private static void setupFolders() {
         IBaseMod mod = Platform.getCurrentMod();
-        if (mod != null && mod.getResourceFolder() != null) {
-            blockStatesFolder = new File(mod.getResourceFolder(), "blockstates");
-            BaseFileUtils.createFolder(blockStatesFolder);
-            blockModelsFolder = new File(mod.getResourceFolder(), "models/block");
-            BaseFileUtils.createFolder(blockModelsFolder);
-            itemModelsFolder = new File(mod.getResourceFolder(), "models/item");
-            BaseFileUtils.createFolder(itemModelsFolder);
-            okayToRun = true;
+        if (mod != null) {
+            File resourceFolder = mod.getResourceFolder();
+            if (resourceFolder != null) {
+                blockStatesFolder = new File(resourceFolder, "blockstates");
+                BaseFileUtils.createFolder(blockStatesFolder);
+                blockModelsFolder = new File(resourceFolder, "models/block");
+                BaseFileUtils.createFolder(blockModelsFolder);
+                itemModelsFolder = new File(resourceFolder, "models/item");
+                BaseFileUtils.createFolder(itemModelsFolder);
+                okayToRun = true;
+            }
         }
         isSetup = true;
     }
