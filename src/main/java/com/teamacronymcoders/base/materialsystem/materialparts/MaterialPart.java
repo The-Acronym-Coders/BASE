@@ -11,6 +11,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
+import javax.annotation.Nullable;
+import java.awt.*;
+
 public class MaterialPart {
     private Material material;
     private Part part;
@@ -93,6 +96,11 @@ public class MaterialPart {
         return this.colorized ? this.getMaterial().getColor().getRGB() : -1;
     }
 
+    @Nullable
+    public Color getFullColor() {
+        return this.colorized ? this.getMaterial().getColor() : null;
+    }
+
     public boolean isColorized() {
         return colorized;
     }
@@ -118,7 +126,7 @@ public class MaterialPart {
     }
 
     public void setup() {
-        this.getPart().getPartType().setup(this);
+        this.getPart().getPartType().setup(this, materialUser);
     }
 
     public MaterialUser getMaterialUser() {

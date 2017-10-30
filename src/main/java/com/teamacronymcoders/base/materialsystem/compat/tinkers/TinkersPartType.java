@@ -15,7 +15,7 @@ public class TinkersPartType extends PartType {
         super("Tinkers");
     }
 
-    public void setup(@Nonnull MaterialPart materialPart) {
+    public void setup(@Nonnull MaterialPart materialPart, MaterialUser materialUser) {
         this.createTinkers(materialPart);
     }
 

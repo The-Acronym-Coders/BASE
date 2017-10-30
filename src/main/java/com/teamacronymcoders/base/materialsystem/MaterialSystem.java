@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 public class MaterialSystem {
     public static MissingMaterialPart MISSING_MATERIAL_PART;
@@ -97,7 +98,7 @@ public class MaterialSystem {
     }
 
     public static MaterialPart getMaterialPart(String name) {
-        return materialPartMap.get(name.toLowerCase(Locale.US));
+        return Optional.ofNullable(materialPartMap.get(name.toLowerCase(Locale.US))).orElse(MISSING_MATERIAL_PART);
     }
 
     public static boolean hasMaterialPart(MaterialPart materialPart) {

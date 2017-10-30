@@ -41,22 +41,22 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
 
     @Override
     public int getColorFromItemstack(@Nonnull ItemStack itemStack, int tintIndex) {
-        return tintIndex == 0 ? this.getMaterialParkFromItemStack(itemStack).getColor() : -1;
+        return tintIndex == 0 ? this.getMaterialPartFromItemStack(itemStack).getColor() : -1;
     }
 
     @Override
     @Nonnull
     public String getItemStackDisplayName(@Nonnull ItemStack itemStack) {
-        return this.getMaterialParkFromItemStack(itemStack).getLocalizedName();
+        return this.getMaterialPartFromItemStack(itemStack).getLocalizedName();
     }
 
     @Override
     public boolean hasEffect(@Nonnull ItemStack itemStack) {
-        return this.getMaterialParkFromItemStack(itemStack).hasEffect();
+        return this.getMaterialPartFromItemStack(itemStack).hasEffect();
     }
 
     @Nonnull
-    private MaterialPart getMaterialParkFromItemStack(ItemStack itemStack) {
+    private MaterialPart getMaterialPartFromItemStack(ItemStack itemStack) {
         MaterialPart materialPart = materialUser.getMaterialPart(itemStack.getItemDamage());
         return materialPart != null ? materialPart : MaterialSystem.MISSING_MATERIAL_PART;
     }
@@ -103,7 +103,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
     
     @Override
     public int getItemBurnTime(ItemStack itemStack) {
-        return getMaterialParkFromItemStack(itemStack).getData().getValue("burn", 0, string -> Integer.parseInt(string));
+        return getMaterialPartFromItemStack(itemStack).getData().getValue("burn", 0, Integer::parseInt);
     }
     
 }

@@ -25,7 +25,7 @@ public class OrePartType extends BlockPartType {
         return oreDataPieces;
     }
 
-    public void setup(@Nonnull MaterialPart materialPart) {
+    public void setup(@Nonnull MaterialPart materialPart, @Nonnull MaterialUser materialUser) {
         this.createOreSubBlocks(materialPart);
     }
 
