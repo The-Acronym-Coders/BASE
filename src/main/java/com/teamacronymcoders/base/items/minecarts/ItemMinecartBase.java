@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
+import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.util.BlockUtils;
 import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.block.BlockDispenser;
@@ -22,12 +23,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-public abstract class ItemMinecartBase extends ItemMinecart implements /*IMinecartItem,*/ IHasModel, IModAware {
+public abstract class ItemMinecartBase extends ItemMinecart implements IHasModel, IModAware {
     private IBaseMod mod;
+    private String name;
 
     public ItemMinecartBase(String name) {
         super(EntityMinecart.Type.TNT);
-        this.setUnlocalizedName(name);
+        this.name = "minecart_" + name;
+        this.setUnlocalizedName(this.name);
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, new DispenseItemMinecartBase());
     }
 
@@ -57,6 +60,13 @@ public abstract class ItemMinecartBase extends ItemMinecart implements /*IMineca
         }
         return EnumActionResult.PASS;
     }
+
+    @Override
+    public List<String> getModelNames(List<String> modelNames) {
+        modelNames.add(name);
+        return modelNames;
+    }
+
 
     @Override
     public Item getItem() {
