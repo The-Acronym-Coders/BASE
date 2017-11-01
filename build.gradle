@@ -20,26 +20,14 @@ repositories {
     mavenCentral()
 
     maven {
-        name 'JEI/Tinkers'
+        name 'JEI'
         url 'http://dvs1.progwml6.com/files/maven'
-    }
-    maven {
-        name 'Tesla'
-        url 'http://maven.epoxide.xyz'
-    }
-    maven {
-        name 'Redstone Flux'
-        url "http://maven.covers1624.net/"
-    }
-    maven {
-        name 'Baubles'
-        url 'https://jitpack.io'
     }
 }
 
 
 version = "${minecraft_version}-" + getVersion()
-group = "com.teamacronymcoders.base" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "com.teamacronymcoders.base"
 archivesBaseName = "base"
 
 minecraft {
@@ -54,9 +42,6 @@ minecraft {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    deobfCompile "net.darkhax.tesla:Tesla-${minecraft_version}:${tesla_version}"
-    //deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
-    //deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
 }
 
 task srcJar(type: Jar) {
