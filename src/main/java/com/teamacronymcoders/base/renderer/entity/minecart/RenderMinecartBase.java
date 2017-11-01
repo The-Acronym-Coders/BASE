@@ -20,7 +20,7 @@ public class RenderMinecartBase<T extends EntityMinecartBase> extends RenderMine
     @Override
     public void doRender(@Nonnull T entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.pushMatrix();
-        this.bindEntityTexture(entity);
+
         long i = (long) entity.getEntityId() * 493286711L;
         i = i * i * 4392167121L + i * 98761L;
         float f = (((float) (i >> 16 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
@@ -79,13 +79,16 @@ public class RenderMinecartBase<T extends EntityMinecartBase> extends RenderMine
         renderBlock(entity, partialTicks);
 
         GlStateManager.scale(-1.0F, -1.0F, 1.0F);
+
+        this.bindEntityTexture(entity);
         renderCartModel(entity);
-        GlStateManager.popMatrix();
 
         if (this.renderOutlines) {
             GlStateManager.disableOutlineMode();
             GlStateManager.disableColorMaterial();
         }
+
+        GlStateManager.popMatrix();
     }
 
     protected void renderBlock(T entity, float partialTicks) {
@@ -101,7 +104,6 @@ public class RenderMinecartBase<T extends EntityMinecartBase> extends RenderMine
             this.renderCartContents(entity, partialTicks, iblockstate);
             GlStateManager.popMatrix();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            this.bindEntityTexture(entity);
         }
     }
 
