@@ -31,7 +31,7 @@ public class RenderingUtils {
         GL11.glPushMatrix();
         item.hoverStart = 0F;
         GL11.glRotatef(angle, 0, 1, 0);
-        mc.getRenderManager().doRenderEntity(item, 0, 0, 0, 0, 0, false);
+        mc.getRenderManager().renderEntity(item, 0, 0, 0, 0, 0, false);
         GL11.glPopMatrix();
     }
 
