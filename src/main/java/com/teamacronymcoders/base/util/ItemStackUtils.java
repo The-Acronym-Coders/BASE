@@ -2,6 +2,8 @@ package com.teamacronymcoders.base.util;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -24,6 +26,15 @@ public class ItemStackUtils {
 
     public static boolean isValid(ItemStack itemStack) {
         return !itemStack.isEmpty();
+    }
+
+    public static ItemStack getItemStackFromBlockState(IBlockState blockState) {
+        Item item = Item.getItemFromBlock(blockState.getBlock());
+        ItemStack itemStack = ItemStack.EMPTY;
+        if (item != Items.AIR) {
+            itemStack = new ItemStack(item, 1, blockState.getBlock().getMetaFromState(blockState));
+        }
+        return itemStack;
     }
 
     @Nonnull

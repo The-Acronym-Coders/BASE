@@ -1,5 +1,8 @@
 package com.teamacronymcoders.base.util;
 
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+
 import java.util.Locale;
 
 public class TextUtils {
@@ -24,5 +27,14 @@ public class TextUtils {
         }
 
         return output.toString();
+    }
+
+    public static String getRegistryLocation(IForgeRegistryEntry entry) {
+        ResourceLocation resourceLocation = entry.getRegistryName();
+        String rl = "";
+        if (resourceLocation != null) {
+            rl = resourceLocation.toString();
+        }
+        return rl;
     }
 }
