@@ -6,6 +6,7 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGenera
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
+import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockBase;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
@@ -105,7 +106,8 @@ public class SubBlockPart extends SubBlockBase {
         TemplateFile templateFile = TemplateManager.getTemplateFile("block");
         Map<String, String> replacements = Maps.newHashMap();
 
-        replacements.put("texture", "base:blocks/block");
+        Part part = materialPart.getPart();
+        replacements.put("texture", String.format("%s:blocks/%s", part.getOwnerId(), part.getShortUnlocalizedName()));
         templateFile.replaceContents(replacements);
 
         return new GeneratedModel(this.getModelPrefix() + this.getUnLocalizedName(), ModelType.BLOCKSTATE,

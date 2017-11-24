@@ -24,6 +24,9 @@ public class BaseCompat implements IMaterialCompat {
         MaterialSystem.registerPartType(fluid);
         MaterialSystem.registerPartType(armor);
 
+        //Specifically for Backwards Compat
+        MaterialSystem.registerPartType(new StoragePartType());
+
         registerPart(new PartBuilder().setName("Ingot").setPartType(item));
         registerPart(new PartBuilder().setName("Beam").setPartType(item));
         registerPart(new PartBuilder().setName("Gear").setPartType(item));

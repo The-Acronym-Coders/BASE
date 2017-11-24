@@ -14,7 +14,7 @@ import java.util.List;
 
 public class BlockPartType extends PartType {
     public BlockPartType() {
-        this("storage");
+        this("block");
     }
 
     public BlockPartType(String name) {
