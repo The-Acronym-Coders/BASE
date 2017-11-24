@@ -22,6 +22,7 @@ base.part.armor.feet=%s Boots
 base.part.casing=%s Casing
 base.part.crystal=%s Crystal
 base.part.crushed_ore=Crushed %s Ore
+base.part.minecart=%s Minecart
 
 item.wrench.name=Wrench
 

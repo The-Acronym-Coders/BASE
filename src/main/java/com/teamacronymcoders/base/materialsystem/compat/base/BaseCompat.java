@@ -17,12 +17,14 @@ public class BaseCompat implements IMaterialCompat {
         PartType ore = new OrePartType();
         PartType fluid = new FluidPartType();
         PartType armor = new ArmorPartType();
+        PartType minecart = new MinecartPartType();
 
         MaterialSystem.registerPartType(item);
         MaterialSystem.registerPartType(block);
         MaterialSystem.registerPartType(ore);
         MaterialSystem.registerPartType(fluid);
         MaterialSystem.registerPartType(armor);
+        MaterialSystem.registerPartType(minecart);
 
         //Specifically for Backwards Compat
         MaterialSystem.registerPartType(new StoragePartType());
@@ -49,6 +51,8 @@ public class BaseCompat implements IMaterialCompat {
         registerPart(new PartBuilder().setName("Molten").setPartType(fluid).setOreDictName(""));
 
         registerPart(new PartBuilder().setName("Armor").setPartType(armor));
+
+        registerPart(new PartBuilder().setName("Minecart").setPartType(minecart));
     }
 
     private void registerPart(PartBuilder partBuilder) {
