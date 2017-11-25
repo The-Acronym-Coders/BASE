@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.blocks;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.client.models.IHasModel;
@@ -28,7 +29,9 @@ public class BlockBase extends BlockBaseNoModel implements IHasModel, IHasGenera
 
     @Override
     public List<String> getModelNames(List<String> modelNames) {
-        modelNames.add(this.getName());
+        if (!Strings.isNullOrEmpty(this.getName())) {
+            modelNames.add(this.getName());
+        }
         return modelNames;
     }
 

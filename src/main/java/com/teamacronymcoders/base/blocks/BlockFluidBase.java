@@ -18,8 +18,11 @@ import java.util.List;
 import java.util.Map;
 
 public class BlockFluidBase extends BlockFluidClassic implements IHasBlockStateMapper, IHasGeneratedModel {
+    private String name;
+
     public BlockFluidBase(String name, Fluid fluid, Material material) {
         super(fluid, material);
+        this.name = name;
         this.setUnlocalizedName(name);
     }
 
@@ -35,8 +38,7 @@ public class BlockFluidBase extends BlockFluidClassic implements IHasBlockStateM
         replacements.put("FLUID", this.fluidName);
         templateFile.replaceContents(replacements);
 
-        return Lists.newArrayList(new GeneratedModel(this.getResourceLocation(null).getResourcePath(),
-                ModelType.BLOCKSTATE, templateFile.getFileContents()));
+        return Lists.newArrayList(new GeneratedModel(name, ModelType.BLOCKSTATE, templateFile.getFileContents()));
 
     }
 
