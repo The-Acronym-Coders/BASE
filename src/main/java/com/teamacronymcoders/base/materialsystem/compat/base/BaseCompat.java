@@ -42,6 +42,10 @@ public class BaseCompat implements IMaterialCompat {
         registerPart(new PartBuilder().setName("Crushed Ore").setPartType(item));
         registerPart(new PartBuilder().setName("Casing").setPartType(item));
 
+        registerPart("Clump", item);
+        registerPart("Shard", item);
+        registerPart("Dirty Dust", item);
+
         registerPart(new PartBuilder().setName("Block").setPartType(block));
 
         registerPart(new PartBuilder().setName("Ore").setPartType(ore));
@@ -53,6 +57,10 @@ public class BaseCompat implements IMaterialCompat {
         registerPart(new PartBuilder().setName("Armor").setPartType(armor));
 
         registerPart(new PartBuilder().setName("Minecart").setPartType(minecart));
+    }
+
+    private void registerPart(String name, PartType partType) {
+        registerPart(new PartBuilder().setName(name).setPartType(partType));
     }
 
     private void registerPart(PartBuilder partBuilder) {
