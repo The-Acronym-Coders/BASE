@@ -52,7 +52,8 @@ public class ModuleHandler {
     public void setupModules() {
         for (IModule module : getModules().values()) {
             if (module.isConfigurable() && mod.hasConfig()) {
-                this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(module));
+                String configCategory = handlerName.equals(mod.getID()) ? "Module" : handlerName;
+                this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(configCategory, module));
                 module.setIsActive(this.getConfig().getBoolean(module.getName(), module.getActiveDefault()));
             }
 
@@ -130,8 +131,8 @@ public class ModuleHandler {
     }
 
     private static class ModuleConfigEntry extends ConfigEntry {
-        public ModuleConfigEntry(IModule module) {
-            super("Module", module.getName() + " enabled", Property.Type.BOOLEAN, module.getActiveDefault() + "");
+        public ModuleConfigEntry(String handlerName, IModule module) {
+            super(handlerName, module.getName() + " enabled", Property.Type.BOOLEAN, module.getActiveDefault() + "");
         }
     }
 }
