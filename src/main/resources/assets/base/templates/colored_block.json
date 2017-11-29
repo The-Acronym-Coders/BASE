@@ -2,9 +2,10 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "##TEXTURE##"
+      "texture": "##TEXTURE##",
+      "particle": "##TEXTURE##"
     },
-    "model": "cube_all",
+    "model": "base:storage",
     "uvlock": true,
     "transform": "forge:default-block"
   },
