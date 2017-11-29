@@ -21,7 +21,7 @@ public class EntityMaterialMinecart extends EntityMinecartBase {
         super(world);
     }
 
-    public EntityMaterialMinecart(World world, MaterialPart materialPart, ItemStack itemMaterialMinecart) {
+    public EntityMaterialMinecart(World world, MaterialPart materialPart) {
         this(world);
         this.materialPart = materialPart;
         this.dataManager.set(MATERIAL_PART_STRING, materialPart.getUnlocalizedName());

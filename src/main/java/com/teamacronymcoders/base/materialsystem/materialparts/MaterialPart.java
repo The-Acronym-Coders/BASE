@@ -81,7 +81,7 @@ public class MaterialPart {
             itemStack = this.getPartType().getItemStack(this);
         }
 
-        return itemStack;
+        return itemStack.copy();
     }
 
     public ResourceLocation getTextureLocation() {

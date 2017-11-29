@@ -51,7 +51,7 @@ public class ItemMaterialMinecart extends ItemMinecartBase implements IHasItemCo
     @Nonnull
     @Override
     public EntityMinecartBase getEntityFromItem(World world, ItemStack itemStack) {
-        return new EntityMaterialMinecart(world, getMaterialPartFromItemStack(itemStack), itemStack);
+        return new EntityMaterialMinecart(world, getMaterialPartFromItemStack(itemStack));
     }
 
     @Override
