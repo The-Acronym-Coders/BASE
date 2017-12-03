@@ -20,7 +20,6 @@ public class RenderMinecartBase<T extends EntityMinecartBase> extends RenderMine
     @Override
     public void doRender(@Nonnull T entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.pushMatrix();
-
         long i = (long) entity.getEntityId() * 493286711L;
         i = i * i * 4392167121L + i * 98761L;
         float f = (((float) (i >> 16 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
@@ -76,7 +75,9 @@ public class RenderMinecartBase<T extends EntityMinecartBase> extends RenderMine
             GlStateManager.enableOutlineMode(this.getTeamColor(entity));
         }
 
+        GlStateManager.pushMatrix();
         renderBlock(entity, partialTicks);
+        GlStateManager.popMatrix();
 
         GlStateManager.scale(-1.0F, -1.0F, 1.0F);
 
