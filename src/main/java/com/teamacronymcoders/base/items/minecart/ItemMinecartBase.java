@@ -1,13 +1,14 @@
-package com.teamacronymcoders.base.items.minecarts;
+package com.teamacronymcoders.base.items.minecart;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
-import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.util.BlockUtils;
 import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.block.BlockDispenser;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -16,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -31,6 +33,7 @@ public abstract class ItemMinecartBase extends ItemMinecart implements IHasModel
         super(EntityMinecart.Type.TNT);
         this.name = "minecart_" + name;
         this.setUnlocalizedName(this.name);
+        this.hasSubtypes = true;
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, new DispenseItemMinecartBase());
     }
 
@@ -67,6 +70,12 @@ public abstract class ItemMinecartBase extends ItemMinecart implements IHasModel
         return modelNames;
     }
 
+    @Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+        if (this.isInCreativeTab(tab)) {
+            items.addAll(this.getAllSubItems(Lists.newArrayList()));
+        }
+    }
 
     @Override
     public Item getItem() {

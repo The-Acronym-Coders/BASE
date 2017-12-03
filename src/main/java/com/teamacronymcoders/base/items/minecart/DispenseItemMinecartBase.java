@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.items.minecarts;
+package com.teamacronymcoders.base.items.minecart;
 
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
 import com.teamacronymcoders.base.util.ItemStackUtils;

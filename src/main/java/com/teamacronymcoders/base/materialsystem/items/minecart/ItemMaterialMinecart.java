@@ -8,7 +8,7 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGenera
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
 import com.teamacronymcoders.base.items.IHasItemColor;
-import com.teamacronymcoders.base.items.minecarts.ItemMinecartBase;
+import com.teamacronymcoders.base.items.minecart.ItemMinecartBase;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.entity.minecart.EntityMaterialMinecart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
@@ -19,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,7 @@ public class ItemMaterialMinecart extends ItemMinecartBase implements IHasItemCo
 
     @Nonnull
     @Override
+    @ParametersAreNonnullByDefault
     public EntityMinecartBase getEntityFromItem(World world, ItemStack itemStack) {
         return new EntityMaterialMinecart(world, getMaterialPartFromItemStack(itemStack));
     }
