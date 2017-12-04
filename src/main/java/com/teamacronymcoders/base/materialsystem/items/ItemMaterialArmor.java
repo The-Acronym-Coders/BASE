@@ -106,7 +106,12 @@ public class ItemMaterialArmor extends ItemArmor implements IHasModel, IHasItemC
     @SideOnly(Side.CLIENT)
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return String.format("%s:textures/models/armor/material_layer_%d.png", Reference.MODID, (isLegSlot(slot) ? 2 : 1));
+        return String.format("%s:textures/models/armor/material_layer_%d%s.png", Reference.MODID, (isLegSlot(slot) ? 2 : 1), type == null ? "" : String.format("_%s", type));
+    }
+
+    @Override
+    public boolean hasOverlay(@Nonnull ItemStack stack) {
+        return true;
     }
 
     private boolean isLegSlot(EntityEquipmentSlot slot) {
