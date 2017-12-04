@@ -38,8 +38,12 @@ public class BlockFluidBase extends BlockFluidClassic implements IHasBlockStateM
         replacements.put("FLUID", this.fluidName);
         templateFile.replaceContents(replacements);
 
-        return Lists.newArrayList(new GeneratedModel(name, ModelType.BLOCKSTATE, templateFile.getFileContents()));
+        return Lists.newArrayList(new GeneratedModel(this.getModelPrefix() + name, ModelType.BLOCKSTATE, templateFile.getFileContents()));
 
+    }
+
+    protected String getModelPrefix() {
+        return "";
     }
 
     @Override

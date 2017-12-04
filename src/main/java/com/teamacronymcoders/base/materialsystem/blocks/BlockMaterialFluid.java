@@ -47,6 +47,11 @@ public class BlockMaterialFluid extends BlockFluidBase implements IHasBlockState
     }
 
     @Override
+    protected String getModelPrefix() {
+        return "materials/";
+    }
+
+    @Override
     public ResourceLocation getResourceLocation(IBlockState blockState) {
         return new ResourceLocation(this.materialPart.getMaterialUser().getId(), "materials/" +
                 this.materialPart.getUnlocalizedName());
