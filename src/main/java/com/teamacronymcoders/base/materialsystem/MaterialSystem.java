@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.materialsystem;
 
-import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -109,5 +108,17 @@ public class MaterialSystem {
 
     public static Map<String, MaterialPart> getMaterialParts() {
         return ImmutableMap.copyOf(materialPartMap);
+    }
+
+    public static Map<String, Part> getParts() {
+        return ImmutableMap.copyOf(partMap);
+    }
+
+    public static Map<String, PartType> getPartTypes() {
+        return ImmutableMap.copyOf(partTypeMap);
+    }
+
+    public static Map<String, Material> getMaterials() {
+        return ImmutableMap.copyOf(materialMap);
     }
 }
