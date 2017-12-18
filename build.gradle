@@ -68,12 +68,8 @@ repositories {
         url 'http://maven.tterrag.com/'
     }
     maven {
-        name 'ic2'
-        url 'http://maven.ic2.player.to'
-    }
-    maven {
-        name 'Mekanism'
-        url 'https://jitpack.io'
+        name 'thiakil'
+        url 'http://maven.thiakil.com'
     }
 }
 
@@ -93,20 +89,14 @@ minecraft {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    deobfCompile "com.github.aidancbrady:Mekanism:1.12-SNAPSHOT"
+    deobfCompile("mekanism:Mekanism:${minecraft_version}-${mek_version}-thiakil") {
+        exclude module: "jei_${minecraft_version}"
+    }
 }
 
 task srcJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'
-}
-
-sourceSets {
-    main {
-        java {
-            exclude 'com/teamacronymcoders/base/materialsystem/compat/tinkers/**'
-        }
-    }
 }
 
 artifacts {
