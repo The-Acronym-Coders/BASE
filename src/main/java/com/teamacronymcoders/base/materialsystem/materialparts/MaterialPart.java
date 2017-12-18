@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.materialsystem.materialparts;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
@@ -12,7 +13,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
 import javax.annotation.Nullable;
-import java.awt.*;
+import java.awt.Color;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MaterialPart {
     private Material material;
@@ -115,6 +118,14 @@ public class MaterialPart {
 
     public String getOreDictString() {
         return this.getPart().getOreDictPrefix() + this.getMaterial().getOreDictSuffix();
+    }
+
+    public List<String> getAllOreDictStrings() {
+        List<String> allOreDicts = Lists.newArrayList(this.getOreDictString());
+        allOreDicts.addAll(part.getAdditionalOreDictNames().stream()
+                .map(value -> value + material.getOreDictSuffix())
+                .collect(Collectors.toList()));
+        return allOreDicts;
     }
 
     public MaterialPartData getData() {

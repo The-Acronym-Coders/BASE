@@ -1,22 +1,26 @@
 package com.teamacronymcoders.base.materialsystem.items;
 
-import java.util.*;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.*;
-import com.teamacronymcoders.base.items.*;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.items.IHasItemColor;
+import com.teamacronymcoders.base.items.IHasOreDict;
+import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOreDict, IHasGeneratedModel {
     private Map<Integer, MaterialPart> itemMaterialParts;
@@ -72,7 +76,9 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
     @Override
     public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
         for (Map.Entry<Integer, MaterialPart> entry : this.getItemMaterialParts().entrySet()) {
-            names.put(new ItemStack(this, 1, entry.getKey()), entry.getValue().getOreDictString());
+            for (String oreName : entry.getValue().getAllOreDictStrings()) {
+                names.put(new ItemStack(this, 1, entry.getKey()), oreName);
+            }
         }
         return names;
     }
@@ -100,10 +106,10 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
         }
         return models;
     }
-    
+
     @Override
     public int getItemBurnTime(ItemStack itemStack) {
         return getMaterialPartFromItemStack(itemStack).getData().getValue("burn", 0, Integer::parseInt);
     }
-    
+
 }
