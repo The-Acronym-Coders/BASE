@@ -17,7 +17,7 @@ public class ToolModule extends ModuleBase {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        wrench = new ItemTool();
+        wrench = new ItemWrench();
         this.getItemRegistry().register(wrench);
     }
 }

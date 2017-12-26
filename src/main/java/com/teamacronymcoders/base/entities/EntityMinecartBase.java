@@ -2,13 +2,16 @@ package com.teamacronymcoders.base.entities;
 
 import com.teamacronymcoders.base.Base;
 import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemMinecart;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.minecart.MinecartInteractEvent;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public abstract class EntityMinecartBase extends EntityMinecart {
     public EntityMinecartBase(World world) {
@@ -26,6 +29,27 @@ public abstract class EntityMinecartBase extends EntityMinecart {
             cartItemStack.setStackDisplayName(this.getName());
         }
         return cartItemStack;
+    }
+
+    public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
+        if (!MinecraftForge.EVENT_BUS.post(new MinecartInteractEvent(this, player, hand))) {
+            if (this.canBeRidden()) {
+                if (player.isSneaking()) {
+                    return false;
+                } else if (this.isBeingRidden()) {
+                    return true;
+                } else {
+                    if (!this.world.isRemote) {
+                        player.startRiding(this);
+                    }
+
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

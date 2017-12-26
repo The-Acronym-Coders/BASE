@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.parttype;
 
 import com.google.common.collect.Lists;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import net.minecraft.item.ItemStack;
 
@@ -33,7 +34,7 @@ public class PartType {
         this.data = partDataPieces;
     }
 
-    public void setup(@Nonnull MaterialPart materialPart) {
+    public void setup(@Nonnull MaterialPart materialPart, @Nonnull MaterialUser materialUser) {
     }
 
     public ItemStack getItemStack(MaterialPart materialPart) {

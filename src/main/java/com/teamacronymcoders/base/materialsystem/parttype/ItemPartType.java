@@ -26,8 +26,8 @@ public class ItemPartType extends PartType {
 
 
     @Override
-    public void setup(@Nonnull MaterialPart materialPart) {
-        materialPart.getMaterialUser().registerItemMaterialPart(materialPart);
+    public void setup(@Nonnull MaterialPart materialPart, @Nonnull MaterialUser materialUser) {
+        materialUser.registerItemMaterialPart(materialPart);
     }
 
     @Override

@@ -33,6 +33,7 @@ public class ModuleHandler {
         this.handlerName = handlerName;
         this.registryHolder = mod.getRegistryHolder();
         this.modules = MapUtils.sortByValue(this.loadModules(asmDataTable));
+        mod.getLibProxy().loadEntityRenderers(asmDataTable, this);
     }
 
     public void preInit(FMLPreInitializationEvent event) {
@@ -51,7 +52,8 @@ public class ModuleHandler {
     public void setupModules() {
         for (IModule module : getModules().values()) {
             if (module.isConfigurable() && mod.hasConfig()) {
-                this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(module));
+                String configCategory = handlerName.equals(mod.getID()) ? "Module" : handlerName;
+                this.getConfig().addEntry(module.getName(), new ModuleConfigEntry(configCategory, module));
                 module.setIsActive(this.getConfig().getBoolean(module.getName(), module.getActiveDefault()));
             }
 
@@ -90,10 +92,6 @@ public class ModuleHandler {
         return modules;
     }
 
-    public void addModule(IModule module) {
-        modules.put(module.getName(), module);
-    }
-
     public IModule getModule(String name) {
         return modules.get(name);
     }
@@ -113,7 +111,7 @@ public class ModuleHandler {
             boolean load = false;
             if (moduleAnnotation != null) {
                 String modid = moduleAnnotation.value().trim();
-                load = modid.equalsIgnoreCase("") || modid.equalsIgnoreCase(handlerName);
+                load = modid.isEmpty() || modid.equalsIgnoreCase(getName());
                 load &= this.mod.getLibProxy().isRightSide(moduleAnnotation.side());
             }
 
@@ -128,9 +126,13 @@ public class ModuleHandler {
         return moduleMap;
     }
 
+    public String getName() {
+        return handlerName;
+    }
+
     private static class ModuleConfigEntry extends ConfigEntry {
-        public ModuleConfigEntry(IModule module) {
-            super("Module", module.getName() + " enabled", Property.Type.BOOLEAN, module.getActiveDefault() + "");
+        public ModuleConfigEntry(String handlerName, IModule module) {
+            super(handlerName, module.getName() + " enabled", Property.Type.BOOLEAN, module.getActiveDefault() + "");
         }
     }
 }

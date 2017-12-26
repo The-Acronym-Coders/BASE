@@ -30,6 +30,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,7 +101,9 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.moduleHandler = new ModuleHandler(this, event.getAsmData());
         this.getModuleHandler().setupModules();
+        this.getOtherModuleHandlers().forEach(ModuleHandler::setupModules);
         this.getModuleHandler().preInit(event);
+        this.getOtherModuleHandlers().forEach(otherHandler -> otherHandler.preInit(event));
 
         this.afterModuleHandlerInit(event);
         this.finalizeOptionalSystems();
@@ -138,11 +141,15 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     public void init(FMLInitializationEvent event) {
         this.getModuleHandler().init(event);
+        this.getOtherModuleHandlers().forEach(otherHandler -> otherHandler.init(event));
+
         this.getAllRegistries().forEach((name, registry) -> registry.init());
     }
 
     public void postInit(FMLPostInitializationEvent event) {
         this.getModuleHandler().postInit(event);
+        this.getOtherModuleHandlers().forEach(otherHandler -> otherHandler.postInit(event));
+
         this.getAllRegistries().forEach((name, registry) -> registry.postInit());
     }
 
@@ -204,6 +211,11 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Override
     public ModuleHandler getModuleHandler() {
         return this.moduleHandler;
+    }
+
+    @Override
+    public List<ModuleHandler> getOtherModuleHandlers() {
+        return Collections.emptyList();
     }
 
     @Override

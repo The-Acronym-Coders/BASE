@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 
 public class BlockSubBase extends BlockBase {
-    String[] names;
+    private String[] names;
 
     public BlockSubBase(Material mat, String[] names) {
         super(mat, "");

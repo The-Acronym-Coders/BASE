@@ -12,7 +12,6 @@ import javax.annotation.Nonnull;
 public abstract class BlockTEBase<T extends TileEntity> extends BlockBase implements IHasTileEntity {
     public BlockTEBase(Material material, String name) {
         super(material, name);
-        this.isBlockContainer = true;
     }
 
     @Override

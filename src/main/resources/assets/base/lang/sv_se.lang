@@ -1,0 +1,37 @@
+itemGroup.materials.base=B.A.S.E Material
+error.base.null_part=Null Del
+
+base.part.gear=%s Kugghjul
+base.part.plate=%s Plåt
+base.part.dense_plate=Kompakt %s Plåt
+base.part.dust=%s Pulver
+base.part.ingot=%s Metalltacka
+base.part.nugget=%s Klimp
+base.part.beam=%s Balk
+base.part.bolt=%s Bult
+base.part.rod=%s Stav
+base.part.block=Kloss av %s
+base.part.ore=%s Malm
+base.part.poor_ore=%s-Fattig Malm
+base.part.dense_ore=%s-Rik Malm
+base.part.molten=Molten %s
+base.part.armor.head=%s Hjälm
+base.part.armor.chest=%s Bröstplåt
+base.part.armor.legs=%s Benplåt
+base.part.armor.feet=%s Skor
+base.part.casing=%s Hölje
+base.part.crystal=%s Kristall
+base.part.crushed_ore=Krossad %s Malm
+
+item.wrench.name=Skiftnyckel
+
+base.api.multiblock.validation.success=Maskin verifikation var lyckad!
+base.api.multiblock.validation.too_few_parts=Maskinen är för liten.
+base.api.multiblock.validation.machine_too_large=Maskinen är för stor, den måste vara som störst %1$d block i %2$s dimensionen.
+base.api.multiblock.validation.machine_too_small=Maskinen är för liten, den måste vara som störst %1$d block i %2$s dimensionen.
+base.api.multiblock.validation.invalid_part=Delen vid %1$d, %2$d, %3$d är inte kompatible med denna maskin.
+base.api.multiblock.validation.invalid_part_for_frame=Blocket vid %1$d, %2$d, %3$d är inte giltigt för användning i maskinens ram.
+base.api.multiblock.validation.invalid_part_for_bottom=Blocket vid %1$d, %2$d, %3$d är inte giltigt för användning i maskinens botten lager.
+base.api.multiblock.validation.invalid_part_for_top=Blocket vid %1$d, %2$d, %3$d är inte giltigt för användning i maskinens toppen lager.
+base.api.multiblock.validation.invalid_part_for_sides=Blocket vid %1$d, %2$d, %3$d är inte giltigt för användning i maskinens sidor.
+base.api.multiblock.validation.invalid_part_for_interior=Blocket vid %1$d, %2$d, %3$d är inte giltigt för användning i insida.

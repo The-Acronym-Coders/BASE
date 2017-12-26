@@ -1,14 +1,19 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
+import scala.actors.threadpool.Arrays;
+
+import java.util.List;
 
 public class PartBuilder {
     private String name;
     private String ownerId;
     private PartType partType;
     private String oreDictName;
+    private List<String> additionalOreDictNames;
 
     public PartBuilder() {
         MaterialSystem.partsNotBuilt.add(this);
@@ -34,9 +39,14 @@ public class PartBuilder {
         return this;
     }
 
+    public PartBuilder setAdditionalOreDictNames(String... additionalOreDictNames) {
+        this.additionalOreDictNames = Lists.newArrayList(additionalOreDictNames);
+        return this;
+    }
+
     public Part build() throws MaterialException {
         validate();
-        Part part =  new Part(name, oreDictName, partType, ownerId);
+        Part part =  new Part(name, oreDictName, partType, ownerId, additionalOreDictNames);
         MaterialSystem.registerPart(part);
         MaterialSystem.partsNotBuilt.remove(this);
         return part;

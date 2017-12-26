@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.parttype;
 
 import com.google.common.collect.Lists;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.blocks.BlockMaterialFluid;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.registrysystem.BlockRegistry;
@@ -27,7 +28,7 @@ public class FluidPartType extends PartType {
         return fluidDataPieces;
     }
 
-    public void setup(@Nonnull MaterialPart materialPart) {
+    public void setup(@Nonnull MaterialPart materialPart, @Nonnull MaterialUser materialUser) {
         BlockMaterialFluid materialFluid = new BlockMaterialFluid(materialPart);
         materialPart.getMaterialUser().getMod().getRegistryHolder().getRegistry(BlockRegistry.class, "BLOCK").register(materialFluid);
     }

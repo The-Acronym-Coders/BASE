@@ -1,20 +1,22 @@
 package com.teamacronymcoders.base.proxies;
 
+import com.google.common.base.Strings;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
+import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 import javax.annotation.Nullable;
-import java.io.File;
 
 public abstract class LibCommonProxy {
     private IBaseMod mod;
@@ -37,7 +39,7 @@ public abstract class LibCommonProxy {
     protected IModuleProxy getModuleProxy(String path) {
         IModuleProxy moduleProxy = null;
 
-        if (path != null && !path.isEmpty()) {
+        if (!Strings.isNullOrEmpty(path.trim())){
             moduleProxy = ClassLoading.createInstanceOf(IModuleProxy.class, path);
         }
 
@@ -87,5 +89,9 @@ public abstract class LibCommonProxy {
 
     public void createResourceLoader(String modid) {
 
+    }
+
+    public void loadEntityRenderers(ASMDataTable table, ModuleHandler moduleHandler) {
+        // Only done Client Side
     }
 }

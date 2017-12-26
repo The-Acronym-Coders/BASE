@@ -1,7 +1,10 @@
 package com.teamacronymcoders.base.materialsystem.parts;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
 import com.teamacronymcoders.base.util.TextUtils;
 
@@ -11,9 +14,10 @@ public class Part {
     private String unlocalizedName;
     private String oreDictName;
     private String ownerId;
+    private List<String> additionalOreDictNames;
     private PartType partType;
 
-    Part(String name, String oreDict, PartType partType, String ownerId) {
+    Part(String name, String oreDict, PartType partType, String ownerId, List<String> additionalOreDictNames) {
         this.name = name;
         this.shortUnlocalizedName = TextUtils.toSnakeCase(name);
         this.ownerId = "base";
@@ -25,6 +29,7 @@ public class Part {
             oreDict = name.substring(0, 1).toLowerCase(Locale.US) + name.substring(1);
         }
         this.oreDictName = TextUtils.removeSpecialCharacters(oreDict);
+        this.additionalOreDictNames = additionalOreDictNames;
         this.partType = partType;
     }
 
@@ -54,5 +59,9 @@ public class Part {
 
     public String getOwnerId() {
         return this.ownerId;
+    }
+
+    public List<String> getAdditionalOreDictNames() {
+        return Optional.ofNullable(additionalOreDictNames).orElseGet(Lists::newArrayList);
     }
 }

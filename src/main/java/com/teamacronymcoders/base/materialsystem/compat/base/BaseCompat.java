@@ -17,12 +17,17 @@ public class BaseCompat implements IMaterialCompat {
         PartType ore = new OrePartType();
         PartType fluid = new FluidPartType();
         PartType armor = new ArmorPartType();
+        PartType minecart = new MinecartPartType();
 
         MaterialSystem.registerPartType(item);
         MaterialSystem.registerPartType(block);
         MaterialSystem.registerPartType(ore);
         MaterialSystem.registerPartType(fluid);
         MaterialSystem.registerPartType(armor);
+        MaterialSystem.registerPartType(minecart);
+
+        //Specifically for Backwards Compat
+        MaterialSystem.registerPartType(new StoragePartType());
 
         registerPart(new PartBuilder().setName("Ingot").setPartType(item));
         registerPart(new PartBuilder().setName("Beam").setPartType(item));
@@ -30,12 +35,18 @@ public class BaseCompat implements IMaterialCompat {
         registerPart(new PartBuilder().setName("Bolt").setPartType(item));
         registerPart(new PartBuilder().setName("Dust").setPartType(item));
         registerPart(new PartBuilder().setName("Nugget").setPartType(item));
-        registerPart(new PartBuilder().setName("Rod").setPartType(item));
+        registerPart(new PartBuilder().setName("Rod").setPartType(item)
+                .setAdditionalOreDictNames("stick", "partToolRod"));
         registerPart(new PartBuilder().setName("Plate").setPartType(item));
-        registerPart(new PartBuilder().setName("Dense Plate").setPartType(item));
+        registerPart(new PartBuilder().setName("Dense Plate").setPartType(item)
+                .setAdditionalOreDictNames("plateDense"));
         registerPart(new PartBuilder().setName("Crystal").setPartType(item));
         registerPart(new PartBuilder().setName("Crushed Ore").setPartType(item));
         registerPart(new PartBuilder().setName("Casing").setPartType(item));
+
+        registerPart("Clump", item);
+        registerPart("Shard", item);
+        registerPart("Dirty Dust", item);
 
         registerPart(new PartBuilder().setName("Block").setPartType(block));
 
@@ -46,6 +57,12 @@ public class BaseCompat implements IMaterialCompat {
         registerPart(new PartBuilder().setName("Molten").setPartType(fluid).setOreDictName(""));
 
         registerPart(new PartBuilder().setName("Armor").setPartType(armor));
+
+        registerPart(new PartBuilder().setName("Minecart").setPartType(minecart));
+    }
+
+    private void registerPart(String name, PartType partType) {
+        registerPart(new PartBuilder().setName(name).setPartType(partType));
     }
 
     private void registerPart(PartBuilder partBuilder) {

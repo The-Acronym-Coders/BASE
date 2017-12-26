@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.materialsystem.materialparts;
 
+import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
@@ -10,6 +11,11 @@ import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
+
+import javax.annotation.Nullable;
+import java.awt.Color;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MaterialPart {
     private Material material;
@@ -78,7 +84,7 @@ public class MaterialPart {
             itemStack = this.getPartType().getItemStack(this);
         }
 
-        return itemStack;
+        return itemStack.copy();
     }
 
     public ResourceLocation getTextureLocation() {
@@ -91,6 +97,11 @@ public class MaterialPart {
 
     public int getColor() {
         return this.colorized ? this.getMaterial().getColor().getRGB() : -1;
+    }
+
+    @Nullable
+    public Color getFullColor() {
+        return this.colorized ? this.getMaterial().getColor() : null;
     }
 
     public boolean isColorized() {
@@ -109,6 +120,14 @@ public class MaterialPart {
         return this.getPart().getOreDictPrefix() + this.getMaterial().getOreDictSuffix();
     }
 
+    public List<String> getAllOreDictStrings() {
+        List<String> allOreDicts = Lists.newArrayList(this.getOreDictString());
+        allOreDicts.addAll(part.getAdditionalOreDictNames().stream()
+                .map(value -> value + material.getOreDictSuffix())
+                .collect(Collectors.toList()));
+        return allOreDicts;
+    }
+
     public MaterialPartData getData() {
         return data;
     }
@@ -118,7 +137,7 @@ public class MaterialPart {
     }
 
     public void setup() {
-        this.getPart().getPartType().setup(this);
+        this.getPart().getPartType().setup(this, materialUser);
     }
 
     public MaterialUser getMaterialUser() {

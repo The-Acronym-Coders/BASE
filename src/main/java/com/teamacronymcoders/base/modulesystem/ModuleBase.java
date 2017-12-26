@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class ModuleBase implements IModule {
     private boolean isActive = true;
@@ -38,9 +39,7 @@ public abstract class ModuleBase implements IModule {
         this.registerBlocks(this.getConfigRegistry(), this.getBlockRegistry());
         this.registerItems(this.getConfigRegistry(), this.getItemRegistry());
         this.registerEntities(this.getConfigRegistry(), this.getEntityRegistry());
-        if (this.getModuleProxy() != null) {
-            this.getModuleProxy().preInit(event);
-        }
+        this.getModuleProxy().ifPresent(proxy -> proxy.preInit(event));
     }
 
     @Override
@@ -50,16 +49,12 @@ public abstract class ModuleBase implements IModule {
 
     @Override
     public void init(FMLInitializationEvent event) {
-        if (this.getModuleProxy() != null) {
-            this.getModuleProxy().init(event);
-        }
+        this.getModuleProxy().ifPresent(proxy -> proxy.init(event));
     }
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
-        if (this.getModuleProxy() != null) {
-            this.getModuleProxy().postInit(event);
-        }
+        this.getModuleProxy().ifPresent(proxy -> proxy.postInit(event));
     }
 
     public void configure(ConfigRegistry configRegistry) {
@@ -91,9 +86,9 @@ public abstract class ModuleBase implements IModule {
     }
 
     @Override
-    @Nullable
-    public IModuleProxy getModuleProxy() {
-        return moduleProxy;
+    @Nonnull
+    public Optional<IModuleProxy> getModuleProxy() {
+        return Optional.ofNullable(moduleProxy);
     }
 
     @Override

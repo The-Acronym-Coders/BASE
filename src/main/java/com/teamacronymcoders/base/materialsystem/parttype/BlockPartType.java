@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.materialsystem.parttype;
 
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
@@ -10,11 +11,10 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public class BlockPartType extends PartType {
     public BlockPartType() {
-        this("storage");
+        this("block");
     }
 
     public BlockPartType(String name) {
@@ -34,7 +34,7 @@ public class BlockPartType extends PartType {
     }
 
     @Override
-    public void setup(@Nonnull MaterialPart materialPart) {
+    public void setup(@Nonnull MaterialPart materialPart, @Nonnull MaterialUser materialUser) {
         registerSubBlock(materialPart, new SubBlockPart(materialPart, MaterialSystem.materialCreativeTab));
     }
 

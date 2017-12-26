@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.materialsystem;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.Base;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 public class MaterialSystem {
     public static MissingMaterialPart MISSING_MATERIAL_PART;
@@ -97,10 +99,26 @@ public class MaterialSystem {
     }
 
     public static MaterialPart getMaterialPart(String name) {
-        return materialPartMap.get(name.toLowerCase(Locale.US));
+        return Optional.ofNullable(materialPartMap.get(name.toLowerCase(Locale.US))).orElse(MISSING_MATERIAL_PART);
     }
 
     public static boolean hasMaterialPart(MaterialPart materialPart) {
         return materialPartMap.containsKey(materialPart.getUnlocalizedName());
+    }
+
+    public static Map<String, MaterialPart> getMaterialParts() {
+        return ImmutableMap.copyOf(materialPartMap);
+    }
+
+    public static Map<String, Part> getParts() {
+        return ImmutableMap.copyOf(partMap);
+    }
+
+    public static Map<String, PartType> getPartTypes() {
+        return ImmutableMap.copyOf(partTypeMap);
+    }
+
+    public static Map<String, Material> getMaterials() {
+        return ImmutableMap.copyOf(materialMap);
     }
 }

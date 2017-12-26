@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class ArmorPartType extends PartType {
         this.setData(dataPieceList);
     }
 
-    public void setup(@Nonnull MaterialPart materialPart) {
+    public void setup(@Nonnull MaterialPart materialPart, @Nonnull MaterialUser materialUser) {
         ArmorMaterial iron = ArmorMaterial.IRON;
         MaterialPartData data = materialPart.getData();
         int enchantability = data.getValue("enchantability", iron.getEnchantability(), DataPartParsers::getInt);
@@ -47,7 +48,6 @@ public class ArmorPartType extends PartType {
             chestPlates = Maps.newHashMap();
         }
 
-        MaterialUser materialUser = materialPart.getMaterialUser();
         materialUser.registerItem(new ItemMaterialArmor(materialPart, armorMaterial, EntityEquipmentSlot.HEAD));
         materialUser.registerItem(new ItemMaterialArmor(materialPart, armorMaterial, EntityEquipmentSlot.LEGS));
         materialUser.registerItem(new ItemMaterialArmor(materialPart, armorMaterial, EntityEquipmentSlot.FEET));
