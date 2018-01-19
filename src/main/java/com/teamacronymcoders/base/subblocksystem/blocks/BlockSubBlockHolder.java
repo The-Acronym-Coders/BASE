@@ -217,7 +217,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
         return this.getSubBlock(blockState).isFullBlock();
     }
 
-    @Deprecated
+    @Override
     public int getLightOpacity(IBlockState blockState)
     {
         return this.getSubBlock(blockState).getLightOpacity();
