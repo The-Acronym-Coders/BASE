@@ -230,4 +230,10 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
             world.setBlockToAir(pos);
         }
     }
+
+    @Override
+    public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos) {
+        IBlockState blockState = world.getBlockState(pos);
+        return this.getSubBlock(blockState).canPlaceBlockAt(world, pos);
+    }
 }

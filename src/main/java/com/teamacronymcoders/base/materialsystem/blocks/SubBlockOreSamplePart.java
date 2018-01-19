@@ -20,8 +20,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
@@ -144,6 +147,11 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     @Override
     public boolean isBrokenWhenUnplaceable() {
         return true;
+    }
+
+    @Override
+    public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos) {
+        return world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP);
     }
 }
 

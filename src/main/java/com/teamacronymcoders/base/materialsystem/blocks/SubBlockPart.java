@@ -16,6 +16,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -180,5 +182,10 @@ public class SubBlockPart extends SubBlockBase {
     @Override
     public boolean isBrokenWhenUnplaceable() {
         return false;
+    }
+
+    @Override
+    public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos) {
+        return world.getBlockState(pos).getBlock().isReplaceable(world, pos);
     }
 }
