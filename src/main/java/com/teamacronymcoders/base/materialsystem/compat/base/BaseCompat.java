@@ -48,6 +48,8 @@ public class BaseCompat implements IMaterialCompat {
         registerPart("Shard", item);
         registerPart("Dirty Dust", item);
 
+        registerPart(new PartBuilder().setName("Cluster").setPartType(item).setOverlay(true));
+
         registerPart(new PartBuilder().setName("Block").setPartType(block));
 
         registerPart(new PartBuilder().setName("Ore").setPartType(ore));

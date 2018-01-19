@@ -16,8 +16,9 @@ public class Part {
     private String ownerId;
     private List<String> additionalOreDictNames;
     private PartType partType;
+    private boolean overlay;
 
-    Part(String name, String oreDict, PartType partType, String ownerId, List<String> additionalOreDictNames) {
+    Part(String name, String oreDict, PartType partType, String ownerId, List<String> additionalOreDictNames, boolean overlay) {
         this.name = name;
         this.shortUnlocalizedName = TextUtils.toSnakeCase(name);
         this.ownerId = "base";
@@ -31,6 +32,7 @@ public class Part {
         this.oreDictName = TextUtils.removeSpecialCharacters(oreDict);
         this.additionalOreDictNames = additionalOreDictNames;
         this.partType = partType;
+        this.overlay = overlay;
     }
 
     public String getName() {
@@ -63,5 +65,9 @@ public class Part {
 
     public List<String> getAdditionalOreDictNames() {
         return Optional.ofNullable(additionalOreDictNames).orElseGet(Lists::newArrayList);
+    }
+
+    public boolean hasOverlayTexture() {
+        return this.overlay;
     }
 }
