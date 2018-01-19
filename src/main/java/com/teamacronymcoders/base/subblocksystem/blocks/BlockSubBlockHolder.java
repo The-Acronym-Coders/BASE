@@ -179,11 +179,6 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
-    public boolean canPlaceTorchOnTop(IBlockState blockState, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
-        return this.getSubBlock(blockState).canPlaceTorchOnTop();
-    }
-
-    @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState blockState, BlockPos pos, EnumFacing face) {
         return this.getSubBlock(blockState).getBlockFaceShape();
     }
@@ -219,8 +214,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
-    public int getLightOpacity(IBlockState blockState)
-    {
+    public int getLightOpacity(IBlockState blockState) {
         return this.getSubBlock(blockState).getLightOpacity();
     }
 

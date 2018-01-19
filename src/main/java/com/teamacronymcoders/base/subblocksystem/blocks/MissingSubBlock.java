@@ -122,11 +122,6 @@ public class MissingSubBlock implements ISubBlock {
     }
 
     @Override
-    public boolean canPlaceTorchOnTop() {
-        return true;
-    }
-
-    @Override
     public BlockFaceShape getBlockFaceShape() {
         return BlockFaceShape.SOLID;
     }

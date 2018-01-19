@@ -137,11 +137,6 @@ public class SubBlockPart extends SubBlockBase {
     }
 
     @Override
-    public boolean canPlaceTorchOnTop() {
-        return true;
-    }
-
-    @Override
     public BlockFaceShape getBlockFaceShape() {
         return BlockFaceShape.SOLID;
     }

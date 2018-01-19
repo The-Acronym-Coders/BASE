@@ -67,8 +67,6 @@ public interface ISubBlock {
 
     boolean isTopSolid();
 
-    boolean canPlaceTorchOnTop();
-
     BlockFaceShape getBlockFaceShape();
 
     AxisAlignedBB getBoundingBox();

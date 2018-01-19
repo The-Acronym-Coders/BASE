@@ -101,11 +101,6 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     }
 
     @Override
-    public boolean canPlaceTorchOnTop() {
-        return false;
-    }
-
-    @Override
     public BlockFaceShape getBlockFaceShape() {
         return BlockFaceShape.UNDEFINED;
     }
