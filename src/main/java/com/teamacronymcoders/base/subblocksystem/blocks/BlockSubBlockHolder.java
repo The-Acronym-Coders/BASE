@@ -225,11 +225,9 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
 
     @Override
     public void neighborChanged(IBlockState blockState, World world, BlockPos pos, Block block, BlockPos fromPos) {
-        if (!this.canPlaceBlockAt(world, pos)) {
-            if (this.getSubBlock(blockState).isBrokenWhenUnplaceable()) {
-                this.dropBlockAsItem(world, pos, blockState, 0);
-                world.setBlockToAir(pos);
-            }
+        if (this.getSubBlock(blockState).isBrokenWhenUnplaceable() && !this.canPlaceBlockAt(world, pos)) {
+            this.dropBlockAsItem(world, pos, blockState, 0);
+            world.setBlockToAir(pos);
         }
     }
 }
