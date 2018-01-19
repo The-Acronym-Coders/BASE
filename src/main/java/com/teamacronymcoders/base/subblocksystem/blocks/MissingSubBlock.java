@@ -9,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 
@@ -112,7 +113,7 @@ public class MissingSubBlock implements ISubBlock {
     }
 
     @Override
-    public boolean isSideSolid() {
+    public boolean isSideSolid(EnumFacing side) {
         return true;
     }
 

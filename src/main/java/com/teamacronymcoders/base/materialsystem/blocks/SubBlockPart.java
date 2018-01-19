@@ -13,6 +13,7 @@ import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 
@@ -127,7 +128,7 @@ public class SubBlockPart extends SubBlockBase {
     }
 
     @Override
-    public boolean isSideSolid() {
+    public boolean isSideSolid(EnumFacing side) {
         return true;
     }
 

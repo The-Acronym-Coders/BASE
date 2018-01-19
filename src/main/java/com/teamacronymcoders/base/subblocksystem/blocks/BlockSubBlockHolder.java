@@ -170,7 +170,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
 
     @Override
     public boolean isSideSolid(IBlockState blockState, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, EnumFacing side) {
-        return this.getSubBlock(blockState).isSideSolid();
+        return this.getSubBlock(blockState).isSideSolid(side);
     }
 
     @Override

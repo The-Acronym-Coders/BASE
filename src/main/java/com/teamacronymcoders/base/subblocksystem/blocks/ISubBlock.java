@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.translation.I18n;
@@ -63,7 +64,7 @@ public interface ISubBlock {
     
     void setBlock(Block block);
 
-    boolean isSideSolid();
+    boolean isSideSolid(EnumFacing side);
 
     boolean isTopSolid();
 

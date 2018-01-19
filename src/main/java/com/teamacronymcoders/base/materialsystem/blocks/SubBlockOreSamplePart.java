@@ -17,6 +17,7 @@ import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -91,7 +92,7 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     }
 
     @Override
-    public boolean isSideSolid() {
+    public boolean isSideSolid(EnumFacing side) {
         return false;
     }
 
