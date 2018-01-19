@@ -6,6 +6,7 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGenera
 import com.teamacronymcoders.base.items.*;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.subblocksystem.items.ItemBlockSubBlockHolder;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.*;
@@ -226,5 +227,15 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     @Override
     public boolean canSilkHarvest(World world, BlockPos pos, @Nonnull IBlockState blockState, EntityPlayer player) {
         return this.getSubBlock(blockState).canSilkHarvest();
+    }
+
+    @Override
+    public void neighborChanged(IBlockState blockState, World world, BlockPos pos, Block block, BlockPos fromPos) {
+        if (!this.canPlaceBlockAt(world, pos)) {
+            if (this.getSubBlock(blockState).isBrokenWhenUnplaceable()) {
+                this.dropBlockAsItem(world, pos, blockState, 0);
+                world.setBlockToAir(pos);
+            }
+        }
     }
 }

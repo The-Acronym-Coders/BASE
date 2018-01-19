@@ -180,4 +180,9 @@ public class SubBlockPart extends SubBlockBase {
     public boolean canSilkHarvest() {
         return true;
     }
+
+    @Override
+    public boolean isBrokenWhenUnplaceable() {
+        return false;
+    }
 }

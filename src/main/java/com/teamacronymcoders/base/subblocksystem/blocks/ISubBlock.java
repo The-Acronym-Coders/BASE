@@ -84,4 +84,6 @@ public interface ISubBlock {
     int getLightOpacity();
 
     boolean canSilkHarvest();
+
+    boolean isBrokenWhenUnplaceable();
 }

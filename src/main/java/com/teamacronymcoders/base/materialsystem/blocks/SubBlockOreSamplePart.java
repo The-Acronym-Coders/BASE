@@ -144,5 +144,10 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     public boolean canSilkHarvest() {
         return false;
     }
+
+    @Override
+    public boolean isBrokenWhenUnplaceable() {
+        return true;
+    }
 }
 

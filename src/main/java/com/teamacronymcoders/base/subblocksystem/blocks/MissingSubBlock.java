@@ -165,4 +165,9 @@ public class MissingSubBlock implements ISubBlock {
     public boolean canSilkHarvest() {
         return true;
     }
+
+    @Override
+    public boolean isBrokenWhenUnplaceable() {
+        return false;
+    }
 }
