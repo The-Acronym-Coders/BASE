@@ -52,7 +52,7 @@ public class PartBuilder {
 
     public Part build() throws MaterialException {
         validate();
-        Part part =  new Part(name, oreDictName, partType, ownerId, additionalOreDictNames, overlay);
+        Part part = new Part(name, oreDictName, partType, ownerId, additionalOreDictNames, overlay);
         MaterialSystem.registerPart(part);
         MaterialSystem.partsNotBuilt.remove(this);
         return part;
