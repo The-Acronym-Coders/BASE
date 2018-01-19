@@ -160,4 +160,9 @@ public class MissingSubBlock implements ISubBlock {
     public int getLightOpacity() {
         return 255;
     }
+
+    @Override
+    public boolean canSilkHarvest() {
+        return true;
+    }
 }

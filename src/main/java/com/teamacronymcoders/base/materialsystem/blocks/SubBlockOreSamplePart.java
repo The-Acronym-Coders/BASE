@@ -139,5 +139,10 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     public int getLightOpacity() {
         return 0;
     }
+
+    @Override
+    public boolean canSilkHarvest() {
+        return false;
+    }
 }
 

@@ -175,4 +175,9 @@ public class SubBlockPart extends SubBlockBase {
     public int getLightOpacity() {
         return 255;
     }
+
+    @Override
+    public boolean canSilkHarvest() {
+        return true;
+    }
 }

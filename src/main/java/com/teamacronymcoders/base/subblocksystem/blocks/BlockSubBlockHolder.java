@@ -11,6 +11,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.*;
@@ -220,5 +221,10 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     public int getLightOpacity(IBlockState blockState)
     {
         return this.getSubBlock(blockState).getLightOpacity();
+    }
+
+    @Override
+    public boolean canSilkHarvest(World world, BlockPos pos, @Nonnull IBlockState blockState, EntityPlayer player) {
+        return this.getSubBlock(blockState).canSilkHarvest();
     }
 }

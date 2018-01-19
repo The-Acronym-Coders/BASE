@@ -82,4 +82,6 @@ public interface ISubBlock {
     boolean isFullBlock();
 
     int getLightOpacity();
+
+    boolean canSilkHarvest();
 }
