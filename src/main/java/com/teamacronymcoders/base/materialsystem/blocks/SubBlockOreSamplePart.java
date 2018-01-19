@@ -9,6 +9,8 @@ import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
+import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.util.math.AxisAlignedBB;
 
 import java.util.Map;
 
@@ -30,6 +32,56 @@ public class SubBlockOreSamplePart extends SubBlockPart {
 
         return new GeneratedModel(this.getModelPrefix() + this.getUnLocalizedName(), ModelType.BLOCKSTATE,
                 templateFile.getFileContents());
+    }
+
+    @Override
+    public boolean isSideSolid() {
+        return false;
+    }
+
+    @Override
+    public boolean isTopSolid() {
+        return false;
+    }
+
+    @Override
+    public boolean canPlaceTorchOnTop() {
+        return false;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape() {
+        return BlockFaceShape.UNDEFINED;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox() {
+        return new AxisAlignedBB(0.2F, 0.0F, 0.2F, 0.8F, 0.25F, 0.8F);
+    }
+
+    @Override
+    public boolean isFullCube() {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public boolean isPassable() {
+        return true;
+    }
+
+    @Override
+    public boolean isFullBlock() {
+        return false;
+    }
+
+    @Override
+    public int getLightOpacity() {
+        return 0;
     }
 }
 

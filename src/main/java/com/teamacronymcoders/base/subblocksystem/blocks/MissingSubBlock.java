@@ -3,12 +3,14 @@ package com.teamacronymcoders.base.subblocksystem.blocks;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -107,5 +109,55 @@ public class MissingSubBlock implements ISubBlock {
     @Override
     public void setBlock(Block block) {
     
+    }
+
+    @Override
+    public boolean isSideSolid() {
+        return true;
+    }
+
+    @Override
+    public boolean isTopSolid() {
+        return true;
+    }
+
+    @Override
+    public boolean canPlaceTorchOnTop() {
+        return true;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape() {
+        return BlockFaceShape.SOLID;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox() {
+        return Block.FULL_BLOCK_AABB;
+    }
+
+    @Override
+    public boolean isFullCube() {
+        return true;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return true;
+    }
+
+    @Override
+    public boolean isPassable() {
+        return false;
+    }
+
+    @Override
+    public boolean isFullBlock() {
+        return true;
+    }
+
+    @Override
+    public int getLightOpacity() {
+        return 255;
     }
 }

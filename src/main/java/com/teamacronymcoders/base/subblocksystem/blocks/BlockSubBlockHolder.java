@@ -167,43 +167,58 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
-    public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-        return false;
+    public boolean isSideSolid(IBlockState blockState, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, EnumFacing side) {
+        return this.getSubBlock(blockState).isSideSolid();
     }
 
     @Override
-    public boolean isTopSolid(IBlockState state) {
-        return false;
+    public boolean isTopSolid(IBlockState blockState) {
+        return this.getSubBlock(blockState).isTopSolid();
     }
 
     @Override
-    public boolean canPlaceTorchOnTop(IBlockState state, IBlockAccess world, BlockPos pos) {
-        return false;
+    public boolean canPlaceTorchOnTop(IBlockState blockState, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
+        return this.getSubBlock(blockState).canPlaceTorchOnTop();
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
-        return BlockFaceShape.UNDEFINED;
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState blockState, BlockPos pos, EnumFacing face) {
+        return this.getSubBlock(blockState).getBlockFaceShape();
     }
 
     @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        //TODO: if not an ore sample, do: return super.getBoundingBox(state, source, pos);
-        return new AxisAlignedBB(0.2F, 0.0F, 0.2F, 0.8F, 0.25F, 0.8F);
+    public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess source, BlockPos pos) {
+        return this.getSubBlock(blockState).getBoundingBox();
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
-        return false;
+    public boolean isFullCube(IBlockState blockState) {
+        return this.getSubBlock(blockState).isFullCube();
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
+    public boolean isOpaqueCube(IBlockState blockState) {
+        // blockState is null in preInit when this is first called - Used in block constructor
+        try {
+            return this.getSubBlock(blockState).isOpaqueCube();
+        } catch (NullPointerException error) {
+            return true;
+        }
     }
 
     @Override
-    public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
-        return true;
+    public boolean isPassable(IBlockAccess world, BlockPos pos) {
+        return this.getSubBlock(world.getBlockState(pos)).isPassable();
+    }
+
+    @Override
+    public boolean isFullBlock(IBlockState blockState) {
+        return this.getSubBlock(blockState).isFullBlock();
+    }
+
+    @Deprecated
+    public int getLightOpacity(IBlockState blockState)
+    {
+        return this.getSubBlock(blockState).getLightOpacity();
     }
 }

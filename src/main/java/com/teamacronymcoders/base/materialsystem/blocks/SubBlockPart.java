@@ -10,8 +10,11 @@ import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockBase;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -121,5 +124,55 @@ public class SubBlockPart extends SubBlockBase {
 
     public MaterialPart getMaterialPart() {
         return materialPart;
+    }
+
+    @Override
+    public boolean isSideSolid() {
+        return true;
+    }
+
+    @Override
+    public boolean isTopSolid() {
+        return true;
+    }
+
+    @Override
+    public boolean canPlaceTorchOnTop() {
+        return true;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape() {
+        return BlockFaceShape.SOLID;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox() {
+        return Block.FULL_BLOCK_AABB;
+    }
+
+    @Override
+    public boolean isFullCube() {
+        return true;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return true;
+    }
+
+    @Override
+    public boolean isPassable() {
+        return false;
+    }
+
+    @Override
+    public boolean isFullBlock() {
+        return true;
+    }
+
+    @Override
+    public int getLightOpacity() {
+        return 255;
     }
 }
