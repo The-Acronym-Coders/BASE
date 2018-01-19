@@ -23,7 +23,9 @@ public class SubBlockOreSamplePart extends SubBlockPart {
         Map<String, String> replacements = Maps.newHashMap();
 
         Part part = this.getMaterialPart().getPart();
-        replacements.put("texture", String.format("%s:blocks/%s", part.getOwnerId(), part.getShortUnlocalizedName()));
+        replacements.put("texture", String.format("%s:blocks/%s", "minecraft", "gravel"));
+        replacements.put("particle", String.format("%s:blocks/%s", "minecraft", "stone"));
+        replacements.put("ore", String.format("%s:blocks/%s", part.getOwnerId(), part.getShortUnlocalizedName()));
         templateFile.replaceContents(replacements);
 
         return new GeneratedModel(this.getModelPrefix() + this.getUnLocalizedName(), ModelType.BLOCKSTATE,
