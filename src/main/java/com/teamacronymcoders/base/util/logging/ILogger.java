@@ -11,6 +11,8 @@ public interface ILogger {
 
     void error(String message);
 
+    void error(Throwable throwable);
+
     void devWarning(String message);
 
     void devInfo(String message);
