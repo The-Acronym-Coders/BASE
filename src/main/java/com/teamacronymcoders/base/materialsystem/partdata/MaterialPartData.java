@@ -45,7 +45,7 @@ public class MaterialPartData {
             String[] valueArray = value.split(",");
             List<T> actualValues = Lists.newArrayList();
             for (String string : valueArray) {
-                returnList.add(parser.apply(string));
+                actualValues.add(parser.apply(string));
             }
             returnList = actualValues;
         }
