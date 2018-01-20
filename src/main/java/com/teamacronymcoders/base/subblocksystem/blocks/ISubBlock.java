@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumFacing;
@@ -89,4 +90,6 @@ public interface ISubBlock {
     boolean isBrokenWhenUnplaceable();
 
     boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos);
+
+    boolean onBlockActivated(World world, BlockPos pos, EntityPlayer player);
 }

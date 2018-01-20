@@ -13,6 +13,7 @@ import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -187,5 +188,10 @@ public class SubBlockPart extends SubBlockBase {
     @Override
     public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos) {
         return world.getBlockState(pos).getBlock().isReplaceable(world, pos);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, EntityPlayer player) {
+        return false;
     }
 }

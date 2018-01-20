@@ -15,12 +15,15 @@ import com.teamacronymcoders.base.util.OreDictUtils;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -28,11 +31,13 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
+import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.ACTIVATED_TEXT_DATA_NAME;
 import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.DROP_DATA_NAME;
 
 public class SubBlockOreSamplePart extends SubBlockPart {
     private ItemStack itemStackToDrop = null;
     private String itemDrop;
+    private String activatedText;
     private IBaseMod mod;
 
     public SubBlockOreSamplePart(MaterialPart materialPart, MaterialUser materialUser) {
@@ -41,6 +46,7 @@ public class SubBlockOreSamplePart extends SubBlockPart {
         this.mod = materialUser.getMod();
         if (data.containsDataPiece(DROP_DATA_NAME)) {
             itemDrop = data.getDataPiece(DROP_DATA_NAME);
+            activatedText = data.getDataPiece(ACTIVATED_TEXT_DATA_NAME);
         }
     }
 
@@ -152,6 +158,18 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     @Override
     public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos) {
         return world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, EntityPlayer player) {
+        if (activatedText != null && !activatedText.isEmpty()) {
+            player.sendStatusMessage(new TextComponentString(activatedText), true);
+        } else {
+            //TODO: Block drop as item
+        }
+        world.setBlockToAir(pos);
+        player.swingArm(EnumHand.MAIN_HAND);
+        return true;
     }
 }
 

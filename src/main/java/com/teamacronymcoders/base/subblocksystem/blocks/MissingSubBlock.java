@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -172,5 +173,10 @@ public class MissingSubBlock implements ISubBlock {
     @Override
     public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos) {
         return world.getBlockState(pos).getBlock().isReplaceable(world, pos);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, EntityPlayer player) {
+        return false;
     }
 }

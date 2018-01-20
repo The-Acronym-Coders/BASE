@@ -236,4 +236,10 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
         IBlockState blockState = world.getBlockState(pos);
         return this.getSubBlock(blockState).canPlaceBlockAt(world, pos);
     }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player,
+                                    EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        return this.getSubBlock(state).onBlockActivated(world, pos, player);
+    }
 }
