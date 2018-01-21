@@ -1,0 +1,16 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "texture": "##TEXTURE##",
+            "ore": "##ORE##",
+            "particle": "##TEXTURE##"
+        },
+        "model": "base:ore_sample",
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}]
+    }
+}
