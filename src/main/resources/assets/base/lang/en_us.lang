@@ -23,6 +23,7 @@ base.part.casing=%s Casing
 base.part.crystal=%s Crystal
 base.part.crushed_ore=Crushed %s Ore
 base.part.minecart=%s Minecart
+base.part.cluster=%s Cluster
 
 item.wrench.name=Wrench
 

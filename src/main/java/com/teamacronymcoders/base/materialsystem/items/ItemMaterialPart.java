@@ -45,7 +45,12 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
 
     @Override
     public int getColorFromItemstack(@Nonnull ItemStack itemStack, int tintIndex) {
-        return tintIndex == 0 ? this.getMaterialPartFromItemStack(itemStack).getColor() : -1;
+        MaterialPart materialPart = this.getMaterialPartFromItemStack(itemStack);
+        if (materialPart.getPart().hasOverlayTexture()) {
+            return tintIndex == 1 ? this.getMaterialPartFromItemStack(itemStack).getColor() : -1;
+        } else {
+            return tintIndex == 0 ? this.getMaterialPartFromItemStack(itemStack).getColor() : -1;
+        }
     }
 
     @Override
@@ -98,9 +103,18 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
     public List<IGeneratedModel> getGeneratedModels() {
         List<IGeneratedModel> models = Lists.newArrayList();
         for (MaterialPart materialPart : this.getItemMaterialParts().values()) {
-            TemplateFile templateFile = TemplateManager.getTemplateFile("item_model");
+            TemplateFile templateFile;
             Map<String, String> replacements = Maps.newHashMap();
-            replacements.put("texture", materialPart.getPart().getOwnerId() + ":items/" + materialPart.getPart().getShortUnlocalizedName());
+
+            if (materialPart.getPart().hasOverlayTexture()) {
+                templateFile = TemplateManager.getTemplateFile("item_model_overlayed");
+                replacements.put("texture", materialPart.getPart().getOwnerId() + ":items/" + materialPart.getPart().getShortUnlocalizedName());
+                replacements.put("texture_overlay", materialPart.getPart().getOwnerId() + ":items/" + materialPart.getPart().getShortUnlocalizedName() + "_overlay");
+            } else {
+                templateFile = TemplateManager.getTemplateFile("item_model");
+                replacements.put("texture", materialPart.getPart().getOwnerId() + ":items/" + materialPart.getPart().getShortUnlocalizedName());
+            }
+
             templateFile.replaceContents(replacements);
             models.add(new GeneratedModel(materialPart.getUnlocalizedName(), ModelType.ITEM_MODEL, templateFile.getFileContents()));
         }
