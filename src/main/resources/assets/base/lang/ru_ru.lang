@@ -1,0 +1,38 @@
+itemGroup.materials.base=Материалы B.A.S.E
+error.base.null_part=Нулевая часть
+
+base.part.gear=%s Шестерня
+base.part.plate=%s Пластина
+base.part.dense_plate=Плотная %s пластина
+base.part.dust=%s Пыль
+base.part.ingot=%s Слиток
+base.part.nugget=%s Самородок
+base.part.beam=%s Луч
+base.part.bolt=%s Палка
+base.part.rod=%s Стержень
+base.part.block=Блок %s
+base.part.ore=%s Руда
+base.part.poor_ore=Чистая %s руда
+base.part.dense_ore=Плотная %s руда
+base.part.molten=Сплав %s
+base.part.armor.head=%s Шлем
+base.part.armor.chest=%s Нагрудник
+base.part.armor.legs=%s Поножи
+base.part.armor.feet=%s Ботинки
+base.part.casing=%s Корпус
+base.part.crystal=%s Кристалл
+base.part.crushed_ore=Измельченная %s руда
+base.part.minecart=%s Minecart
+
+item.wrench.name=Ключ
+
+base.api.multiblock.validation.success=Проверка механизма выполнена успешно.
+base.api.multiblock.validation.too_few_parts=Механизм слишком маленький.
+base.api.multiblock.validation.machine_too_large=Механизм слишком большой, он может быть не более %1$d блоков в %2$s плоскости.
+base.api.multiblock.validation.machine_too_small=Механизм слишком маленький, он должен быть не менее %1$d блоков в %2$s плоскости.
+base.api.multiblock.validation.invalid_part=Деталь на %1$d, %2$d, %3$d несовместима с этим механизмом.
+base.api.multiblock.validation.invalid_part_for_frame=Блок на %1$d, %2$d, %3$d не подходит для использования в рамке механизма.
+base.api.multiblock.validation.invalid_part_for_bottom=Блок на %1$d, %2$d, %3$d не подходит для использования в нижнем слое механизма.
+base.api.multiblock.validation.invalid_part_for_top=Блок на %1$d, %2$d, %3$d не подходит для использования в верхнем слое механизма.
+base.api.multiblock.validation.invalid_part_for_sides=Блок на %1$d, %2$d, %3$d не подходит для использования на сторонах механизма.
+base.api.multiblock.validation.invalid_part_for_interior=Блок на %1$d, %2$d, %3$d не подходит для использования во внутренней части механизма.
