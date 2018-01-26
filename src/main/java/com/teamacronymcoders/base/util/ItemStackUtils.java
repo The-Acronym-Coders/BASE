@@ -58,4 +58,26 @@ public class ItemStackUtils {
     public static boolean containsItemStack(ItemStack stack, ItemStack inputStack) {
         return ItemStack.areItemsEqual(stack, inputStack) && stack.getCount() >= inputStack.getCount();
     }
+
+    public static boolean canStacksMerge(ItemStack original, ItemStack addition) {
+        return ItemStack.areItemsEqual(original, addition) &&
+                ItemStack.areItemStackTagsEqual(original, addition) &&
+                original.getItemDamage() == addition.getItemDamage();
+    }
+
+    public static ItemStack mergeStacks(ItemStack original, ItemStack addition) {
+        if (ItemStackUtils.canStacksMerge(original, addition)) {
+            int spaceToAdd = original.getMaxStackSize() - original.getCount();
+            if (spaceToAdd > 0) {
+                int amountToAdd = addition.getCount();
+                if (amountToAdd > spaceToAdd) {
+                    amountToAdd = spaceToAdd;
+                    addition.shrink(amountToAdd);
+                    original.grow(amountToAdd);
+                }
+            }
+        }
+
+        return addition;
+    }
 }
