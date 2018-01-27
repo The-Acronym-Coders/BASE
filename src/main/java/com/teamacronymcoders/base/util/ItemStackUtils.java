@@ -72,9 +72,10 @@ public class ItemStackUtils {
                 int amountToAdd = addition.getCount();
                 if (amountToAdd > spaceToAdd) {
                     amountToAdd = spaceToAdd;
-                    addition.shrink(amountToAdd);
-                    original.grow(amountToAdd);
                 }
+
+                addition.shrink(amountToAdd);
+                original.grow(amountToAdd);
             }
         }
 
