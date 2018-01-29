@@ -65,6 +65,10 @@ public class ItemStackUtils {
                 original.getItemDamage() == addition.getItemDamage();
     }
 
+    public static boolean canStacksMergeCompletely(ItemStack original, ItemStack addition) {
+        return canStacksMerge(original, addition) && original.getCount() + addition.getCount() <= original.getMaxStackSize();
+    }
+
     public static ItemStack mergeStacks(ItemStack original, ItemStack addition) {
         if (ItemStackUtils.canStacksMerge(original, addition)) {
             int spaceToAdd = original.getMaxStackSize() - original.getCount();
