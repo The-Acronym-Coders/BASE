@@ -17,7 +17,7 @@ public class ItemStackHandlerExport extends ItemStackHandler {
 
     @Override
     @Nonnull
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        return ItemStack.EMPTY;
+    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+        return stack;
     }
 }
