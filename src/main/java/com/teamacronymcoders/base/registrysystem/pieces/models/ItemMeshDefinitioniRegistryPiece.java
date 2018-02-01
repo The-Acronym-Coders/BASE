@@ -25,7 +25,7 @@ public class ItemMeshDefinitioniRegistryPiece extends RegistryPieceBase<IHasItem
     }
 
     @Override
-    public void onRegistryEvent(ResourceLocation name, IHasItemMeshDefinition entry) {
+    public void onModelEvent(ResourceLocation name, IHasItemMeshDefinition entry) {
         ItemMeshDefinitions.registerItemMeshDefinitions(entry);
     }
 }

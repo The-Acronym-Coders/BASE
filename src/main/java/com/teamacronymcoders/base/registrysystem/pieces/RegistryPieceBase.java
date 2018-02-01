@@ -44,6 +44,11 @@ public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAwar
     }
 
     @Override
+    public void onModelEvent(ResourceLocation name, ENTRY entry) {
+
+    }
+
+    @Override
     public void onRegistryEvent(ResourceLocation name, ENTRY entry) {
     }
 

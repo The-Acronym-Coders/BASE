@@ -13,6 +13,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Optional;
+
 public abstract class BlockSidedBase<T extends TileEntitySidedBase> extends BlockTEBase<T> {
     protected BlockSidedBase(Material material, String name) {
         super(material, name);
@@ -24,14 +26,14 @@ public abstract class BlockSidedBase<T extends TileEntitySidedBase> extends Bloc
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
                                     EnumFacing side, float hitX, float hitY, float hitZ) {
         if(!world.isRemote) {
-            TileEntitySidedBase tileEntity = this.getTileEntity(world, pos);
-            if(tileEntity != null) {
+            Optional<T> tileEntity = this.getTileEntity(world, pos);
+            if(tileEntity.isPresent()) {
                 ItemStack heldItem = player.getHeldItem(hand);
                 if(heldItem.hasCapability(Capabilities.TOOL, null)) {
                     if(player.isSneaking()) {
                         side = side.getOpposite();
                     }
-                    tileEntity.toggleSide(side.ordinal());
+                    tileEntity.get().toggleSide(side.ordinal());
                     return true;
                 }
             }

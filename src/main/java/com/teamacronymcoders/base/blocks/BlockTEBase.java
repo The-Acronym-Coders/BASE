@@ -8,6 +8,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public abstract class BlockTEBase<T extends TileEntity> extends BlockBase implements IHasTileEntity {
     public BlockTEBase(Material material, String name) {
@@ -29,12 +30,13 @@ public abstract class BlockTEBase<T extends TileEntity> extends BlockBase implem
     }
 
     @SuppressWarnings("unchecked")
-    public T getTileEntity(IBlockAccess world, BlockPos pos) {
+    public Optional<T> getTileEntity(IBlockAccess world, BlockPos pos) {
         TileEntity tileEntity = world.getTileEntity(pos);
+        T actualTileEntity = null;
         if (tileEntity != null && tileEntity.getClass() == this.getTileEntityClass()) {
-            return (T) tileEntity;
+            actualTileEntity = (T) tileEntity;
         }
-        return null;
+        return Optional.ofNullable(actualTileEntity);
     }
 
     @Override

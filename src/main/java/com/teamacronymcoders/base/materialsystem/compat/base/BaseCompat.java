@@ -15,6 +15,7 @@ public class BaseCompat implements IMaterialCompat {
         PartType item = new ItemPartType();
         PartType block = new BlockPartType();
         PartType ore = new OrePartType();
+        PartType oreSample = new OreSamplePartType();
         PartType fluid = new FluidPartType();
         PartType armor = new ArmorPartType();
         PartType minecart = new MinecartPartType();
@@ -22,6 +23,7 @@ public class BaseCompat implements IMaterialCompat {
         MaterialSystem.registerPartType(item);
         MaterialSystem.registerPartType(block);
         MaterialSystem.registerPartType(ore);
+        MaterialSystem.registerPartType(oreSample);
         MaterialSystem.registerPartType(fluid);
         MaterialSystem.registerPartType(armor);
         MaterialSystem.registerPartType(minecart);
@@ -48,11 +50,15 @@ public class BaseCompat implements IMaterialCompat {
         registerPart("Shard", item);
         registerPart("Dirty Dust", item);
 
+        registerPart(new PartBuilder().setName("Cluster").setPartType(item).setOverlay(true));
+
         registerPart(new PartBuilder().setName("Block").setPartType(block));
 
         registerPart(new PartBuilder().setName("Ore").setPartType(ore));
         registerPart(new PartBuilder().setName("Poor Ore").setPartType(ore));
         registerPart(new PartBuilder().setName("Dense Ore").setPartType(ore));
+
+        registerPart(new PartBuilder().setName("Ore Sample").setPartType(oreSample));
 
         registerPart(new PartBuilder().setName("Molten").setPartType(fluid).setOreDictName(""));
 

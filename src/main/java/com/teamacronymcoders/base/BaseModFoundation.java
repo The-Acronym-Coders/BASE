@@ -87,6 +87,10 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         if (this.useDefaultRegistryEventHandler()) {
             MinecraftForge.EVENT_BUS.register(new RegistryEventHandler(this));
         }
+
+        this.registerBlocks(this.getRegistry(BlockRegistry.class, "BLOCK"));
+        this.registerItems(this.getRegistry(ItemRegistry.class, "ITEM"));
+
         if (this.getMaterialUser() != null) {
             MaterialSystem.setup(this.getMaterialUser(), event.getAsmData());
             this.getMaterialUser().setup();
@@ -119,6 +123,14 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
             SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
         }
+    }
+
+    public void registerBlocks(BlockRegistry registry) {
+
+    }
+
+    public void registerItems(ItemRegistry registry) {
+
     }
 
     public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {

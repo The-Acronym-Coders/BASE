@@ -14,6 +14,7 @@ public class PartBuilder {
     private PartType partType;
     private String oreDictName;
     private List<String> additionalOreDictNames;
+    private boolean overlay = false;
 
     public PartBuilder() {
         MaterialSystem.partsNotBuilt.add(this);
@@ -44,9 +45,14 @@ public class PartBuilder {
         return this;
     }
 
+    public PartBuilder setOverlay(boolean overlay) {
+        this.overlay = overlay;
+        return this;
+    }
+
     public Part build() throws MaterialException {
         validate();
-        Part part =  new Part(name, oreDictName, partType, ownerId, additionalOreDictNames);
+        Part part = new Part(name, oreDictName, partType, ownerId, additionalOreDictNames, overlay);
         MaterialSystem.registerPart(part);
         MaterialSystem.partsNotBuilt.remove(this);
         return part;
