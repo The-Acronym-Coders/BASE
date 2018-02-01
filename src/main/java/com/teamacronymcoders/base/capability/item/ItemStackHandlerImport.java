@@ -6,7 +6,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 
 public class ItemStackHandlerImport extends ItemStackHandler {
-
     public ItemStackHandlerImport() {
         this(1);
     }
