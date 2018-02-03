@@ -1,18 +1,13 @@
 package com.teamacronymcoders.base.proxies;
 
-import com.teamacronymcoders.base.blocks.IHasBlockColor;
-import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
-import com.teamacronymcoders.base.client.BlockStateMappers;
 import com.teamacronymcoders.base.client.ClientHelper;
-import com.teamacronymcoders.base.client.Colors;
-import com.teamacronymcoders.base.client.models.handler.ModelHandler;
 import com.teamacronymcoders.base.client.models.IHasModel;
-import com.teamacronymcoders.base.renderer.entity.loader.EntityRendererLoader;
-import com.teamacronymcoders.base.items.IHasItemColor;
+import com.teamacronymcoders.base.client.models.handler.ModelHandler;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
+import com.teamacronymcoders.base.renderer.entity.loader.EntityRendererLoader;
 import com.teamacronymcoders.base.util.files.ResourceLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -32,6 +27,7 @@ import org.apache.commons.io.IOUtils;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 
 @SideOnly(Side.CLIENT)
 public class LibClientProxy extends LibCommonProxy {
@@ -52,36 +48,15 @@ public class LibClientProxy extends LibCommonProxy {
     public void registerFluidModel(Block fluidBlock, final ResourceLocation resourceLocation) {
         Item fluidItem = Item.getItemFromBlock(fluidBlock);
         ModelResourceLocation modelResourceLocation = new ModelResourceLocation(resourceLocation, "normal");
-        if (fluidItem != null) {
-            ModelBakery.registerItemVariants(fluidItem);
-            ModelLoader.setCustomMeshDefinition(fluidItem, stack -> modelResourceLocation);
-            ModelLoader.setCustomStateMapper(fluidBlock, new StateMapperBase() {
-                @Override
-                @Nonnull
-                protected ModelResourceLocation getModelResourceLocation(@Nonnull IBlockState state) {
-                    return modelResourceLocation;
-                }
-            });
-        }
-    }
-
-    @Override
-    public void registerItemColor(Item item, IHasItemColor itemColor) {
-        Colors.registerItemColor(item, itemColor);
-    }
-
-    public void registerItemColor(Block block, IHasItemColor itemColor) {
-        Colors.registerItemColor(block, itemColor);
-    }
-
-    @Override
-    public void registerBlockColor(IHasBlockColor blockColor) {
-        Colors.registerBlockColor(blockColor);
-    }
-
-    @Override
-    public void registerBlockStateMapper(IHasBlockStateMapper stateMapper) {
-        BlockStateMappers.registerStateMapper(stateMapper);
+        ModelBakery.registerItemVariants(fluidItem);
+        ModelLoader.setCustomMeshDefinition(fluidItem, stack -> modelResourceLocation);
+        ModelLoader.setCustomStateMapper(fluidBlock, new StateMapperBase() {
+            @Override
+            @Nonnull
+            protected ModelResourceLocation getModelResourceLocation(@Nonnull IBlockState state) {
+                return modelResourceLocation;
+            }
+        });
     }
 
     @Override
@@ -95,11 +70,6 @@ public class LibClientProxy extends LibCommonProxy {
     }
 
     @Override
-    public void registerModelVariant(Item item, ResourceLocation resourceLocation) {
-        ModelBakery.registerItemVariants(item, resourceLocation);
-    }
-
-    @Override
     public String getFileContents(ResourceLocation location) {
         location = new ResourceLocation(location.getResourceDomain(), "templates/" + location.getResourcePath() + ".json");
         IResource resource = ClientHelper.getResource(location);
@@ -107,7 +77,7 @@ public class LibClientProxy extends LibCommonProxy {
         if (resource != null) {
             InputStream inputStream = resource.getInputStream();
             try {
-                fileContents = IOUtils.toString(inputStream);
+                fileContents = IOUtils.toString(inputStream, Charset.defaultCharset());
             } catch (IOException e) {
                 this.getMod().getLogger().getLogger().error("Failed to get File: " + location + " Exception: " + e);
             }
