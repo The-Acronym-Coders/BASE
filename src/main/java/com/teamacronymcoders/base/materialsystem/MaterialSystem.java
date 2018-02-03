@@ -15,6 +15,7 @@ import com.teamacronymcoders.base.materialsystem.parts.GatherPartsEvent;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.materialsystem.parts.PartBuilder;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
+import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.TextUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
@@ -45,6 +46,9 @@ public class MaterialSystem {
             materialCompatLoader.loadCompat(dataTable);
 
             materialCreativeTab = new CreativeTabCarousel("materials.base");
+
+            ConfigRegistry configRegistry = Base.instance.getRegistry(ConfigRegistry.class, "CONFIG");
+            configRegistry.addNewConfigFile(configRegistry.getTacFolder(), "material_system");
 
             try {
                 MISSING_MATERIAL_PART = new MissingMaterialPart();

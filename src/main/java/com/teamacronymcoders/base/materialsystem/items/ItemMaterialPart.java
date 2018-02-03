@@ -10,7 +10,6 @@ import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
-import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
@@ -24,12 +23,18 @@ import java.util.Map;
 
 public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOreDict, IHasGeneratedModel {
     private Map<Integer, MaterialPart> itemMaterialParts;
-    private MaterialUser materialUser;
+    private final String modid;
 
-    public ItemMaterialPart(MaterialUser materialUser) {
+    public ItemMaterialPart(String modid) {
         super("material_part");
         this.setHasSubtypes(true);
-        this.materialUser = materialUser;
+        this.modid = modid;
+    }
+
+    public ItemMaterialPart(String modid, Integer integer) {
+        super("material_part_" + integer);
+        this.setHasSubtypes(true);
+        this.modid = modid;
     }
 
     @Override
@@ -66,7 +71,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
 
     @Nonnull
     private MaterialPart getMaterialPartFromItemStack(ItemStack itemStack) {
-        MaterialPart materialPart = materialUser.getMaterialPart(itemStack.getItemDamage());
+        MaterialPart materialPart = this.itemMaterialParts.get(itemStack.getItemDamage());
         return materialPart != null ? materialPart : MaterialSystem.MISSING_MATERIAL_PART;
     }
 
@@ -95,7 +100,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
     @Override
     public List<ResourceLocation> getResourceLocations(List<ResourceLocation> resourceLocations) {
         this.getItemMaterialParts().forEach((id, materialPart) -> resourceLocations.add(
-                new ResourceLocation(this.materialUser.getMod().getID(), materialPart.getUnlocalizedName())));
+                new ResourceLocation(modid, materialPart.getUnlocalizedName())));
         return resourceLocations;
     }
 
@@ -107,7 +112,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
             Map<String, String> replacements = Maps.newHashMap();
 
             if (materialPart.getPart().hasOverlayTexture()) {
-                templateFile = TemplateManager.getTemplateFile("item_model_overlayed");
+                templateFile = TemplateManager.getTemplateFile("item_model_overlaid");
                 replacements.put("texture", materialPart.getPart().getOwnerId() + ":items/" + materialPart.getPart().getShortUnlocalizedName());
                 replacements.put("texture_overlay", materialPart.getPart().getOwnerId() + ":items/" + materialPart.getPart().getShortUnlocalizedName() + "_overlay");
             } else {

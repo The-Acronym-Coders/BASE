@@ -25,7 +25,6 @@ public class MaterialUser {
     private Map<String, Integer> nameMapping = Maps.newHashMap();
     private int nextId = 0;
     private BiMap<Integer, MaterialPart> materialPartBiMap = HashBiMap.create();
-    private ItemMaterialPart itemMaterialPart;
 
     public MaterialUser(IBaseMod mod) {
         this.mod = mod;
@@ -69,24 +68,8 @@ public class MaterialUser {
         return false;
     }
 
-    public void setupMaterPartItem() {
-        if (itemMaterialPart == null) {
-            itemMaterialPart = new ItemMaterialPart(this);
-            registerItem(itemMaterialPart);
-        }
-    }
-
     public IBaseMod getMod() {
         return mod;
-    }
-
-    public ItemMaterialPart getItemMaterialPart() {
-        return itemMaterialPart;
-    }
-
-    public void registerItemMaterialPart(MaterialPart materialPart) {
-        setupMaterPartItem();
-        itemMaterialPart.addMaterialPart(materialPartBiMap.inverse().get(materialPart), materialPart);
     }
 
     public MaterialPart getMaterialPart(int itemDamage) {
@@ -95,10 +78,6 @@ public class MaterialUser {
 
     public int getMaterialPartId(MaterialPart materialPart) {
         return materialPartBiMap.inverse().get(materialPart);
-    }
-
-    public Map<Integer, MaterialPart> getMaterialParts() {
-        return materialPartBiMap;
     }
 
     @SuppressWarnings("UnusedReturnValue")
