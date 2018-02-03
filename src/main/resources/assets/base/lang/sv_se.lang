@@ -23,7 +23,7 @@ base.part.casing=%s Hölje
 base.part.crystal=%s Kristall
 base.part.crushed_ore=Krossad %s Malm
 
-item.wrench.name=Skiftnyckel
+item.base.wrench.name=Skiftnyckel
 
 base.api.multiblock.validation.success=Maskin verifikation var lyckad!
 base.api.multiblock.validation.too_few_parts=Maskinen är för liten.
