@@ -10,6 +10,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 public enum GuiCarrier {
     ENTITY {
         @Override
@@ -35,7 +37,7 @@ public enum GuiCarrier {
             return hasGui;
         }
     },
-    TileEntity {
+    TILE_ENTITY {
         @Override
         public IHasGui getHasGUI(EntityPlayer player, World world, BlockPos blockPos) {
             IHasGui hasGui = null;
@@ -60,5 +62,6 @@ public enum GuiCarrier {
         }
     };
 
+    @Nullable
     public abstract IHasGui getHasGUI(EntityPlayer player, World world, BlockPos blockPos);
 }

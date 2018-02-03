@@ -8,4 +8,8 @@ public class DataPartParsers {
     public static Integer getInt(String value) {
         return Integer.parseInt(value);
     }
+
+    public static String getString(String value) {
+        return value;
+    }
 }

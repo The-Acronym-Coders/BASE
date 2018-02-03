@@ -50,6 +50,10 @@ public abstract class Registry<T> {
         }
     }
 
+    public void onModelRun() {
+
+    }
+
     public boolean requiresBeforeRegister() {
         return true;
     }

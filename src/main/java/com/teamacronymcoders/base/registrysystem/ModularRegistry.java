@@ -46,6 +46,16 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public void onModelRun() {
+        super.onModelRun();
+        entries.forEach((entryName, entryValue) -> registryPieces.stream()
+                .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
+                .forEach(registryPiece -> registryPiece.onModelEvent(entryName, entryValue)));
+
+    }
+
+    @Override
     @SuppressWarnings("unchecked") //Yes I know... it's IRegistryPiece#postInit()
     public void postInit() {
         super.postInit();

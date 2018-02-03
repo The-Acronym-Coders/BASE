@@ -19,7 +19,7 @@ public class GuiOpener {
     }
 
     public static void openTileEntityGui(IBaseMod mod, EntityPlayer player, World world, BlockPos blockPos) {
-        player.openGui(mod, TileEntity.ordinal(), world, blockPos.getX(), blockPos.getY(), blockPos.getZ());
+        player.openGui(mod, TILE_ENTITY.ordinal(), world, blockPos.getX(), blockPos.getY(), blockPos.getZ());
     }
 
     public static void openItemGui(IBaseMod mod, EntityPlayer player, World world, EnumHand enumHand) {

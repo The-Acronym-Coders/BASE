@@ -19,21 +19,6 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public final class TextureUtils {
 
-    public final static int TEXTURE_MAP_BLOCKS = 0;
-    public final static int TEXTURE_MAP_ITEMS = 1;
-
-    public static void bindTextureToClient(ResourceLocation texture) {
-        if (texture != null) {
-            ClientHelper.mc().renderEngine.bindTexture(texture);
-        }
-    }
-
-    public static void bindDefaultTerrainTexture() {
-        bindTextureToClient(TextureMap.LOCATION_BLOCKS_TEXTURE);
-    }
-
-    public static float FLUID_OFFSET = 0.005f;
-
     protected static Minecraft mc = Minecraft.getMinecraft();
 
     /**
@@ -206,5 +191,9 @@ public final class TextureUtils {
         GlStateManager.disableBlend();
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
+    }
+
+    public static TextureAtlasSprite getSprite(ResourceLocation textureLocation) {
+        return mc.getTextureMapBlocks().getTextureExtry(textureLocation.toString());
     }
 }

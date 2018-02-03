@@ -1,19 +1,24 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.blocks.*;
 import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.items.*;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.subblocksystem.items.ItemBlockSubBlockHolder;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.*;
 
@@ -107,7 +112,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     public ISubBlock getSubBlock(int meta) {
-        return getSubBlocks().get(meta);
+        return getSubBlocks().getOrDefault(meta, SubBlockSystem.MISSING_SUB_BLOCK);
     }
 
     @Override
@@ -139,6 +144,9 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     public Map<Integer, ISubBlock> getSubBlocks() {
+        if (subBlocks == null) {
+            subBlocks = Maps.newHashMap();
+        }
         return subBlocks;
     }
 
@@ -147,7 +155,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     public Map<ItemStack, String> getOreDictNames(@Nonnull Map<ItemStack, String> names) {
         this.getSubBlocks().forEach((key, value) -> {
             String oreDict = value.getOreDict();
-            if (oreDict != null && !oreDict.isEmpty()) {
+            if (!Strings.isNullOrEmpty(oreDict)) {
                 names.put(new ItemStack(this.getItemBlock(), 1, key), oreDict);
             }
         });
@@ -163,5 +171,75 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     @Override
     public List<IGeneratedModel> getGeneratedModels() {
         return this.getSubBlocks().values().stream().map(ISubBlock::getGeneratedModel).filter(Objects::nonNull).collect(Collectors.toList());
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean isSideSolid(IBlockState blockState, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, EnumFacing side) {
+        return this.getSubBlock(blockState).isSideSolid(side);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean isTopSolid(IBlockState blockState) {
+        return this.getSubBlock(blockState).isTopSolid();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState blockState, BlockPos pos, EnumFacing face) {
+        return this.getSubBlock(blockState).getBlockFaceShape();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess source, BlockPos pos) {
+        return this.getSubBlock(blockState).getBoundingBox();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean isFullCube(IBlockState blockState) {
+        return this.getSubBlock(blockState).isFullCube();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean isOpaqueCube(IBlockState blockState) {
+        return this.getSubBlock(blockState).isOpaqueCube();
+    }
+
+    @Override
+    public boolean isPassable(IBlockAccess world, BlockPos pos) {
+        return this.getSubBlock(world.getBlockState(pos)).isPassable();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean isFullBlock(IBlockState blockState) {
+        return this.getSubBlock(blockState).isFullBlock();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public int getLightOpacity(IBlockState blockState) {
+        return this.getSubBlock(blockState).getLightOpacity();
+    }
+
+    @Override
+    public boolean canSilkHarvest(World world, BlockPos pos, @Nonnull IBlockState blockState, EntityPlayer player) {
+        return this.getSubBlock(blockState).canSilkHarvest();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void neighborChanged(IBlockState blockState, World world, BlockPos pos, Block block, BlockPos fromPos) {
+        this.getSubBlock(blockState).onNeighborChange(world, pos, block, fromPos);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player,
+                                    EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        return this.getSubBlock(state).onBlockActivated(world, pos, player);
     }
 }

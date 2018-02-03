@@ -3,12 +3,18 @@ package com.teamacronymcoders.base.subblocksystem.blocks;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,7 +33,7 @@ public class MissingSubBlock implements ISubBlock {
 
     @Override
     public ResourceLocation getTextureLocation() {
-        return Blocks.BEDROCK.getRegistryName();
+        return new ResourceLocation("bedrock");
     }
 
     @Override
@@ -68,7 +74,7 @@ public class MissingSubBlock implements ISubBlock {
 
     @Override
     public String getOreDict() {
-        return null;
+        return "";
     }
 
     @Override
@@ -107,5 +113,70 @@ public class MissingSubBlock implements ISubBlock {
     @Override
     public void setBlock(Block block) {
     
+    }
+
+    @Override
+    public boolean isSideSolid(EnumFacing side) {
+        return true;
+    }
+
+    @Override
+    public boolean isTopSolid() {
+        return true;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape() {
+        return BlockFaceShape.SOLID;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox() {
+        return Block.FULL_BLOCK_AABB;
+    }
+
+    @Override
+    public boolean isFullCube() {
+        return true;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return true;
+    }
+
+    @Override
+    public boolean isPassable() {
+        return false;
+    }
+
+    @Override
+    public boolean isFullBlock() {
+        return true;
+    }
+
+    @Override
+    public int getLightOpacity() {
+        return 255;
+    }
+
+    @Override
+    public boolean canSilkHarvest() {
+        return true;
+    }
+
+    @Override
+    public void onNeighborChange(World world, BlockPos pos, Block block, BlockPos fromPos) {
+
+    }
+
+    @Override
+    public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos) {
+        return false;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, EntityPlayer player) {
+        return false;
     }
 }

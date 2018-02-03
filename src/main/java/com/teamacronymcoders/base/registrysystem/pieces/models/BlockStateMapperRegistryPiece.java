@@ -25,7 +25,7 @@ public class BlockStateMapperRegistryPiece extends RegistryPieceBase<IHasBlockSt
     }
 
     @Override
-    public void onRegistryEvent(ResourceLocation name, IHasBlockStateMapper entry) {
+    public void onModelEvent(ResourceLocation name, IHasBlockStateMapper entry) {
         BlockStateMappers.registerStateMapper(entry);
     }
 }

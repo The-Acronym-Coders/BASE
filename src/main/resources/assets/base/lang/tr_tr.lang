@@ -1,0 +1,39 @@
+itemGroup.materials.base=B.A.S.E Malzemeleri
+error.base.null_part=Boş Parça
+
+base.part.gear=%s Dişli
+base.part.plate=%s Plaka
+base.part.dense_plate=Yoğun %s Plaka
+base.part.dust=%s Tozu
+base.part.ingot=%s Külçe
+base.part.nugget=%s Parçası
+base.part.beam=%s Kiriş
+base.part.bolt=%s Cıvata
+base.part.rod=%s Çubuk
+base.part.block=%s Bloğu
+base.part.ore=%s Cevheri
+base.part.poor_ore=Az %s Cevheri
+base.part.dense_ore=Yoğun %s Cevheri
+base.part.molten=Erimiş %s
+base.part.armor.head=%s Kask
+base.part.armor.chest=%s Göğüslük
+base.part.armor.legs=%s Pantolon
+base.part.armor.feet=%s Botlar
+base.part.casing=%s Kaplama
+base.part.crystal=%s Kristal
+base.part.crushed_ore=Ezilmiş %s Cevheri
+base.part.minecart=%s Minecart
+
+item.base.wrench.name=İngiliz Anahtarı
+
+base.api.multiblock.validation.success=Makine doğrulaması başarılı oldu.
+base.api.multiblock.validation.too_few_parts=Makine çok küçük.
+base.api.multiblock.validation.machine_too_large=Makine çok büyük, %2$s boyutunda en fazla %1$d blok olabilir.
+base.api.multiblock.validation.machine_too_small=Makine çok küçük, %2$s boyutunda en az %1$d blok olmalı.
+base.api.multiblock.validation.invalid_part=%1$d, %2$d, %3$d bölgesindeki parça bu makine ile uyumlu değil.
+base.api.multiblock.validation.invalid_part_for_frame=%1$d, %2$d, %3$d bölgesindeki blok makinenin çerçevesinde kullanım için geçerli değildir.
+base.api.multiblock.validation.invalid_part_for_bottom=%1$d, %2$d, %3$d bölgesindeki blok makinenin alt tabakasında kullanım için geçerli değildir.
+base.api.multiblock.validation.invalid_part_for_top=%1$d, %2$d, %3$d bölgesindeki blok makinenin üst tabakasında kullanım için geçerli değildir.
+
+base.api.multiblock.validation.invalid_part_for_sides=%1$d, %2$d, %3$d bölgesindeki blok makinenin kenarlarında kullanım için geçerli değildir.
+base.api.multiblock.validation.invalid_part_for_interior=%1$d, %2$d, %3$d bölgesindeki blok makinenin iç bölümünde kullanım için geçerli değildir.

@@ -38,6 +38,11 @@ public class ModLogger implements ILogger {
     }
 
     @Override
+    public void error(Throwable throwable) {
+        this.modLog.error(throwable);
+    }
+
+    @Override
     public void devWarning(String message) {
         if (this.isDev) {
             this.warning(message);
