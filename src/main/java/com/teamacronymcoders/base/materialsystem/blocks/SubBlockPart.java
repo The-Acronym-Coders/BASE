@@ -181,11 +181,6 @@ public class SubBlockPart extends SubBlockBase {
     }
 
     @Override
-    public boolean isBrokenWhenUnplaceable() {
-        return false;
-    }
-
-    @Override
     public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos) {
         return world.getBlockState(pos).getBlock().isReplaceable(world, pos);
     }

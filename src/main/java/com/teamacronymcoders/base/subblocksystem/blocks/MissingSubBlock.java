@@ -33,7 +33,7 @@ public class MissingSubBlock implements ISubBlock {
 
     @Override
     public ResourceLocation getTextureLocation() {
-        return Blocks.BEDROCK.getRegistryName();
+        return new ResourceLocation("bedrock");
     }
 
     @Override
@@ -74,7 +74,7 @@ public class MissingSubBlock implements ISubBlock {
 
     @Override
     public String getOreDict() {
-        return null;
+        return "";
     }
 
     @Override
@@ -166,13 +166,13 @@ public class MissingSubBlock implements ISubBlock {
     }
 
     @Override
-    public boolean isBrokenWhenUnplaceable() {
-        return false;
+    public void onNeighborChange(World world, BlockPos pos, Block block, BlockPos fromPos) {
+
     }
 
     @Override
     public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos) {
-        return world.getBlockState(pos).getBlock().isReplaceable(world, pos);
+        return false;
     }
 
     @Override

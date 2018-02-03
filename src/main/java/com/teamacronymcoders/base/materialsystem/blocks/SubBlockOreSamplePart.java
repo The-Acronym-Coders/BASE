@@ -14,6 +14,7 @@ import com.teamacronymcoders.base.util.ItemStackUtils;
 import com.teamacronymcoders.base.util.OreDictUtils;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -46,12 +47,24 @@ public class SubBlockOreSamplePart extends SubBlockPart {
         this.mod = materialUser.getMod();
         if (data.containsDataPiece(DROP_DATA_NAME)) {
             itemDrop = data.getDataPiece(DROP_DATA_NAME);
+        }
+        if (data.containsDataPiece(ACTIVATED_TEXT_DATA_NAME)) {
             activatedText = data.getDataPiece(ACTIVATED_TEXT_DATA_NAME);
         }
     }
 
     @Override
     public void getDrops(int fortune, List<ItemStack> itemStacks) {
+        ItemStack itemStack = this.getItemStack().copy();
+        if (ItemStackUtils.isValid(itemStack)) {
+            itemStacks.add(itemStack);
+        } else {
+            mod.getLogger().fatal("Couldn't drop null ItemStack for " + getMaterialPart().getLocalizedName());
+        }
+    }
+
+    @Override
+    public ItemStack getItemStack() {
         if (itemStackToDrop == null) {
             if (itemDrop != null && !itemDrop.isEmpty()) {
                 String[] itemDropArray = itemDrop.split(":");
@@ -75,14 +88,10 @@ public class SubBlockOreSamplePart extends SubBlockPart {
                     }
                 }
             } else {
-                this.itemStackToDrop = this.getItemStack();
+                this.itemStackToDrop = super.getItemStack();
             }
         }
-        if (ItemStackUtils.isValid(this.itemStackToDrop)) {
-            itemStacks.add(itemStackToDrop.copy());
-        } else {
-            mod.getLogger().fatal("Couldn't drop null ItemStack for " + getMaterialPart().getLocalizedName());
-        }
+        return this.itemStackToDrop;
     }
 
     @Override
@@ -151,8 +160,11 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     }
 
     @Override
-    public boolean isBrokenWhenUnplaceable() {
-        return true;
+    public void onNeighborChange(World world, BlockPos pos, Block block, BlockPos fromPos) {
+        if (!world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP)) {
+            spawnItemStackEntity(world, this.getItemStack().copy(), pos);
+            world.setBlockToAir(pos);
+        }
     }
 
     @Override
@@ -165,7 +177,7 @@ public class SubBlockOreSamplePart extends SubBlockPart {
         if (activatedText != null && !activatedText.isEmpty()) {
             player.sendStatusMessage(new TextComponentString(activatedText), true);
         } else {
-            //TODO: Block drop as item
+            spawnItemStackEntity(world, this.getItemStack().copy(), pos);
         }
         world.setBlockToAir(pos);
         player.swingArm(EnumHand.MAIN_HAND);
