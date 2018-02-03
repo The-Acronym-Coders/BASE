@@ -57,7 +57,7 @@ public class ItemPartType extends PartType {
             itemMaterialParts.put(materialUser.getId(), Maps.newHashMap());
         }
 
-        if (itemSize == -1) {
+        if (itemSize == 0) {
             Map<Integer, ItemMaterialPart> materialPartMap = itemMaterialParts.get(materialUser.getId());
             if (!materialPartMap.containsKey(0)) {
                 ItemMaterialPart itemMaterialPart = new ItemMaterialPart(materialUser.getId());
@@ -88,7 +88,7 @@ public class ItemPartType extends PartType {
         MaterialUser materialUser = materialPart.getMaterialUser();
         ItemStack itemStack;
 
-        if (itemSize == -1) {
+        if (itemSize == 0) {
             itemStack = new ItemStack(this.itemMaterialParts.get(materialUser.getId()).get(0), 1,
                     materialUser.getMaterialPartId(materialPart));
         } else if (itemSize == 1) {
