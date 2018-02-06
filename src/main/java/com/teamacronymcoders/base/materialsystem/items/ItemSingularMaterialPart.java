@@ -23,7 +23,7 @@ public class ItemSingularMaterialPart extends ItemBase implements IHasItemColor,
     private final int burnTime;
 
     public ItemSingularMaterialPart(MaterialPart materialPart) {
-        super("material_part");
+        super(materialPart.getUnlocalizedName());
         this.materialPart = materialPart;
         this.burnTime = materialPart.getData().getValue("burn", 0, Integer::parseInt);;
     }
