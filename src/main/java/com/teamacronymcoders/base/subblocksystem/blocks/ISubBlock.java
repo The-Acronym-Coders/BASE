@@ -87,7 +87,7 @@ public interface ISubBlock {
 
     boolean canSilkHarvest();
 
-    boolean isBrokenWhenUnplaceable();
+    void onNeighborChange(World world, BlockPos pos, Block block, BlockPos fromPos);
 
     boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos);
 

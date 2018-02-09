@@ -63,26 +63,6 @@ public abstract class LibCommonProxy {
         this.mod = mod;
     }
 
-    public void registerItemColor(Item item, IHasItemColor itemColor) {
-        // Only done Client RegistrySide
-    }
-
-    public void registerItemColor(Block block, IHasItemColor itemColor) {
-        // Only done Client RegistrySide
-    }
-
-    public void registerBlockColor(IHasBlockColor blockColor) {
-        // Only done Client RegistrySide
-    }
-
-    public void registerBlockStateMapper(IHasBlockStateMapper stateMapper) {
-        // Only done Client RegistrySide
-    }
-
-    public void registerModelVariant(Item item, ResourceLocation resourceLocation) {
-        // Only done Client RegistrySide
-    }
-
     public String getFileContents(ResourceLocation resourceLocation) {
         return "";
     }

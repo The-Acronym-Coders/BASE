@@ -24,7 +24,7 @@ base.part.crystal=%s Kristal
 base.part.crushed_ore=Ezilmiş %s Cevheri
 base.part.minecart=%s Minecart
 
-item.wrench.name=İngiliz Anahtarı
+item.base.wrench.name=İngiliz Anahtarı
 
 base.api.multiblock.validation.success=Makine doğrulaması başarılı oldu.
 base.api.multiblock.validation.too_few_parts=Makine çok küçük.
