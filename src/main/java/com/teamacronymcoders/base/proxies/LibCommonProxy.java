@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.blocks.IHasBlockColor;
 import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.models.IHasModel;
+import com.teamacronymcoders.base.guisystem.IHasGui;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
@@ -12,8 +13,11 @@ import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 import javax.annotation.Nullable;
@@ -73,5 +77,9 @@ public abstract class LibCommonProxy {
 
     public void loadEntityRenderers(ASMDataTable table, ModuleHandler moduleHandler) {
         // Only done Client Side
+    }
+
+    public Object getGui(IHasGui openableGUI, EntityPlayer player, World world, BlockPos blockPos) {
+        return null;
     }
 }

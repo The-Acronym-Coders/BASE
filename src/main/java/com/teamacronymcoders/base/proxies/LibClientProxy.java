@@ -3,6 +3,7 @@ package com.teamacronymcoders.base.proxies;
 import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.client.models.handler.ModelHandler;
+import com.teamacronymcoders.base.guisystem.IHasGui;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
@@ -15,8 +16,11 @@ import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.resources.IResource;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
@@ -110,5 +114,10 @@ public class LibClientProxy extends LibCommonProxy {
     @Override
     public void loadEntityRenderers(ASMDataTable table, ModuleHandler moduleHandler) {
         EntityRendererLoader.loadRenderersFor(table, moduleHandler);
+    }
+
+    @Override
+    public Object getGui(IHasGui gui, EntityPlayer player, World world, BlockPos blockPos) {
+        return gui.getGui(player, world, blockPos);
     }
 }

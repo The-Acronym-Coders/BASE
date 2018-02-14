@@ -12,8 +12,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Optional;
 
 public class GuiHandler implements IGuiHandler {
+    private IBaseMod instance;
+
     public GuiHandler(IBaseMod instance) {
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, this);
+        this.instance = instance;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, final int z) {
         BlockPos blockPos = new BlockPos(x, y, z);
         return this.getHasGUI(id, player, world, blockPos)
-                .map(openableGUI -> openableGUI.getGui(player, world, blockPos))
+                .map(openableGUI -> instance.getLibProxy().getGui(openableGUI, player, world, blockPos))
                 .orElse(null);
     }
 
