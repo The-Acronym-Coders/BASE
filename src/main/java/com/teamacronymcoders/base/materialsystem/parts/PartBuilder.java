@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialException;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.parttype.PartType;
-import scala.actors.threadpool.Arrays;
 
 import java.util.List;
 

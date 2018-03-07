@@ -5,7 +5,6 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.materialsystem.items.ItemMaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPartSave;
 import com.teamacronymcoders.base.materialsystem.materials.Material;
