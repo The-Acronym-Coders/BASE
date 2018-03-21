@@ -85,7 +85,6 @@ public class SubBlockPart extends SubBlockBase {
         return harvestLevel;
     }
 
-    @Nonnull
     @Override
     public String getHarvestTool() {
         return harvestTool;
