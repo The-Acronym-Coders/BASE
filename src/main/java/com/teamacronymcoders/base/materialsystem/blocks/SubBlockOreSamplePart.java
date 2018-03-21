@@ -84,6 +84,11 @@ public class SubBlockOreSamplePart extends SubBlockBase {
     }
 
     @Override
+    public Material getMaterial() {
+        return Material.GROUND;
+    }
+
+    @Override
     public void getDrops(int fortune, List<ItemStack> itemStacks) {
         ItemStack itemStack = this.getItemStack().copy();
         if (ItemStackUtils.isValid(itemStack)) {
