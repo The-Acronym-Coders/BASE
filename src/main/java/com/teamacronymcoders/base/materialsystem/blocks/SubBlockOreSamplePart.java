@@ -52,13 +52,9 @@ public class SubBlockOreSamplePart extends SubBlockPart {
         setHarvestLevel(data.getValue("harvestLevel", -1, DataPartParsers::getInt));
         setHarvestTool(data.getValue("harvestTool", null, DataPartParsers::getString));
 
-        this.mod = materialUser.getMod();
-        if (data.containsDataPiece(DROP_DATA_NAME)) {
-            itemDrop = data.getDataPiece(DROP_DATA_NAME);
-        }
-        if (data.containsDataPiece(ACTIVATED_TEXT_DATA_NAME)) {
-            activatedText = data.getDataPiece(ACTIVATED_TEXT_DATA_NAME);
-        }
+        mod = materialUser.getMod();
+        itemDrop = data.getValue(DROP_DATA_NAME, itemDrop, DataPartParsers::getString);
+        activatedText = data.getValue(ACTIVATED_TEXT_DATA_NAME, itemDrop, DataPartParsers::getString);
     }
 
     @Override

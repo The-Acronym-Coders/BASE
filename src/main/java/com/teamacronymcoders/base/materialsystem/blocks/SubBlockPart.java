@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.Generat
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.base.materialsystem.partdata.DataPartParsers;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockBase;
@@ -37,30 +38,13 @@ public class SubBlockPart extends SubBlockBase {
         super(materialPart.getUnlocalizedName());
         this.materialPart = materialPart;
         MaterialPartData data = this.materialPart.getData();
-        hardness = setField(data, "hardness", hardness);
-        resistance = setField(data, "resistance", resistance);
-        harvestLevel = setField(data, "harvestLevel", harvestLevel);
 
-        if (data.containsDataPiece("harvestTool")) {
-            harvestTool = data.getDataPiece("harvestTool");
-        }
+        hardness = data.getValue("hardness", hardness, DataPartParsers::getFloat);
+        resistance = data.getValue("resistance", resistance, DataPartParsers::getInt);
+        harvestLevel = data.getValue("harvestLevel", harvestLevel, DataPartParsers::getInt);
+        harvestTool = data.getValue("harvestTool", harvestTool, DataPartParsers::getString);
+
         this.creativeTabs = creativeTab;
-    }
-
-    private int setField(MaterialPartData data, String fieldName, int currentLevel) {
-        if (data.containsDataPiece(fieldName)) {
-            currentLevel = Integer.parseInt(data.getDataPiece(fieldName));
-        }
-
-        return currentLevel;
-    }
-
-    private float setField(MaterialPartData data, String fieldName, float currentLevel) {
-        if (data.containsDataPiece(fieldName)) {
-            currentLevel = Float.parseFloat(data.getDataPiece(fieldName));
-        }
-
-        return currentLevel;
     }
 
     public void setHardness(float hardness) {
