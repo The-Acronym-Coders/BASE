@@ -8,6 +8,7 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelTy
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.base.materialsystem.partdata.DataPartParsers;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.util.ItemStackUtils;
@@ -45,6 +46,11 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     public SubBlockOreSamplePart(MaterialPart materialPart, MaterialUser materialUser) {
         super(materialPart, MaterialSystem.materialCreativeTab);
         MaterialPartData data = materialPart.getData();
+
+        setHardness(data.getValue("hardness", 0.125F, DataPartParsers::getFloat));
+        setResistance(data.getValue("resistance", 2, DataPartParsers::getInt));
+        setHarvestLevel(data.getValue("harvestLevel", -1, DataPartParsers::getInt));
+        setHarvestTool(data.getValue("harvestTool", null, DataPartParsers::getString));
 
         this.mod = materialUser.getMod();
         if (data.containsDataPiece(DROP_DATA_NAME)) {

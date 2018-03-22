@@ -63,6 +63,22 @@ public class SubBlockPart extends SubBlockBase {
         return currentLevel;
     }
 
+    public void setHardness(float hardness) {
+        this.hardness = hardness;
+    }
+
+    public void setResistance(int resistance) {
+        this.resistance = resistance;
+    }
+
+    public void setHarvestLevel(int harvestLevel) {
+        this.harvestLevel = harvestLevel;
+    }
+
+    public void setHarvestTool(String harvestTool) {
+        this.harvestTool = harvestTool;
+    }
+
     @Override
     public String getLocalizedName() {
         return this.materialPart.getLocalizedName();
