@@ -47,7 +47,7 @@ public class SubBlockOreSamplePart extends SubBlockBase {
     private String activatedText;
     private IBaseMod mod;
 
-    private int hardness = 0;
+    private float hardness = 0.125F;
     private int resistance = 2;
     private int harvestLevel = -1;
     private String harvestTool = null;
@@ -78,6 +78,14 @@ public class SubBlockOreSamplePart extends SubBlockBase {
     private int setField(MaterialPartData data, String fieldName, int currentLevel) {
         if (data.containsDataPiece(fieldName)) {
             currentLevel = Integer.parseInt(data.getDataPiece(fieldName));
+        }
+
+        return currentLevel;
+    }
+
+    private float setField(MaterialPartData data, String fieldName, float currentLevel) {
+        if (data.containsDataPiece(fieldName)) {
+            currentLevel = Float.parseFloat(data.getDataPiece(fieldName));
         }
 
         return currentLevel;
@@ -145,7 +153,7 @@ public class SubBlockOreSamplePart extends SubBlockBase {
     }
 
     @Override
-    public int getHardness() {
+    public float getHardness() {
         return hardness;
     }
 

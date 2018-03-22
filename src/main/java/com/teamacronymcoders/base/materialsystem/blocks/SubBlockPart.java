@@ -28,7 +28,7 @@ public class SubBlockPart extends SubBlockBase {
     private MaterialPart materialPart;
     private CreativeTabs creativeTabs;
 
-    private int hardness = 5;
+    private float hardness = 5;
     private int resistance = 30;
     private int harvestLevel = 1;
     private String harvestTool = "pickaxe";
@@ -55,6 +55,14 @@ public class SubBlockPart extends SubBlockBase {
         return currentLevel;
     }
 
+    private float setField(MaterialPartData data, String fieldName, float currentLevel) {
+        if (data.containsDataPiece(fieldName)) {
+            currentLevel = Float.parseFloat(data.getDataPiece(fieldName));
+        }
+
+        return currentLevel;
+    }
+
     @Override
     public String getLocalizedName() {
         return this.materialPart.getLocalizedName();
@@ -71,7 +79,7 @@ public class SubBlockPart extends SubBlockBase {
     }
 
     @Override
-    public int getHardness() {
+    public float getHardness() {
         return hardness;
     }
 
