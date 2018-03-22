@@ -1,7 +1,6 @@
 package com.teamacronymcoders.base.materialsystem.parttype;
 
 import com.google.common.collect.Lists;
-import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockOreSamplePart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
@@ -26,6 +25,6 @@ public class OreSamplePartType extends BlockPartType {
 
     @Override
     public void setup(@Nonnull MaterialPart materialPart, @Nonnull MaterialUser materialUser) {
-        registerSubBlock(materialPart, new SubBlockOreSamplePart(materialPart, materialUser, MaterialSystem.materialCreativeTab));
+        registerSubBlock(materialPart, new SubBlockOreSamplePart(materialPart, materialUser));
     }
 }
