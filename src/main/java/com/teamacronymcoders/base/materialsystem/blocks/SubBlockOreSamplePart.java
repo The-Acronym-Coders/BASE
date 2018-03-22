@@ -54,7 +54,7 @@ public class SubBlockOreSamplePart extends SubBlockPart {
 
         mod = materialUser.getMod();
         itemDrop = data.getValue(DROP_DATA_NAME, itemDrop, DataPartParsers::getString);
-        activatedText = data.getValue(ACTIVATED_TEXT_DATA_NAME, itemDrop, DataPartParsers::getString);
+        activatedText = data.getValue(ACTIVATED_TEXT_DATA_NAME, activatedText, DataPartParsers::getString);
     }
 
     @Override
