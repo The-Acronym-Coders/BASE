@@ -42,7 +42,7 @@ public class MissingSubBlock implements ISubBlock {
     }
 
     @Override
-    public int getHardness() {
+    public float getHardness() {
         return 0;
     }
 
