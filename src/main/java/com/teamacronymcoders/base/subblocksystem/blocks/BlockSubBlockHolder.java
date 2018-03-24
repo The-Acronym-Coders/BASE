@@ -80,7 +80,6 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
     }
 
     @Override
-    @Nonnull
     public String getHarvestTool(@Nonnull IBlockState state) {
         return this.getSubBlock(state.getValue(SUB_BLOCK_NUMBER)).getHarvestTool();
     }

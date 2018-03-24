@@ -34,7 +34,7 @@ public interface ISubBlock {
 
     int getColor();
 
-    int getHardness();
+    float getHardness();
 
     int getResistance();
 

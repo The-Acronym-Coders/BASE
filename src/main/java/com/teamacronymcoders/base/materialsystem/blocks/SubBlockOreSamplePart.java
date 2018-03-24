@@ -8,6 +8,7 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelTy
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.base.materialsystem.partdata.DataPartParsers;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.util.ItemStackUtils;
@@ -15,6 +16,7 @@ import com.teamacronymcoders.base.util.OreDictUtils;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -44,13 +46,20 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     public SubBlockOreSamplePart(MaterialPart materialPart, MaterialUser materialUser) {
         super(materialPart, MaterialSystem.materialCreativeTab);
         MaterialPartData data = materialPart.getData();
-        this.mod = materialUser.getMod();
-        if (data.containsDataPiece(DROP_DATA_NAME)) {
-            itemDrop = data.getDataPiece(DROP_DATA_NAME);
-        }
-        if (data.containsDataPiece(ACTIVATED_TEXT_DATA_NAME)) {
-            activatedText = data.getDataPiece(ACTIVATED_TEXT_DATA_NAME);
-        }
+
+        setHardness(data.getValue("hardness", 0.125F, DataPartParsers::getFloat));
+        setResistance(data.getValue("resistance", 2, DataPartParsers::getInt));
+        setHarvestLevel(data.getValue("harvestLevel", -1, DataPartParsers::getInt));
+        setHarvestTool(data.getValue("harvestTool", null, DataPartParsers::getString));
+
+        mod = materialUser.getMod();
+        itemDrop = data.getValue(DROP_DATA_NAME, itemDrop, DataPartParsers::getString);
+        activatedText = data.getValue(ACTIVATED_TEXT_DATA_NAME, activatedText, DataPartParsers::getString);
+    }
+
+    @Override
+    public Material getMaterial() {
+        return Material.GROUND;
     }
 
     @Override

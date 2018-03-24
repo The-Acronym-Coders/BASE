@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.Generat
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.base.materialsystem.partdata.DataPartParsers;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
 import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockBase;
@@ -28,7 +29,7 @@ public class SubBlockPart extends SubBlockBase {
     private MaterialPart materialPart;
     private CreativeTabs creativeTabs;
 
-    private int hardness = 5;
+    private float hardness = 5;
     private int resistance = 30;
     private int harvestLevel = 1;
     private String harvestTool = "pickaxe";
@@ -37,22 +38,29 @@ public class SubBlockPart extends SubBlockBase {
         super(materialPart.getUnlocalizedName());
         this.materialPart = materialPart;
         MaterialPartData data = this.materialPart.getData();
-        hardness = setField(data, "hardness", hardness);
-        resistance = setField(data, "resistance", resistance);
-        harvestLevel = setField(data, "harvestLevel", harvestLevel);
 
-        if (data.containsDataPiece("harvestTool")) {
-            harvestTool = data.getDataPiece("harvestTool");
-        }
+        hardness = data.getValue("hardness", hardness, DataPartParsers::getFloat);
+        resistance = data.getValue("resistance", resistance, DataPartParsers::getInt);
+        harvestLevel = data.getValue("harvestLevel", harvestLevel, DataPartParsers::getInt);
+        harvestTool = data.getValue("harvestTool", harvestTool, DataPartParsers::getString);
+
         this.creativeTabs = creativeTab;
     }
 
-    private int setField(MaterialPartData data, String fieldName, int currentLevel) {
-        if (data.containsDataPiece(fieldName)) {
-            currentLevel = Integer.parseInt(data.getDataPiece(fieldName));
-        }
+    public void setHardness(float hardness) {
+        this.hardness = hardness;
+    }
 
-        return currentLevel;
+    public void setResistance(int resistance) {
+        this.resistance = resistance;
+    }
+
+    public void setHarvestLevel(int harvestLevel) {
+        this.harvestLevel = harvestLevel;
+    }
+
+    public void setHarvestTool(String harvestTool) {
+        this.harvestTool = harvestTool;
     }
 
     @Override
@@ -71,7 +79,7 @@ public class SubBlockPart extends SubBlockBase {
     }
 
     @Override
-    public int getHardness() {
+    public float getHardness() {
         return hardness;
     }
 
@@ -85,7 +93,6 @@ public class SubBlockPart extends SubBlockBase {
         return harvestLevel;
     }
 
-    @Nonnull
     @Override
     public String getHarvestTool() {
         return harvestTool;
