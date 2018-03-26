@@ -1,8 +1,10 @@
 package com.teamacronymcoders.base.subblocksystem.items;
 
 import com.google.common.collect.Lists;
+import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.itemblocks.ItemBlockGeneric;
+import com.teamacronymcoders.base.items.itemblocks.ItemBlockModel;
 import com.teamacronymcoders.base.subblocksystem.blocks.BlockSubBlockHolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -23,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemBlockSubBlockHolder extends ItemBlockGeneric<BlockSubBlockHolder> implements IHasItemColor {
+public class ItemBlockSubBlockHolder extends ItemBlockGeneric<BlockSubBlockHolder> implements IHasItemColor, IHasModel {
     public ItemBlockSubBlockHolder(BlockSubBlockHolder block) {
         super(block);
     }

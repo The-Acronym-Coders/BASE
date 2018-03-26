@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemSubBlock<BLOCK extends Block & IHasModel> extends ItemBlockGeneric<BLOCK> {
+public class ItemSubBlock<BLOCK extends Block & IHasModel> extends ItemBlockGeneric<BLOCK> implements IHasModel {
     private String[] names;
 
     public ItemSubBlock(BLOCK block, String[] names) {
