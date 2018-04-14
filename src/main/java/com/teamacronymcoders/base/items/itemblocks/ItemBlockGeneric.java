@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.IHasSubItems;
@@ -16,8 +17,9 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHasModel, IHasOreDict {
+public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IModAware, IHasSubItems, IHasOreDict {
     private T actualBlock;
+    private IBaseMod mod;
 
     public ItemBlockGeneric(T block) {
         super(block);
@@ -61,11 +63,11 @@ public class ItemBlockGeneric<T extends Block> extends ItemBlock implements IHas
 
     @Override
     public IBaseMod getMod() {
-        return null;
+        return mod;
     }
 
     @Override
     public void setMod(IBaseMod mod) {
-
+        this.mod = mod;
     }
 }
