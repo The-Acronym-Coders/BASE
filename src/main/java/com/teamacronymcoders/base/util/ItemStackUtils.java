@@ -1,22 +1,13 @@
 package com.teamacronymcoders.base.util;
 
-import com.teamacronymcoders.base.registrysystem.Registry;
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
-import net.minecraftforge.registries.RegistryManager;
-
-import javax.annotation.Nonnull;
-import java.util.Optional;
 
 public class ItemStackUtils {
     private ItemStackUtils() {
@@ -35,7 +26,7 @@ public class ItemStackUtils {
     }
 
     public static boolean isValid(ItemStack itemStack) {
-        return !itemStack.isEmpty();
+        return itemStack != null && !itemStack.isEmpty();
     }
 
     public static ItemStack getItemStackFromBlockState(IBlockState blockState) {
