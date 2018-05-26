@@ -29,6 +29,10 @@ public abstract class LibCommonProxy {
         // Only set Client RegistrySide
     }
 
+    public void addSidedBlockDomain() {
+        // Only set Client RegistrySide
+    }
+
     public void registerFluidModel(Block fluidBlock, final ResourceLocation loc) {
         // Only done Client RegistrySide
     }

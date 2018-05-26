@@ -3,6 +3,7 @@ package com.teamacronymcoders.base.proxies;
 import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.client.models.handler.ModelHandler;
+import com.teamacronymcoders.base.client.models.sided.ModelLoaderSidedBlock;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
@@ -37,6 +38,11 @@ public class LibClientProxy extends LibCommonProxy {
     @Override
     public void addOBJDomain() {
         OBJLoader.INSTANCE.addDomain(getMod().getID());
+    }
+
+    @Override
+    public void addSidedBlockDomain() {
+        ModelLoaderSidedBlock.getInstance().addDomain(getMod().getID());
     }
 
     @Override

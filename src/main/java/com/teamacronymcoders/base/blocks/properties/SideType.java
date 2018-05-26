@@ -8,6 +8,7 @@ import java.util.Locale;
 public enum SideType implements IStringSerializable {
     INPUT, OUTPUT, NONE;
 
+    public static final SideType[] VALUES = values();
     @Nonnull
     public String getName() {
         return this.name().toLowerCase(Locale.US);
@@ -15,9 +16,9 @@ public enum SideType implements IStringSerializable {
 
     public SideType next() {
         int next = ordinal() + 1;
-        if(next > SideType.values().length) {
+        if(next >= VALUES.length) {
             next = 0;
         }
-        return SideType.values()[next];
+        return VALUES[next];
     }
 }
