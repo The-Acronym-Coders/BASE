@@ -6,13 +6,18 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
 
-public abstract class TileEntitySidedBase extends TileEntityBase implements IBlockOverlayText {
+public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements IBlockOverlayText {
     private SideType[] sideTypes;
     private boolean isColorBlindActive;
 
@@ -73,6 +78,39 @@ public abstract class TileEntitySidedBase extends TileEntityBase implements IBlo
         }
         return false;
     }
+
+    @Override
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == this.getCapabilityType() || super.hasCapability(capability, facing);
+    }
+
+    @Nullable
+    @Override
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == this.getCapabilityType()) {
+            if (facing != null) {
+                SideType sideType = this.getSideValue(facing.getIndex());
+                if (sideType == SideType.INPUT) {
+                    return this.castCapability(this.getInputCapability());
+                } else if (sideType == SideType.OUTPUT) {
+                    return this.castCapability(this.getOutputCapability());
+                }
+            } else {
+                return this.castCapability(this.getInternalCapability());
+            }
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    public abstract Capability<?> getCapabilityType();
+
+    public abstract <T> T castCapability(CAP cap);
+
+    public abstract CAP getInternalCapability();
+
+    public abstract CAP getOutputCapability();
+
+    public abstract CAP getInputCapability();
 
     @Override
     @SideOnly(Side.CLIENT)
