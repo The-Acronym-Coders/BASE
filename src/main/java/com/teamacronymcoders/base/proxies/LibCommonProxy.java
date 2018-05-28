@@ -14,7 +14,9 @@ import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import javax.annotation.Nullable;
 
@@ -78,4 +80,6 @@ public abstract class LibCommonProxy {
     public void loadEntityRenderers(ASMDataTable table, ModuleHandler moduleHandler) {
         // Only done Client Side
     }
+
+    public abstract World getWorld(MessageContext ctx);
 }

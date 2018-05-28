@@ -6,10 +6,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,6 +29,11 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
         isColorBlindActive = false; // TODO
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+    }
+
     public void toggleSide(int side) {
         setSideType(side, this.getSideValue(side).next());
         updateBlock();
@@ -35,9 +41,11 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
 
     public void updateBlock() {
         IBlockState state = world.getBlockState(getPos());
-        world.notifyBlockUpdate(pos,state, state,3);
+        world.notifyBlockUpdate(pos, state, state, 3);
         world.notifyNeighborsOfStateChange(pos, state.getBlock(), true);
-        world.addBlockEvent(getPos(), this.getBlockType(), 0, 0);
+        if (!world.isRemote) {
+            world.addBlockEvent(getPos(), this.getBlockType(), 0, 0);
+        }
     }
 
     public void setSideType(int side, SideType sideType) {
@@ -50,23 +58,12 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
 
     @Override
     public void readFromDisk(NBTTagCompound data) {
-        int[] array = data.getIntArray("sideTypes");
-        if (this.sideTypes == null) {
-            this.sideTypes = new SideType[6];
-        }
-
-        for (int i = 0; i < array.length; i++) {
-            this.sideTypes[i] = SideType.values()[array[i]];
-        }
+        setSideTypesFromNBT(data);
     }
 
     @Override
     public NBTTagCompound writeToDisk(NBTTagCompound data) {
-        int[] array = new int[6];
-        for (int i = 0; i < this.sideTypes.length; i++) {
-            array[i] = this.sideTypes[i].ordinal();
-        }
-        data.setIntArray("sideTypes", array);
+        setSideTypesToNBT(data);
         return data;
     }
 
@@ -115,7 +112,6 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
     @Override
     @SideOnly(Side.CLIENT)
     public String[] getOverlayText(EntityPlayer player, RayTraceResult rayTrace, boolean tool) {
-
         if (tool && isColorBlindActive) {
             SideType facing = sideTypes[rayTrace.sideHit.ordinal()];
             SideType opposite = sideTypes[rayTrace.sideHit.getOpposite().ordinal()];
@@ -127,5 +123,45 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
         }
 
         return null;
+    }
+
+    public void setSideTypesToNBT(NBTTagCompound nbt) {
+        int[] array = new int[6];
+        for (int i = 0; i < this.sideTypes.length; i++) {
+            array[i] = this.sideTypes[i].ordinal();
+        }
+        nbt.setIntArray("sideTypes", array);
+    }
+
+    public void setSideTypesFromNBT(NBTTagCompound nbt) {
+        int[] array = nbt.getIntArray("sideTypes");
+        if (this.sideTypes == null) {
+            this.sideTypes = new SideType[6];
+        }
+
+        for (int i = 0; i < array.length; i++) {
+            this.sideTypes[i] = SideType.values()[array[i]];
+        }
+    }
+
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        setSideTypesToNBT(nbttagcompound);
+        return new SPacketUpdateTileEntity(this.pos, 3, nbttagcompound);
+    }
+
+    @Nonnull
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        NBTTagCompound nbt = super.writeToNBT(new NBTTagCompound());
+        setSideTypesToNBT(nbt);
+        return nbt;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        setSideTypesFromNBT(pkt.getNbtCompound());
     }
 }

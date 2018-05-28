@@ -12,15 +12,19 @@ import com.teamacronymcoders.base.renderer.entity.loader.EntityRendererLoader;
 import com.teamacronymcoders.base.util.files.ResourceLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.io.IOUtils;
@@ -116,5 +120,10 @@ public class LibClientProxy extends LibCommonProxy {
     @Override
     public void loadEntityRenderers(ASMDataTable table, ModuleHandler moduleHandler) {
         EntityRendererLoader.loadRenderersFor(table, moduleHandler);
+    }
+
+    @Override
+    public World getWorld(MessageContext ctx) {
+        return Minecraft.getMinecraft().world;
     }
 }
