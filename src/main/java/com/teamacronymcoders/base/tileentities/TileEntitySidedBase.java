@@ -13,51 +13,55 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Arrays;
 
 public abstract class TileEntitySidedBase extends TileEntityBase implements IBlockOverlayText {
-    private SideType[] sideConfig;
+    private SideType[] sideTypes;
     private boolean isColorBlindActive;
 
     public TileEntitySidedBase() {
         super();
-        sideConfig = new SideType[6];
-        Arrays.fill(sideConfig, SideType.NONE);
+        sideTypes = new SideType[6];
+        Arrays.fill(sideTypes, SideType.NONE);
         isColorBlindActive = false; // TODO
     }
 
     public void toggleSide(int side) {
-        this.sideConfig[side] = this.sideConfig[side].next();
+        setSideType(side, this.getSideValue(side).next());
+        updateBlock();
+    }
+
+    public void updateBlock() {
         IBlockState state = world.getBlockState(getPos());
         world.notifyBlockUpdate(pos,state, state,3);
         world.notifyNeighborsOfStateChange(pos, state.getBlock(), true);
         world.addBlockEvent(getPos(), this.getBlockType(), 0, 0);
     }
 
-    public void setSideConfig(int side, SideType sideType) {
-        this.sideConfig[side] = sideType;
+    public void setSideType(int side, SideType sideType) {
+        this.sideTypes[side] = sideType;
     }
 
     public SideType getSideValue(int side) {
-        return this.sideConfig[side];
+        return this.sideTypes[side];
     }
 
     @Override
     public void readFromDisk(NBTTagCompound data) {
-        int[] array = data.getIntArray("sideConfig");
-        if (this.sideConfig == null) {
-            this.sideConfig = new SideType[6];
+        int[] array = data.getIntArray("sideTypes");
+        if (this.sideTypes == null) {
+            this.sideTypes = new SideType[6];
         }
 
         for (int i = 0; i < array.length; i++) {
-            this.sideConfig[i] = SideType.values()[array[i]];
+            this.sideTypes[i] = SideType.values()[array[i]];
         }
     }
 
     @Override
     public NBTTagCompound writeToDisk(NBTTagCompound data) {
         int[] array = new int[6];
-        for (int i = 0; i < this.sideConfig.length; i++) {
-            array[i] = this.sideConfig[i].ordinal();
+        for (int i = 0; i < this.sideTypes.length; i++) {
+            array[i] = this.sideTypes[i].ordinal();
         }
-        data.setIntArray("sideConfig", array);
+        data.setIntArray("sideTypes", array);
         return data;
     }
 
@@ -75,12 +79,12 @@ public abstract class TileEntitySidedBase extends TileEntityBase implements IBlo
     public String[] getOverlayText(EntityPlayer player, RayTraceResult rayTrace, boolean tool) {
 
         if (tool && isColorBlindActive) {
-            SideType facing = sideConfig[rayTrace.sideHit.ordinal()];
-            SideType opposite = sideConfig[rayTrace.sideHit.getOpposite().ordinal()];
+            SideType facing = sideTypes[rayTrace.sideHit.ordinal()];
+            SideType opposite = sideTypes[rayTrace.sideHit.getOpposite().ordinal()];
             return new String[]{
-                    I18n.format("base.blockSide.facing") + ": "
+                    I18n.format("base.block_side.facing") + ": "
                             + I18n.format("base.sidetype." + facing.name().toLowerCase()),
-                    I18n.format("base.blockSide.opposite") + ": "
+                    I18n.format("base.block_side.opposite") + ": "
                             + I18n.format("base.sidetype." + opposite.name().toLowerCase())};
         }
 
