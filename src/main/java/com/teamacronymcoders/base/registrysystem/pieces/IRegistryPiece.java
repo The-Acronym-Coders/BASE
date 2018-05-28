@@ -19,4 +19,6 @@ public interface IRegistryPiece<ENTRY> {
     void onModelEvent(ResourceLocation name, ENTRY entry);
 
     void onRegistryEvent(ResourceLocation name, ENTRY entry);
+
+    void afterRegistryEvent();
 }

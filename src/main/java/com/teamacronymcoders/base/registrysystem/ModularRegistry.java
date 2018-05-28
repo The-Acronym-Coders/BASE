@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.registrysystem;
 
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.registrysystem.pieces.IRegistryPiece;
+import com.teamacronymcoders.base.registrysystem.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistryPieceComparator;
 import net.minecraft.util.ResourceLocation;
 
@@ -34,6 +35,7 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
         entries.forEach((entryName, entryValue) -> registryPieces.stream()
                 .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
                 .forEach(registryPiece -> registryPiece.onRegistryEvent(entryName, entryValue)));
+        registryPieces.forEach(IRegistryPiece::afterRegistryEvent);
     }
 
     @Override
@@ -62,6 +64,7 @@ public class ModularRegistry<ENTRY> extends Registry<ENTRY> {
         entries.forEach((entryName, entryValue) -> registryPieces.stream()
                 .filter(registryPiece -> registryPiece.acceptsEntry(entryName, entryValue))
                 .forEach(registryPiece -> registryPiece.postInit(entryName, entryValue)));
+        registryPieces.clear();
     }
 
     @Override
