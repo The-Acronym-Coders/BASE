@@ -10,6 +10,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -58,17 +59,24 @@ public abstract class BlockSidedBase<T extends TileEntitySidedBase> extends Bloc
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
                                     EnumFacing side, float hitX, float hitY, float hitZ) {
 
-        Optional<T> tileEntity = this.getTileEntity(world, pos);
-        if (tileEntity.isPresent()) {
+        Optional<T> tileEntityOptional = this.getTileEntity(world, pos);
+        if (tileEntityOptional.isPresent()) {
+            T tileEntity = tileEntityOptional.get();
             ItemStack heldItem = player.getHeldItem(hand);
             if (heldItem.hasCapability(Capabilities.TOOL, null)) {
                 if (player.isSneaking()) {
                     side = side.getOpposite();
                 }
-                tileEntity.get().toggleSide(side.ordinal());
+                tileEntity.toggleSide(side.ordinal());
                 return true;
+            } else {
+                return handleAdditionalTileActions(world, tileEntity, player, hand, heldItem);
             }
         }
+        return false;
+    }
+
+    protected boolean handleAdditionalTileActions(World world, T tileEntity, EntityPlayer entityPlayer, EnumHand hand, ItemStack currentItem) {
         return false;
     }
 }
