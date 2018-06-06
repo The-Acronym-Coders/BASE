@@ -53,6 +53,11 @@ public class RegistryPieceBase<ENTRY> implements IRegistryPiece<ENTRY>, IModAwar
     }
 
     @Override
+    public void afterRegistryEvent() {
+
+    }
+
+    @Override
     public IBaseMod getMod() {
         return mod;
     }

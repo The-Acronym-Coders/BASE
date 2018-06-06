@@ -4,7 +4,13 @@ import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Module(value = Reference.MODID)
 public class ToolModule extends ModuleBase {
@@ -19,5 +25,14 @@ public class ToolModule extends ModuleBase {
     public void preInit(FMLPreInitializationEvent event) {
         wrench = new ItemWrench();
         this.getItemRegistry().register(wrench);
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @SubscribeEvent
+    public void itemStackCaps(AttachCapabilitiesEvent<ItemStack> attachEvent) {
+        ItemStack itemStack = attachEvent.getObject();
+        if (itemStack.getItem().getToolClasses(itemStack).contains("IE_HAMMER")) {
+            attachEvent.addCapability(new ResourceLocation(Reference.MODID, "tool"), new CapabilityProviderTool());
+        }
     }
 }

@@ -123,7 +123,7 @@ public class BaseFileUtils {
     public static String readFileToString(File file) {
         String string = null;
         try {
-            string = FileUtils.readFileToString(file, Charset.defaultCharset());
+            string = FileUtils.readFileToString(file, Charset.forName("UTF-8"));
         } catch (IOException e) {
             Platform.attemptLogExceptionToCurrentMod(e);
         }
