@@ -56,6 +56,10 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
         return this.sideTypes[side];
     }
 
+    public SideType getSideValue(EnumFacing facing) {
+        return getSideValue(facing.ordinal());
+    }
+
     @Override
     public void readFromDisk(NBTTagCompound data) {
         setSideTypesFromNBT(data);
@@ -99,7 +103,7 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
         return super.getCapability(capability, facing);
     }
 
-    public abstract Capability<?> getCapabilityType();
+    public abstract Capability<CAP> getCapabilityType();
 
     public abstract <T> T castCapability(CAP cap);
 
