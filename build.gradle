@@ -27,7 +27,10 @@ repositories {
         name 'TAC'
         url 'http://maven.blamejared.com'
     }
-
+    maven {
+        name 'Chickens'
+        url 'https://minecraft.curseforge.com/api/maven/'
+    }
 }
 
 version = "${minecraft_version}-" + getVersion()
@@ -46,6 +49,7 @@ minecraft {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
+    deobfCompile "chickens:chickens:${chickens_version}"
 }
 
 task srcJar(type: Jar) {
