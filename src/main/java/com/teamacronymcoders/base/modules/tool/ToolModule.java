@@ -25,14 +25,5 @@ public class ToolModule extends ModuleBase {
     public void preInit(FMLPreInitializationEvent event) {
         wrench = new ItemWrench();
         this.getItemRegistry().register(wrench);
-        MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @SubscribeEvent
-    public void itemStackCaps(AttachCapabilitiesEvent<ItemStack> attachEvent) {
-        ItemStack itemStack = attachEvent.getObject();
-        if (itemStack.getItem().getToolClasses(itemStack).contains("IE_HAMMER")) {
-            attachEvent.addCapability(new ResourceLocation(Reference.MODID, "tool"), new CapabilityProviderTool());
-        }
     }
 }
