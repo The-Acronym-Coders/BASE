@@ -61,15 +61,21 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
     }
 
     @Override
-    public void readFromDisk(NBTTagCompound data) {
+    protected void readFromDisk(NBTTagCompound data) {
         setSideTypesFromNBT(data);
+        readCapability(data);
     }
 
+    protected abstract void readCapability(NBTTagCompound data);
+
     @Override
-    public NBTTagCompound writeToDisk(NBTTagCompound data) {
+    protected NBTTagCompound writeToDisk(NBTTagCompound data) {
         setSideTypesToNBT(data);
+        writeCapability(data);
         return data;
     }
+
+    protected abstract void writeCapability(NBTTagCompound data);
 
     @Override
     public boolean receiveClientEvent(int id, int arg) {
@@ -82,7 +88,10 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == this.getCapabilityType() || super.hasCapability(capability, facing);
+        if (capability == this.getCapabilityType()) {
+            return facing == null || this.getSideValue(facing) != SideType.NONE;
+        }
+        return super.hasCapability(capability, facing);
     }
 
     @Nullable
@@ -103,15 +112,17 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
         return super.getCapability(capability, facing);
     }
 
-    public abstract Capability<CAP> getCapabilityType();
+    protected abstract Capability<CAP> getCapabilityType();
 
-    public abstract <T> T castCapability(CAP cap);
+    protected <T> T castCapability(CAP cap) {
+        return this.getCapabilityType().cast(cap);
+    }
 
-    public abstract CAP getInternalCapability();
+    protected abstract CAP getInternalCapability();
 
-    public abstract CAP getOutputCapability();
+    protected abstract CAP getOutputCapability();
 
-    public abstract CAP getInputCapability();
+    protected abstract CAP getInputCapability();
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -129,7 +140,7 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
         return null;
     }
 
-    public void setSideTypesToNBT(NBTTagCompound nbt) {
+    protected void setSideTypesToNBT(NBTTagCompound nbt) {
         int[] array = new int[6];
         for (int i = 0; i < this.sideTypes.length; i++) {
             array[i] = this.sideTypes[i].ordinal();
@@ -137,7 +148,7 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
         nbt.setIntArray("sideTypes", array);
     }
 
-    public void setSideTypesFromNBT(NBTTagCompound nbt) {
+    protected void setSideTypesFromNBT(NBTTagCompound nbt) {
         int[] array = nbt.getIntArray("sideTypes");
         if (this.sideTypes == null) {
             this.sideTypes = new SideType[6];
