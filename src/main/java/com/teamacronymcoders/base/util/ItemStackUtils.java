@@ -1,13 +1,13 @@
 package com.teamacronymcoders.base.util;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-
-import javax.annotation.Nonnull;
 
 public class ItemStackUtils {
     private ItemStackUtils() {
@@ -26,7 +26,7 @@ public class ItemStackUtils {
     }
 
     public static boolean isValid(ItemStack itemStack) {
-        return !itemStack.isEmpty();
+        return itemStack != null && !itemStack.isEmpty();
     }
 
     public static ItemStack getItemStackFromBlockState(IBlockState blockState) {

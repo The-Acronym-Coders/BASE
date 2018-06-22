@@ -1,10 +1,9 @@
 package com.teamacronymcoders.base.blocks.properties;
 
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
 public class PropertySideType implements IUnlistedProperty<SideType> {
-    final String name;
+    private final String name;
 
     public PropertySideType(String name) {
         this.name = name;

@@ -16,9 +16,9 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import javax.annotation.Nullable;
 
@@ -30,6 +30,10 @@ public abstract class LibCommonProxy {
     }
 
     public void setAllItemModels(IHasModel model) {
+        // Only set Client RegistrySide
+    }
+
+    public void addSidedBlockDomain() {
         // Only set Client RegistrySide
     }
 
@@ -78,6 +82,8 @@ public abstract class LibCommonProxy {
     public void loadEntityRenderers(ASMDataTable table, ModuleHandler moduleHandler) {
         // Only done Client Side
     }
+
+    public abstract World getWorld(MessageContext ctx);
 
     public Object getGui(IHasGui openableGUI, EntityPlayer player, World world, BlockPos blockPos) {
         return null;
