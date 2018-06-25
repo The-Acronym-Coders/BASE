@@ -49,8 +49,14 @@ public class ItemStackQueue extends QueueFoundation<ItemStack> implements IItemH
     @Nonnull
     @Override
     public ItemStack getStackInSlot(int slot) {
-        ItemStack itemStack = this.getBackingList().get(slot);
-        return itemStack == null ? ItemStack.EMPTY : itemStack;
+        switch (slot) {
+            case 0:
+                return this.peek().orElse(ItemStack.EMPTY);
+            case 1:
+                return this.getEndOfQueue().orElse(ItemStack.EMPTY);
+            default:
+                throw new RuntimeException("Slot " + slot + " not in valid range - [0,1]");
+        }
     }
 
     @Nonnull
