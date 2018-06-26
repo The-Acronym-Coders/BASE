@@ -62,8 +62,11 @@ public class SubBlockOreSamplePart extends SubBlockPart {
 
     @Override
     public Material getMaterial() {
-        if (requireTool) { return Material.ROCK; }
-        else { return Material.GROUND; }
+        if (requireTool) {
+            return Material.ROCK;
+        } else {
+            return Material.GROUND;
+        }
     }
 
     @Override
@@ -175,7 +178,9 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     @Override
     public void onNeighborChange(World world, BlockPos pos, Block block, BlockPos fromPos) {
         if (!world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP)) {
-            if (!requireTool){ spawnItemStackEntity(world, this.getItemStack().copy(), pos); }
+            if (!requireTool){
+                spawnItemStackEntity(world, this.getItemStack().copy(), pos);
+            }
             world.setBlockToAir(pos);
         }
     }
