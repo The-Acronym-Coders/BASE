@@ -179,7 +179,7 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     public void onNeighborChange(World world, BlockPos pos, Block block, BlockPos fromPos) {
         if (!world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP)) {
             if (!requireTool){
-                spawnItemStackEntity(world, this.getItemStack().copy(), pos);
+                getBlock().dropBlockAsItem(world, pos, getBlockState(), 0);
             }
             world.setBlockToAir(pos);
         }
@@ -196,7 +196,7 @@ public class SubBlockOreSamplePart extends SubBlockPart {
             player.sendStatusMessage(new TextComponentString(activatedText), true);
             world.setBlockToAir(pos);
         } else if (!requireTool) {
-            spawnItemStackEntity(world, this.getItemStack().copy(), pos);
+            getBlock().dropBlockAsItem(world, pos, getBlockState(), 0);
             world.setBlockToAir(pos);
         }
         player.swingArm(EnumHand.MAIN_HAND);

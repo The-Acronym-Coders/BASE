@@ -107,15 +107,11 @@ public class MaterialSystem {
     }
     
     public static void removeMaterialPart(String name) {
-        if (materialPartMap.containsKey(name)) {
-            materialPartMap.remove(name);
-        }
+        materialPartMap.remove(name);
     }
     
     public static void removeMaterialPart(MaterialPart materialPart) {
-        if (materialPartMap.containsKey(materialPart.getUnlocalizedName())) {
-            materialPartMap.remove(materialPart.getUnlocalizedName());
-        }
+        materialPartMap.remove(materialPart.getUnlocalizedName());
     }
 
     public static boolean hasMaterialPart(MaterialPart materialPart) {
