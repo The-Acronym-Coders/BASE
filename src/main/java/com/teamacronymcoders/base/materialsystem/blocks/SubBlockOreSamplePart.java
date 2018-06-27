@@ -35,11 +35,13 @@ import java.util.List;
 import java.util.Map;
 
 import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.ACTIVATED_TEXT_DATA_NAME;
+import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.REQUIRE_TOOL_DATA_NAME;
 import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.DROP_DATA_NAME;
 
 public class SubBlockOreSamplePart extends SubBlockPart {
     private ItemStack itemStackToDrop = null;
     private String itemDrop;
+    private boolean requireTool;
     private String activatedText;
     private IBaseMod mod;
 
@@ -54,12 +56,17 @@ public class SubBlockOreSamplePart extends SubBlockPart {
 
         mod = materialUser.getMod();
         itemDrop = data.getValue(DROP_DATA_NAME, itemDrop, DataPartParsers::getString);
+        requireTool = data.getValue(REQUIRE_TOOL_DATA_NAME, requireTool, DataPartParsers::getBool);
         activatedText = data.getValue(ACTIVATED_TEXT_DATA_NAME, activatedText, DataPartParsers::getString);
     }
 
     @Override
     public Material getMaterial() {
-        return Material.GROUND;
+        if (requireTool) {
+            return Material.ROCK;
+        } else {
+            return Material.GROUND;
+        }
     }
 
     @Override
@@ -171,7 +178,9 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     @Override
     public void onNeighborChange(World world, BlockPos pos, Block block, BlockPos fromPos) {
         if (!world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP)) {
-            spawnItemStackEntity(world, this.getItemStack().copy(), pos);
+            if (!requireTool){
+                getBlock().dropBlockAsItem(world, pos, getBlockState(), 0);
+            }
             world.setBlockToAir(pos);
         }
     }
@@ -185,12 +194,12 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     public boolean onBlockActivated(World world, BlockPos pos, EntityPlayer player) {
         if (activatedText != null && !activatedText.isEmpty()) {
             player.sendStatusMessage(new TextComponentString(activatedText), true);
-        } else {
-            spawnItemStackEntity(world, this.getItemStack().copy(), pos);
+            world.setBlockToAir(pos);
+        } else if (!requireTool) {
+            getBlock().dropBlockAsItem(world, pos, getBlockState(), 0);
+            world.setBlockToAir(pos);
         }
-        world.setBlockToAir(pos);
         player.swingArm(EnumHand.MAIN_HAND);
         return true;
     }
 }
-
