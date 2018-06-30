@@ -1,0 +1,25 @@
+{
+  "type": "forge:ore_shaped",
+  "conditions": [
+    {
+      "type": "base:module_active",
+      "name": "Tool"
+    }
+  ],
+  "result": {
+    "item": "base:wrench"
+  },
+  "pattern": [
+    "II ",
+    "RIR",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "item": "#ingotIron"
+    },
+    "R": {
+      "item": "#dyeRed"
+    }
+  }
+}
