@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.event.PlaceWaypointEvent;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
@@ -37,6 +38,7 @@ import java.util.Map;
 import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.ACTIVATED_TEXT_DATA_NAME;
 import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.REQUIRE_TOOL_DATA_NAME;
 import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.DROP_DATA_NAME;
+import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
 
 public class SubBlockOreSamplePart extends SubBlockPart {
     private ItemStack itemStackToDrop = null;
@@ -198,6 +200,9 @@ public class SubBlockOreSamplePart extends SubBlockPart {
         } else if (!requireTool) {
             getBlock().dropBlockAsItem(world, pos, getBlockState(), 0);
             world.setBlockToAir(pos);
+        }
+        if(player.isSneaking()) {
+            EVENT_BUS.post(new PlaceWaypointEvent(this.getLocalizedName(), world.provider.getDimension(), pos, this.getColor()));
         }
         player.swingArm(EnumHand.MAIN_HAND);
         return true;
