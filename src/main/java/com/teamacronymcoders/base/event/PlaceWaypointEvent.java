@@ -5,16 +5,12 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class PlaceWaypointEvent extends Event {
     private BlockPos pos;
-    private int dimension;
-    private String id;
-    private String modId;
+    private int dim;
     private String name;
     
-    public PlaceWaypointEvent(String modId, String id, String name, int dimension, BlockPos pos) {
+    public PlaceWaypointEvent(String name, int dim, BlockPos pos) {
         this.pos = pos;
-        this.dimension = dimension;
-        this.id = id;
-        this.modId = modId;
+        this.dim = dim;
         this.name = name;
     }
     
@@ -22,16 +18,8 @@ public class PlaceWaypointEvent extends Event {
         return pos;
     }
     
-    public int getDimension() {
-        return dimension;
-    }
-    
-    public String getId() {
-        return id;
-    }
-    
-    public String getModId() {
-        return modId;
+    public int getDim() {
+        return dim;
     }
     
     public String getName() {

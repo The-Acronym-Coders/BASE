@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.modules.journeymap;
 
+import com.teamacronymcoders.base.Base;
 import journeymap.client.api.IClientAPI;
 import journeymap.client.api.IClientPlugin;
 import journeymap.client.api.event.ClientEvent;
@@ -12,7 +13,9 @@ public class JourneyMapPlugin implements IClientPlugin {
 
     @Override
     public void initialize(IClientAPI jAPI) {
-        EVENT_BUS.register(new JourneyMapWaypointListener(jAPI));
+        if (Base.instance.getModuleHandler().isModuleEnabled("JourneyMap")) {
+            EVENT_BUS.register(new JourneyMapWaypointListener(jAPI));
+        }
     }
 
     @Override

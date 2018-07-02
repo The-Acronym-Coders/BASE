@@ -35,7 +35,6 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
-import static com.teamacronymcoders.base.Reference.MODID;
 import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.ACTIVATED_TEXT_DATA_NAME;
 import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.REQUIRE_TOOL_DATA_NAME;
 import static com.teamacronymcoders.base.materialsystem.parttype.OreSamplePartType.DROP_DATA_NAME;
@@ -203,7 +202,7 @@ public class SubBlockOreSamplePart extends SubBlockPart {
             world.setBlockToAir(pos);
         }
         if(player.isSneaking()) {
-            EVENT_BUS.post(new PlaceWaypointEvent(MODID, this.getLocalizedName()+world.provider.getDimension()+pos.hashCode(), this.getLocalizedName(), world.provider.getDimension(), pos));
+            EVENT_BUS.post(new PlaceWaypointEvent(this.getLocalizedName(), world.provider.getDimension(), pos));
         }
         player.swingArm(EnumHand.MAIN_HAND);
         return true;
