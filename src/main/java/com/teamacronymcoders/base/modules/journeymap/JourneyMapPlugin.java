@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.modules.journeymap;
 
 import com.teamacronymcoders.base.Base;
+import journeymap.client.api.ClientPlugin;
 import journeymap.client.api.IClientAPI;
 import journeymap.client.api.IClientPlugin;
 import journeymap.client.api.event.ClientEvent;
@@ -8,7 +9,7 @@ import journeymap.client.api.event.ClientEvent;
 import static com.teamacronymcoders.base.Reference.MODID;
 import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
 
-@journeymap.client.api.ClientPlugin
+@ClientPlugin
 public class JourneyMapPlugin implements IClientPlugin {
 
     @Override

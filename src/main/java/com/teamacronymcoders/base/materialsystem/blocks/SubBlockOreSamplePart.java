@@ -202,7 +202,7 @@ public class SubBlockOreSamplePart extends SubBlockPart {
             world.setBlockToAir(pos);
         }
         if(player.isSneaking()) {
-            EVENT_BUS.post(new PlaceWaypointEvent(this.getLocalizedName(), world.provider.getDimension(), pos));
+            EVENT_BUS.post(new PlaceWaypointEvent(this.getLocalizedName(), world.provider.getDimension(), pos, this.getColor()));
         }
         player.swingArm(EnumHand.MAIN_HAND);
         return true;

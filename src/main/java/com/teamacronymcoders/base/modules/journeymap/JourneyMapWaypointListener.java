@@ -6,8 +6,6 @@ import journeymap.client.api.IClientAPI;
 import journeymap.client.api.display.Waypoint;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.Random;
-
 import static com.teamacronymcoders.base.Reference.MODID;
 
 public class JourneyMapWaypointListener {
@@ -20,7 +18,7 @@ public class JourneyMapWaypointListener {
     @SubscribeEvent
     public void onWaypointPlaced(PlaceWaypointEvent e) {
         try {
-            jAPI.show(new Waypoint(MODID, e.getName()+e.getDim()+e.getPos().hashCode(), e.getName(), e.getDim(), e.getPos()).setColor(new Random().nextInt(0xffffff)));
+            jAPI.show(new Waypoint(MODID, e.getName() + e.getDim() + e.getPos().hashCode(), e.getName(), e.getDim(), e.getPos()).setColor(e.getColor()));
         } catch(Throwable t) {
             Base.instance.getLogger().warning(t.getLocalizedMessage());
         }
