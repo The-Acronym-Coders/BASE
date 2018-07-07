@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base;
 
+import com.teamacronymcoders.base.capability.tool.ToolConfiguration;
 import com.teamacronymcoders.base.entities.dataserializers.BaseDataSerializers;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
@@ -41,6 +42,7 @@ public class Base extends BaseModFoundation<Base> {
         OreDictUtils.setup();
         BaseDataSerializers.registerSerializers();
         Capabilities.register();
+        ToolConfiguration.configureTool();
     }
 
     @EventHandler
