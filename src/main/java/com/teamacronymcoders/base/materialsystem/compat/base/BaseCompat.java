@@ -11,7 +11,7 @@ import com.teamacronymcoders.base.materialsystem.parttype.*;
 @MaterialCompat("base")
 public class BaseCompat implements IMaterialCompat {
     @Override
-    public void doCompat() throws MaterialException {
+    public void doCompat() {
         PartType item = new ItemPartType();
         PartType block = new BlockPartType();
         PartType ore = new OrePartType();

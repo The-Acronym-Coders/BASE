@@ -5,6 +5,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class CapUtils {
     @Nullable
@@ -13,7 +14,11 @@ public class CapUtils {
     }
 
     @Nullable
-    public static <T> T get(ICapabilityProvider provider, Capability<T> capability, EnumFacing facing) {
+    public static <T> T get(ICapabilityProvider provider, Capability<T> capability, @Nullable EnumFacing facing) {
         return provider.hasCapability(capability, facing) ? provider.getCapability(capability, facing) : null;
+    }
+
+    public static <T> Optional<T> getOptional(ICapabilityProvider provider, Capability<T> capability) {
+        return Optional.ofNullable(get(provider, capability));
     }
 }

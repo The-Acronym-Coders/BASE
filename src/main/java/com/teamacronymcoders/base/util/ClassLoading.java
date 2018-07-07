@@ -6,6 +6,8 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -82,5 +84,24 @@ public class ClassLoading {
             }
         }
         return instances;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T createInstanceOf(Class<T> tClass, String path, Object... inputs) {
+        try {
+            Class pathClass = Class.forName(path);
+            Class[] inputClasses = new Class[inputs.length];
+            Constructor constructor = pathClass.getConstructor(inputClasses);
+            Object object = constructor.newInstance(inputs);
+            return tClass.cast(object);
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("Couldn't find class for path: " + path);
+        } catch (NoSuchMethodException e) {
+            throw new IllegalArgumentException("Couldn't find constructor for inputs");
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new IllegalStateException("Couldn't access constructor");
+        } catch (InstantiationException e) {
+            throw new IllegalArgumentException("Couldn't create object from constructor");
+        }
     }
 }
