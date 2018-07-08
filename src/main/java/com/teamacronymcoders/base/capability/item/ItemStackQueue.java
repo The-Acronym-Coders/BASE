@@ -43,7 +43,7 @@ public class ItemStackQueue extends QueueFoundation<ItemStack> implements IItemH
 
     @Override
     public int getSlots() {
-        return this.getQueueSize();
+        return 2;
     }
 
     @Nonnull
