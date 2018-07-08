@@ -87,11 +87,10 @@ public class ClassLoading {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T createInstanceOf(Class<T> tClass, String path, Object... inputs) {
+    public static <T> T createInstanceOf(Class<T> tClass, String path, Class[] classes, Object[] inputs) {
         try {
             Class pathClass = Class.forName(path);
-            Class[] inputClasses = new Class[inputs.length];
-            Constructor constructor = pathClass.getConstructor(inputClasses);
+            Constructor constructor = pathClass.getConstructor(classes);
             Object object = constructor.newInstance(inputs);
             return tClass.cast(object);
         } catch (ClassNotFoundException e) {
