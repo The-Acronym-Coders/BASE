@@ -6,6 +6,8 @@ import journeymap.client.api.IClientAPI;
 import journeymap.client.api.IClientPlugin;
 import journeymap.client.api.event.ClientEvent;
 
+import javax.annotation.Nonnull;
+
 import static com.teamacronymcoders.base.Reference.MODID;
 import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
 
@@ -13,7 +15,7 @@ import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
 public class JourneyMapPlugin implements IClientPlugin {
 
     @Override
-    public void initialize(IClientAPI jAPI) {
+    public void initialize(@Nonnull IClientAPI jAPI) {
         if (Base.instance.getModuleHandler().isModuleEnabled("JourneyMap")) {
             EVENT_BUS.register(new JourneyMapWaypointListener(jAPI));
         }
@@ -25,6 +27,6 @@ public class JourneyMapPlugin implements IClientPlugin {
     }
 
     @Override
-    public void onEvent(ClientEvent event) {
+    public void onEvent(@Nonnull ClientEvent event) {
     }
 }
