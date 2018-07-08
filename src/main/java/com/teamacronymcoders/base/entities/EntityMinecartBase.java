@@ -5,6 +5,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemMinecart;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
@@ -12,6 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.minecart.MinecartInteractEvent;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public abstract class EntityMinecartBase extends EntityMinecart {
     public EntityMinecartBase(World world) {
@@ -25,10 +27,17 @@ public abstract class EntityMinecartBase extends EntityMinecart {
     @Nonnull
     public ItemStack getCartItem() {
         ItemStack cartItemStack = new ItemStack(this.getItem(), 1, this.getMetadata());
+
+        this.getCartItemNBT().ifPresent(cartItemStack::setTagCompound);
+
         if (!this.getName().isEmpty()) {
             cartItemStack.setStackDisplayName(this.getName());
         }
         return cartItemStack;
+    }
+
+    public Optional<NBTTagCompound> getCartItemNBT() {
+        return Optional.empty();
     }
 
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
