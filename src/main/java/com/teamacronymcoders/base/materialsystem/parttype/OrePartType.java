@@ -2,6 +2,7 @@ package com.teamacronymcoders.base.materialsystem.parttype;
 
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
+import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockOrePart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
@@ -70,6 +71,7 @@ public class OrePartType extends BlockPartType {
                 variantMaterialPart.setColorized(materialPart.isColorized());
                 materialUser.registerMaterialPart(variantMaterialPart);
             }
+            MaterialSystem.removeMaterialPart(materialPart);
         } else {
             registerSubBlock(materialPart, new SubBlockOrePart(materialPart, new ResourceLocation("stone"),
                     materialUser));

@@ -25,7 +25,7 @@ public class ItemSingularMaterialPart extends ItemBase implements IHasItemColor,
     public ItemSingularMaterialPart(MaterialPart materialPart) {
         super(materialPart.getUnlocalizedName());
         this.materialPart = materialPart;
-        this.burnTime = materialPart.getData().getValue("burn", 0, Integer::parseInt);;
+        this.burnTime = materialPart.getData().getValue("burn", 0, Integer::parseInt);
     }
 
     @Override

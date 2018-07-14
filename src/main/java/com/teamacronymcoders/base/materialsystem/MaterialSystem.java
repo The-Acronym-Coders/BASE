@@ -105,6 +105,14 @@ public class MaterialSystem {
     public static MaterialPart getMaterialPart(String name) {
         return Optional.ofNullable(materialPartMap.get(name.toLowerCase(Locale.US))).orElse(MISSING_MATERIAL_PART);
     }
+    
+    public static void removeMaterialPart(String name) {
+        materialPartMap.remove(name);
+    }
+    
+    public static void removeMaterialPart(MaterialPart materialPart) {
+        materialPartMap.remove(materialPart.getUnlocalizedName());
+    }
 
     public static boolean hasMaterialPart(MaterialPart materialPart) {
         return materialPartMap.containsKey(materialPart.getUnlocalizedName());

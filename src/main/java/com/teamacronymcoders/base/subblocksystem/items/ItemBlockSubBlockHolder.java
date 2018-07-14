@@ -3,9 +3,11 @@ package com.teamacronymcoders.base.subblocksystem.items;
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.items.IHasItemColor;
+import com.teamacronymcoders.base.items.IHasItemMeshDefinition;
 import com.teamacronymcoders.base.items.itemblocks.ItemBlockGeneric;
 import com.teamacronymcoders.base.items.itemblocks.ItemBlockModel;
 import com.teamacronymcoders.base.subblocksystem.blocks.BlockSubBlockHolder;
+import com.teamacronymcoders.base.subblocksystem.blocks.ISubBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -13,10 +15,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,8 +23,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class ItemBlockSubBlockHolder extends ItemBlockGeneric<BlockSubBlockHolder> implements IHasItemColor, IHasModel {
+public class ItemBlockSubBlockHolder extends ItemBlockGeneric<BlockSubBlockHolder> implements IHasItemColor, IHasItemMeshDefinition {
     public ItemBlockSubBlockHolder(BlockSubBlockHolder block) {
         super(block);
     }
@@ -41,14 +41,6 @@ public class ItemBlockSubBlockHolder extends ItemBlockGeneric<BlockSubBlockHolde
         return this.getActualBlock().getSubBlock(stack.getMetadata()).getLocalizedName();
     }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public List<ModelResourceLocation> getModelResourceLocations(List<ModelResourceLocation> models) {
-        this.getActualBlock().getSubBlocks().forEach((meta, subBlock) ->
-                models.add(new ModelResourceLocation(subBlock.getTextureLocation(), "inventory")));
-        return models;
-    }
-
     @Override
     @Nonnull
     public CreativeTabs[] getCreativeTabs() {
@@ -58,7 +50,7 @@ public class ItemBlockSubBlockHolder extends ItemBlockGeneric<BlockSubBlockHolde
                 creativeTabsList.add(subBlock.getCreativeTab());
             }
         });
-        return creativeTabsList.toArray(new CreativeTabs[creativeTabsList.size()]);
+        return creativeTabsList.toArray(new CreativeTabs[0]);
     }
 
     @Override
@@ -91,5 +83,17 @@ public class ItemBlockSubBlockHolder extends ItemBlockGeneric<BlockSubBlockHolde
         } else {
             return EnumActionResult.FAIL;
         }
+    }
+
+    @Override
+    public ResourceLocation getResourceLocation(ItemStack itemStack) {
+        return this.getActualBlock().getSubBlock(itemStack.getMetadata()).getTextureLocation();
+    }
+
+    @Override
+    public List<ResourceLocation> getAllVariants() {
+        return this.getActualBlock().getSubBlocks().values().stream()
+                .map(ISubBlock::getTextureLocation)
+                .collect(Collectors.toList());
     }
 }
