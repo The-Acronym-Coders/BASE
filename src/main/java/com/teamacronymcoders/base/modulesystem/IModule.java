@@ -49,4 +49,8 @@ public interface IModule extends Comparable<IModule> {
     void setMod(@Nonnull IBaseMod mod);
 
     void setModuleHandler(@Nonnull ModuleHandler moduleHandler);
+
+    default boolean hasEventsHandlers() {
+        return false;
+    }
 }

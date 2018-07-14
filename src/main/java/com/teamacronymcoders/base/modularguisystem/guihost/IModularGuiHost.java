@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.modularguisystem;
+package com.teamacronymcoders.base.modularguisystem.guihost;
 
 import net.minecraft.entity.player.EntityPlayer;
 

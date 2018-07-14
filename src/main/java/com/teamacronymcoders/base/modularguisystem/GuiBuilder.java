@@ -5,10 +5,12 @@ import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.modularguisystem.components.IModularGuiComponent;
 import com.teamacronymcoders.base.modularguisystem.container.ContainerModular;
 import com.teamacronymcoders.base.modularguisystem.gui.GuiModular;
+import com.teamacronymcoders.base.modularguisystem.guihost.IModularGuiHost;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GuiBuilder {
@@ -28,11 +30,11 @@ public class GuiBuilder {
     }
 
     public ContainerModular createContainer(IModularGuiHost guiHost) {
-        return new ContainerModular(guiHost, this.components);
+        return new ContainerModular(guiHost, new ArrayList<>(this.components));
     }
 
     @SideOnly(Side.CLIENT)
     public GuiModular createGui(IModularGuiHost guiHost) {
-        return new GuiModular(this.createContainer(guiHost), this.backgroundLocation, this.components);
+        return new GuiModular(this.createContainer(guiHost), this.backgroundLocation, new ArrayList<>(this.components));
     }
 }

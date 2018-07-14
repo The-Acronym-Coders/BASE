@@ -7,6 +7,7 @@ import com.teamacronymcoders.base.registrysystem.config.ConfigEntry;
 import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.collections.MapUtils;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -37,8 +38,16 @@ public class ModuleHandler {
     }
 
     public void preInit(FMLPreInitializationEvent event) {
-        this.modules.values().stream().filter(IModule::getIsActive).forEachOrdered(module -> module.preInit(event));
-        this.modules.values().stream().filter(IModule::getIsActive).forEachOrdered(module -> module.afterModulesPreInit(event));
+        this.modules.values().stream()
+                .filter(IModule::getIsActive)
+                .filter(IModule::hasEventsHandlers)
+                .forEach(MinecraftForge.EVENT_BUS::register);
+        this.modules.values().stream()
+                .filter(IModule::getIsActive)
+                .forEachOrdered(module -> module.preInit(event));
+        this.modules.values().stream()
+                .filter(IModule::getIsActive)
+                .forEachOrdered(module -> module.afterModulesPreInit(event));
     }
 
     public void init(FMLInitializationEvent event) {

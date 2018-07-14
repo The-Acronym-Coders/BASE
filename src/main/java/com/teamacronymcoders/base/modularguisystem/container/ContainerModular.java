@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.modularguisystem.container;
 
-import com.teamacronymcoders.base.modularguisystem.IModularGuiHost;
+import com.teamacronymcoders.base.modularguisystem.guihost.IModularGuiHost;
 import com.teamacronymcoders.base.modularguisystem.components.IModularGuiComponent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
