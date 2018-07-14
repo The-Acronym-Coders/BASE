@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class ClassLoading {
     private ClassLoading() {
     }
 
+    @Nullable
     public static LibCommonProxy createProxy(String clientString, String serverString) {
         Side side = FMLCommonHandler.instance().getEffectiveSide();
         String proxyString = side == Side.CLIENT ? clientString : serverString;
@@ -27,6 +29,7 @@ public class ClassLoading {
         return null;
     }
 
+    @Nullable
     public static <T> T createInstanceOf(Class<T> tClass, String path) {
         Object object = createObjectInstance(path);
         if (object != null) {
@@ -36,6 +39,7 @@ public class ClassLoading {
     }
 
     @SuppressWarnings("unchecked")
+    @Nullable
     public static Object createObjectInstance(String path) {
         try {
             Class classToGrab;
@@ -48,6 +52,7 @@ public class ClassLoading {
         return null;
     }
 
+    @Nullable
     public static <T> T createObjectInstance(Class<T> clazz) {
         try {
             return clazz.newInstance();
