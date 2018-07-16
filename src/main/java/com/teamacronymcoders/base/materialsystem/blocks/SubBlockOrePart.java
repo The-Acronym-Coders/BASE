@@ -5,18 +5,17 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.items.IDropTable;
+import com.teamacronymcoders.base.items.ItemStackDropTable;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
-import com.teamacronymcoders.base.util.ItemStackUtils;
-import com.teamacronymcoders.base.util.OreDictUtils;
+import com.teamacronymcoders.base.util.DropUtils;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.List;
 import java.util.Map;
@@ -24,10 +23,10 @@ import java.util.Map;
 import static com.teamacronymcoders.base.materialsystem.parttype.OrePartType.DROP_DATA_NAME;
 
 public class SubBlockOrePart extends SubBlockPart {
-    private ItemStack itemStackToDrop = null;
     private String itemDrop;
     private IBaseMod mod;
     private ResourceLocation variantLocation;
+    private IDropTable dropTable = null;
 
     public SubBlockOrePart(MaterialPart materialPart, ResourceLocation variantLocation, MaterialUser materialUser) {
         super(materialPart, MaterialSystem.materialCreativeTab);
@@ -41,37 +40,15 @@ public class SubBlockOrePart extends SubBlockPart {
 
     @Override
     public void getDrops(int fortune, List<ItemStack> itemStacks) {
-        if (itemStackToDrop == null) {
+        if(dropTable == null) {
             if (itemDrop != null && !itemDrop.isEmpty()) {
-                String[] itemDropArray = itemDrop.split(":");
-                String itemString = itemDropArray[0];
-
-                if (itemString.equalsIgnoreCase("oredict")) {
-                    itemStackToDrop = OreDictUtils.getPreferredItemStack(itemDropArray[1]);
-                } else {
-                    int meta = 0;
-                    if (itemDropArray.length > 1) {
-                        itemString += ":" + itemDropArray[1];
-                        if (itemDropArray.length > 2) {
-                            meta = Integer.parseInt(itemDropArray[2]);
-                        }
-                    }
-                    Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemString));
-                    if (item != null) {
-                        itemStackToDrop = new ItemStack(item, 1, meta);
-                    } else {
-                        this.mod.getLogger().error("Could not find Item for name: " + itemString);
-                    }
-                }
+                dropTable = DropUtils.parseDrops(itemDrop);
             } else {
-                this.itemStackToDrop = this.getItemStack();
+                dropTable = new ItemStackDropTable(getItemStack());
             }
         }
-        if (ItemStackUtils.isValid(this.itemStackToDrop)) {
-            itemStacks.add(itemStackToDrop.copy());
-        } else {
-            mod.getLogger().fatal("Couldn't drop null ItemStack for " + getMaterialPart().getLocalizedName());
-        }
+        
+        itemStacks.addAll(dropTable.getDrops(fortune));
     }
 
     @Override
