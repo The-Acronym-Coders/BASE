@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 public class WeightedDropTable implements IDropTable {
-    private List<List<ItemStack>> dropTable = new ArrayList<List<ItemStack>>();
-    private List<Boolean> fortuneTable = new ArrayList<Boolean>();
+    private List<List<ItemStack>> dropTable;
+    private List<Boolean> fortuneTable;
     private Random rng = new Random();
     
     public WeightedDropTable(List<List<ItemStack>> dropTable, List<Boolean> fortuneTable) {

@@ -16,7 +16,10 @@ public class DropTableBuilder {
     }
     
     public DropTableBuilder newSlot() {
-        return new DropTableBuilder(this.toString());
+        oldSlots = toString();
+        items.clear();
+        fortuneEnabled = false;
+        return this;
     }
     
     public DropTableBuilder addItem(String item) {
@@ -49,6 +52,6 @@ public class DropTableBuilder {
         if (fortuneEnabled) {
             sb.append("$true");
         }
-        return sb.append("]").toString();
+        return sb.toString();
     }
 }
