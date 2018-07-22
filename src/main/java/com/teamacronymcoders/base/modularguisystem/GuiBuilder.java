@@ -29,6 +29,11 @@ public class GuiBuilder {
         components.add(component);
     }
 
+    public GuiBuilder withComponent(IModularGuiComponent component) {
+        addComponent(component);
+        return this;
+    }
+
     public ContainerModular createContainer(IModularGuiHost guiHost) {
         return new ContainerModular(guiHost, new ArrayList<>(this.components));
     }
