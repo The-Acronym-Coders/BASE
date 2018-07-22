@@ -152,7 +152,7 @@ public class BaseFileUtils {
     }
 
     public static void createFile(File file) {
-        file.mkdirs();
+        createFolder(file.getParentFile());
         try {
             file.createNewFile();
         } catch (IOException e) {
