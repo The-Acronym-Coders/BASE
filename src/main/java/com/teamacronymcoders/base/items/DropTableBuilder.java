@@ -52,6 +52,6 @@ public class DropTableBuilder {
         if (fortuneEnabled) {
             sb.append("$true");
         }
-        return sb.toString();
+        return sb.append("]").toString();
     }
 }
