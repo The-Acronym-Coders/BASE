@@ -6,5 +6,5 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 public interface IEntityRenderer<T extends Entity> {
     Class<T> getEntityClass();
 
-    IRenderFactory<T> getRenderFactory();
+    IRenderFactory getRenderFactory();
 }

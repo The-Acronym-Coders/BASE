@@ -1,6 +1,10 @@
 package com.teamacronymcoders.base.guisystem;
 
+import javax.annotation.Nullable;
+
+import com.teamacronymcoders.base.multiblock.MultiblockTileEntityBase;
 import com.teamacronymcoders.base.util.ItemStackUtils;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,8 +13,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
 
 public enum GuiCarrier {
     ENTITY {
@@ -45,6 +47,22 @@ public enum GuiCarrier {
             TileEntity tileEntity = world.getTileEntity(blockPos);
             if (tileEntity instanceof IHasGui) {
                 hasGui = (IHasGui) tileEntity;
+            }
+
+            return hasGui;
+        }
+    },
+    MULTIBLOCK {
+        @Override
+        public IHasGui getHasGUI(EntityPlayer player, World world, BlockPos blockPos) {
+            IHasGui hasGui = null;
+
+            TileEntity tileEntity = world.getTileEntity(blockPos);
+            if (tileEntity instanceof MultiblockTileEntityBase) {
+                MultiblockTileEntityBase<?> multiblockTileEntity = (MultiblockTileEntityBase<?>) tileEntity;
+                if(multiblockTileEntity.getMultiblockController() instanceof IHasGui) {
+                    hasGui = (IHasGui) multiblockTileEntity.getMultiblockController();
+                }
             }
 
             return hasGui;

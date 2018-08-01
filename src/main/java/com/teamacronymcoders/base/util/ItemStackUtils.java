@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.util;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,15 +18,15 @@ public class ItemStackUtils {
         return isValid(itemStack) && isValid(FurnaceRecipes.instance().getSmeltingResult(itemStack));
     }
 
-    public static boolean isItemInstanceOf(ItemStack itemStack, Class itemClass) {
-        return isValid(itemStack) && itemClass != null && itemClass.isInstance(itemStack.getItem());
+    public static boolean isItemInstanceOf(ItemStack itemStack, @Nonnull Class itemClass) {
+        return isValid(itemStack) && itemClass.isInstance(itemStack.getItem());
     }
 
     public static boolean doItemsMatch(ItemStack itemStack, Item item) {
         return isValid(itemStack) && itemStack.getItem() == item;
     }
 
-    public static boolean isValid(ItemStack itemStack) {
+    public static boolean isValid(@Nullable ItemStack itemStack) {
         return itemStack != null && !itemStack.isEmpty();
     }
 

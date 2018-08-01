@@ -21,6 +21,6 @@ public class EntityRendererLoader {
             }
             return load;
         }).forEach(entityRender ->
-                RenderingRegistry.registerEntityRenderingHandler(entityRender.getEntityClass(), entityRender.getRenderFactory()));
+                        RenderingRegistry.registerEntityRenderingHandler(entityRender.getEntityClass(), entityRender.getRenderFactory()));
     }
 }

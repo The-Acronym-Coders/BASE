@@ -1,0 +1,9 @@
+{
+  "ingredients": {
+  },
+  "recipes": {
+  },
+  "conditions": {
+    "module_active": "com.teamacronymcoders.base.modulesystem.crafting.ConditionFactoryModuleActive"
+  }
+}

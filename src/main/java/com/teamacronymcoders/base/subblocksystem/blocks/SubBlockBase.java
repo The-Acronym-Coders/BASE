@@ -84,6 +84,10 @@ public abstract class SubBlockBase implements ISubBlock {
         return this.block.getDefaultState().withProperty(BlockSubBlockHolder.SUB_BLOCK_NUMBER, meta);
     }
     
+    public Block getBlock() {
+        return block;
+    }
+    
     @Override
     public void setBlock(Block block) {
         this.block = block;

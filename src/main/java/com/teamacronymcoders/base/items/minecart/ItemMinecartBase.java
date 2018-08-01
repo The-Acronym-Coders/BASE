@@ -5,9 +5,9 @@ import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
-import com.teamacronymcoders.base.util.BlockUtils;
 import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.block.BlockDispenser;
+import net.minecraft.block.BlockRailBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,7 +47,7 @@ public abstract class ItemMinecartBase extends ItemMinecart implements IHasModel
     }
 
     public EnumActionResult placeCart(ItemStack itemStack, World world, BlockPos blockPos, EntityMinecartBase entityMinecart) {
-        if (ItemStackUtils.isValid(itemStack) && BlockUtils.isRailBlock(world.getBlockState(blockPos))) {
+        if (ItemStackUtils.isValid(itemStack) && BlockRailBase.isRailBlock(world, blockPos)) {
             if (itemStack.hasDisplayName()) {
                 entityMinecart.setCustomNameTag(itemStack.getDisplayName());
             }

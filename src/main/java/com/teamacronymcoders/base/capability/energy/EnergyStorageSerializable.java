@@ -6,7 +6,11 @@ import net.minecraftforge.energy.EnergyStorage;
 
 public class EnergyStorageSerializable extends EnergyStorage implements INBTSerializable<NBTTagCompound> {
     public EnergyStorageSerializable() {
-        super(10000);
+        this(10000, 1000);
+    }
+
+    public EnergyStorageSerializable(int capacity, int maxIO) {
+        this(capacity, maxIO, maxIO);
     }
 
     public EnergyStorageSerializable(int capacity, int maxReceive, int maxExtract) {
