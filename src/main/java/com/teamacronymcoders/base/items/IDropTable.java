@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 
+@FunctionalInterface
 public interface IDropTable {
-    public List<ItemStack> getDrops(int fortune);
+    List<ItemStack> getDrops(int fortune);
 }
