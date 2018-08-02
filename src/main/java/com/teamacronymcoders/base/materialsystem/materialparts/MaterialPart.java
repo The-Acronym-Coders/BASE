@@ -56,7 +56,12 @@ public class MaterialPart {
 
     public String getLocalizedName() {
         //noinspection deprecation
-        return I18n.translateToLocalFormatted(part.getUnlocalizedName(), material.getName());
+        if (I18n.canTranslate(material.getUnlocalizedName())) {
+            String materialDisplayName = I18n.translateToLocal(material.getUnlocalizedName());
+            return I18n.translateToLocalFormatted(part.getUnlocalizedName(), materialDisplayName);
+        } else {
+            return I18n.translateToLocalFormatted(part.getUnlocalizedName(), material.getName());
+        }
     }
 
     public boolean hasEffect() {

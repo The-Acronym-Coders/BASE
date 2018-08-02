@@ -36,6 +36,6 @@ public class Material {
     }
 
     public String getUnlocalizedName() {
-        return unlocalizedName;
+        return "base.material." + unlocalizedName;
     }
 }
