@@ -56,6 +56,8 @@ public class DropUtils {
                 ItemStack itemDrop = ItemStack.EMPTY;
                 
                 switch (itemString.toLowerCase()) {
+                    case "empty":
+                        break;
                     case "oredict":
                         itemDrop = OreDictUtils.getPreferredItemStack(itemArray[1]);
                         break;
@@ -74,7 +76,7 @@ public class DropUtils {
                             Base.instance.getLogger().error("Could not find Item for name: " + itemString);
                         }
                 }
-                
+
                 for (int i = 0; i < weight; i++) {
                     slotTable.add(itemDrop);
                 }
