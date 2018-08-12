@@ -43,7 +43,6 @@ public class Base extends BaseModFoundation<Base> {
         BaseDataSerializers.registerSerializers();
         Capabilities.register();
         ToolConfiguration.configureTool();
-        RecipeSystem.loadTypes();
     }
 
     @EventHandler

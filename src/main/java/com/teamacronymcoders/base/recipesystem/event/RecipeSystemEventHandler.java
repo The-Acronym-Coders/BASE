@@ -20,6 +20,7 @@ import static com.teamacronymcoders.base.Reference.MODID;
 public class RecipeSystemEventHandler {
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent<IRecipe> recipeRegistryEvent) {
+        RecipeSystem.loadTypes();
         RecipeSystem.loadRecipes();
     }
 
