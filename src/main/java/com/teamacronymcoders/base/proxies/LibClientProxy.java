@@ -81,7 +81,7 @@ public class LibClientProxy extends LibCommonProxy {
 
     @Override
     public String getFileContents(ResourceLocation location) {
-        location = new ResourceLocation(location.getResourceDomain(), "templates/" + location.getResourcePath() + ".json");
+        location = new ResourceLocation(location.getNamespace(), "templates/" + location.getPath() + ".json");
         IResource resource = ClientHelper.getResource(location);
         String fileContents = "";
         if (resource != null) {

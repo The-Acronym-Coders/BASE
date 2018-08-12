@@ -62,8 +62,8 @@ public class SubBlockOrePart extends SubBlockPart {
         Map<String, String> replacements = Maps.newHashMap();
 
         String unlocalizedName = this.getMaterialPart().getPart().getShortUnlocalizedName();
-        String variantTexture = new ResourceLocation(variantLocation.getResourceDomain(),
-                "blocks/" + variantLocation.getResourcePath()).toString();
+        String variantTexture = new ResourceLocation(variantLocation.getNamespace(),
+                "blocks/" + variantLocation.getPath()).toString();
         replacements.put("texture", variantTexture);
         replacements.put("particle", variantTexture);
         String modid = this.getMaterialPart().getPart().getOwnerId();

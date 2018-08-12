@@ -102,7 +102,7 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
 
     @Override
     @Nonnull
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 

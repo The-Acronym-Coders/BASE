@@ -13,12 +13,12 @@ public class BlockRegistry extends ModularRegistry<Block> {
     }
 
     public void register(Block block) {
-        String unlocalizedName = block.getUnlocalizedName();
+        String unlocalizedName = block.getTranslationKey();
         if (unlocalizedName.startsWith("tile.")) {
             unlocalizedName = unlocalizedName.substring(5);
         }
         if (!unlocalizedName.contains(mod.getID())) {
-            block.setUnlocalizedName(mod.getID() + "." + unlocalizedName);
+            block.setTranslationKey(mod.getID() + "." + unlocalizedName);
         }
         ResourceLocation name = block.getRegistryName();
         if (name == null) {

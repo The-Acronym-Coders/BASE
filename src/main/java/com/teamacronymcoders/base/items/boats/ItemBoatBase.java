@@ -37,7 +37,7 @@ public abstract class ItemBoatBase<BOAT extends EntityBoat> extends ItemBoat imp
 
     public ItemBoatBase(String unlocalizedName) {
         super(EntityBoat.Type.OAK);
-        this.setUnlocalizedName(unlocalizedName);
+        this.setTranslationKey(unlocalizedName);
     }
 
     @Override
@@ -60,7 +60,7 @@ public abstract class ItemBoatBase<BOAT extends EntityBoat> extends ItemBoat imp
         float f7 = f4 * f5;
         float f8 = f3 * f5;
         double d3 = 5.0D;
-        Vec3d vec3d1 = vec3d.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
+        Vec3d vec3d1 = vec3d.add((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
         RayTraceResult raytraceresult = world.rayTraceBlocks(vec3d, vec3d1, true);
 
         if (raytraceresult == null) {
@@ -146,7 +146,7 @@ public abstract class ItemBoatBase<BOAT extends EntityBoat> extends ItemBoat imp
 
     @Override
     public List<String> getModelNames(List<String> modelNames) {
-        this.getAllSubItems(Lists.newArrayList()).forEach(itemStack -> modelNames.add(this.getUnlocalizedName(itemStack)));
+        this.getAllSubItems(Lists.newArrayList()).forEach(itemStack -> modelNames.add(this.getTranslationKey(itemStack)));
         return modelNames;
     }
 

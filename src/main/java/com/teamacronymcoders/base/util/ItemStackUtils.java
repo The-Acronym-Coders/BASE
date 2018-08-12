@@ -49,9 +49,9 @@ public class ItemStackUtils {
         String modid = "";
         Item item = itemStack.getItem();
         if (item.getRegistryName() != null) {
-            modid = item.getRegistryName().getResourceDomain();
+            modid = item.getRegistryName().getNamespace();
         } else {
-            Platform.attemptLogErrorToCurrentMod("Could not find modid for Item: " + item.getUnlocalizedName());
+            Platform.attemptLogErrorToCurrentMod("Could not find modid for Item: " + item.getTranslationKey());
         }
         return modid;
     }

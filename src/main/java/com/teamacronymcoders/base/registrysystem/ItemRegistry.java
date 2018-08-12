@@ -14,7 +14,7 @@ public class ItemRegistry extends ModularRegistry<Item> {
     }
 
     public void register(Item item) {
-        String unlocalizedName = item.getUnlocalizedName();
+        String unlocalizedName = item.getTranslationKey();
         if (unlocalizedName.startsWith("item.")) {
             unlocalizedName = unlocalizedName.substring(5);
             if (unlocalizedName.equalsIgnoreCase("null")) {
@@ -22,7 +22,7 @@ public class ItemRegistry extends ModularRegistry<Item> {
             }
         }
         if (!unlocalizedName.contains(mod.getID())) {
-            item.setUnlocalizedName(mod.getID() + "." + unlocalizedName);
+            item.setTranslationKey(mod.getID() + "." + unlocalizedName);
         }
         ResourceLocation name = item.getRegistryName();
         if (name == null) {
