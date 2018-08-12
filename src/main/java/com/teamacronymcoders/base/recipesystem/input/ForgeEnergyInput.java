@@ -4,10 +4,10 @@ import com.teamacronymcoders.base.recipesystem.RecipeContainer;
 import com.teamacronymcoders.base.util.CapUtils;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class ForgeEnergyRecipeInput implements IRecipeInput {
+public class ForgeEnergyInput implements IInput {
     private final int amountRequired;
 
-    public ForgeEnergyRecipeInput(int amountRequired) {
+    public ForgeEnergyInput(int amountRequired) {
         this.amountRequired = amountRequired;
     }
 

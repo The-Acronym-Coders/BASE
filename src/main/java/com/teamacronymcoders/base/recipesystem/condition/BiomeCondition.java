@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.recipesystem.condition;
 
+import com.teamacronymcoders.base.recipesystem.RecipeContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -14,7 +15,8 @@ public class BiomeCondition implements ICondition {
     }
 
     @Override
-    public boolean isMet(World world, BlockPos blockPos, @Nullable EntityPlayer entityPlayer) {
-        return world.isBlockLoaded(blockPos) && name.equals(world.getBiome(blockPos).getBiomeName());
+    public boolean isMet(RecipeContainer recipeContainer, @Nullable EntityPlayer entityPlayer) {
+        return recipeContainer.getWorld().isBlockLoaded(recipeContainer.getPos()) &&
+                name.equals(recipeContainer.getWorld().getBiome(recipeContainer.getPos()).getBiomeName());
     }
 }

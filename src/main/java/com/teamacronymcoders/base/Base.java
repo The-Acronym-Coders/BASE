@@ -3,6 +3,7 @@ package com.teamacronymcoders.base;
 import com.teamacronymcoders.base.capability.tool.ToolConfiguration;
 import com.teamacronymcoders.base.entities.dataserializers.BaseDataSerializers;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
+import com.teamacronymcoders.base.recipesystem.RecipeSystem;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import com.teamacronymcoders.base.util.OreDictUtils;
 import net.minecraft.creativetab.CreativeTabs;
@@ -42,6 +43,7 @@ public class Base extends BaseModFoundation<Base> {
         BaseDataSerializers.registerSerializers();
         Capabilities.register();
         ToolConfiguration.configureTool();
+        RecipeSystem.loadTypes();
     }
 
     @EventHandler

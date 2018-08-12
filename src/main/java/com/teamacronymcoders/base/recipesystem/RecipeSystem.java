@@ -1,44 +1,74 @@
 package com.teamacronymcoders.base.recipesystem;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.teamacronymcoders.base.Base;
-import com.teamacronymcoders.base.recipesystem.event.RegisterRecipeSystemTypesEvent;
-import net.minecraft.item.crafting.IRecipe;
+import com.teamacronymcoders.base.event.BaseRegistryEvent;
+import com.teamacronymcoders.base.json.BlockPosDeserializer;
+import com.teamacronymcoders.base.json.BlockStateDeserializer;
+import com.teamacronymcoders.base.json.factory.IObjectFactory;
+import com.teamacronymcoders.base.recipesystem.condition.ICondition;
+import com.teamacronymcoders.base.recipesystem.event.RegisterRecipeFactoriesEvent;
+import com.teamacronymcoders.base.recipesystem.input.IInput;
+import com.teamacronymcoders.base.recipesystem.output.IOutput;
+import com.teamacronymcoders.base.recipesystem.source.IRecipeSource;
+import com.teamacronymcoders.base.recipesystem.source.RecipeSource;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.JsonContext;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-import static com.teamacronymcoders.base.Reference.MODID;
-
-@EventBusSubscriber(modid = MODID)
 public class RecipeSystem {
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(IBlockState.class, new BlockStateDeserializer())
+            .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
+            .create();
+
+    private static final IRecipeSource JSON_RECIPE_SOURCE = new RecipeSource("json", true);
 
     private static Map<String, RecipeType> recipeTypes = Maps.newHashMap();
     private static Map<RecipeType, RecipeList> recipeLists = Maps.newHashMap();
 
+    private static final Map<String, IObjectFactory<? extends IInput>> inputFactories = Maps.newHashMap();
+    private static final Map<String, IObjectFactory<? extends IOutput>> outputFactories = Maps.newHashMap();
+    private static final Map<String, IObjectFactory<? extends ICondition>> conditionFactories = Maps.newHashMap();
+
     public static void loadRecipes() {
-        Loader.instance().getActiveModList()
-                .forEach(RecipeSystem::loadRecipe);
+        recipeLists.putAll(Loader.instance().getActiveModList()
+                .parallelStream()
+                .map(RecipeSystem::loadRecipesForMod)
+                .flatMap(List::stream)
+                .collect(Collectors.toMap(recipe -> recipe.type, Lists::newArrayList, RecipeSystem::merge))
+                .entrySet()
+                .parallelStream()
+                .map(entry -> new RecipeList(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toMap(list -> list.type, list -> list)));
     }
 
-    private static void loadRecipe(ModContainer mod) {
+    private static <T, U extends List<T>> U merge(U left, U right) {
+        left.addAll(right);
+        return left;
+    }
+
+    private static List<Recipe> loadRecipesForMod(ModContainer mod) {
         JsonContext ctx = new JsonContext(mod.getModId());
+        List<Recipe> recipes = Lists.newArrayList();
+
         CraftingHelper.findFiles(mod, "assets/" + mod.getModId() + "/base/recipe_system",
                 (root) -> {
                     Base.instance.getLogger().devInfo(mod.getModId());
@@ -55,29 +85,74 @@ public class RecipeSystem {
                     try (BufferedReader bufferedReader = Files.newBufferedReader(file)) {
                         JsonObject jsonObject = JsonUtils.fromJson(GSON, bufferedReader, JsonObject.class);
                         if (jsonObject != null) {
-                            boolean loadRecipe = true;
-                            if (jsonObject.has("load_conditions")) {
-                                loadRecipe = CraftingHelper.processConditions(JsonUtils.getJsonArray(jsonObject, "load_conditions"), ctx);
-                            }
-                            if (loadRecipe) {
-                                Base.instance.getLogger().fatal("LOADED " + key + " FUCK YES");
+                            if (jsonObject.has("type")) {
+                                String typeName = jsonObject.get("type").getAsString();
+                                RecipeType recipeType = recipeTypes.get(typeName);
+                                if (recipeType != null) {
+                                    boolean loadRecipe = true;
+                                    if (jsonObject.has("load_conditions")) {
+                                        loadRecipe = CraftingHelper.processConditions(JsonUtils.getJsonArray(jsonObject, "load_conditions"), ctx);
+                                    }
+                                    if (loadRecipe) {
+                                        JsonArray inputsJson = JsonUtils.getJsonArray(jsonObject, "inputs");
+                                        JsonArray outputsJson = JsonUtils.getJsonArray(jsonObject, "outputs");
+                                        JsonArray conditionsJson = JsonUtils.getJsonArray(jsonObject, "conditions", new JsonArray());
+
+                                        List<IInput> inputList = processJsonArray(inputsJson, ctx, inputFactories::get, "Input");
+                                        List<IOutput> outputList = processJsonArray(outputsJson, ctx, outputFactories::get, "Output");
+                                        List<ICondition> conditionList = processJsonArray(conditionsJson, ctx, conditionFactories::get, "Conditions");
+
+                                        recipes.add(new Recipe(key, JSON_RECIPE_SOURCE, recipeType, inputList, outputList, conditionList));
+                                    }
+                                } else {
+                                    throw new JsonParseException("No Recipe Type found for: " + typeName);
+                                }
                             }
                         }
-                    } catch (IOException e) {
+                    } catch (IOException | JsonParseException e) {
                         Base.instance.getLogger().getLogger().warn(e.getMessage(), e);
                     }
                     return true;
                 }, true, true);
+
+        return recipes;
     }
 
-    @SubscribeEvent
-    public static void registerRecipes(RegistryEvent<IRecipe> recipeRegistryEvent) {
-        loadTypes();
-        loadRecipes();
+    private static <T> List<T> processJsonArray(JsonArray jsonElements, JsonContext context, Function<String, IObjectFactory<? extends T>> factoryFunction, String name) {
+        List<T> processedList = Lists.newArrayList();
+        for (JsonElement element : jsonElements) {
+            if (element.isJsonObject()) {
+                JsonObject jsonObject = element.getAsJsonObject();
+                String typeName = JsonUtils.getString(jsonObject, "type");
+                IObjectFactory<? extends T> factory = factoryFunction.apply(typeName);
+                jsonObject.remove("type");
+                if (factory != null) {
+                    processedList.add(factory.parse(context, jsonObject));
+                } else {
+                    throw new JsonParseException("No " + name + " found for type: " + typeName);
+                }
+            } else {
+                throw new JsonParseException(name + "s must be JSON Objects");
+            }
+        }
+        return processedList;
     }
 
-    private static void loadTypes() {
-        RegisterRecipeSystemTypesEvent event = new RegisterRecipeSystemTypesEvent();
-        MinecraftForge.EVENT_BUS.post(event);
+    public static void loadTypes() {
+        RegisterRecipeFactoriesEvent<IInput> inputEvent = new RegisterRecipeFactoriesEvent<>(IInput.class);
+        MinecraftForge.EVENT_BUS.post(inputEvent);
+        inputFactories.putAll(inputEvent.getFactories());
+
+        RegisterRecipeFactoriesEvent<IOutput> outputEvent = new RegisterRecipeFactoriesEvent<>(IOutput.class);
+        MinecraftForge.EVENT_BUS.post(outputEvent);
+        outputFactories.putAll(outputEvent.getFactories());
+
+        RegisterRecipeFactoriesEvent<ICondition> conditionEvent = new RegisterRecipeFactoriesEvent<>(ICondition.class);
+        MinecraftForge.EVENT_BUS.post(conditionEvent);
+        conditionFactories.putAll(conditionEvent.getFactories());
+
+        BaseRegistryEvent<RecipeType> recipeTypeEvent = new BaseRegistryEvent<>(RecipeType.class);
+        MinecraftForge.EVENT_BUS.post(recipeTypeEvent);
+        recipeTypes.putAll(recipeTypeEvent.getEntries());
     }
 }
