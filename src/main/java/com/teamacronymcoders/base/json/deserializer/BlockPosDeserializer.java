@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.json;
+package com.teamacronymcoders.base.json.deserializer;
 
 import com.google.gson.*;
 import net.minecraft.util.JsonUtils;
@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 public class BlockPosDeserializer implements JsonDeserializer<BlockPos> {
     @Override
     public BlockPos deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        if (json.isJsonObject()) {
+        if (json != null && json.isJsonObject()) {
             JsonObject jsonObject = json.getAsJsonObject();
             int x = JsonUtils.getInt(jsonObject, "x", 0);
             int y = JsonUtils.getInt(jsonObject, "y", 0);
@@ -17,6 +17,6 @@ public class BlockPosDeserializer implements JsonDeserializer<BlockPos> {
             return new BlockPos(x, y, z);
         }
 
-        throw new JsonParseException("BlockPos must be a JSON Object");
+        return BlockPos.ORIGIN;
     }
 }

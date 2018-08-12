@@ -1,22 +1,24 @@
 package com.teamacronymcoders.base.recipesystem.condition;
 
+import com.google.gson.annotations.JsonAdapter;
+import com.teamacronymcoders.base.json.deserializer.ResourceLocationDeserializer;
 import com.teamacronymcoders.base.recipesystem.RecipeContainer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
 public class BiomeCondition implements ICondition {
-    private final String name;
+    @JsonAdapter(value = ResourceLocationDeserializer.class, nullSafe = false)
+    private final ResourceLocation biome;
 
-    public BiomeCondition(String name) {
-        this.name = name;
+    public BiomeCondition(ResourceLocation biome) {
+        this.biome = biome;
     }
 
     @Override
     public boolean isMet(RecipeContainer recipeContainer, @Nullable EntityPlayer entityPlayer) {
         return recipeContainer.getWorld().isBlockLoaded(recipeContainer.getPos()) &&
-                name.equals(recipeContainer.getWorld().getBiome(recipeContainer.getPos()).getBiomeName());
+                biome.equals(recipeContainer.getWorld().getBiome(recipeContainer.getPos()).getRegistryName());
     }
 }

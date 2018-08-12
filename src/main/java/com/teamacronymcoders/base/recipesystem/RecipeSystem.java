@@ -5,8 +5,8 @@ import com.google.common.collect.Maps;
 import com.google.gson.*;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.event.BaseRegistryEvent;
-import com.teamacronymcoders.base.json.BlockPosDeserializer;
-import com.teamacronymcoders.base.json.BlockStateDeserializer;
+import com.teamacronymcoders.base.json.deserializer.BlockPosDeserializer;
+import com.teamacronymcoders.base.json.deserializer.BlockStateDeserializer;
 import com.teamacronymcoders.base.json.factory.IObjectFactory;
 import com.teamacronymcoders.base.recipesystem.condition.ICondition;
 import com.teamacronymcoders.base.recipesystem.event.RegisterRecipeFactoriesEvent;
@@ -34,10 +34,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RecipeSystem {
-    private static final Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(IBlockState.class, new BlockStateDeserializer())
-            .registerTypeAdapter(BlockPos.class, new BlockPosDeserializer())
-            .create();
+    private static final Gson GSON = new Gson();
 
     private static final IRecipeSource JSON_RECIPE_SOURCE = new RecipeSource("json", true);
 
@@ -70,10 +67,7 @@ public class RecipeSystem {
         List<Recipe> recipes = Lists.newArrayList();
 
         CraftingHelper.findFiles(mod, "assets/" + mod.getModId() + "/base/recipe_system",
-                (root) -> {
-                    Base.instance.getLogger().devInfo(mod.getModId());
-                    return true;
-                },
+                (root) -> true,
                 (root, file) -> {
                     String relative = root.relativize(file).toString();
                     if (!"json".equals(FilenameUtils.getExtension(file.toString())) || relative.startsWith("_"))
@@ -110,7 +104,7 @@ public class RecipeSystem {
                             }
                         }
                     } catch (IOException | JsonParseException e) {
-                        Base.instance.getLogger().getLogger().warn(e.getMessage(), e);
+                        Base.instance.getLogger().getLogger().warn("Error in recipe: " + key.toString(), e);
                     }
                     return true;
                 }, true, true);
