@@ -36,8 +36,8 @@ public class ItemSubBlock<BLOCK extends Block & IHasModel> extends ItemBlockGene
 
     @Override
     @Nonnull
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName() + "." + names[stack.getItemDamage()];
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey() + "." + names[stack.getItemDamage()];
     }
 
     @Override

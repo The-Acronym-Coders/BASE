@@ -33,7 +33,7 @@ public class ItemBaseNoModel extends Item implements IModAware, IHasSubItems {
         if (!texturePath.isEmpty() && !texturePath.endsWith("/")) {
             this.texturePath += "/";
         }
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
     }
 
     @Override

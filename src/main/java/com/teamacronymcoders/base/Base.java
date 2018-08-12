@@ -2,7 +2,6 @@ package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.capability.tool.ToolConfiguration;
 import com.teamacronymcoders.base.entities.dataserializers.BaseDataSerializers;
-import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import com.teamacronymcoders.base.util.OreDictUtils;

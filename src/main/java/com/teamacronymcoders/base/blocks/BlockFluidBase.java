@@ -23,7 +23,7 @@ public class BlockFluidBase extends BlockFluidClassic implements IHasBlockStateM
     public BlockFluidBase(String name, Fluid fluid, Material material) {
         super(fluid, material);
         this.name = name;
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
     }
 
     @Override

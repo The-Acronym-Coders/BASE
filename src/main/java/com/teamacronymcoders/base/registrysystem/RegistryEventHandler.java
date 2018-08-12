@@ -46,7 +46,7 @@ public class RegistryEventHandler {
                 (name, entityEntry) -> {
                     Class<? extends Entity> entityClass = entityEntry.getEntityClass();
                     UpdateInfo updateInfo = entityEntry.getUpdateInfo();
-                    net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(name, entityClass, name.getResourcePath(), nextAvailableID++, this.mod,
+                    net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(name, entityClass, name.getPath(), nextAvailableID++, this.mod,
                             updateInfo.getTrackingRange(), updateInfo.getUpdateFrequency(), updateInfo.isSendVelocityUpdates());
 
                     EntityList.EntityEggInfo spawnEgg = entityEntry.getEgg();

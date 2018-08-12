@@ -38,13 +38,13 @@ public class ModelLoaderSidedBlock implements ICustomModelLoader {
 
     @Override
     public boolean accepts(@Nonnull ResourceLocation modelLocation) {
-        return domains.contains(modelLocation.getResourceDomain()) && modelLocation.getResourcePath().contains(RESOURCE_LOCATION);
+        return domains.contains(modelLocation.getNamespace()) && modelLocation.getPath().contains(RESOURCE_LOCATION);
     }
 
     @Override
     @Nonnull
     public IModel loadModel(@Nonnull ResourceLocation modelLocation) {
-        String resourcePath = modelLocation.getResourcePath();
+        String resourcePath = modelLocation.getPath();
         if (resourcePath.startsWith(RESOURCE_LOCATION)) {
             String sub = resourcePath.replaceFirst(RESOURCE_LOCATION, "");
             int firstSlash = sub.indexOf("/");
@@ -57,7 +57,7 @@ public class ModelLoaderSidedBlock implements ICustomModelLoader {
                 for (SideType cfg : SideType.values()) {
                     String key = f.getName() + "_" + cfg.getName();
                     String tex = name + "_" + textureNamer.getTextureName(f, cfg);
-                    builder.put(key, new ResourceLocation(modelLocation.getResourceDomain(), "blocks/" + tex));
+                    builder.put(key, new ResourceLocation(modelLocation.getNamespace(), "blocks/" + tex));
                 }
             }
 

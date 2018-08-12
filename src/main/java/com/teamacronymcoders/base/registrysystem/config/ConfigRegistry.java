@@ -160,7 +160,7 @@ public class ConfigRegistry extends Registry<ConfigEntry> {
 
     @Override
     public void register(ResourceLocation name, ConfigEntry entry) {
-        addEntry(name.getResourcePath(), entry);
+        addEntry(name.getPath(), entry);
     }
 
     public void register(String name, ConfigEntry entry) {

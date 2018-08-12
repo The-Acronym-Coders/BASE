@@ -32,7 +32,7 @@ public abstract class ItemMinecartBase extends ItemMinecart implements IHasModel
     public ItemMinecartBase(String name) {
         super(EntityMinecart.Type.TNT);
         this.name = "minecart_" + name;
-        this.setUnlocalizedName(this.name);
+        this.setTranslationKey(this.name);
         this.hasSubtypes = true;
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, new DispenseItemMinecartBase());
     }

@@ -108,8 +108,8 @@ public abstract class SubBlockBase implements ISubBlock {
         TemplateFile templateFile = TemplateManager.getTemplateFile("sub_block_state");
         Map<String, String> replacements = Maps.newHashMap();
 
-        replacements.put("texture", new ResourceLocation(this.getTextureLocation().getResourceDomain(),
-                "blocks/" + this.getTextureLocation().getResourcePath()).toString());
+        replacements.put("texture", new ResourceLocation(this.getTextureLocation().getNamespace(),
+                "blocks/" + this.getTextureLocation().getPath()).toString());
         templateFile.replaceContents(replacements);
 
         return new GeneratedModel(this.getModelPrefix() + this.getUnLocalizedName(), ModelType.BLOCKSTATE,
