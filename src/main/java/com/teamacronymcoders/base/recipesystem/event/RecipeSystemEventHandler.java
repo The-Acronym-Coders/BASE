@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.recipesystem.RecipeSystem;
 import com.teamacronymcoders.base.recipesystem.condition.BiomeCondition;
 import com.teamacronymcoders.base.recipesystem.condition.ICondition;
 import com.teamacronymcoders.base.recipesystem.input.BlockStateInput;
+import com.teamacronymcoders.base.recipesystem.input.EntityInput;
 import com.teamacronymcoders.base.recipesystem.input.ForgeEnergyInput;
 import com.teamacronymcoders.base.recipesystem.input.IInput;
 import com.teamacronymcoders.base.recipesystem.json.JsonRecipeLoader;
@@ -36,6 +37,7 @@ public class RecipeSystemEventHandler {
     public static void registerInput(RegisterRecipeFactoriesEvent<IInput> inputEvent) {
         inputEvent.register(new ResourceLocation(MODID, "blockstate"), BlockStateInput.class);
         inputEvent.register(new ResourceLocation(MODID, "forge_energy"), ForgeEnergyInput.class);
+        inputEvent.register(new ResourceLocation(MODID, "entity"), EntityInput.class);
     }
 
     @SubscribeEvent

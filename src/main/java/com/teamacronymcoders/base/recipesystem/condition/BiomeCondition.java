@@ -1,7 +1,6 @@
 package com.teamacronymcoders.base.recipesystem.condition;
 
 import com.google.gson.annotations.JsonAdapter;
-import com.teamacronymcoders.base.json.deserializer.ResourceLocationDeserializer;
 import com.teamacronymcoders.base.recipesystem.RecipeContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -9,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nullable;
 
 public class BiomeCondition implements ICondition {
-    @JsonAdapter(value = ResourceLocationDeserializer.class, nullSafe = false)
+    @JsonAdapter(value = ResourceLocation.Serializer.class, nullSafe = false)
     private final ResourceLocation biome;
 
     public BiomeCondition(ResourceLocation biome) {

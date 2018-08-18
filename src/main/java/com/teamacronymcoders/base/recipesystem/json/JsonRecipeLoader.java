@@ -42,7 +42,7 @@ public class JsonRecipeLoader implements ILoader {
     private final Map<String, IObjectFactory<? extends IOutput>> outputFactories = Maps.newHashMap();
     private final Map<String, IObjectFactory<? extends ICondition>> conditionFactories = Maps.newHashMap();
 
-    public void loadTypes() {
+    public JsonRecipeLoader() {
         RegisterRecipeFactoriesEvent<IInput> inputEvent = new RegisterRecipeFactoriesEvent<>(IInput.class);
         MinecraftForge.EVENT_BUS.post(inputEvent);
         inputFactories.putAll(inputEvent.getFactories());

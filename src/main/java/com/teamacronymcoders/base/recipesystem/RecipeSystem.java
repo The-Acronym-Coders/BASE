@@ -2,11 +2,15 @@ package com.teamacronymcoders.base.recipesystem;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.teamacronymcoders.base.Base;
+import com.teamacronymcoders.base.command.CommandSubBase;
 import com.teamacronymcoders.base.event.BaseRegistryEvent;
+import com.teamacronymcoders.base.recipesystem.command.ReloadRecipesCommand;
 import com.teamacronymcoders.base.recipesystem.loader.ILoader;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +18,8 @@ public class RecipeSystem {
     private final static Map<String, RecipeType> recipeTypes = Maps.newHashMap();
     private final static Map<RecipeType, List<Recipe>> recipeLists = Maps.newHashMap();
     private final static Map<String, ILoader> loaders = Maps.newHashMap();
+
+    private final static CommandSubBase recipeCommand = new CommandSubBase("recipes");
 
     public static void loadRecipeTypes() {
         BaseRegistryEvent<RecipeType> recipeTypeEvent = new BaseRegistryEvent<>(RecipeType.class);
@@ -36,7 +42,7 @@ public class RecipeSystem {
                 });
 
         recipeTypes.values().parallelStream()
-                .map(recipeType -> new Tuple<>(recipeType.getHandlers(), recipeLists.get(recipeType)))
+                .map(recipeType -> new Tuple<>(recipeType.getRecipeHandlers(), recipeLists.get(recipeType)))
                 .forEach(tuple -> tuple.getFirst().parallelStream()
                         .forEach(recipeHandler -> recipeHandler.reloadRecipes(tuple.getSecond())));
     }
@@ -53,6 +59,11 @@ public class RecipeSystem {
     }
 
     public static List<Recipe> getRecipesFor(RecipeType recipeType) {
-        return recipeLists.get(recipeType);
+        return recipeLists.getOrDefault(recipeType, new ArrayList<>());
+    }
+
+    public static void setup() {
+        Base.instance.getBaseCommand().addSubcommand(recipeCommand);
+        recipeCommand.addSubcommand(new ReloadRecipesCommand());
     }
 }

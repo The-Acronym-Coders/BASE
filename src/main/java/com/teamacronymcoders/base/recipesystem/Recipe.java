@@ -34,4 +34,8 @@ public class Recipe {
     public boolean canOutput(RecipeContainer recipeContainer) {
         return outputs.parallelStream().allMatch(output -> output.canOutput(recipeContainer));
     }
+
+    public void doOutput(RecipeContainer recipeContainer) {
+        outputs.forEach(output -> output.output(recipeContainer));
+    }
 }
