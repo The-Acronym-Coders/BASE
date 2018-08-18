@@ -1,11 +1,14 @@
 package com.teamacronymcoders.base.recipesystem.event;
 
+import com.teamacronymcoders.base.event.BaseRegistryEvent;
 import com.teamacronymcoders.base.recipesystem.RecipeSystem;
 import com.teamacronymcoders.base.recipesystem.condition.BiomeCondition;
 import com.teamacronymcoders.base.recipesystem.condition.ICondition;
 import com.teamacronymcoders.base.recipesystem.input.BlockStateInput;
 import com.teamacronymcoders.base.recipesystem.input.ForgeEnergyInput;
 import com.teamacronymcoders.base.recipesystem.input.IInput;
+import com.teamacronymcoders.base.recipesystem.json.JsonRecipeLoader;
+import com.teamacronymcoders.base.recipesystem.loader.ILoader;
 import com.teamacronymcoders.base.recipesystem.output.BlockStateOutput;
 import com.teamacronymcoders.base.recipesystem.output.IOutput;
 import net.minecraft.item.crafting.IRecipe;
@@ -20,8 +23,8 @@ import static com.teamacronymcoders.base.Reference.MODID;
 public class RecipeSystemEventHandler {
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent<IRecipe> recipeRegistryEvent) {
-        RecipeSystem.loadTypes();
-        RecipeSystem.loadRecipes();
+        RecipeSystem.loadRecipeTypes();
+        RecipeSystem.loadRecipes(false);
     }
 
     @SubscribeEvent
@@ -38,5 +41,10 @@ public class RecipeSystemEventHandler {
     @SubscribeEvent
     public static void registerOutput(RegisterRecipeFactoriesEvent<IOutput> outputEvent) {
         outputEvent.register(new ResourceLocation(MODID, "blockstate"), BlockStateOutput.class);
+    }
+
+    @SubscribeEvent
+    public static void registerLoader(BaseRegistryEvent<ILoader> loaderRegistryEvent) {
+        loaderRegistryEvent.register(new ResourceLocation(MODID, "json"), new JsonRecipeLoader());
     }
 }

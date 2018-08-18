@@ -2,151 +2,57 @@ package com.teamacronymcoders.base.recipesystem;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.gson.*;
-import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.event.BaseRegistryEvent;
-import com.teamacronymcoders.base.json.deserializer.BlockPosDeserializer;
-import com.teamacronymcoders.base.json.deserializer.BlockStateDeserializer;
-import com.teamacronymcoders.base.json.factory.IObjectFactory;
-import com.teamacronymcoders.base.recipesystem.condition.ICondition;
-import com.teamacronymcoders.base.recipesystem.event.RegisterRecipeFactoriesEvent;
-import com.teamacronymcoders.base.recipesystem.input.IInput;
-import com.teamacronymcoders.base.recipesystem.output.IOutput;
-import com.teamacronymcoders.base.recipesystem.source.IRecipeSource;
-import com.teamacronymcoders.base.recipesystem.source.RecipeSource;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.JsonUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import com.teamacronymcoders.base.recipesystem.loader.ILoader;
+import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.JsonContext;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModContainer;
-import org.apache.commons.io.FilenameUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class RecipeSystem {
-    private static final Gson GSON = new Gson();
+    private final static Map<String, RecipeType> recipeTypes = Maps.newHashMap();
+    private final static Map<RecipeType, List<Recipe>> recipeLists = Maps.newHashMap();
+    private final static Map<String, ILoader> loaders = Maps.newHashMap();
 
-    private static final IRecipeSource JSON_RECIPE_SOURCE = new RecipeSource("json", true);
-
-    private static Map<String, RecipeType> recipeTypes = Maps.newHashMap();
-    private static Map<RecipeType, RecipeList> recipeLists = Maps.newHashMap();
-
-    private static final Map<String, IObjectFactory<? extends IInput>> inputFactories = Maps.newHashMap();
-    private static final Map<String, IObjectFactory<? extends IOutput>> outputFactories = Maps.newHashMap();
-    private static final Map<String, IObjectFactory<? extends ICondition>> conditionFactories = Maps.newHashMap();
-
-    public static void loadRecipes() {
-        recipeLists.putAll(Loader.instance().getActiveModList()
-                .parallelStream()
-                .map(RecipeSystem::loadRecipesForMod)
-                .flatMap(List::stream)
-                .collect(Collectors.toMap(recipe -> recipe.type, Lists::newArrayList, RecipeSystem::merge))
-                .entrySet()
-                .parallelStream()
-                .map(entry -> new RecipeList(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toMap(list -> list.type, list -> list)));
-    }
-
-    private static <T, U extends List<T>> U merge(U left, U right) {
-        left.addAll(right);
-        return left;
-    }
-
-    private static List<Recipe> loadRecipesForMod(ModContainer mod) {
-        JsonContext ctx = new JsonContext(mod.getModId());
-        List<Recipe> recipes = Lists.newArrayList();
-
-        CraftingHelper.findFiles(mod, "assets/" + mod.getModId() + "/base/recipe_system",
-                (root) -> true,
-                (root, file) -> {
-                    String relative = root.relativize(file).toString();
-                    if (!"json".equals(FilenameUtils.getExtension(file.toString())) || relative.startsWith("_"))
-                        return true;
-
-                    String name = FilenameUtils.removeExtension(relative).replaceAll("\\\\", "/");
-                    ResourceLocation key = new ResourceLocation(ctx.getModId(), name);
-
-                    try (BufferedReader bufferedReader = Files.newBufferedReader(file)) {
-                        JsonObject jsonObject = JsonUtils.fromJson(GSON, bufferedReader, JsonObject.class);
-                        if (jsonObject != null) {
-                            if (jsonObject.has("type")) {
-                                String typeName = jsonObject.get("type").getAsString();
-                                RecipeType recipeType = recipeTypes.get(typeName);
-                                if (recipeType != null) {
-                                    boolean loadRecipe = true;
-                                    if (jsonObject.has("load_conditions")) {
-                                        loadRecipe = CraftingHelper.processConditions(JsonUtils.getJsonArray(jsonObject, "load_conditions"), ctx);
-                                    }
-                                    if (loadRecipe) {
-                                        JsonArray inputsJson = JsonUtils.getJsonArray(jsonObject, "inputs");
-                                        JsonArray outputsJson = JsonUtils.getJsonArray(jsonObject, "outputs");
-                                        JsonArray conditionsJson = JsonUtils.getJsonArray(jsonObject, "conditions", new JsonArray());
-
-                                        List<IInput> inputList = processJsonArray(inputsJson, ctx, inputFactories::get, "Input");
-                                        List<IOutput> outputList = processJsonArray(outputsJson, ctx, outputFactories::get, "Output");
-                                        List<ICondition> conditionList = processJsonArray(conditionsJson, ctx, conditionFactories::get, "Conditions");
-
-                                        recipes.add(new Recipe(key, JSON_RECIPE_SOURCE, recipeType, inputList, outputList, conditionList));
-                                    }
-                                } else {
-                                    throw new JsonParseException("No Recipe Type found for: " + typeName);
-                                }
-                            }
-                        }
-                    } catch (IOException | JsonParseException e) {
-                        Base.instance.getLogger().getLogger().warn("Error in recipe: " + key.toString(), e);
-                    }
-                    return true;
-                }, true, true);
-
-        return recipes;
-    }
-
-    private static <T> List<T> processJsonArray(JsonArray jsonElements, JsonContext context, Function<String, IObjectFactory<? extends T>> factoryFunction, String name) {
-        List<T> processedList = Lists.newArrayList();
-        for (JsonElement element : jsonElements) {
-            if (element.isJsonObject()) {
-                JsonObject jsonObject = element.getAsJsonObject();
-                String typeName = JsonUtils.getString(jsonObject, "type");
-                IObjectFactory<? extends T> factory = factoryFunction.apply(typeName);
-                jsonObject.remove("type");
-                if (factory != null) {
-                    processedList.add(factory.parse(context, jsonObject));
-                } else {
-                    throw new JsonParseException("No " + name + " found for type: " + typeName);
-                }
-            } else {
-                throw new JsonParseException(name + "s must be JSON Objects");
-            }
-        }
-        return processedList;
-    }
-
-    public static void loadTypes() {
-        RegisterRecipeFactoriesEvent<IInput> inputEvent = new RegisterRecipeFactoriesEvent<>(IInput.class);
-        MinecraftForge.EVENT_BUS.post(inputEvent);
-        inputFactories.putAll(inputEvent.getFactories());
-
-        RegisterRecipeFactoriesEvent<IOutput> outputEvent = new RegisterRecipeFactoriesEvent<>(IOutput.class);
-        MinecraftForge.EVENT_BUS.post(outputEvent);
-        outputFactories.putAll(outputEvent.getFactories());
-
-        RegisterRecipeFactoriesEvent<ICondition> conditionEvent = new RegisterRecipeFactoriesEvent<>(ICondition.class);
-        MinecraftForge.EVENT_BUS.post(conditionEvent);
-        conditionFactories.putAll(conditionEvent.getFactories());
-
+    public static void loadRecipeTypes() {
         BaseRegistryEvent<RecipeType> recipeTypeEvent = new BaseRegistryEvent<>(RecipeType.class);
         MinecraftForge.EVENT_BUS.post(recipeTypeEvent);
         recipeTypes.putAll(recipeTypeEvent.getEntries());
+
+        BaseRegistryEvent<ILoader> loaderEvent = new BaseRegistryEvent<>(ILoader.class);
+        MinecraftForge.EVENT_BUS.post(loaderEvent);
+        loaders.putAll(loaderEvent.getEntries());
+    }
+
+    public static void loadRecipes(boolean reload) {
+        loaders.values().stream()
+                .filter(loader -> !reload || loader.getRecipeSource().canReload())
+                .map(ILoader::loadRecipes)
+                .flatMap(List::stream)
+                .forEach(recipe -> {
+                    recipeLists.putIfAbsent(recipe.type, Lists.newArrayList());
+                    recipeLists.get(recipe.type).add(recipe);
+                });
+
+        recipeTypes.values().parallelStream()
+                .map(recipeType -> new Tuple<>(recipeType.getHandlers(), recipeLists.get(recipeType)))
+                .forEach(tuple -> tuple.getFirst().parallelStream()
+                        .forEach(recipeHandler -> recipeHandler.reloadRecipes(tuple.getSecond())));
+    }
+
+    public static void reloadRecipe() {
+        for (List<Recipe> recipes : recipeLists.values()) {
+            recipes.removeIf(recipe -> recipe.source.canReload());
+        }
+        loadRecipes(true);
+    }
+
+    public static RecipeType getRecipeType(String typeName) {
+        return recipeTypes.get(typeName);
+    }
+
+    public static List<Recipe> getRecipesFor(RecipeType recipeType) {
+        return recipeLists.get(recipeType);
     }
 }

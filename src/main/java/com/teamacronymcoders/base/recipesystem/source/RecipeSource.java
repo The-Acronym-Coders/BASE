@@ -15,7 +15,7 @@ public class RecipeSource implements IRecipeSource {
     }
 
     @Override
-    public boolean doReload() {
+    public boolean canReload() {
         return reload;
     }
 }
