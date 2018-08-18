@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.recipesystem.output;
 
 import com.google.gson.annotations.JsonAdapter;
+import com.teamacronymcoders.base.json.deserializer.BlockPosDeserializer;
 import com.teamacronymcoders.base.json.deserializer.BlockStateDeserializer;
 import com.teamacronymcoders.base.recipesystem.RecipeContainer;
 import net.minecraft.block.state.IBlockState;
@@ -11,7 +12,7 @@ import java.util.Optional;
 public class BlockStateOutput implements IOutput {
     @JsonAdapter(value = BlockStateDeserializer.class, nullSafe = false)
     private final IBlockState blockState;
-    @JsonAdapter(value = BlockStateDeserializer.class, nullSafe = false)
+    @JsonAdapter(value = BlockPosDeserializer.class, nullSafe = false)
     private final BlockPos offset;
 
     public BlockStateOutput(IBlockState blockState, BlockPos offset) {
