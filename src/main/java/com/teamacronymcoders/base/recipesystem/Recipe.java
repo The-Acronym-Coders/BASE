@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.recipesystem.condition.ICondition;
 import com.teamacronymcoders.base.recipesystem.input.IInput;
 import com.teamacronymcoders.base.recipesystem.output.IOutput;
 import com.teamacronymcoders.base.recipesystem.source.IRecipeSource;
+import com.teamacronymcoders.base.recipesystem.type.RecipeType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
@@ -37,5 +38,9 @@ public class Recipe {
 
     public void doOutput(RecipeContainer recipeContainer) {
         outputs.forEach(output -> output.output(recipeContainer));
+    }
+
+    public void consumeInput(RecipeContainer recipeContainer) {
+        inputs.parallelStream().forEach(input -> input.consume(recipeContainer));
     }
 }

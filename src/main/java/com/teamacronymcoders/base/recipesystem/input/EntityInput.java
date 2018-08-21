@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class EntityInput implements IInput {
-    @JsonAdapter(value = EntityClassDeserializer.class, nullSafe = false)
+    @JsonAdapter(value = EntityClassDeserializer.class)
     private final Class<? extends Entity> entity;
 
     public EntityInput(Class<? extends Entity> entity) {
@@ -21,7 +21,7 @@ public class EntityInput implements IInput {
 
     @Override
     public void consume(RecipeContainer recipeContainer) {
-        if (recipeContainer.getRecipeHolder() instanceof Entity) {
+        if (recipeContainer.getRecipeHolder().getClass().isAssignableFrom(entity)) {
             ((Entity) recipeContainer.getRecipeHolder()).setDead();
         }
     }

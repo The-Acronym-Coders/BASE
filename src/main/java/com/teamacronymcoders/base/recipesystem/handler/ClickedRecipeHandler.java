@@ -8,22 +8,23 @@ import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.List;
 
-public class DefaultRecipeHandler implements IRecipeHandler {
+public class ClickedRecipeHandler implements IRecipeHandler {
     private final List<Recipe> recipes;
     private Recipe currentRecipe = null;
-    private int waiting = 0;
 
-    public DefaultRecipeHandler(List<Recipe> recipes) {
+    public ClickedRecipeHandler(List<Recipe> recipes) {
         this.recipes = recipes;
     }
 
     @Override
     public boolean handleRecipe(RecipeContainer recipeContainer, @Nullable EntityPlayer entityPlayer) {
-        if (waiting > 0) {
-            waiting--;
+        if (currentRecipe != null) {
+            if (!currentRecipe.matches(recipeContainer, entityPlayer)) {
+                currentRecipe = null;
+            }
         }
 
-        if (currentRecipe == null && waiting <= 0) {
+        if (currentRecipe == null) {
             Iterator<Recipe> recipeIterator = recipes.iterator();
             while (currentRecipe == null && recipeIterator.hasNext()) {
                 Recipe recipe = recipeIterator.next();
@@ -31,17 +32,15 @@ public class DefaultRecipeHandler implements IRecipeHandler {
                     currentRecipe = recipe;
                 }
             }
-            waiting = 100;
         }
 
         if (currentRecipe != null) {
             if (currentRecipe.matches(recipeContainer, entityPlayer)) {
                 if (currentRecipe.canOutput(recipeContainer)) {
+                    currentRecipe.consumeInput(recipeContainer);
                     currentRecipe.doOutput(recipeContainer);
                     return true;
                 }
-            } else {
-                currentRecipe = null;
             }
         }
 

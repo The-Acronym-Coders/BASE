@@ -22,10 +22,6 @@ public  class RecipeContainer implements ICapabilityProvider {
         this.pos = pos;
     }
 
-    public void tick() {
-
-    }
-
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         return capabilityProvider.hasCapability(capability, facing);

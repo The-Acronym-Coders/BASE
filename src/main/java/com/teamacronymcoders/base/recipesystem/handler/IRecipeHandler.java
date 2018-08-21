@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public interface IRecipeHandler {
-    boolean tickRecipe(RecipeContainer recipeContainer, @Nullable EntityPlayer entityPlayer);
+    boolean handleRecipe(RecipeContainer recipeContainer, @Nullable EntityPlayer entityPlayer);
 
     void reloadRecipes(List<Recipe> recipeList);
 }

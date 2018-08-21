@@ -1,19 +1,16 @@
-package com.teamacronymcoders.base.recipesystem.json;
+package com.teamacronymcoders.base.recipesystem.loader;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.*;
 import com.teamacronymcoders.base.Base;
-import com.teamacronymcoders.base.event.BaseRegistryEvent;
 import com.teamacronymcoders.base.json.factory.IObjectFactory;
 import com.teamacronymcoders.base.recipesystem.Recipe;
-import com.teamacronymcoders.base.recipesystem.RecipeList;
 import com.teamacronymcoders.base.recipesystem.RecipeSystem;
-import com.teamacronymcoders.base.recipesystem.RecipeType;
+import com.teamacronymcoders.base.recipesystem.type.RecipeType;
 import com.teamacronymcoders.base.recipesystem.condition.ICondition;
 import com.teamacronymcoders.base.recipesystem.event.RegisterRecipeFactoriesEvent;
 import com.teamacronymcoders.base.recipesystem.input.IInput;
-import com.teamacronymcoders.base.recipesystem.loader.ILoader;
 import com.teamacronymcoders.base.recipesystem.output.IOutput;
 import com.teamacronymcoders.base.recipesystem.source.IRecipeSource;
 import com.teamacronymcoders.base.recipesystem.source.RecipeSource;
@@ -35,6 +32,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class JsonRecipeLoader implements ILoader {
+    private static JsonRecipeLoader instance;
+
     private final Gson GSON = new Gson();
     private final IRecipeSource JSON_RECIPE_SOURCE = new RecipeSource("json", true);
 
@@ -42,7 +41,14 @@ public class JsonRecipeLoader implements ILoader {
     private final Map<String, IObjectFactory<? extends IOutput>> outputFactories = Maps.newHashMap();
     private final Map<String, IObjectFactory<? extends ICondition>> conditionFactories = Maps.newHashMap();
 
-    public JsonRecipeLoader() {
+    public static JsonRecipeLoader getInstance() {
+        if (instance == null) {
+            instance = new JsonRecipeLoader();
+        }
+        return instance;
+    }
+
+    private JsonRecipeLoader() {
         RegisterRecipeFactoriesEvent<IInput> inputEvent = new RegisterRecipeFactoriesEvent<>(IInput.class);
         MinecraftForge.EVENT_BUS.post(inputEvent);
         inputFactories.putAll(inputEvent.getFactories());
@@ -101,7 +107,7 @@ public class JsonRecipeLoader implements ILoader {
                                         JsonArray conditionsJson = JsonUtils.getJsonArray(jsonObject, "conditions", new JsonArray());
 
                                         List<IInput> inputList = processJsonArray(inputsJson, ctx, inputFactories::get, "Input");
-                                        List<IOutput> outputList = processJsonArray(outputsJson, ctx, outputFactories::get, "Output");
+                                        List<IOutput> outputList = processOutputs(outputsJson, ctx);
                                         List<ICondition> conditionList = processJsonArray(conditionsJson, ctx, conditionFactories::get, "Conditions");
 
                                         recipes.add(new Recipe(key, JSON_RECIPE_SOURCE, recipeType, inputList, outputList, conditionList));
@@ -118,6 +124,10 @@ public class JsonRecipeLoader implements ILoader {
                 }, true, true);
 
         return recipes;
+    }
+
+    public List<IOutput> processOutputs(JsonArray jsonElements, JsonContext context) {
+        return processJsonArray(jsonElements, context, outputFactories::get, "Output");
     }
 
     private static <T> List<T> processJsonArray(JsonArray jsonElements, JsonContext context, Function<String, IObjectFactory<? extends T>> factoryFunction, String name) {

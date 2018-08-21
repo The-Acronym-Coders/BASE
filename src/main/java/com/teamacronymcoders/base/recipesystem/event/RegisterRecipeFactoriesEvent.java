@@ -3,12 +3,7 @@ package com.teamacronymcoders.base.recipesystem.event;
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.json.factory.DefaultObjectFactory;
 import com.teamacronymcoders.base.json.factory.IObjectFactory;
-import com.teamacronymcoders.base.recipesystem.RecipeType;
-import com.teamacronymcoders.base.recipesystem.condition.ICondition;
-import com.teamacronymcoders.base.recipesystem.input.IInput;
-import com.teamacronymcoders.base.recipesystem.output.IOutput;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.GenericEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;

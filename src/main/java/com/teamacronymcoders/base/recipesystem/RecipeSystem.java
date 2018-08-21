@@ -7,6 +7,7 @@ import com.teamacronymcoders.base.command.CommandSubBase;
 import com.teamacronymcoders.base.event.BaseRegistryEvent;
 import com.teamacronymcoders.base.recipesystem.command.ReloadRecipesCommand;
 import com.teamacronymcoders.base.recipesystem.loader.ILoader;
+import com.teamacronymcoders.base.recipesystem.type.RecipeType;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -42,7 +43,7 @@ public class RecipeSystem {
                 });
 
         recipeTypes.values().parallelStream()
-                .map(recipeType -> new Tuple<>(recipeType.getRecipeHandlers(), recipeLists.get(recipeType)))
+                .map(recipeType -> new Tuple<>(recipeType.getRecipeHandlers(), getRecipesFor(recipeType)))
                 .forEach(tuple -> tuple.getFirst().parallelStream()
                         .forEach(recipeHandler -> recipeHandler.reloadRecipes(tuple.getSecond())));
     }

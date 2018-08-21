@@ -8,10 +8,12 @@ import com.teamacronymcoders.base.recipesystem.input.BlockStateInput;
 import com.teamacronymcoders.base.recipesystem.input.EntityInput;
 import com.teamacronymcoders.base.recipesystem.input.ForgeEnergyInput;
 import com.teamacronymcoders.base.recipesystem.input.IInput;
-import com.teamacronymcoders.base.recipesystem.json.JsonRecipeLoader;
+import com.teamacronymcoders.base.recipesystem.loader.JsonRecipeLoader;
 import com.teamacronymcoders.base.recipesystem.loader.ILoader;
 import com.teamacronymcoders.base.recipesystem.output.BlockStateOutput;
+import com.teamacronymcoders.base.recipesystem.output.EntityOutput;
 import com.teamacronymcoders.base.recipesystem.output.IOutput;
+import com.teamacronymcoders.base.recipesystem.output.json.OneOfOutputFactory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -43,10 +45,12 @@ public class RecipeSystemEventHandler {
     @SubscribeEvent
     public static void registerOutput(RegisterRecipeFactoriesEvent<IOutput> outputEvent) {
         outputEvent.register(new ResourceLocation(MODID, "blockstate"), BlockStateOutput.class);
+        outputEvent.register(new ResourceLocation(MODID, "one_of"), new OneOfOutputFactory());
+        outputEvent.register(new ResourceLocation(MODID, "entity"), EntityOutput.class);
     }
 
     @SubscribeEvent
     public static void registerLoader(BaseRegistryEvent<ILoader> loaderRegistryEvent) {
-        loaderRegistryEvent.register(new ResourceLocation(MODID, "json"), new JsonRecipeLoader());
+        loaderRegistryEvent.register(new ResourceLocation(MODID, "json"), JsonRecipeLoader.getInstance());
     }
 }
