@@ -40,6 +40,7 @@ public class BlockStateMatcherDeserializer implements JsonDeserializer<BlockStat
                                 acceptableStringValues.add(jsonValues.getAsString());
                             }
                             for (String value: acceptableStringValues) {
+                                //noinspection unchecked
                                 property.parseValue(value).toJavaUtil().ifPresent(acceptableValues::add);
                             }
                             propertyMatching.put(property, acceptableValues);
