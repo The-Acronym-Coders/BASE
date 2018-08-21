@@ -3,11 +3,13 @@ package com.teamacronymcoders.base;
 import com.teamacronymcoders.base.capability.tool.ToolConfiguration;
 import com.teamacronymcoders.base.command.CommandSubBase;
 import com.teamacronymcoders.base.entities.dataserializers.BaseDataSerializers;
+import com.teamacronymcoders.base.items.ItemEventHandler;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
 import com.teamacronymcoders.base.recipesystem.RecipeSystem;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import com.teamacronymcoders.base.util.OreDictUtils;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -46,6 +48,7 @@ public class Base extends BaseModFoundation<Base> {
         Capabilities.register();
         ToolConfiguration.configureTool();
         RecipeSystem.setup();
+        MinecraftForge.EVENT_BUS.register(new ItemEventHandler());
     }
 
     @EventHandler
