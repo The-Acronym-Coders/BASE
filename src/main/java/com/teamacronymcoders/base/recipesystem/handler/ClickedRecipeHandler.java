@@ -51,5 +51,6 @@ public class ClickedRecipeHandler implements IRecipeHandler {
     public void reloadRecipes(List<Recipe> recipeList) {
         recipes.clear();
         recipes.addAll(recipeList);
+        currentRecipe = null;
     }
 }
