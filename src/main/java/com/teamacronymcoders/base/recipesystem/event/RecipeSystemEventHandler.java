@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.event.BaseRegistryEvent;
 import com.teamacronymcoders.base.recipesystem.RecipeSystem;
 import com.teamacronymcoders.base.recipesystem.condition.BiomeCondition;
 import com.teamacronymcoders.base.recipesystem.condition.ICondition;
+import com.teamacronymcoders.base.recipesystem.condition.VillageCondition;
 import com.teamacronymcoders.base.recipesystem.input.BlockStateInput;
 import com.teamacronymcoders.base.recipesystem.input.EntityInput;
 import com.teamacronymcoders.base.recipesystem.input.ForgeEnergyInput;
@@ -33,6 +34,7 @@ public class RecipeSystemEventHandler {
     @SubscribeEvent
     public static void registerConditions(RegisterRecipeFactoriesEvent<ICondition> conditionEvent) {
         conditionEvent.register(new ResourceLocation(MODID, "in_biome"), BiomeCondition.class);
+        conditionEvent.register(new ResourceLocation(MODID, "village"), VillageCondition.class);
     }
 
     @SubscribeEvent
