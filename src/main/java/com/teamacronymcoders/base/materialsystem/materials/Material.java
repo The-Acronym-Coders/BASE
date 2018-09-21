@@ -36,6 +36,10 @@ public class Material {
     }
 
     public String getUnlocalizedName() {
+        return unlocalizedName;
+    }
+
+    public String getTranslationKey() {
         return "base.material." + unlocalizedName;
     }
 }

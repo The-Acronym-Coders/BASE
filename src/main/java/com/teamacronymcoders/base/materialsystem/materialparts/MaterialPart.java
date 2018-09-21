@@ -56,8 +56,8 @@ public class MaterialPart {
 
     public String getLocalizedName() {
         //noinspection deprecation
-        if (I18n.canTranslate(material.getUnlocalizedName())) {
-            String materialDisplayName = I18n.translateToLocal(material.getUnlocalizedName());
+        if (I18n.canTranslate(material.getTranslationKey())) {
+            String materialDisplayName = I18n.translateToLocal(material.getTranslationKey());
             return I18n.translateToLocalFormatted(part.getUnlocalizedName(), materialDisplayName);
         } else {
             return I18n.translateToLocalFormatted(part.getUnlocalizedName(), material.getName());

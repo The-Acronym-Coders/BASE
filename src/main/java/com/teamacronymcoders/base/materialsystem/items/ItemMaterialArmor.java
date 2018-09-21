@@ -59,8 +59,8 @@ public class ItemMaterialArmor extends ItemArmor implements IHasModel, IHasItemC
     public String getItemStackDisplayName(@Nonnull ItemStack itemStack) {
         //noinspection deprecation
         String materialName;
-        if (I18n.canTranslate(this.materialPart.getMaterial().getUnlocalizedName())) {
-            materialName = I18n.translateToLocal(this.materialPart.getMaterial().getUnlocalizedName());
+        if (I18n.canTranslate(this.materialPart.getMaterial().getTranslationKey())) {
+            materialName = I18n.translateToLocal(this.materialPart.getMaterial().getTranslationKey());
         } else {
             materialName = this.materialPart.getMaterial().getName();
         }
