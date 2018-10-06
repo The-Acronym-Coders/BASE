@@ -1,14 +1,15 @@
 package com.teamacronymcoders.base.items;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class DropTableBuilder {
-    private List<String> items = new ArrayList<String>();
+    private final List<String> items = new LinkedList<>();
     private boolean fortuneEnabled = false;
-    private String oldSlots = "";
+    private String oldSlots;
     
     public DropTableBuilder() {
+        this.oldSlots = "";
     }
     
     public DropTableBuilder(String oldSlots) {

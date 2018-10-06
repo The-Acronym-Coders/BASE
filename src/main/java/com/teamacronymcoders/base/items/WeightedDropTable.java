@@ -2,35 +2,35 @@ package com.teamacronymcoders.base.items;
 
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 public class WeightedDropTable implements IDropTable {
-    private List<List<ItemStack>> dropTable;
-    private List<Boolean> fortuneTable;
+    private ItemStack[][] dropTable;
+    private Boolean[] fortuneTable;
     private Random rng = new Random();
     
     public WeightedDropTable(List<List<ItemStack>> dropTable, List<Boolean> fortuneTable) {
-        this.dropTable = dropTable;
-        this.fortuneTable = fortuneTable;
+        this.dropTable = new ItemStack[dropTable.size()][];
+        for (int slot = 0; slot < dropTable.size(); slot++) {
+            this.dropTable[slot] = dropTable.get(slot).toArray(new ItemStack[0]);
+        }
+        this.fortuneTable = fortuneTable.toArray(new Boolean[0]);
     }
     
     public List<ItemStack> getDrops(int fortune) {
-        List<ItemStack> itemsToDrop = new ArrayList<ItemStack>();
-        for (int index = 0; index < dropTable.size(); index++) {
-            List<ItemStack> itemSlot = dropTable.get(index);
+        List<ItemStack> itemsToDrop = new LinkedList<>();
+        for (int slot = 0; slot < dropTable.length; slot++) {
             int count;
-            if (fortuneTable.get(index)) {
+            if (fortuneTable[slot]) {
                 count = Math.max(rng.nextInt(fortune + 2), 1);
             } else {
                 count = 1;
             }
             for (int i = 0; i < count; i++) {
-                ItemStack drop = itemSlot.get(rng.nextInt(itemSlot.size()));
-                if (drop != null) {
-                    itemsToDrop.add(drop.copy());
-                }
+                ItemStack drop = dropTable[slot][rng.nextInt(dropTable[slot].length)];
+                itemsToDrop.add(drop.copy());
             }
         }
         return itemsToDrop;
