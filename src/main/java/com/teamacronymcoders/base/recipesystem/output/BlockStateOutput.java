@@ -10,8 +10,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.Optional;
-
 public class BlockStateOutput implements IOutput {
     @JsonAdapter(value = BlockStateDeserializer.class)
     private final IBlockState blockState;
