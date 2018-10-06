@@ -11,9 +11,7 @@ import com.teamacronymcoders.base.recipesystem.input.ForgeEnergyInput;
 import com.teamacronymcoders.base.recipesystem.input.IInput;
 import com.teamacronymcoders.base.recipesystem.loader.JsonRecipeLoader;
 import com.teamacronymcoders.base.recipesystem.loader.ILoader;
-import com.teamacronymcoders.base.recipesystem.output.BlockStateOutput;
-import com.teamacronymcoders.base.recipesystem.output.EntityOutput;
-import com.teamacronymcoders.base.recipesystem.output.IOutput;
+import com.teamacronymcoders.base.recipesystem.output.*;
 import com.teamacronymcoders.base.recipesystem.output.json.OneOfOutputFactory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -33,7 +31,7 @@ public class RecipeSystemEventHandler {
 
     @SubscribeEvent
     public static void registerConditions(RegisterRecipeFactoriesEvent<ICondition> conditionEvent) {
-        conditionEvent.register(new ResourceLocation(MODID, "in_biome"), BiomeCondition.class);
+        conditionEvent.register(new ResourceLocation(MODID, "biome"), BiomeCondition.class);
         conditionEvent.register(new ResourceLocation(MODID, "village"), VillageCondition.class);
     }
 
@@ -46,9 +44,11 @@ public class RecipeSystemEventHandler {
 
     @SubscribeEvent
     public static void registerOutput(RegisterRecipeFactoriesEvent<IOutput> outputEvent) {
+        outputEvent.register(new ResourceLocation(MODID, "command"), CommandOutput.class);
         outputEvent.register(new ResourceLocation(MODID, "blockstate"), BlockStateOutput.class);
         outputEvent.register(new ResourceLocation(MODID, "one_of"), new OneOfOutputFactory());
         outputEvent.register(new ResourceLocation(MODID, "entity"), EntityOutput.class);
+        outputEvent.register(new ResourceLocation(MODID, "explosion"), ExplosionOutput.class);
     }
 
     @SubscribeEvent
