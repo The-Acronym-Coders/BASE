@@ -102,6 +102,7 @@ public class JsonRecipeLoader implements ILoader {
                                         loadRecipe = CraftingHelper.processConditions(JsonUtils.getJsonArray(jsonObject, "load_conditions"), ctx);
                                     }
                                     if (loadRecipe) {
+                                        int priority = JsonUtils.getInt(jsonObject, "priority", 0);
                                         JsonArray inputsJson = JsonUtils.getJsonArray(jsonObject, "inputs");
                                         JsonArray outputsJson = JsonUtils.getJsonArray(jsonObject, "outputs");
                                         JsonArray conditionsJson = JsonUtils.getJsonArray(jsonObject, "conditions", new JsonArray());
@@ -110,7 +111,7 @@ public class JsonRecipeLoader implements ILoader {
                                         List<IOutput> outputList = processOutputs(outputsJson, ctx);
                                         List<ICondition> conditionList = processJsonArray(conditionsJson, ctx, conditionFactories::get, "Conditions");
 
-                                        recipes.add(new Recipe(key, JSON_RECIPE_SOURCE, recipeType, inputList, outputList, conditionList));
+                                        recipes.add(new Recipe(key, priority, JSON_RECIPE_SOURCE, recipeType, inputList, outputList, conditionList));
                                     }
                                 } else {
                                     throw new JsonParseException("No Recipe Type found for: " + typeName);

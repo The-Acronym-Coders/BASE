@@ -12,14 +12,16 @@ import java.util.List;
 
 public class Recipe {
     public final ResourceLocation name;
+    public final int priority;
     public final RecipeType type;
     public final IRecipeSource source;
     private final List<IInput> inputs;
     private final List<IOutput> outputs;
     private final List<ICondition> conditions;
 
-    public Recipe(ResourceLocation name, IRecipeSource source, RecipeType type, List<IInput> inputs, List<IOutput> outputs, List<ICondition> conditions) {
+    public Recipe(ResourceLocation name, int priority, IRecipeSource source, RecipeType type, List<IInput> inputs, List<IOutput> outputs, List<ICondition> conditions) {
         this.name = name;
+        this.priority = priority;
         this.source = source;
         this.type = type;
         this.inputs = inputs;

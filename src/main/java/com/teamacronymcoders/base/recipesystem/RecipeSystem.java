@@ -6,14 +6,17 @@ import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.command.CommandSubBase;
 import com.teamacronymcoders.base.event.BaseRegistryEvent;
 import com.teamacronymcoders.base.recipesystem.command.ReloadRecipesCommand;
+import com.teamacronymcoders.base.recipesystem.handler.IRecipeHandler;
 import com.teamacronymcoders.base.recipesystem.loader.ILoader;
 import com.teamacronymcoders.base.recipesystem.type.RecipeType;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class RecipeSystem {
     private final static Map<String, RecipeType> recipeTypes = Maps.newHashMap();
@@ -43,9 +46,13 @@ public class RecipeSystem {
                 });
 
         recipeTypes.values().parallelStream()
-                .map(recipeType -> new Tuple<>(recipeType.getRecipeHandlers(), getRecipesFor(recipeType)))
-                .forEach(tuple -> tuple.getFirst().parallelStream()
-                        .forEach(recipeHandler -> recipeHandler.reloadRecipes(tuple.getSecond())));
+                .forEach(RecipeSystem::handleRecipeType);
+    }
+
+    private static void handleRecipeType(RecipeType recipeType) {
+        List<Recipe> recipes = getRecipesFor(recipeType);
+        recipes.sort(Comparator.comparingInt(recipe -> recipe.priority));
+        recipeType.recipeHandlers.forEach(recipeHandler -> recipeHandler.reloadRecipes(recipes));
     }
 
     public static void reloadRecipe() {
