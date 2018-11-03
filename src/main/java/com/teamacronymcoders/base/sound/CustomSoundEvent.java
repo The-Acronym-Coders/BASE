@@ -6,17 +6,16 @@ import net.minecraft.util.SoundEvent;
 public class CustomSoundEvent extends SoundEvent implements IHasSoundGroup {
     private final ResourceLocation soundName;
     private final boolean stream;
-    private final String category;
 
     public CustomSoundEvent(ResourceLocation soundName) {
-        this(soundName, null, false);
+        this(soundName, false);
     }
 
-    public CustomSoundEvent(ResourceLocation soundName, String category, boolean stream) {
+    public CustomSoundEvent(ResourceLocation soundName, boolean stream) {
         super(soundName);
+        this.setRegistryName(soundName);
         this.soundName = soundName;
         this.stream = stream;
-        this.category = category;
     }
 
     @Override
@@ -26,8 +25,8 @@ public class CustomSoundEvent extends SoundEvent implements IHasSoundGroup {
 
     @Override
     public SoundGroup getSoundGroup() {
-        return new SoundGroup(category, new SoundGroupItem[] {
-            new SoundGroupItem(soundName, stream)
+        return new SoundGroup(new SoundGroupItem[] {
+            new SoundGroupItem(soundName.getPath(), stream)
         }, String.format("subtitle.%s.%s", soundName.getNamespace(), soundName.getNamespace().replace("/", ".")));
     }
 }

@@ -1,6 +1,8 @@
 package com.teamacronymcoders.base.util.files;
 
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.registrysystem.SoundEventRegistry;
@@ -29,7 +31,7 @@ public class ResourceLoader {
     private final Gson gson;
 
     public ResourceLoader() {
-        gson = new Gson();
+        gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     public void setup() throws NoSuchFieldException, IllegalAccessException {
@@ -119,6 +121,9 @@ public class ResourceLoader {
             Map<String, SoundGroup> currentSoundGroups = gson.fromJson(BaseFileUtils.readFileToString(soundsJson),
                     new TypeToken<Map<String, SoundGroup>>(){}.getType());
 
+            if (currentSoundGroups == null) {
+                currentSoundGroups = Maps.newHashMap();
+            }
             soundGroups.forEach(currentSoundGroups::putIfAbsent);
 
             BaseFileUtils.writeStringToFile(gson.toJson(currentSoundGroups), soundsJson);

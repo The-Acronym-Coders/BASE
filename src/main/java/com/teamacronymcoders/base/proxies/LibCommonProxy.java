@@ -77,6 +77,10 @@ public abstract class LibCommonProxy {
 
     }
 
+    public void handleSounds() {
+
+    }
+
     public void loadEntityRenderers(ASMDataTable table, ModuleHandler moduleHandler) {
         // Only done Client Side
     }

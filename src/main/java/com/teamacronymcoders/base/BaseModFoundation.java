@@ -150,6 +150,8 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         if (this.getSubBlockSystem() != null) {
             this.getSubBlockSystem().createBlocks();
         }
+
+        this.getLibProxy().handleSounds();
     }
 
     public void init(FMLInitializationEvent event) {

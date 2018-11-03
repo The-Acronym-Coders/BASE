@@ -1,12 +1,10 @@
 package com.teamacronymcoders.base.sound;
 
-import net.minecraft.util.ResourceLocation;
-
 public class SoundGroupItem {
-    public final ResourceLocation name;
+    public final String name;
     public final Boolean stream;
 
-    public SoundGroupItem(ResourceLocation name, Boolean stream) {
+    public SoundGroupItem(String name, Boolean stream) {
         this.name = name;
         this.stream = stream;
     }

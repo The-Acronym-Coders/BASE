@@ -33,6 +33,7 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Optional;
 
 @SideOnly(Side.CLIENT)
 public class LibClientProxy extends LibCommonProxy {
@@ -102,12 +103,17 @@ public class LibClientProxy extends LibCommonProxy {
             resourceLoader = new ResourceLoader();
             try {
                 resourceLoader.setup();
-                resourceLoader.createImportantFolders(modid);
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 this.getMod().getLogger().getLogger().error(e);
             }
         }
+        resourceLoader.createImportantFolders(modid);
+    }
 
+    @Override
+    public void handleSounds() {
+        Optional.ofNullable(resourceLoader)
+                .ifPresent(loader -> loader.handleSoundsJsonForMod(this.getMod()));
     }
 
     private ModelHandler getModelHandler() {
