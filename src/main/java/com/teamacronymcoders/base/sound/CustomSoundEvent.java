@@ -20,13 +20,13 @@ public class CustomSoundEvent extends SoundEvent implements IHasSoundGroup {
 
     @Override
     public String getName() {
-        return soundName.toString();
+        return soundName.getPath().replace("/", ".");
     }
 
     @Override
     public SoundGroup getSoundGroup() {
         return new SoundGroup(new SoundGroupItem[] {
-            new SoundGroupItem(soundName.getPath(), stream)
-        }, String.format("subtitle.%s.%s", soundName.getNamespace(), soundName.getNamespace().replace("/", ".")));
+            new SoundGroupItem(soundName.toString(), stream)
+        }, String.format("subtitle.%s.%s", soundName.getNamespace(), soundName.getPath().replace("/", ".")));
     }
 }
