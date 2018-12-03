@@ -43,10 +43,10 @@ public class BlockBase extends BlockBaseNoModel implements IHasModel, IHasGenera
             Map<String, String> replacements = Maps.newHashMap();
 
             replacements.put("texture", new ResourceLocation(resourceLocation.getNamespace(),
-                    "blocks/" + resourceLocation.getNamespace()).toString());
+                    "blocks/" + resourceLocation.getPath()).toString());
             templateFile.replaceContents(replacements);
 
-            models.add(new GeneratedModel(resourceLocation.getNamespace(), ModelType.BLOCKSTATE,
+            models.add(new GeneratedModel(resourceLocation.getPath(), ModelType.BLOCKSTATE,
                     templateFile.getFileContents()));
         });
 
