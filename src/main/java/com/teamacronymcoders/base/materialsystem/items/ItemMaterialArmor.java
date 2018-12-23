@@ -41,7 +41,7 @@ public class ItemMaterialArmor extends ItemArmor implements IHasModel, IHasItemC
     public ItemMaterialArmor(MaterialPart materialPart, ArmorMaterial material, EntityEquipmentSlot equipmentSlot) {
         super(material, 0, equipmentSlot);
         this.materialPart = materialPart;
-        this.setUnlocalizedName(materialPart.getMaterial().getUnlocalizedName() + "_" + equipmentSlot.getName().toLowerCase(Locale.US));
+        this.setTranslationKey(materialPart.getMaterial().getUnlocalizedName() + "_" + equipmentSlot.getName().toLowerCase(Locale.US));
     }
 
     @Override
@@ -58,9 +58,15 @@ public class ItemMaterialArmor extends ItemArmor implements IHasModel, IHasItemC
     @Nonnull
     public String getItemStackDisplayName(@Nonnull ItemStack itemStack) {
         //noinspection deprecation
+        String materialName;
+        if (I18n.canTranslate(this.materialPart.getMaterial().getTranslationKey())) {
+            materialName = I18n.translateToLocal(this.materialPart.getMaterial().getTranslationKey());
+        } else {
+            materialName = this.materialPart.getMaterial().getName();
+        }
         return I18n.translateToLocalFormatted(this.materialPart.getPart()
                         .getUnlocalizedName() + "." + this.armorType.getName(),
-                this.materialPart.getMaterial().getName());
+                materialName);
     }
 
     @Override

@@ -24,6 +24,11 @@ public class PacketHandler {
         networkWrapper.registerMessage(messageHandler, requestMessageType, ++id, side);
     }
 
+    public <I extends IMessage, O extends IMessage> void registerPacket(
+            IMessageHandler<I, O> messageHandler, Class<I> messageClass, Side side) {
+        networkWrapper.registerMessage(messageHandler, messageClass, ++id, side);
+    }
+
     public void sendToAllAround(IMessage message, Entity entity) {
         TargetPoint targetPoint = new TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, 64);
         sendToAllAround(message, targetPoint);

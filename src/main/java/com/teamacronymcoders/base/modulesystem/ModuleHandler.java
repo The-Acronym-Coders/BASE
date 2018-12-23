@@ -7,14 +7,18 @@ import com.teamacronymcoders.base.registrysystem.config.ConfigEntry;
 import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.ClassLoading;
 import com.teamacronymcoders.base.util.collections.MapUtils;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -119,6 +123,12 @@ public class ModuleHandler {
         }).forEach(module -> {
             if (!moduleMap.containsKey(module.getName())) {
                 moduleMap.put(module.getName(), module);
+                Method[] methods = module.getClass().getMethods();
+                for (Method method: methods) {
+                    if (method.getDeclaredAnnotation(SubscribeEvent.class) != null) {
+                        MinecraftForge.EVENT_BUS.register(module);
+                    }
+                }
             } else {
                 throw new UnsupportedOperationException("Module Names must be Unique");
             }

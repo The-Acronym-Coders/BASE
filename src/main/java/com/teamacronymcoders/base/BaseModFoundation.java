@@ -123,6 +123,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
             this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
             SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
         }
+        this.addRegistry("SOUND_EVENT", new SoundEventRegistry(this));
     }
 
     public void registerBlocks(BlockRegistry registry) {
@@ -149,6 +150,8 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         if (this.getSubBlockSystem() != null) {
             this.getSubBlockSystem().createBlocks();
         }
+
+        this.getLibProxy().handleSounds();
     }
 
     public void init(FMLInitializationEvent event) {

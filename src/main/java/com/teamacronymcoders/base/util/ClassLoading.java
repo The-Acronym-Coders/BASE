@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.util;
 
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
@@ -7,10 +8,12 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -80,6 +83,32 @@ public class ClassLoading {
                 if (createInstance.apply(asmInstanceClass)) {
                     T instance = asmInstanceClass.newInstance();
                     instances.add(instance);
+                }
+            } catch (IllegalAccessException | InstantiationException exception) {
+                Platform.attemptLogErrorToCurrentMod("Failed to load: " + asmData.getClassName());
+                Platform.attemptLogExceptionToCurrentMod(exception);
+            } catch (ClassNotFoundException e) {
+                //Silence for some things are side only....
+            }
+        }
+        return instances;
+    }
+
+    public static <T, U extends Annotation> Map<String, T> getInstances(@Nonnull ASMDataTable asmDataTable, Class<U> annotationClass,
+                                                  Class<T> instanceClass, Function<Class<? extends T>, Boolean> createInstance,
+                                                  Function<U, String> getKey) {
+        String annotationClassName = annotationClass.getCanonicalName();
+        Set<ASMDataTable.ASMData> asmDataSet = asmDataTable.getAll(annotationClassName);
+        Map<String, T> instances = Maps.newHashMap();
+        for (ASMDataTable.ASMData asmData : asmDataSet) {
+            try {
+                Class<?> asmClass = Class.forName(asmData.getClassName());
+                Class<? extends T> asmInstanceClass = asmClass.asSubclass(instanceClass);
+                if (createInstance.apply(asmInstanceClass)) {
+                    T instance = asmInstanceClass.newInstance();
+                    U annotation = asmInstanceClass.getAnnotation(annotationClass);
+                    String key = getKey.apply(annotation);
+                    instances.put(key, instance);
                 }
             } catch (IllegalAccessException | InstantiationException exception) {
                 Platform.attemptLogErrorToCurrentMod("Failed to load: " + asmData.getClassName());

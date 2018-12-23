@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -46,7 +47,7 @@ public class RegistryEventHandler {
                 (name, entityEntry) -> {
                     Class<? extends Entity> entityClass = entityEntry.getEntityClass();
                     UpdateInfo updateInfo = entityEntry.getUpdateInfo();
-                    net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(name, entityClass, name.getResourcePath(), nextAvailableID++, this.mod,
+                    net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(name, entityClass, name.getPath(), nextAvailableID++, this.mod,
                             updateInfo.getTrackingRange(), updateInfo.getUpdateFrequency(), updateInfo.isSendVelocityUpdates());
 
                     EntityList.EntityEggInfo spawnEgg = entityEntry.getEgg();
@@ -64,6 +65,12 @@ public class RegistryEventHandler {
                     }
                 });
         entityRegistry.registryEvent();
+    }
+
+    @SubscribeEvent
+    public void registerSoundEvents(RegistryEvent.Register<SoundEvent> soundEventRegistryEvent) {
+        this.mod.getRegistryHolder().getRegistry(SoundEventRegistry.class, "SOUND_EVENT").entries.values()
+                .forEach(soundEventRegistryEvent.getRegistry()::register);
     }
 
     @SubscribeEvent

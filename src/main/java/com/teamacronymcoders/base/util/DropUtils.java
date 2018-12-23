@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -19,9 +19,9 @@ public class DropUtils {
     private static final String WEIGHT_DELIM = "%";
     private static final String DROP_DELIM = "#";
     
-    private static Map<String, WeightedDropTable> wdMap = new HashMap<String, WeightedDropTable>();
-    private static Pattern p = Pattern.compile("([^\\[\\]]+)");
-    private static Matcher m = p.matcher("");
+    private static Map<String, WeightedDropTable> wdMap = new HashMap<>();
+    private static Pattern bracketPattern = Pattern.compile("([^\\[\\]]+)");
+    private static Matcher bracketMatcher = bracketPattern.matcher("");
     
     private DropUtils() {
     }
@@ -31,12 +31,12 @@ public class DropUtils {
             return wdMap.get(drops);
         }
         
-        List<List<ItemStack>> dropTable = new ArrayList<List<ItemStack>>();
-        List<Boolean> fortuneTable = new ArrayList<Boolean>();
-        List<String> itemSlots = new ArrayList<String>();
-        m.reset(drops);
-        while (m.find()) {
-            itemSlots.add(m.group());
+        List<List<ItemStack>> dropTable = new LinkedList<>();
+        List<Boolean> fortuneTable = new LinkedList<>();
+        List<String> itemSlots = new LinkedList<>();
+        bracketMatcher.reset(drops);
+        while (bracketMatcher.find()) {
+            itemSlots.add(bracketMatcher.group());
         }
         if (itemSlots.size() == 0) {
             itemSlots.add(drops);
@@ -44,12 +44,11 @@ public class DropUtils {
         
         for (String itemSlot : itemSlots) {
             String[] fortuneArray = itemSlot.split(FORTUNE_DELIM);
-            boolean fortune = fortuneArray.length > 1 ? Boolean.parseBoolean(fortuneArray[1]) : false;
-            List<ItemStack> slotTable = new ArrayList<ItemStack>();
+            boolean fortune = fortuneArray.length > 1 && Boolean.parseBoolean(fortuneArray[1]);
+            List<ItemStack> slotTable = new LinkedList<>();
             
             for (String drop : fortuneArray[0].split(DROP_DELIM)) {
                 String[] dropArray = drop.split(WEIGHT_DELIM);
-                Base.instance.getLogger().info("itemSlot: "+itemSlot+" | drop: "+drop);
                 int weight = dropArray.length > 1 ? Integer.parseInt(dropArray[1]) : 1;
                 int count = dropArray.length > 2 ? Integer.parseInt(dropArray[2]) : 1;
                 String[] itemArray = dropArray[0].split(":");
@@ -57,6 +56,8 @@ public class DropUtils {
                 ItemStack itemDrop = ItemStack.EMPTY;
                 
                 switch (itemString.toLowerCase()) {
+                    case "empty":
+                        break;
                     case "oredict":
                         itemDrop = OreDictUtils.getPreferredItemStack(itemArray[1]);
                         break;
@@ -75,7 +76,7 @@ public class DropUtils {
                             Base.instance.getLogger().error("Could not find Item for name: " + itemString);
                         }
                 }
-                
+
                 for (int i = 0; i < weight; i++) {
                     slotTable.add(itemDrop);
                 }

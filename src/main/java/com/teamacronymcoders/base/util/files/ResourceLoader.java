@@ -1,32 +1,37 @@
 package com.teamacronymcoders.base.util.files;
 
-import com.google.common.collect.Lists;
-import com.teamacronymcoders.base.Base;
+import com.google.common.collect.Maps;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.registrysystem.SoundEventRegistry;
+import com.teamacronymcoders.base.sound.IHasSoundGroup;
+import com.teamacronymcoders.base.sound.SoundGroup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.nio.charset.MalformedInputException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @SideOnly(Side.CLIENT)
 public class ResourceLoader {
     private File resourceFolder;
+    private final Gson gson;
 
     public ResourceLoader() {
-
+        gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     public void setup() throws NoSuchFieldException, IllegalAccessException {
@@ -98,6 +103,31 @@ public class ResourceLoader {
         BaseFileUtils.createFolder(models);
         BaseFileUtils.createFolder(new File(models, "block"));
         BaseFileUtils.createFolder(new File(models, "item"));
+
+        File sounds = new File(modFolder, "sounds");
+        BaseFileUtils.createFolder(sounds);
+    }
+
+    public void handleSoundsJsonForMod(IBaseMod mod) {
+        Map<String, SoundGroup> soundGroups = mod.getRegistryHolder().getRegistry(SoundEventRegistry.class, "SOUND_EVENT")
+                .getEntries().values().parallelStream()
+                .filter(soundEvent -> soundEvent instanceof IHasSoundGroup)
+                .map(soundEvent -> (IHasSoundGroup)soundEvent)
+                .map(soundEvent -> Pair.of(soundEvent.getName(), soundEvent.getSoundGroup()))
+                .collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
+
+        if (!soundGroups.values().isEmpty()) {
+            File soundsJson = new File(new File(resourceFolder, mod.getID()), "sounds.json");
+            Map<String, SoundGroup> currentSoundGroups = gson.fromJson(BaseFileUtils.readFileToString(soundsJson),
+                    new TypeToken<Map<String, SoundGroup>>(){}.getType());
+
+            if (currentSoundGroups == null) {
+                currentSoundGroups = Maps.newHashMap();
+            }
+            soundGroups.forEach(currentSoundGroups::putIfAbsent);
+
+            BaseFileUtils.writeStringToFile(gson.toJson(currentSoundGroups), soundsJson);
+        }
     }
 
 }

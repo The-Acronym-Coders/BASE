@@ -42,7 +42,7 @@ public class ModelHandler {
         } else {
             ItemStack itemStack;
             if (!allSubItems.isEmpty() && !(itemStack = allSubItems.get(0)).isEmpty()) {
-                this.logger.warning(itemStack.getUnlocalizedName() + " has no models");
+                this.logger.warning(itemStack.getTranslationKey() + " has no models");
             } else {
                 this.logger.warning("There's an issue with an IHasModel.");
             }

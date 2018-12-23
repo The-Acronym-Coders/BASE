@@ -29,7 +29,7 @@ public class CreativeTabBase extends CreativeTabs {
 
     @Override
     @Nonnull
-    public ItemStack getTabIconItem() {
+    public ItemStack createIcon() {
         return new ItemStack(Items.STICK);
     }
 }

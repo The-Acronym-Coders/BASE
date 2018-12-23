@@ -40,7 +40,7 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     public BlockBaseNoModel(Material mat, String name) {
         this(mat);
         this.name = name;
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
     }
 
     @Override
@@ -84,8 +84,8 @@ public class BlockBaseNoModel extends Block implements IHasItemBlock, IHasSubIte
     @Override
     @Nonnull
     @SuppressWarnings("deprecation")
-    public EnumPushReaction getMobilityFlag(@Nonnull IBlockState state) {
-        return state.getMaterial().getMobilityFlag();
+    public EnumPushReaction getPushReaction(@Nonnull IBlockState state) {
+        return state.getMaterial().getPushReaction();
     }
 
     public void setItemBlock(ItemBlock itemBlock) {

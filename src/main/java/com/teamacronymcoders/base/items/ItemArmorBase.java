@@ -15,7 +15,7 @@ public class ItemArmorBase extends ItemArmor implements IHasModel {
 
     public ItemArmorBase(ArmorMaterial material, EntityEquipmentSlot equipmentSlot, String name) {
         super(material, 0, equipmentSlot);
-        this.setUnlocalizedName(name);
+        this.setTranslationKey(name);
         this.name = name;
     }
 

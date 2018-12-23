@@ -81,8 +81,8 @@ public class ModelUtils {
     }
 
     public static TextureAtlasSprite getBlockSprite(ResourceLocation path) {
-        if (!path.getResourcePath().contains("blocks/")) {
-            path = new ResourceLocation(path.getResourceDomain(), "blocks/" + path.getResourcePath());
+        if (!path.getPath().contains("blocks/")) {
+            path = new ResourceLocation(path.getNamespace(), "blocks/" + path.getPath());
         }
         return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(path.toString());
     }

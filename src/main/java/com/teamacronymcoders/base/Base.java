@@ -1,20 +1,22 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.capability.tool.ToolConfiguration;
+import com.teamacronymcoders.base.command.CommandSubBase;
 import com.teamacronymcoders.base.entities.dataserializers.BaseDataSerializers;
-import com.teamacronymcoders.base.materialsystem.MaterialSystem;
+import com.teamacronymcoders.base.items.ItemEventHandler;
 import com.teamacronymcoders.base.proxies.ModCommonProxy;
+import com.teamacronymcoders.base.recipesystem.RecipeSystem;
 import com.teamacronymcoders.base.util.LanguageHelper;
 import com.teamacronymcoders.base.util.OreDictUtils;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.server.command.CommandTreeBase;
 
 import static com.teamacronymcoders.base.Reference.*;
 
@@ -32,6 +34,8 @@ public class Base extends BaseModFoundation<Base> {
     @SidedProxy(clientSide = "com.teamacronymcoders.base.proxies.ModClientProxy", serverSide = "com.teamacronymcoders.base.proxies.ModCommonProxy")
     public static ModCommonProxy proxy;
 
+    private CommandTreeBase baseCommand = new CommandSubBase(MODID);
+
     public Base() {
         super(MODID, NAME, VERSION, CreativeTabs.MISC);
     }
@@ -43,6 +47,8 @@ public class Base extends BaseModFoundation<Base> {
         BaseDataSerializers.registerSerializers();
         Capabilities.register();
         ToolConfiguration.configureTool();
+        RecipeSystem.setup();
+        MinecraftForge.EVENT_BUS.register(new ItemEventHandler());
     }
 
     @EventHandler
@@ -55,12 +61,16 @@ public class Base extends BaseModFoundation<Base> {
         super.postInit(event);
     }
 
-    public void setCreativeTab(CreativeTabs creativeTab) {
-        this.creativeTab = creativeTab;
+    @EventHandler
+    public void serverInit(FMLServerStartingEvent event) {
+        event.registerServerCommand(this.getBaseCommand());
     }
-
     @Override
     public Base getInstance() {
         return instance;
+    }
+
+    public CommandTreeBase getBaseCommand() {
+        return baseCommand;
     }
 }
