@@ -30,6 +30,5 @@ public class EntityOutput implements IOutput {
             entity.setPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ());
             recipeContainer.getWorld().spawnEntity(entity);
         }
-
     }
 }

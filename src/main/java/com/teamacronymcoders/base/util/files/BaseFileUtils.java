@@ -121,7 +121,7 @@ public class BaseFileUtils {
     }
 
     public static String readFileToString(File file) {
-        String string = null;
+        String string = "";
         try {
             string = FileUtils.readFileToString(file, Charset.forName("UTF-8"));
         } catch (IOException e) {
