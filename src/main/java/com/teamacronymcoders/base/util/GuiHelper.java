@@ -394,6 +394,7 @@ public class GuiHelper extends GuiScreen {
         drawTexturedModalRect(x, y, u, v, w, h);
     }
 
+    //Below this line...you guessed it, stolen from TiCon
 	public static void renderGuiTank(FluidStack fluid, int capacity, int amount, double x, double y, double width,
 			double height) {
 		GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);

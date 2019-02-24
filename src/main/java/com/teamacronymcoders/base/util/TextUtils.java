@@ -1,15 +1,14 @@
 package com.teamacronymcoders.base.util;
 
+import java.util.Locale;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.util.text.*;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-
-import java.util.Locale;
 
 public class TextUtils {
     private TextUtils() {
@@ -44,28 +43,24 @@ public class TextUtils {
         return rl;
     }
 
-	public static String localize(String input, Object... format) {
-		return I18n.translateToLocalFormatted(input, format);
-	}
-
-	public static TextComponentString representFluidStack(FluidStack stack) {
+	public static TextComponentBase representFluidStack(FluidStack stack) {
 		if(stack != null) {
 			return new TextComponentString(stack.getLocalizedName() + ": " + stack.amount + "mB");
 	
 		}
-		return new TextComponentString("No fluid");
+		return new TextComponentTranslation("base.info.nofluid");
 	}
 
-	public static TextComponentString representTankContents(IFluidTank tank) {
+	public static TextComponentBase representTankContents(IFluidTank tank) {
 		if(tank.getFluid() != null && tank.getFluidAmount() > 0) {
 			return new TextComponentString(tank.getFluid().getLocalizedName() + ": " + tank.getFluidAmount() + "mB/"
 					+ tank.getCapacity() + "mB");
 		}
-		return new TextComponentString("Empty");
+		return new TextComponentTranslation("base.info.empty");
 	}
 
-	public static TextComponentString representInventoryContents(ItemStackHandler handler) {
-		TextComponentString start = new TextComponentString("Inventory: ");
+	public static TextComponentBase representInventoryContents(ItemStackHandler handler) {
+		TextComponentTranslation start = new TextComponentTranslation("Inventory: ");
 		for(int i = 0; i < handler.getSlots(); i++) {
 			ItemStack current = handler.getStackInSlot(i);
 			if(current != ItemStack.EMPTY) {
