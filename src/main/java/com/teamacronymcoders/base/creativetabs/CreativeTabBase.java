@@ -1,13 +1,13 @@
 package com.teamacronymcoders.base.creativetabs;
 
+import java.util.function.Supplier;
+
+import javax.annotation.Nonnull;
+
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nonnull;
-import java.util.function.Supplier;
 
 public class CreativeTabBase extends CreativeTabs {
     private Supplier<ItemStack> function;
@@ -30,6 +30,6 @@ public class CreativeTabBase extends CreativeTabs {
     @Override
     @Nonnull
     public ItemStack createIcon() {
-        return new ItemStack(Items.STICK);
+        return function.get();
     }
 }

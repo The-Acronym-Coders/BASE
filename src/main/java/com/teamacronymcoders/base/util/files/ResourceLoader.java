@@ -65,6 +65,7 @@ public class ResourceLoader {
                     .map(File::listFiles)
                     .filter(Objects::nonNull)
                     .flatMap(Arrays::stream)
+                    .filter(File::isFile)
                     .forEach(this::fixLangFile);
         }
 

@@ -1,9 +1,14 @@
 package com.teamacronymcoders.base.util;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.registries.IForgeRegistryEntry;
-
 import java.util.Locale;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.*;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class TextUtils {
     private TextUtils() {
@@ -37,4 +42,32 @@ public class TextUtils {
         }
         return rl;
     }
+
+	public static TextComponentBase representFluidStack(FluidStack stack) {
+		if(stack != null) {
+			return new TextComponentString(stack.getLocalizedName() + ": " + stack.amount + "mB");
+	
+		}
+		return new TextComponentTranslation("base.info.nofluid");
+	}
+
+	public static TextComponentBase representTankContents(IFluidTank tank) {
+		if(tank.getFluid() != null && tank.getFluidAmount() > 0) {
+			return new TextComponentString(tank.getFluid().getLocalizedName() + ": " + tank.getFluidAmount() + "mB/"
+					+ tank.getCapacity() + "mB");
+		}
+		return new TextComponentTranslation("base.info.empty");
+	}
+
+	public static TextComponentBase representInventoryContents(ItemStackHandler handler) {
+		TextComponentTranslation start = new TextComponentTranslation("Inventory: ");
+		for(int i = 0; i < handler.getSlots(); i++) {
+			ItemStack current = handler.getStackInSlot(i);
+			if(current != ItemStack.EMPTY) {
+				start.appendText(current.getCount() + " " + current.getDisplayName() + " ");
+			}
+		}
+	
+		return start;
+	}
 }
