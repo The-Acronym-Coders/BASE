@@ -1,6 +1,7 @@
 package com.teamacronymcoders.base.client.models.generator;
 
 import com.teamacronymcoders.base.IBaseMod;
+import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.util.Platform;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
@@ -12,17 +13,30 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class ModelGenerator {
-    private static File blockStatesFolder;
-    private static File blockModelsFolder;
-    private static File itemModelsFolder;
-    private static boolean isSetup = false;
-    private static boolean okayToRun = false;
+    private final File blockStatesFolder;
+    private final File blockModelsFolder;
+    private final File itemModelsFolder;
+    private final boolean okayToRun;
 
-    public static void generate(IHasGeneratedModel model) {
-        if (!isSetup) {
-            setupFolders();
+    public ModelGenerator(IBaseMod mod) {
+        File resourceFolder = mod.getResourceFolder();
+        if (resourceFolder != null) {
+            blockStatesFolder = new File(resourceFolder, "blockstates");
+            BaseFileUtils.createFolder(blockStatesFolder);
+            blockModelsFolder = new File(resourceFolder, "models/block");
+            BaseFileUtils.createFolder(blockModelsFolder);
+            itemModelsFolder = new File(resourceFolder, "models/item");
+            BaseFileUtils.createFolder(itemModelsFolder);
+            okayToRun = true;
+        } else {
+            blockStatesFolder = null;
+            blockModelsFolder = null;
+            itemModelsFolder = null;
+            okayToRun = false;
         }
+    }
 
+    public void generate(IHasGeneratedModel model) {
         if (okayToRun) {
             List<IGeneratedModel> generatedModels = model.getGeneratedModels();
             generatedModels.forEach(resource -> {
@@ -43,22 +57,5 @@ public class ModelGenerator {
                 }
             });
         }
-    }
-
-    private static void setupFolders() {
-        IBaseMod mod = Platform.getCurrentMod();
-        if (mod != null) {
-            File resourceFolder = mod.getResourceFolder();
-            if (resourceFolder != null) {
-                blockStatesFolder = new File(resourceFolder, "blockstates");
-                BaseFileUtils.createFolder(blockStatesFolder);
-                blockModelsFolder = new File(resourceFolder, "models/block");
-                BaseFileUtils.createFolder(blockModelsFolder);
-                itemModelsFolder = new File(resourceFolder, "models/item");
-                BaseFileUtils.createFolder(itemModelsFolder);
-                okayToRun = true;
-            }
-        }
-        isSetup = true;
     }
 }
