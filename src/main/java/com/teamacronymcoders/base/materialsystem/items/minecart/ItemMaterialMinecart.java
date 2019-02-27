@@ -79,7 +79,7 @@ public class ItemMaterialMinecart extends ItemMinecartBase implements IHasItemCo
     }
 
     @Override
-    public int getColorFromItemstack(@Nonnull ItemStack itemStack, int tintIndex) {
+    public int getColorFromItemStack(@Nonnull ItemStack itemStack, int tintIndex) {
         return tintIndex == 0 ? this.getMaterialPartFromItemStack(itemStack).getColor() : -1;
     }
 

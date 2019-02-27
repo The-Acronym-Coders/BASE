@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.proxies;
 
-import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;

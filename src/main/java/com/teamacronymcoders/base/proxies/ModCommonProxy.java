@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.proxies;
 
-import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.multiblock.IMultiblockRegistry;
 import com.teamacronymcoders.base.multiblock.MultiblockEventHandler;
 import com.teamacronymcoders.base.multiblock.MultiblockRegistry;

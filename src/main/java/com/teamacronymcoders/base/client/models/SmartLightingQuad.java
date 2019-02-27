@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.client.models;
 
-import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -10,6 +10,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraftforge.client.model.pipeline.*;
 
 import javax.annotation.Nonnull;
@@ -56,7 +58,7 @@ public class SmartLightingQuad extends BakedQuad {
 
     @Override
     public void pipe(@Nonnull IVertexConsumer consumer) {
-        IBlockAccess world = null;
+        IWorldReader world = null;
         BlockInfo info;
         if (consumer instanceof VertexLighterFlat) {
             try {
@@ -83,7 +85,7 @@ public class SmartLightingQuad extends BakedQuad {
                     //lightmap is UV with 2 shorts
                     if (format.getElement(e).getUsage() == EnumUsage.UV && format.getElement(e).getType() == EnumType.SHORT){
                         int brightness;
-                        if (!ignoreLight && world != null && !(world instanceof ChunkCache)) {
+                        if (!ignoreLight && world != null) {
                             BlockPos here = blockPos.add(relativePos[v][0], relativePos[v][1], relativePos[v][2]);
                             brightness = world.getCombinedLight(here, 0);
                         } else {

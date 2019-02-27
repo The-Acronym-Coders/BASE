@@ -2,17 +2,13 @@ package com.teamacronymcoders.base.proxies;
 
 import com.google.common.base.Strings;
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.blocks.IHasBlockColor;
-import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.models.IHasModel;
-import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.modulesystem.IModule;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;

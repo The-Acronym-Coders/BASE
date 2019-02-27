@@ -6,21 +6,21 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class Colors {
     public static void registerItemColor(Object object, IHasItemColor itemColor) {
-        ItemColors itemColors = Minecraft.getMinecraft().getItemColors();
+        ItemColors itemColors = Minecraft.getInstance().getItemColors();
         if (object instanceof Item) {
-            itemColors.registerItemColorHandler(itemColor::getColorFromItemstack, (Item) object);
+            itemColors.register(itemColor::getColorFromItemStack, (Item) object);
         } else if (object instanceof Block) {
-            itemColors.registerItemColorHandler(itemColor::getColorFromItemstack, (Block) object);
+            itemColors.register(itemColor::getColorFromItemStack, (Block) object);
         }
     }
 
     public static void registerBlockColor(IHasBlockColor blockColor) {
-        Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(blockColor::colorMultiplier, blockColor.getBlock());
+        Minecraft.getInstance().getBlockColors().register(blockColor::colorMultiplier, blockColor.getBlock());
     }
 }

@@ -5,12 +5,8 @@ import com.teamacronymcoders.base.registrysystem.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistryPieceBase;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.eventbus.api.EventPriority;
 
-@SideOnly(Side.CLIENT)
 @RegistryPiece(value = RegistrySide.CLIENT, priority = EventPriority.LOWEST)
 public class ModelGeneratorPiece extends RegistryPieceBase<IHasGeneratedModel> {
     private ModelGenerator modelGenerator;

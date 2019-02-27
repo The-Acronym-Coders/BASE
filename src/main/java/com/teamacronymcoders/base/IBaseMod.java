@@ -8,7 +8,7 @@ import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import com.teamacronymcoders.base.registrysystem.IRegistryHolder;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.util.logging.ILogger;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemGroup;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -18,13 +18,11 @@ public interface IBaseMod<T> {
     T getInstance();
 
     @Nullable
-    CreativeTabs getCreativeTab();
+    ItemGroup getItemGroup();
 
     String getID();
 
     String getName();
-
-    String getVersion();
 
     boolean hasConfig();
 
@@ -44,7 +42,9 @@ public interface IBaseMod<T> {
 
     List<ModuleHandler> getOtherModuleHandlers();
 
-    boolean addOBJDomain();
+    default boolean addOBJDomain() {
+        return false;
+    }
 
     default boolean hasExternalResources() {
         return false;
@@ -52,9 +52,6 @@ public interface IBaseMod<T> {
 
     @Nullable
     MaterialUser getMaterialUser();
-
-    @Nullable
-    SubBlockSystem getSubBlockSystem();
 
     @Nullable
     File getResourceFolder();

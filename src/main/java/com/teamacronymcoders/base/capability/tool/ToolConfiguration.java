@@ -3,7 +3,6 @@ package com.teamacronymcoders.base.capability.tool;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.Base;
-import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.modules.tool.CapabilityProviderTool;
 import com.teamacronymcoders.base.registrysystem.config.ConfigEntry;
 import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;

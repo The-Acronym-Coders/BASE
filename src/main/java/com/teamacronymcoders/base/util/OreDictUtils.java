@@ -3,7 +3,6 @@ package com.teamacronymcoders.base.util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.Base;
-import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.registrysystem.config.ConfigEntry;
 import com.teamacronymcoders.base.registrysystem.config.ConfigEntryBuilder;
 import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
@@ -11,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 

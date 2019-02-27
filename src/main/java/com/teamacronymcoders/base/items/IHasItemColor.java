@@ -5,5 +5,5 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 
 public interface IHasItemColor {
-    int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex);
+    int getColorFromItemStack(@Nonnull ItemStack stack, int tintIndex);
 }

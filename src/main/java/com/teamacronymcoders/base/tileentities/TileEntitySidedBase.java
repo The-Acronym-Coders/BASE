@@ -11,8 +11,6 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,9 +40,9 @@ public abstract class TileEntitySidedBase<CAP> extends TileEntityBase implements
     public void updateBlock() {
         IBlockState state = world.getBlockState(getPos());
         world.notifyBlockUpdate(pos, state, state, 3);
-        world.notifyNeighborsOfStateChange(pos, state.getBlock(), true);
+        world.notifyNeighborsOfStateChange(pos, state.getBlock());
         if (!world.isRemote) {
-            world.addBlockEvent(getPos(), this.getBlockType(), 0, 0);
+            world.addBlockEvent(getPos(), state.getBlock(), 0, 0);
         }
     }
 

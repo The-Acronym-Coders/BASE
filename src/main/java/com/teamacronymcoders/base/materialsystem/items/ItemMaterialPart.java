@@ -49,7 +49,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
     }
 
     @Override
-    public int getColorFromItemstack(@Nonnull ItemStack itemStack, int tintIndex) {
+    public int getColorFromItemStack(@Nonnull ItemStack itemStack, int tintIndex) {
         MaterialPart materialPart = this.getMaterialPartFromItemStack(itemStack);
         if (materialPart.getPart().hasOverlayTexture()) {
             return tintIndex == 1 ? this.getMaterialPartFromItemStack(itemStack).getColor() : -1;

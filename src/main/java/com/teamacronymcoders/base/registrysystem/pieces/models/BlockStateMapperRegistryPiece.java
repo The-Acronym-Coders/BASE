@@ -1,7 +1,5 @@
 package com.teamacronymcoders.base.registrysystem.pieces.models;
 
-import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
-import com.teamacronymcoders.base.client.BlockStateMappers;
 import com.teamacronymcoders.base.registrysystem.Registry;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistryPiece;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistryPieceBase;

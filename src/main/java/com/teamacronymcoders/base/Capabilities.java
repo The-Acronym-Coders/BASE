@@ -2,7 +2,7 @@ package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.api.ITool;
 import com.teamacronymcoders.base.api.ToolImpl;
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.INBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -21,9 +21,9 @@ public class Capabilities {
             }
 
             @Override
-            public void readNBT(Capability<ITool> capability, ITool instance, EnumFacing side, NBTBase nbt) {
+            public void readNBT(Capability<ITool> capability, ITool instance, EnumFacing side, INBTBase nbt) {
 
             }
-        }, ToolImpl.class);
+        }, ToolImpl::new);
     }
 }

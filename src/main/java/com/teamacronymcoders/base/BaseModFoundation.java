@@ -5,7 +5,9 @@ import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import com.teamacronymcoders.base.network.PacketHandler;
+import com.teamacronymcoders.base.proxies.LibClientProxy;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
+import com.teamacronymcoders.base.proxies.LibServerProxy;
 import com.teamacronymcoders.base.registrysystem.*;
 import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
 import com.teamacronymcoders.base.registrysystem.pieces.IRegistryPiece;
@@ -18,25 +20,25 @@ import com.teamacronymcoders.base.util.OreDictUtils;
 import com.teamacronymcoders.base.util.Platform;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import com.teamacronymcoders.base.util.logging.ModLogger;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import javax.annotation.Nullable;
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public abstract class BaseModFoundation<T extends BaseModFoundation> implements IBaseMod<T>, IRegistryHolder {
-    protected CreativeTabs creativeTab;
+    protected ItemGroup itemGroup;
     protected ILogger logger;
     protected GuiHandler guiHandler;
     protected PacketHandler packetHandler;
@@ -44,32 +46,22 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     protected ModuleHandler moduleHandler;
     protected LibCommonProxy libProxy;
     protected MaterialUser materialUser;
-    protected SubBlockSystem subBlockSystem;
     private String modid;
-    private String modName;
-    private String version;
     private File resourceFolder;
     private File minecraftFolder;
 
-    public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab) {
-        this(modid, name, version, creativeTab, false);
-    }
-
-    public BaseModFoundation(String modid, String name, String version, CreativeTabs creativeTab, boolean optionalSystems) {
+    public BaseModFoundation(String modid, ItemGroup itemGroup, boolean optionalSystems) {
         this.modid = modid;
-        this.modName = name;
-        this.version = version;
-        this.creativeTab = creativeTab;
+        this.itemGroup = itemGroup;
         this.logger = new ModLogger(modid);
         this.packetHandler = new PacketHandler(modid);
         if (optionalSystems) {
             materialUser = new MaterialUser(this);
-            subBlockSystem = new SubBlockSystem(this);
             OreDictUtils.addDefaultModId(modid);
         }
 
-        this.libProxy = ClassLoading.createProxy("com.teamacronymcoders.base.proxies.LibClientProxy",
-                "com.teamacronymcoders.base.proxies.LibServerProxy");
+        this.libProxy = DistExecutor.runForDist(() -> LibClientProxy::new, () -> LibServerProxy::new);
+
         this.getLibProxy().setMod(this);
 
         if (hasExternalResources()) {
@@ -77,10 +69,11 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         }
     }
 
-    public void preInit(FMLPreInitializationEvent event) {
+    public void preInit(FMLCommonSetupEvent event) {
         BaseMods.addBaseMod(this);
 
-        this.minecraftFolder = event.getModConfigurationDirectory().getParentFile();
+        //TODO: Fix Folder finding
+        this.minecraftFolder = new File(".");
         this.resourceFolder = new File(minecraftFolder, "resources");
 
         this.createRegistries(event, this.getRegistryPieces(event.getAsmData()));
@@ -103,7 +96,7 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
         this.beforeModuleHandlerInit(event);
 
-        this.moduleHandler = new ModuleHandler(this, event.getAsmData());
+        this.moduleHandler = new ModuleHandler(this, null);
         this.getModuleHandler().setupModules();
         this.getOtherModuleHandlers().forEach(ModuleHandler::setupModules);
         this.getModuleHandler().preInit(event);
@@ -115,12 +108,12 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getAllRegistries().forEach((name, registry) -> registry.preInit());
     }
 
-    public void createRegistries(FMLPreInitializationEvent event, List<IRegistryPiece> registryPieces) {
+    public void createRegistries(FMLCommonSetupEvent event, List<IRegistryPiece> registryPieces) {
         this.addRegistry("BLOCK", new BlockRegistry(this, registryPieces));
         this.addRegistry("ITEM", new ItemRegistry(this, registryPieces));
         this.addRegistry("ENTITY", new EntityRegistry(this, registryPieces));
         if (this.hasConfig()) {
-            this.addRegistry("CONFIG", new ConfigRegistry(this, event.getModConfigurationDirectory(), this.useModAsConfigFolder()));
+            this.addRegistry("CONFIG", new ConfigRegistry(this, this.minecraftFolder, this.useModAsConfigFolder()));
             SaveLoader.setConfigFolder(this.getRegistry(ConfigRegistry.class, "CONFIG").getTacFolder());
         }
         this.addRegistry("SOUND_EVENT", new SoundEventRegistry(this));
@@ -134,11 +127,11 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
 
     }
 
-    public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
+    public void beforeModuleHandlerInit(FMLCommonSetupEvent event) {
 
     }
 
-    public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
+    public void afterModuleHandlerInit(FMLCommonSetupEvent event) {
 
     }
 
@@ -154,33 +147,14 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
         this.getLibProxy().handleSounds();
     }
 
-    public void init(FMLInitializationEvent event) {
-        this.getModuleHandler().init(event);
-        this.getOtherModuleHandlers().forEach(otherHandler -> otherHandler.init(event));
-
-        this.getAllRegistries().forEach((name, registry) -> registry.init());
-    }
-
-    public void postInit(FMLPostInitializationEvent event) {
-        this.getModuleHandler().postInit(event);
-        this.getOtherModuleHandlers().forEach(otherHandler -> otherHandler.postInit(event));
-
-        this.getAllRegistries().forEach((name, registry) -> registry.postInit());
-    }
-
     @Override
-    public CreativeTabs getCreativeTab() {
-        return this.creativeTab;
+    public ItemGroup getItemGroup() {
+        return this.itemGroup;
     }
 
     @Override
     public String getID() {
         return this.modid;
-    }
-
-    @Override
-    public String getName() {
-        return this.modName;
     }
 
     @Override
@@ -242,12 +216,6 @@ public abstract class BaseModFoundation<T extends BaseModFoundation> implements 
     @Override
     public MaterialUser getMaterialUser() {
         return this.materialUser;
-    }
-
-    @Nullable
-    @Override
-    public SubBlockSystem getSubBlockSystem() {
-        return this.subBlockSystem;
     }
 
     @Nullable

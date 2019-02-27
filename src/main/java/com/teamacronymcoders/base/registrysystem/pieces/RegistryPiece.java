@@ -1,11 +1,11 @@
 package com.teamacronymcoders.base.registrysystem.pieces;
 
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.eventbus.api.EventPriority;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import static net.minecraftforge.fml.common.eventhandler.EventPriority.NORMAL;
+import static net.minecraftforge.eventbus.api.EventPriority.NORMAL;
 
 
 @Retention(RetentionPolicy.RUNTIME)

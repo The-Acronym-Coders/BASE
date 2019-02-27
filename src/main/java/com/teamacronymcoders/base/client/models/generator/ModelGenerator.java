@@ -1,17 +1,12 @@
 package com.teamacronymcoders.base.client.models.generator;
 
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
-import com.teamacronymcoders.base.util.Platform;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
 import java.util.List;
 
-@SideOnly(Side.CLIENT)
 public class ModelGenerator {
     private final File blockStatesFolder;
     private final File blockModelsFolder;

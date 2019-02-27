@@ -2,9 +2,7 @@ package com.teamacronymcoders.base.materialsystem.items;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
@@ -12,7 +10,6 @@ import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGenera
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
-import com.teamacronymcoders.base.util.ItemStackUtils;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.entity.Entity;
@@ -31,7 +28,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 public class ItemMaterialArmor extends ItemArmor implements IHasModel, IHasItemColor, IHasGeneratedModel {
     private MaterialPart materialPart;
@@ -105,7 +101,7 @@ public class ItemMaterialArmor extends ItemArmor implements IHasModel, IHasItemC
     }
 
     @Override
-    public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
+    public int getColorFromItemStack(@Nonnull ItemStack stack, int tintIndex) {
         return this.getColor(stack);
     }
 

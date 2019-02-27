@@ -2,9 +2,11 @@ package com.teamacronymcoders.base.client.models;
 
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
+import net.minecraft.client.renderer.Vector3f;
+import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.model.ItemTransformVec3f;
+import net.minecraft.client.renderer.texture.MissingTextureSprite;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -13,16 +15,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.model.obj.OBJModel.Normal;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.util.vector.Vector3f;
 
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
 //Borrowed from IE with Permission
-@SideOnly(Side.CLIENT)
 public class ModelUtils {
     private static float[] alphaNoFading = {1, 1, 1, 1};
 
@@ -67,7 +65,7 @@ public class ModelUtils {
                     break;
                 case UV:
                     if (sprite == null) {//Double Safety. I have no idea how it even happens, but it somehow did .-.
-                        sprite = Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite();
+                        sprite = MissingTextureSprite.getSprite();
                     }
                     builder.put(e, sprite.getInterpolatedU(u), sprite.getInterpolatedV((v)), 0, 1);
                     break;
@@ -84,7 +82,7 @@ public class ModelUtils {
         if (!path.getPath().contains("blocks/")) {
             path = new ResourceLocation(path.getNamespace(), "blocks/" + path.getPath());
         }
-        return Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(path.toString());
+        return Minecraft.getInstance().getTextureMap().getSprite(path);
     }
 
     @SuppressWarnings("deprecation")

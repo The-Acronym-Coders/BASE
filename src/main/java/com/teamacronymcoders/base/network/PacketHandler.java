@@ -3,16 +3,11 @@ package com.teamacronymcoders.base.network;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
-
-import static net.minecraftforge.fml.common.network.NetworkRegistry.INSTANCE;
-import static net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 
 public class PacketHandler {
-    private SimpleNetworkWrapper networkWrapper;
+    private PacketDistributor networkWrapper;
     private int id = -1;
 
     public PacketHandler(String modid) {

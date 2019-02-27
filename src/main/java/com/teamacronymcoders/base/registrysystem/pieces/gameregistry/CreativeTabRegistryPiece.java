@@ -42,6 +42,6 @@ public class CreativeTabRegistryPiece extends RegistryPieceBase {
     @Override
     public void setMod(IBaseMod mod) {
         super.setMod(mod);
-        this.creativeTabs = mod.getCreativeTab();
+        this.creativeTabs = mod.getItemGroup();
     }
 }

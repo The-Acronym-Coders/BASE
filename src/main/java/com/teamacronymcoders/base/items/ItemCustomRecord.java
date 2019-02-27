@@ -43,7 +43,7 @@ public class ItemCustomRecord extends ItemRecord implements IHasGeneratedModel, 
     }
 
     @Override
-    public int getColorFromItemstack(@Nonnull ItemStack stack, int tintIndex) {
+    public int getColorFromItemStack(@Nonnull ItemStack stack, int tintIndex) {
         return color != null && tintIndex == 1 ? color.getIntColor() : -1;
     }
 
