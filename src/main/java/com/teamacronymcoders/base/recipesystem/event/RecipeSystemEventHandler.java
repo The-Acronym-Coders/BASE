@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.recipesystem.event;
 
-import com.teamacronymcoders.base.event.BaseRegistryEvent;
 import com.teamacronymcoders.base.recipesystem.RecipeSystem;
 import com.teamacronymcoders.base.recipesystem.condition.BiomeCondition;
 import com.teamacronymcoders.base.recipesystem.condition.ICondition;

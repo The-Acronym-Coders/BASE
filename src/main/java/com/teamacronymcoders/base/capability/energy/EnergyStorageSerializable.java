@@ -20,18 +20,18 @@ public class EnergyStorageSerializable extends EnergyStorage implements INBTSeri
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        nbtTagCompound.setInteger("capacity", this.capacity);
-        nbtTagCompound.setInteger("maxReceive", this.maxReceive);
-        nbtTagCompound.setInteger("maxExtract", this.maxExtract);
-        nbtTagCompound.setInteger("amount", this.energy);
+        nbtTagCompound.setInt("capacity", this.capacity);
+        nbtTagCompound.setInt("maxReceive", this.maxReceive);
+        nbtTagCompound.setInt("maxExtract", this.maxExtract);
+        nbtTagCompound.setInt("amount", this.energy);
         return nbtTagCompound;
     }
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
-        this.capacity = nbt.getInteger("capacity");
-        this.maxReceive = nbt.getInteger("maxReceive");
-        this.maxExtract = nbt.getInteger("maxExtract");
-        this.energy = nbt.getInteger("amount");
+        this.capacity = nbt.getInt("capacity");
+        this.maxReceive = nbt.getInt("maxReceive");
+        this.maxExtract = nbt.getInt("maxExtract");
+        this.energy = nbt.getInt("amount");
     }
 }

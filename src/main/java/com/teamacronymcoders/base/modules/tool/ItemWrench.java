@@ -3,7 +3,6 @@ package com.teamacronymcoders.base.modules.tool;
 import com.teamacronymcoders.base.Capabilities;
 import com.teamacronymcoders.base.api.ITool;
 import com.teamacronymcoders.base.items.IHasRecipe;
-import com.teamacronymcoders.base.items.ItemBase;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemGroup;

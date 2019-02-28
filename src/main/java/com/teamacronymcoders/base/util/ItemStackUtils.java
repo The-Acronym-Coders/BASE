@@ -22,4 +22,22 @@ public class ItemStackUtils {
     public static boolean isValid(@Nullable ItemStack itemStack) {
         return itemStack != null && !itemStack.isEmpty();
     }
+
+    public static ItemStack mergeStacks(ItemStack original, ItemStack additional) {
+        if (ItemStackUtils.canStacksMerge(original, additional)) {
+            int spaceToAdd = original.getMaxStackSize() - original.getCount();
+            if (spaceToAdd > 0) {
+                int amountToAdd = Math.min(additional.getCount(), spaceToAdd);
+                additional.shrink(amountToAdd);
+                original.grow(amountToAdd);
+            }
+        }
+
+        return additional;
+    }
+
+    public static boolean canStacksMerge(ItemStack original, ItemStack additional) {
+        return ItemStack.areItemsEqual(original, additional)&&
+                ItemStack.areItemStackTagsEqual(original, additional);
+    }
 }

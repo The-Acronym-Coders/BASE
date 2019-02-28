@@ -15,10 +15,13 @@ public class ItemStackQueue extends QueueFoundation<ItemStack> implements IItemH
 
     @Override
     protected ItemStack addToBack(ItemStack value) {
-        ItemStack remaining = value;
+        ItemStack remaining;
         if (this.getEndOfQueue().isPresent()) {
             remaining = ItemStackUtils.mergeStacks(this.getEndOfQueue().get(), value);
+        } else {
+            remaining = value;
         }
+
         if (anyRemainingValue(remaining) && this.getLength() < this.getQueueSize()) {
             this.push(remaining);
             remaining = ItemStack.EMPTY;
@@ -38,7 +41,7 @@ public class ItemStackQueue extends QueueFoundation<ItemStack> implements IItemH
 
     @Override
     public ItemStack deserializeValue(NBTTagCompound nbtTagCompound) {
-        return new ItemStack(nbtTagCompound);
+        return ItemStack.read(nbtTagCompound);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.teamacronymcoders.base.modules.debug.items;
 
 import com.teamacronymcoders.base.api.IDebuggable;
-import com.teamacronymcoders.base.items.ItemBase;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

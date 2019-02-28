@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
-import com.teamacronymcoders.base.event.PlaceWaypointEvent;
+import com.teamacronymcoders.base.event.PlaceWayPointEvent;
 import com.teamacronymcoders.base.items.IDropTable;
 import com.teamacronymcoders.base.items.ItemStackDropTable;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
@@ -70,7 +70,7 @@ public class SubBlockOreSamplePart extends SubBlockPart {
     public void getDrops(int fortune, List<ItemStack> itemStacks) {
         if(dropTable == null) {
             if (itemDrop != null && !itemDrop.isEmpty()) {
-                dropTable = DropUtils.parseDrops(itemDrop);
+                dropTable = DropUtils.getDrops(itemDrop);
             } else {
                 dropTable = new ItemStackDropTable(getItemStack());
             }
@@ -169,7 +169,7 @@ public class SubBlockOreSamplePart extends SubBlockPart {
             world.setBlockToAir(pos);
         }
         if(player.isSneaking()) {
-            EVENT_BUS.post(new PlaceWaypointEvent(this.getLocalizedName(), world.provider.getDimension(), pos, this.getColor()));
+            EVENT_BUS.post(new PlaceWayPointEvent(this.getLocalizedName(), world.provider.getDimension(), pos, this.getColor()));
         }
         player.swingArm(EnumHand.MAIN_HAND);
         return true;
