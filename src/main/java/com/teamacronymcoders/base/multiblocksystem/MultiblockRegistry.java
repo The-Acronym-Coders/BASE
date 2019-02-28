@@ -1,11 +1,28 @@
-package com.teamacronymcoders.base.multiblock;
+package com.teamacronymcoders.base.multiblocksystem;
 
+import com.teamacronymcoders.base.Base;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.HashMap;
 
 public final class MultiblockRegistry implements IMultiblockRegistry {
+
+    private static MultiblockRegistry instance;
+
+    public static MultiblockRegistry getInstance() {
+        if (instance == null) {
+            instance = new MultiblockRegistry();
+        }
+        return instance;
+    }
+    private HashMap<IWorld, MultiblockWorldRegistry> registries;
+
+    private MultiblockRegistry() {
+        this.registries = new HashMap<>(2);
+        MinecraftForge.EVENT_BUS.register(new MultiblockEventHandler());
+    }
 
     /**
      * Register a new part in the system. The part has been created either through user action or via a chunk loading.
@@ -18,18 +35,22 @@ public final class MultiblockRegistry implements IMultiblockRegistry {
 
         MultiblockWorldRegistry registry;
 
-        if (this._registries.containsKey(world)) {
+        if (this.registries.containsKey(world)) {
 
-            registry = this._registries.get(world);
+            registry = this.registries.get(world);
 
         } else {
 
             registry = new MultiblockWorldRegistry(world);
-            this._registries.put(world, registry);
+            this.registries.put(world, registry);
         }
 
         registry.onPartAdded(part);
     }
+
+    /*
+     * Private implementation
+     */
 
     /**
      * Call to remove a part from world lists.
@@ -40,8 +61,8 @@ public final class MultiblockRegistry implements IMultiblockRegistry {
     @Override
     public void onPartRemovedFromWorld(final World world, final IMultiblockPart part) {
 
-        if (this._registries.containsKey(world))
-            this._registries.get(world).onPartRemovedFromWorld(part);
+        if (this.registries.containsKey(world))
+            this.registries.get(world).onPartRemovedFromWorld(part);
     }
 
     /**
@@ -54,10 +75,10 @@ public final class MultiblockRegistry implements IMultiblockRegistry {
     @Override
     public void addDeadController(final World world, final MultiblockControllerBase controller) {
 
-        if (this._registries.containsKey(world))
-            this._registries.get(world).addDeadController(controller);
+        if (this.registries.containsKey(world))
+            this.registries.get(world).addDeadController(controller);
         else
-            FMLLog.warning(
+            Base.instance.getLogger().warn(
                     "Controller %d in world %s marked as dead, but that world is not tracked! Controller is being ignored.",
                     controller.hashCode(), world);
     }
@@ -72,16 +93,13 @@ public final class MultiblockRegistry implements IMultiblockRegistry {
     @Override
     public void addDirtyController(final World world, final MultiblockControllerBase controller) {
 
-        if (this._registries.containsKey(world))
-            this._registries.get(world).addDirtyController(controller);
-        else
+        if (this.registries.containsKey(world)) {
+            this.registries.get(world).addDirtyController(controller);
+        } else {
             throw new IllegalArgumentException(
                     "Adding a dirty controller to a world that has no registered controllers!");
+        }
     }
-
-	/*
-     * Private implementation
-	 */
 
     /**
      * Called before Tile Entities are ticked in the world. Do bookkeeping here.
@@ -90,9 +108,9 @@ public final class MultiblockRegistry implements IMultiblockRegistry {
      */
     protected void tickStart(final World world) {
 
-        if (this._registries.containsKey(world)) {
+        if (this.registries.containsKey(world)) {
 
-            final MultiblockWorldRegistry registry = this._registries.get(world);
+            final MultiblockWorldRegistry registry = this.registries.get(world);
 
             registry.processMultiblockChanges();
             registry.tickStart();
@@ -106,10 +124,11 @@ public final class MultiblockRegistry implements IMultiblockRegistry {
      * @param chunkX The X coordinate of the chunk
      * @param chunkZ The Z coordinate of the chunk
      */
-    protected void onChunkLoaded(final World world, final int chunkX, final int chunkZ) {
+    protected void onChunkLoaded(final IWorld world, final int chunkX, final int chunkZ) {
 
-        if (this._registries.containsKey(world))
-            this._registries.get(world).onChunkLoaded(chunkX, chunkZ);
+        if (this.registries.containsKey(world)) {
+            this.registries.get(world).onChunkLoaded(chunkX, chunkZ);
+        }
     }
 
     /**
@@ -117,19 +136,10 @@ public final class MultiblockRegistry implements IMultiblockRegistry {
      *
      * @param world The world being unloaded.
      */
-    protected void onWorldUnloaded(final World world) {
-
-        if (this._registries.containsKey(world)) {
-            this._registries.get(world).onWorldUnloaded();
-            this._registries.remove(world);
+    protected void onWorldUnloaded(final IWorld world) {
+        if (this.registries.containsKey(world)) {
+            this.registries.get(world).onWorldUnloaded();
+            this.registries.remove(world);
         }
     }
-
-    private MultiblockRegistry() {
-        this._registries = new HashMap<World, MultiblockWorldRegistry>(2);
-    }
-
-    private HashMap<World, MultiblockWorldRegistry> _registries;
-
-    public static final MultiblockRegistry INSTANCE = new MultiblockRegistry();
 }

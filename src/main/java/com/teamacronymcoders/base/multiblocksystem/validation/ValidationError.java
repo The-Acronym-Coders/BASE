@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.multiblock.validation;
+package com.teamacronymcoders.base.multiblocksystem.validation;
 
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -7,6 +7,8 @@ public class ValidationError {
 
     public static final ValidationError VALIDATION_ERROR_TOO_FEW_PARTS =
             new ValidationError("base.api.multiblock.validation.too_few_parts");
+    protected final String _resourceKey;
+    protected final Object[] _parameters;
 
     public ValidationError(String messageFormatStringResourceKey, Object... messageParameters) {
         this._resourceKey = messageFormatStringResourceKey;
@@ -16,7 +18,4 @@ public class ValidationError {
     public ITextComponent getChatMessage() {
         return new TextComponentTranslation(this._resourceKey, _parameters);
     }
-
-    protected final String _resourceKey;
-    protected final Object[] _parameters;
 }

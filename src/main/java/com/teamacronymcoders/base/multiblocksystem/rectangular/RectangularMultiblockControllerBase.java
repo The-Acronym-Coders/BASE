@@ -1,15 +1,13 @@
-package com.teamacronymcoders.base.multiblock.rectangular;
+package com.teamacronymcoders.base.multiblocksystem.rectangular;
 
-import com.teamacronymcoders.base.multiblock.MultiblockControllerBase;
-import com.teamacronymcoders.base.multiblock.validation.IMultiblockValidator;
-import com.teamacronymcoders.base.multiblock.validation.ValidationError;
-
+import com.teamacronymcoders.base.multiblocksystem.MultiblockControllerBase;
+import com.teamacronymcoders.base.multiblocksystem.validation.IMultiblockValidator;
+import com.teamacronymcoders.base.multiblocksystem.validation.ValidationError;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class RectangularMultiblockControllerBase extends MultiblockControllerBase {
-
     protected RectangularMultiblockControllerBase(World world) {
         super(world);
     }
@@ -88,7 +86,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
                 for (int z = minZ; z <= maxZ; z++) {
                     // Okay, figure out what sort of block this should be.
 
-                    te = this.WORLD.getTileEntity(new BlockPos(x, y, z));
+                    te = this.controllerWorld.getTileEntity(new BlockPos(x, y, z));
                     if (te instanceof RectangularMultiblockTileEntityBase) {
                         part = (RectangularMultiblockTileEntityBase) te;
 
@@ -129,7 +127,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
                     if (extremes >= 2) {
 
                         isPartValid = part != null ? part.isGoodForFrame(validatorCallback)
-                                : this.isBlockGoodForFrame(this.WORLD, x, y, z, validatorCallback);
+                                : this.isBlockGoodForFrame(this.controllerWorld, x, y, z, validatorCallback);
 
                         if (!isPartValid) {
 
@@ -143,7 +141,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
                         if (y == maxY) {
 
                             isPartValid = part != null ? part.isGoodForTop(validatorCallback)
-                                    : this.isBlockGoodForTop(this.WORLD, x, y, z, validatorCallback);
+                                    : this.isBlockGoodForTop(this.controllerWorld, x, y, z, validatorCallback);
 
                             if (!isPartValid) {
 
@@ -156,7 +154,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
                         } else if (y == minY) {
 
                             isPartValid = part != null ? part.isGoodForBottom(validatorCallback)
-                                    : this.isBlockGoodForBottom(this.WORLD, x, y, z, validatorCallback);
+                                    : this.isBlockGoodForBottom(this.controllerWorld, x, y, z, validatorCallback);
 
                             if (!isPartValid) {
 
@@ -169,7 +167,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
                         } else {
                             // Side
                             isPartValid = part != null ? part.isGoodForSides(validatorCallback)
-                                    : this.isBlockGoodForSides(this.WORLD, x, y, z, validatorCallback);
+                                    : this.isBlockGoodForSides(this.controllerWorld, x, y, z, validatorCallback);
 
                             if (!isPartValid) {
 
@@ -183,7 +181,7 @@ public abstract class RectangularMultiblockControllerBase extends MultiblockCont
                     } else {
 
                         isPartValid = part != null ? part.isGoodForInterior(validatorCallback)
-                                : this.isBlockGoodForInterior(this.WORLD, x, y, z, validatorCallback);
+                                : this.isBlockGoodForInterior(this.controllerWorld, x, y, z, validatorCallback);
 
                         if (!isPartValid) {
 

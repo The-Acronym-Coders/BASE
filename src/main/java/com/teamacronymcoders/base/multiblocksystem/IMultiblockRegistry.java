@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.multiblock;
+package com.teamacronymcoders.base.multiblocksystem;
 
 import net.minecraft.world.World;
 

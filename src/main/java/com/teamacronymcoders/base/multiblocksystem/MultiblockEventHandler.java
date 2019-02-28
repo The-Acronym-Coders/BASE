@@ -1,22 +1,21 @@
-package com.teamacronymcoders.base.multiblock;
+package com.teamacronymcoders.base.multiblocksystem;
 
-import net.minecraft.world.chunk.Chunk;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.chunk.IChunk;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public final class MultiblockEventHandler {
-
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onChunkLoad(final ChunkEvent.Load loadEvent) {
+        IChunk chunk = loadEvent.getChunk();
 
-        Chunk chunk = loadEvent.getChunk();
-
-        MultiblockRegistry.INSTANCE.onChunkLoaded(loadEvent.getWorld(), chunk.x, chunk.z);
+        MultiblockRegistry.INSTANCE.onChunkLoaded(loadEvent.getWorld(), chunk.getPos().x, chunk.getPos().z);
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
@@ -26,16 +25,16 @@ public final class MultiblockEventHandler {
 
     @SubscribeEvent
     public void onWorldTick(final TickEvent.WorldTickEvent event) {
-
-        if (TickEvent.Phase.START == event.phase)
+        if (TickEvent.Phase.START == event.phase) {
             MultiblockRegistry.INSTANCE.tickStart(event.world);
+        }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onClientTick(final TickEvent.ClientTickEvent event) {
-
-        if (TickEvent.Phase.START == event.phase)
-            MultiblockRegistry.INSTANCE.tickStart(ClientHelper.world());
+        if (TickEvent.Phase.START == event.phase) {
+            MultiblockRegistry.INSTANCE.tickStart(Minecraft.getInstance().world);
+        }
     }
 }

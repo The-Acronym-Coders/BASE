@@ -1,4 +1,4 @@
-package com.teamacronymcoders.base.multiblock.validation;
+package com.teamacronymcoders.base.multiblocksystem.validation;
 
 public interface IMultiblockValidator {
 

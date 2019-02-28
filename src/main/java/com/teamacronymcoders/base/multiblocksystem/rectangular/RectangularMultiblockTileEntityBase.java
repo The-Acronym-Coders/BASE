@@ -1,13 +1,14 @@
-package com.teamacronymcoders.base.multiblock.rectangular;
+package com.teamacronymcoders.base.multiblocksystem.rectangular;
+
+import com.teamacronymcoders.base.multiblocksystem.BlockFacings;
+import com.teamacronymcoders.base.multiblocksystem.MultiblockControllerBase;
+import com.teamacronymcoders.base.multiblocksystem.MultiblockTileEntityBase;
+import com.teamacronymcoders.base.multiblocksystem.validation.IMultiblockValidator;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.teamacronymcoders.base.multiblock.*;
-import com.teamacronymcoders.base.multiblock.validation.IMultiblockValidator;
-
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 
 public abstract class RectangularMultiblockTileEntityBase<T extends RectangularMultiblockControllerBase>
         extends MultiblockTileEntityBase<T> {
@@ -147,97 +148,78 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
         if (facesMatching <= 0) {
             this.position = PartPosition.INTERIOR;
         }
-      //TODO Clean up position logic based on new granularity
+        //TODO Clean up position logic based on new granularity
         else if (facesMatching >= 3) {
-            if(upFacing) {
-                if(southFacing) {
-                    if(eastFacing) {
-                    this.position = PartPosition.FRAME_CORNER_SOUTH_EAST_TOP;
-                    }
-                    else if(westFacing) {
+            if (upFacing) {
+                if (southFacing) {
+                    if (eastFacing) {
+                        this.position = PartPosition.FRAME_CORNER_SOUTH_EAST_TOP;
+                    } else if (westFacing) {
                         this.position = PartPosition.FRAME_CORNER_SOUTH_WEST_TOP;
                     }
-                }
-                else if(northFacing) {
-                    if(eastFacing) {
-                    this.position = PartPosition.FRAME_CORNER_NORTH_EAST_TOP;
-                    }
-                    else if(westFacing) {
+                } else if (northFacing) {
+                    if (eastFacing) {
+                        this.position = PartPosition.FRAME_CORNER_NORTH_EAST_TOP;
+                    } else if (westFacing) {
                         this.position = PartPosition.FRAME_CORNER_NORTH_WEST_TOP;
                     }
                 }
-            }
-            else if(downFacing) {
-                if(southFacing) {
-                    if(eastFacing) {
-                    this.position = PartPosition.FRAME_CORNER_SOUTH_EAST_BOTTOM;
-                    }
-                    else if(westFacing) {
+            } else if (downFacing) {
+                if (southFacing) {
+                    if (eastFacing) {
+                        this.position = PartPosition.FRAME_CORNER_SOUTH_EAST_BOTTOM;
+                    } else if (westFacing) {
                         this.position = PartPosition.FRAME_CORNER_SOUTH_WEST_BOTTOM;
                     }
-                }
-                else if(northFacing) {
-                    if(eastFacing) {
-                    this.position = PartPosition.FRAME_CORNER_NORTH_EAST_BOTTOM;
-                    }
-                    else if(westFacing) {
+                } else if (northFacing) {
+                    if (eastFacing) {
+                        this.position = PartPosition.FRAME_CORNER_NORTH_EAST_BOTTOM;
+                    } else if (westFacing) {
                         this.position = PartPosition.FRAME_CORNER_NORTH_WEST_BOTTOM;
                     }
                 }
             }
-        }
-        else if (facesMatching == 2) {
+        } else if (facesMatching == 2) {
 
             if (!eastFacing && !westFacing) {
-                if(upFacing) {
-                    if(northFacing) {
-                    this.position = PartPosition.FRAME_NORTH_TOP;
-                    }
-                    else if(southFacing) {
+                if (upFacing) {
+                    if (northFacing) {
+                        this.position = PartPosition.FRAME_NORTH_TOP;
+                    } else if (southFacing) {
                         this.position = PartPosition.FRAME_SOUTH_TOP;
                     }
-                    }
-                    else if(downFacing) {
-                        if(northFacing) {
-                            this.position = PartPosition.FRAME_NORTH_BOTTOM;
-                            }
-                            else if(southFacing) {
-                                this.position = PartPosition.FRAME_SOUTH_BOTTOM;
-                            }
-                    }
-            }
-            else if (!southFacing && !northFacing) {
-                if(upFacing) {
-                    if(eastFacing) {
-                    this.position = PartPosition.FRAME_EAST_TOP;
-                    }
-                    else if(westFacing) {
-                        this.position = PartPosition.FRAME_WEST_TOP;
-                    }
-                    }
-                    else if(downFacing) {
-                        if(eastFacing) {
-                            this.position = PartPosition.FRAME_EAST_BOTTOM;
-                            }
-                            else if(westFacing) {
-                                this.position = PartPosition.FRAME_WEST_BOTTOM;
-                            }
-                    }
-            }
-            else {
-                if(southFacing) {
-                    if(eastFacing) {
-                    this.position = PartPosition.FRAME_VERTICAL_SOUTH_EAST;
-                    }
-                    else if(westFacing) {
-                        this.position = PartPosition.FRAME_VERTICAL_SOUTH_WEST;
+                } else if (downFacing) {
+                    if (northFacing) {
+                        this.position = PartPosition.FRAME_NORTH_BOTTOM;
+                    } else if (southFacing) {
+                        this.position = PartPosition.FRAME_SOUTH_BOTTOM;
                     }
                 }
-                else if(northFacing) {
-                    if(eastFacing) {
-                    this.position = PartPosition.FRAME_VERTICAL_NORTH_EAST;
+            } else if (!southFacing && !northFacing) {
+                if (upFacing) {
+                    if (eastFacing) {
+                        this.position = PartPosition.FRAME_EAST_TOP;
+                    } else if (westFacing) {
+                        this.position = PartPosition.FRAME_WEST_TOP;
                     }
-                    else if(westFacing) {
+                } else if (downFacing) {
+                    if (eastFacing) {
+                        this.position = PartPosition.FRAME_EAST_BOTTOM;
+                    } else if (westFacing) {
+                        this.position = PartPosition.FRAME_WEST_BOTTOM;
+                    }
+                }
+            } else {
+                if (southFacing) {
+                    if (eastFacing) {
+                        this.position = PartPosition.FRAME_VERTICAL_SOUTH_EAST;
+                    } else if (westFacing) {
+                        this.position = PartPosition.FRAME_VERTICAL_SOUTH_WEST;
+                    }
+                } else if (northFacing) {
+                    if (eastFacing) {
+                        this.position = PartPosition.FRAME_VERTICAL_NORTH_EAST;
+                    } else if (westFacing) {
                         this.position = PartPosition.FRAME_VERTICAL_NORTH_WEST;
                     }
                 }
