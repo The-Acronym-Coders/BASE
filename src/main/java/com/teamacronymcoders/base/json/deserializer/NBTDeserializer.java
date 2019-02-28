@@ -45,7 +45,7 @@ public class NBTDeserializer implements JsonDeserializer<NBTTagCompound> {
             if (number instanceof Long) {
                 tagCompound.setLong(propertyName, number.longValue());
             } else if (number instanceof Integer) {
-                tagCompound.setInteger(propertyName, number.intValue());
+                tagCompound.setInt(propertyName, number.intValue());
             } else if (number instanceof Short) {
                 tagCompound.setShort(propertyName, number.shortValue());
             } else if (number instanceof Double) {

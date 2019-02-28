@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.capability;
 
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.INBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -11,12 +11,12 @@ import javax.annotation.Nullable;
 public class NBTCapStorage<T extends INBTSerializable<NBTTagCompound>> implements Capability.IStorage<T> {
     @Nullable
     @Override
-    public NBTBase writeNBT(Capability<T> capability, T instance, EnumFacing side) {
+    public INBTBase writeNBT(Capability<T> capability, T instance, EnumFacing side) {
         return instance.serializeNBT();
     }
 
     @Override
-    public void readNBT(Capability<T> capability, T instance, EnumFacing side, NBTBase nbt) {
+    public void readNBT(Capability<T> capability, T instance, EnumFacing side, INBTBase nbt) {
         if (nbt instanceof NBTTagCompound) {
             instance.deserializeNBT((NBTTagCompound) nbt);
         }

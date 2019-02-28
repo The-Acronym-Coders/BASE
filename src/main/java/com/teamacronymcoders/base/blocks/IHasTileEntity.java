@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.blocks;
 
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 
 @FunctionalInterface
@@ -9,5 +9,5 @@ public interface IHasTileEntity {
         return blockName.toString();
     }
 
-    Class<? extends TileEntity> getTileEntityClass();
+    Class<? extends TileEntityType> getTileEntityClass();
 }

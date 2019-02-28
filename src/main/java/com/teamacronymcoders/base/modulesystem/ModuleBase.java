@@ -9,7 +9,6 @@ import com.teamacronymcoders.base.registrysystem.EntityRegistry;
 import com.teamacronymcoders.base.registrysystem.IRegistryHolder;
 import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
-import com.teamacronymcoders.base.util.Platform;
 import com.teamacronymcoders.base.util.logging.ILogger;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;

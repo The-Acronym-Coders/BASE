@@ -4,8 +4,6 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.teamacronymcoders.base.Base;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.ExecutionException;
@@ -25,7 +23,7 @@ public class TemplateManager {
             file = templates.get(resourceLocation.toString(), () ->
                     new TemplateFile(resourceLocation, Base.instance.getLibProxy().getFileContents(resourceLocation)));
         } catch (ExecutionException e) {
-            Base.instance.getLogger().getLogger().error(e);
+            Base.instance.getLogger().error(e);
         } finally {
             if (file == null) {
                 file = new TemplateFile(new ResourceLocation("base:empty"), "");

@@ -72,10 +72,10 @@ public abstract class QueueFoundation<T> implements INBTSerializable<NBTTagCompo
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        nbtTagCompound.setInteger("queueSize", this.getQueueSize());
+        nbtTagCompound.setInt("queueSize", this.getQueueSize());
         NBTTagList tagList = new NBTTagList();
         for (T value : this.getBackingList()) {
-            tagList.appendTag(serializeValue(value));
+            tagList.add(serializeValue(value));
         }
         nbtTagCompound.setTag("queueValues", tagList);
         return nbtTagCompound;
@@ -83,10 +83,10 @@ public abstract class QueueFoundation<T> implements INBTSerializable<NBTTagCompo
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
-        this.setQueueSize(nbt.getInteger("queueSize"));
-        NBTTagList queueValueNBT = nbt.getTagList("fluidStacks", 9);
-        for (int i = 0; i < queueValueNBT.tagCount(); i++) {
-            this.getBackingList().add(deserializeValue(queueValueNBT.getCompoundTagAt(i)));
+        this.setQueueSize(nbt.getInt("queueSize"));
+        NBTTagList queueValueNBT = nbt.getList("fluidStacks", 9);
+        for (int i = 0; i < queueValueNBT.size(); i++) {
+            this.getBackingList().add(deserializeValue(queueValueNBT.getCompound(i)));
         }
     }
 

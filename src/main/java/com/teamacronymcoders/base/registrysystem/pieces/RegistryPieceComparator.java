@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.registrysystem.pieces;
 
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.eventbus.api.EventPriority;
 
 import java.util.Comparator;
 

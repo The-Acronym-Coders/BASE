@@ -1,57 +1,23 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.guisystem.GuiHandler;
-import com.teamacronymcoders.base.materialsystem.MaterialUser;
-import com.teamacronymcoders.base.modulesystem.ModuleHandler;
-import com.teamacronymcoders.base.network.PacketHandler;
 import com.teamacronymcoders.base.proxies.LibCommonProxy;
-import com.teamacronymcoders.base.registrysystem.IRegistryHolder;
-import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
-import com.teamacronymcoders.base.util.logging.ILogger;
 import net.minecraft.item.ItemGroup;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.List;
 
 public interface IBaseMod<T> {
     T getInstance();
 
+    String getID();
+
     @Nullable
     ItemGroup getItemGroup();
 
-    String getID();
-
-    String getName();
-
-    boolean hasConfig();
-
-    String getConfigFolderName();
-
     LibCommonProxy getLibProxy();
 
-    ILogger getLogger();
-
-    GuiHandler getGuiHandler();
-
-    PacketHandler getPacketHandler();
-
-    IRegistryHolder getRegistryHolder();
-
-    ModuleHandler getModuleHandler();
-
-    List<ModuleHandler> getOtherModuleHandlers();
-
-    default boolean addOBJDomain() {
-        return false;
-    }
-
-    default boolean hasExternalResources() {
-        return false;
-    }
-
-    @Nullable
-    MaterialUser getMaterialUser();
+    Logger getLogger();
 
     @Nullable
     File getResourceFolder();

@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.util.files;
 
-import com.teamacronymcoders.base.util.Platform;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -102,7 +101,7 @@ public class BaseFileUtils {
         try {
             file.delete();
         } catch (Exception e) {
-            Platform.attemptLogErrorToCurrentMod("Deleting file " + file.getAbsolutePath() + " failed.");
+            //Platform.attemptLogErrorToCurrentMod("Deleting file " + file.getAbsolutePath() + " failed.");
         }
     }
 
@@ -110,13 +109,13 @@ public class BaseFileUtils {
         try {
             FileUtils.deleteDirectory(file);
         } catch (Exception e) {
-            Platform.attemptLogErrorToCurrentMod("Deleting directory " + file.getAbsolutePath() + " failed.");
+            //Platform.attemptLogErrorToCurrentMod("Deleting directory " + file.getAbsolutePath() + " failed.");
         }
     }
 
     public static void createFolder(File file) {
         if (!file.exists() && !file.mkdirs()) {
-            Platform.attemptLogErrorToCurrentMod("Couldn't create folder called: " + file.getName());
+            //Platform.attemptLogErrorToCurrentMod("Couldn't create folder called: " + file.getName());
         }
     }
 
@@ -125,7 +124,7 @@ public class BaseFileUtils {
         try {
             string = FileUtils.readFileToString(file, Charset.forName("UTF-8"));
         } catch (IOException e) {
-            Platform.attemptLogExceptionToCurrentMod(e);
+            //Platform.attemptLogExceptionToCurrentMod(e);
         }
         return string;
     }
@@ -137,17 +136,17 @@ public class BaseFileUtils {
                 file.getParentFile().mkdirs();
                 exists = file.createNewFile();
             } catch (IOException e) {
-                Platform.attemptLogExceptionToCurrentMod(e);
+                //Platform.attemptLogExceptionToCurrentMod(e);
             }
         }
         if (exists) {
             try {
                 FileUtils.writeStringToFile(file, string, Charset.defaultCharset());
             } catch (IOException e) {
-                Platform.attemptLogExceptionToCurrentMod(e);
+                //Platform.attemptLogExceptionToCurrentMod(e);
             }
         } else {
-            Platform.attemptLogErrorToCurrentMod("Couldn't create File: " + file.getName());
+            //Platform.attemptLogErrorToCurrentMod("Couldn't create File: " + file.getName());
         }
     }
 
@@ -156,7 +155,7 @@ public class BaseFileUtils {
         try {
             file.createNewFile();
         } catch (IOException e) {
-            Platform.attemptLogErrorToCurrentMod("Couldn't create File " + file.getName());
+            //Platform.attemptLogErrorToCurrentMod("Couldn't create File " + file.getName());
         }
     }
 }

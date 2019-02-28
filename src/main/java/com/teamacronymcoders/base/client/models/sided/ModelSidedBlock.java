@@ -4,20 +4,21 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.teamacronymcoders.base.blocks.properties.SideType;
 import com.teamacronymcoders.base.client.models.ModelUtils;
-import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.IUnbakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.common.model.IModelState;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
+import java.util.Set;
 import java.util.function.Function;
 
-public class ModelSidedBlock implements IModel {
+public class ModelSidedBlock implements IUnbakedModel {
     private final String name;
     private final String type;
     private final ImmutableMap<String, ResourceLocation> textures;
@@ -30,22 +31,26 @@ public class ModelSidedBlock implements IModel {
 
     @Override
     @Nonnull
-    public Collection<ResourceLocation> getDependencies() {
+    public Collection<ResourceLocation> getOverrideLocations() {
         return ImmutableList.of();
     }
 
     @Override
     @Nonnull
-    public Collection<ResourceLocation> getTextures() {
+    @ParametersAreNonnullByDefault
+    public Collection<ResourceLocation> getTextures(Function<ResourceLocation, IUnbakedModel> modelGetter,
+                                                    Set<String> missingTextureErrors) {
         return textures.values();
     }
 
     @Override
     @Nonnull
     @ParametersAreNonnullByDefault
-    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+    public IBakedModel bake(Function<ResourceLocation, IUnbakedModel> modelGetter,
+                            Function<ResourceLocation, TextureAtlasSprite> spriteGetter,
+                            IModelState state, boolean uvlock, VertexFormat format) {
         TextureAtlasSprite[][] tex = new TextureAtlasSprite[6][3];
-        for (EnumFacing f : EnumFacing.VALUES) {
+        for (EnumFacing f : EnumFacing.values()) {
             for (SideType cfg : SideType.values()) {
                 ResourceLocation resourceLocation = textures.get(f.getName() + "_" + cfg.getName());
                 if (resourceLocation != null) {
@@ -59,10 +64,10 @@ public class ModelSidedBlock implements IModel {
 
     @Override
     @Nonnull
-    public IModel retexture(ImmutableMap<String, String> textures) {
+    public IUnbakedModel retexture(ImmutableMap<String, String> textures) {
         String newName = this.name;
         ImmutableMap.Builder<String, ResourceLocation> builder = ImmutableMap.builder();
-        for (EnumFacing f : EnumFacing.VALUES) {
+        for (EnumFacing f : EnumFacing.values()) {
             for (SideType cfg : SideType.values()) {
                 String key = f.getName() + "_" + cfg.getName();
                 ResourceLocation resourceLocation = this.textures.get(key);
@@ -89,5 +94,4 @@ public class ModelSidedBlock implements IModel {
         }
         return new ModelSidedBlock(newName, type, builder.build());
     }
-
 }

@@ -1,20 +1,8 @@
 package com.teamacronymcoders.base.proxies;
 
-import com.google.common.base.Strings;
 import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.client.models.IHasModel;
-import com.teamacronymcoders.base.modulesystem.IModule;
-import com.teamacronymcoders.base.modulesystem.ModuleHandler;
-import com.teamacronymcoders.base.modulesystem.proxies.IModuleProxy;
 import com.teamacronymcoders.base.registrysystem.pieces.RegistrySide;
-import com.teamacronymcoders.base.util.ClassLoading;
-import net.minecraft.block.Block;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
-import javax.annotation.Nullable;
 
 public abstract class LibCommonProxy {
     private IBaseMod mod;
@@ -23,29 +11,8 @@ public abstract class LibCommonProxy {
         // Only add Client RegistrySide
     }
 
-    public void setAllItemModels(IHasModel model) {
-        // Only set Client RegistrySide
-    }
-
     public void addSidedBlockDomain() {
-        // Only set Client RegistrySide
-    }
 
-    public void registerFluidModel(Block fluidBlock, final ResourceLocation loc) {
-        // Only done Client RegistrySide
-    }
-
-    public abstract IModuleProxy getModuleProxy(IModule module);
-
-    @Nullable
-    protected IModuleProxy getModuleProxy(String path) {
-        IModuleProxy moduleProxy = null;
-
-        if (!Strings.isNullOrEmpty(path.trim())){
-            moduleProxy = ClassLoading.createInstanceOf(IModuleProxy.class, path);
-        }
-
-        return moduleProxy;
     }
 
     public RegistrySide getRegistrySide() {
@@ -76,10 +43,4 @@ public abstract class LibCommonProxy {
     public void handleSounds() {
 
     }
-
-    public void loadEntityRenderers(ASMDataTable table, ModuleHandler moduleHandler) {
-        // Only done Client Side
-    }
-
-    public abstract World getWorld(MessageContext ctx);
 }

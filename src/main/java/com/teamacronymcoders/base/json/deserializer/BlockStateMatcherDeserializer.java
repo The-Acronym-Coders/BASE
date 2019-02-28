@@ -5,11 +5,11 @@ import com.google.common.collect.Maps;
 import com.google.gson.*;
 import com.teamacronymcoders.base.blocks.BlockStateMatcher;
 import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.state.IProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -24,7 +24,7 @@ public class BlockStateMatcherDeserializer implements JsonDeserializer<BlockStat
             Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName));
             if (block != null) {
                 if (jsonObject.has("properties")) {
-                    BlockStateContainer blockStateContainer = block.getBlockState();
+                    StateContainer blockStateContainer = block.getStateContainer();
                     JsonObject properties = jsonObject.getAsJsonObject("properties");
                     Map<IProperty<?>, List<?>> propertyMatching = Maps.newHashMap();
                     for (Map.Entry<String, JsonElement> entry : properties.entrySet()) {
@@ -41,7 +41,7 @@ public class BlockStateMatcherDeserializer implements JsonDeserializer<BlockStat
                             }
                             for (String value: acceptableStringValues) {
                                 //noinspection unchecked
-                                property.parseValue(value).toJavaUtil().ifPresent(acceptableValues::add);
+                                property.parseValue(value).ifPresent(acceptableValues::add);
                             }
                             propertyMatching.put(property, acceptableValues);
                         } else {

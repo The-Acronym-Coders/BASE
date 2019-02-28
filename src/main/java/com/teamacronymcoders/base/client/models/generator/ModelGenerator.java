@@ -3,6 +3,7 @@ package com.teamacronymcoders.base.client.models.generator;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
 import com.teamacronymcoders.base.util.files.BaseFileUtils;
+import net.minecraft.client.Minecraft;
 
 import java.io.File;
 import java.util.List;

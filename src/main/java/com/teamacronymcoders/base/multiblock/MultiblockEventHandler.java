@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.multiblock;
 
-import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;

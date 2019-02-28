@@ -5,8 +5,8 @@ import com.teamacronymcoders.base.api.ITool;
 import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.items.ItemBase;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,7 +25,7 @@ public class ItemWrench extends ItemBase implements IHasRecipe {
 
     public ItemWrench() {
         super("wrench");
-        this.setCreativeTab(CreativeTabs.TOOLS);
+        this.setCreativeTab(ItemGroup.TOOLS);
         this.setMaxStackSize(1);
     }
 

@@ -1,7 +1,9 @@
 package com.teamacronymcoders.base.sound;
 
+import net.minecraft.util.ResourceLocation;
+
 public interface IHasSoundGroup {
-    String getName();
+    ResourceLocation getName();
 
     SoundGroup getSoundGroup();
 }

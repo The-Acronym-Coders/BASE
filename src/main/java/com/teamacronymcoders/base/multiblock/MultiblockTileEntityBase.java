@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.teamacronymcoders.base.Base;
-import com.teamacronymcoders.base.tileentities.TileEntityBase;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

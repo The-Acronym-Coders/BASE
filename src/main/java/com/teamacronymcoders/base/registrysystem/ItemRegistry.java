@@ -21,9 +21,7 @@ public class ItemRegistry extends ModularRegistry<Item> {
                 throw new RuntimeException("Unlocalized Name cannot be null");
             }
         }
-        if (!unlocalizedName.contains(mod.getID())) {
-            item.setTranslationKey(mod.getID() + "." + unlocalizedName);
-        }
+
         ResourceLocation name = item.getRegistryName();
         if (name == null) {
             name = new ResourceLocation(this.mod.getID(), unlocalizedName);

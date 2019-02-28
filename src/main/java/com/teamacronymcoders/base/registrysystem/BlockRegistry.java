@@ -17,9 +17,6 @@ public class BlockRegistry extends ModularRegistry<Block> {
         if (unlocalizedName.startsWith("tile.")) {
             unlocalizedName = unlocalizedName.substring(5);
         }
-        if (!unlocalizedName.contains(mod.getID())) {
-            block.setTranslationKey(mod.getID() + "." + unlocalizedName);
-        }
         ResourceLocation name = block.getRegistryName();
         if (name == null) {
             name = new ResourceLocation(this.mod.getID(), unlocalizedName);

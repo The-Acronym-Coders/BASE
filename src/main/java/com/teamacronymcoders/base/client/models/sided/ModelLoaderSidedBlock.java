@@ -2,12 +2,12 @@ package com.teamacronymcoders.base.client.models.sided;
 
 import com.google.common.collect.ImmutableMap;
 import com.teamacronymcoders.base.blocks.properties.SideType;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.model.IUnbakedModel;
+import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
-import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 
 import javax.annotation.Nonnull;
@@ -43,7 +43,7 @@ public class ModelLoaderSidedBlock implements ICustomModelLoader {
 
     @Override
     @Nonnull
-    public IModel loadModel(@Nonnull ResourceLocation modelLocation) {
+    public IUnbakedModel loadModel(@Nonnull ResourceLocation modelLocation) {
         String resourcePath = modelLocation.getPath();
         if (resourcePath.startsWith(RESOURCE_LOCATION)) {
             String sub = resourcePath.replaceFirst(RESOURCE_LOCATION, "");
@@ -53,7 +53,7 @@ public class ModelLoaderSidedBlock implements ICustomModelLoader {
             ImmutableMap.Builder<String, ResourceLocation> builder = ImmutableMap.builder();
             ITextureNamer textureNamer = SidedTypeRegistry.getTextureNamer(type);
 
-            for (EnumFacing f : EnumFacing.VALUES) {
+            for (EnumFacing f : EnumFacing.values()) {
                 for (SideType cfg : SideType.values()) {
                     String key = f.getName() + "_" + cfg.getName();
                     String tex = name + "_" + textureNamer.getTextureName(f, cfg);

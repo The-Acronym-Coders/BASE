@@ -5,16 +5,17 @@ import com.teamacronymcoders.base.blocks.properties.PropertySideType;
 import com.teamacronymcoders.base.blocks.properties.SideType;
 import com.teamacronymcoders.base.client.models.ModelUtils;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.Vector3f;
+import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.property.IExtendedBlockState;
-import org.lwjgl.util.vector.Vector3f;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 public class BakedModelSidedBlock implements IBakedModel {
     final String name;
@@ -28,7 +29,7 @@ public class BakedModelSidedBlock implements IBakedModel {
 
     @Override
     @Nonnull
-    public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
+    public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, Random rand) {
         TextureAtlasSprite[] tex = new TextureAtlasSprite[6];
         for (int i = 0; i < tex.length; i++) {
             tex[i] = this.textures[i][0];
@@ -117,6 +118,6 @@ public class BakedModelSidedBlock implements IBakedModel {
     @Override
     @Nonnull
     public ItemOverrideList getOverrides() {
-        return ItemOverrideList.NONE;
+        return ItemOverrideList.EMPTY;
     }
 }

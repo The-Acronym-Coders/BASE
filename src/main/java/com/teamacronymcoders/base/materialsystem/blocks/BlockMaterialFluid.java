@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base.materialsystem.blocks;
 
-import com.teamacronymcoders.base.blocks.BlockFluidBase;
 import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;

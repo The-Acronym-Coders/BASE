@@ -2,12 +2,12 @@ package com.teamacronymcoders.base.json.deserializer;
 
 import com.google.gson.*;
 import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.state.IProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class BlockStateDeserializer implements JsonDeserializer<IBlockState> {
             Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName));
             if (block != null) {
                 if (jsonObject.has("properties")) {
-                    BlockStateContainer blockStateContainer = block.getBlockState();
+                    StateContainer blockStateContainer = block.getStateContainer();
                     IBlockState blockState = block.getDefaultState();
                     JsonObject properties = jsonObject.getAsJsonObject("properties");
                     for (Map.Entry<String, JsonElement> entry : properties.entrySet()) {
@@ -47,8 +47,8 @@ public class BlockStateDeserializer implements JsonDeserializer<IBlockState> {
     }
 
     private static <T extends Comparable<T>> IBlockState setValueHelper(final IBlockState blockState, final IProperty<T> property, final String stringValue) throws JsonParseException {
-        return property.parseValue(stringValue).toJavaUtil()
-                .map(propertyValue -> blockState.withProperty(property, propertyValue))
+        return property.parseValue(stringValue)
+                .map(propertyValue -> blockState.with(property, propertyValue))
                 .orElseThrow(() -> new JsonParseException("Failed to find value " + stringValue + " for property " + property.getName()));
     }
 }

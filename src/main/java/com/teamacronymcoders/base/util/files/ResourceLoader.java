@@ -9,78 +9,36 @@ import com.teamacronymcoders.base.registrysystem.SoundEventRegistry;
 import com.teamacronymcoders.base.sound.IHasSoundGroup;
 import com.teamacronymcoders.base.sound.SoundGroup;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.IResourcePack;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.resources.FolderPackFinder;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class ResourceLoader {
-    private File resourceFolder;
-    private final Gson gson;
+    private final File resourceFolder;
 
     public ResourceLoader() {
-        gson = new GsonBuilder().setPrettyPrinting().create();
-    }
+        this.resourceFolder = new File(Minecraft.getInstance().gameDir, "resources");
+        BaseFileUtils.createFolder(this.resourceFolder);
 
-    public void setup() throws NoSuchFieldException, IllegalAccessException {
-        Field minecraftDirField = Loader.class.getDeclaredField("minecraftDir");
-        minecraftDirField.setAccessible(true);
-        Object minecraftDirObject = minecraftDirField.get(null);
-        if (minecraftDirObject instanceof File) {
-            File minecraftDir = (File)minecraftDirObject;
-            this.resourceFolder = new File(minecraftDir, "resources");
-            BaseFileUtils.createFolder(this.resourceFolder);
+        //TODO Confirm this works
+        Minecraft.getInstance().getResourcePackList().addPackFinder(new FolderPackFinder(resourceFolder));
 
-            List<IResourcePack> defaultResourcePacks = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "defaultResourcePacks", "field_110449_ao", "ap");
-            defaultResourcePacks.add(new DirectoryResourcePack(this.resourceFolder));
-        }
 
         createPackMcMeta();
-        prepareResources();
-    }
-
-    private void prepareResources() {
-        fixLangFolder();
-    }
-
-    private void fixLangFolder() {
-        File[] modFolders = this.resourceFolder.listFiles(File::isDirectory);
-        if (Objects.nonNull(modFolders)) {
-            Arrays.stream(modFolders)
-                    .map(modFolder -> new File(modFolder, "lang"))
-                    .filter(File::exists)
-                    .filter(File::isDirectory)
-                    .map(File::listFiles)
-                    .filter(Objects::nonNull)
-                    .flatMap(Arrays::stream)
-                    .filter(File::isFile)
-                    .forEach(this::fixLangFile);
-        }
-
-    }
-
-    Pattern pattern = Pattern.compile(" += +");
-
-    private void fixLangFile(File file) {
-        String fileString = BaseFileUtils.readFileToString(file);
-        fileString = pattern.matcher(fileString).replaceAll("=");
-        BaseFileUtils.writeStringToFile(fileString, file);
     }
 
     private void createPackMcMeta() {
-        String mcMeta = "{\"pack\":{\"pack_format\":3,\"description\":\"B.A.S.E External Resources\"}}";
+        String mcMeta = "{\"pack\":{\"pack_format\":4,\"description\":\"B.A.S.E External Resources\"}}";
         BaseFileUtils.writeStringToFile(mcMeta, new File(this.resourceFolder, "pack.mcmeta"));
     }
 
@@ -107,28 +65,6 @@ public class ResourceLoader {
 
         File sounds = new File(modFolder, "sounds");
         BaseFileUtils.createFolder(sounds);
-    }
-
-    public void handleSoundsJsonForMod(IBaseMod mod) {
-        Map<String, SoundGroup> soundGroups = mod.getRegistryHolder().getRegistry(SoundEventRegistry.class, "SOUND_EVENT")
-                .getEntries().values().parallelStream()
-                .filter(soundEvent -> soundEvent instanceof IHasSoundGroup)
-                .map(soundEvent -> (IHasSoundGroup)soundEvent)
-                .map(soundEvent -> Pair.of(soundEvent.getName(), soundEvent.getSoundGroup()))
-                .collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
-
-        if (!soundGroups.values().isEmpty()) {
-            File soundsJson = new File(new File(resourceFolder, mod.getID()), "sounds.json");
-            Map<String, SoundGroup> currentSoundGroups = gson.fromJson(BaseFileUtils.readFileToString(soundsJson),
-                    new TypeToken<Map<String, SoundGroup>>(){}.getType());
-
-            if (currentSoundGroups == null) {
-                currentSoundGroups = Maps.newHashMap();
-            }
-            soundGroups.forEach(currentSoundGroups::putIfAbsent);
-
-            BaseFileUtils.writeStringToFile(gson.toJson(currentSoundGroups), soundsJson);
-        }
     }
 
 }

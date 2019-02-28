@@ -8,9 +8,6 @@ import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumType;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumUsage;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ChunkCache;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.client.model.pipeline.*;
 

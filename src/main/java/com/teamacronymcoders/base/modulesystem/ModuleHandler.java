@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.modulesystem;
 
+import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.registrysystem.IRegistryHolder;
@@ -28,16 +29,16 @@ public class ModuleHandler {
     private IBaseMod mod;
     private String handlerName;
 
-    public ModuleHandler(IBaseMod mod, ASMDataTable asmDataTable) {
-        this(mod.getID(), mod, asmDataTable);
+    public ModuleHandler(IBaseMod mod) {
+        this(mod.getID(), mod);
     }
 
-    public ModuleHandler(String handlerName, IBaseMod mod, ASMDataTable asmDataTable) {
+    public ModuleHandler(String handlerName, IBaseMod mod) {
         this.mod = mod;
         this.handlerName = handlerName;
         this.registryHolder = mod.getRegistryHolder();
-        this.modules = MapUtils.sortByValue(this.loadModules(asmDataTable));
-        mod.getLibProxy().loadEntityRenderers(asmDataTable, this);
+        //TODO FIX LOADING
+        this.modules = Maps.newHashMap();
     }
 
     public void preInit(FMLPreInitializationEvent event) {

@@ -1,11 +1,14 @@
 package com.teamacronymcoders.base.util;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.items.WeightedDropTable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,18 +22,25 @@ public class DropUtils {
     private static final String WEIGHT_DELIM = "%";
     private static final String DROP_DELIM = "#";
     
-    private static Map<String, WeightedDropTable> wdMap = new HashMap<>();
+    private static LoadingCache<String, WeightedDropTable> wdMap = CacheBuilder.newBuilder()
+            .build(new CacheLoader<String, WeightedDropTable>() {
+                @Override
+                public WeightedDropTable load(String key) throws Exception {
+                    return parseDrops(key);
+                }
+            });
     private static Pattern bracketPattern = Pattern.compile("([^\\[\\]]+)");
     private static Matcher bracketMatcher = bracketPattern.matcher("");
     
     private DropUtils() {
+
+    }
+
+    public static WeightedDropTable getDrops(String drops) {
+        return wdMap.getUnchecked(drops);
     }
     
-    public static WeightedDropTable parseDrops(String drops) {
-        if (wdMap.containsKey(drops)) {
-            return wdMap.get(drops);
-        }
-        
+    private static WeightedDropTable parseDrops(String drops) {
         List<List<ItemStack>> dropTable = new LinkedList<>();
         List<Boolean> fortuneTable = new LinkedList<>();
         List<String> itemSlots = new LinkedList<>();
@@ -59,21 +69,17 @@ public class DropUtils {
                     case "empty":
                         break;
                     case "oredict":
-                        itemDrop = OreDictUtils.getPreferredItemStack(itemArray[1]);
+                        //TODO MAKE TAGS NOT OREDICT
                         break;
                     default:
-                        int meta = 0;
                         if (itemArray.length > 1) {
-                            itemString += ":" + itemArray[1]; 
-                            if (itemArray.length > 2) {
-                                meta = Integer.parseInt(itemArray[2]);
-                            }
+                            itemString += ":" + itemArray[1];
                         }
                         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemString));
                         if (item != null) {
-                            itemDrop = new ItemStack(item, count, meta);
+                            itemDrop = new ItemStack(item, count);
                         } else {
-                            Base.instance.getLogger().error("Could not find Item for name: " + itemString);
+                            Base.instance.getLogger().warn("Could not find Item for name: " + itemString);
                         }
                 }
 
