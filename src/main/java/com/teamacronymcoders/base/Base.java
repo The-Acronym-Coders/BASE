@@ -1,7 +1,6 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.items.ItemEventHandler;
-import com.teamacronymcoders.base.recipesystem.RecipeSystem;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -28,7 +27,6 @@ public class Base extends BaseModFoundation<Base> {
 
     public void setup(FMLCommonSetupEvent event) {
         Capabilities.register();
-        RecipeSystem.setup();
         MinecraftForge.EVENT_BUS.register(new ItemEventHandler());
     }
 

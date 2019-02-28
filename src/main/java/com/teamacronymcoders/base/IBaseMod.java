@@ -1,6 +1,5 @@
 package com.teamacronymcoders.base;
 
-import com.teamacronymcoders.base.proxies.LibCommonProxy;
 import net.minecraft.item.ItemGroup;
 import org.apache.logging.log4j.Logger;
 
@@ -14,8 +13,6 @@ public interface IBaseMod<T> {
 
     @Nullable
     ItemGroup getItemGroup();
-
-    LibCommonProxy getLibProxy();
 
     Logger getLogger();
 
