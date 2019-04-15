@@ -3,6 +3,7 @@ package com.teamacronymcoders.base.util;
 import com.google.common.collect.ImmutableList;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.items.ItemBaseNoModel;
+import com.teamacronymcoders.base.items.tools.IAreaBreakingTool;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -15,7 +16,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -168,8 +172,8 @@ public class TinkersUtils {
 
 	public static ImmutableList<BlockPos> calcAOEBlocks(ItemStack stack, World world, EntityPlayer player,
 			BlockPos origin, int width, int height, int depth, int distance) {
-		// only works with toolcore because we need the raytrace call
-		if(stack.isEmpty() || !(stack.getItem() instanceof ItemBaseNoModel)) {
+		// FIXME
+		if(stack.isEmpty() || !(stack.getItem() instanceof IAreaBreakingTool)) {
 			return ImmutableList.of();
 		}
 
@@ -186,7 +190,7 @@ public class TinkersUtils {
 		}
 
 		// raytrace to get the side, but has to result in the same block
-		RayTraceResult mop = ((ItemBaseNoModel) stack.getItem()).rayTrace(world, player, true);
+		RayTraceResult mop = ((IAreaBreakingTool) stack.getItem()).rayTrace(world, player, true);
 		if(mop == null || !origin.equals(mop.getBlockPos())) {
 			mop = ((ItemBaseNoModel) stack.getItem()).rayTrace(world, player, false);
 			if(mop == null || !origin.equals(mop.getBlockPos())) {
