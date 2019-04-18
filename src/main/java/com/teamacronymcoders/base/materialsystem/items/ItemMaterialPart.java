@@ -11,6 +11,7 @@ import com.teamacronymcoders.base.items.IHasOreDict;
 import com.teamacronymcoders.base.items.ItemBase;
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
+import com.teamacronymcoders.base.materialsystem.parttype.ItemPartType;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.item.ItemStack;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOreDict, IHasGeneratedModel {
     private Map<Integer, MaterialPart> itemMaterialParts;
     private final String modid;
-
+    
     public ItemMaterialPart(String modid) {
         super("material_part");
         this.setHasSubtypes(true);
@@ -32,9 +33,7 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
     }
 
     public ItemMaterialPart(String modid, Integer integer) {
-        super("material_part_" + integer);
-        this.setHasSubtypes(true);
-        this.modid = modid;
+        this("material_part_" + integer);
     }
 
     @Override
@@ -127,8 +126,15 @@ public class ItemMaterialPart extends ItemBase implements IHasItemColor, IHasOre
     }
 
     @Override
-    public int getItemBurnTime(ItemStack itemStack) {
-        return getMaterialPartFromItemStack(itemStack).getData().getValue("burn", 0, Integer::parseInt);
+    public int getItemBurnTime(ItemStack stack) {
+        return getMaterialPartFromItemStack(stack).getData().getValue(ItemPartType.BURN_DATA_NAME, 0, Integer::parseInt);
+    }
+    
+    @SuppressWarnings("deprecation")
+	@Override
+    public int getItemStackLimit(ItemStack stack)
+    {
+        return getMaterialPartFromItemStack(stack).getData().getValue(ItemPartType.STACKSIZE_DATA_NAME, this.getItemStackLimit(), Integer::parseInt);
     }
 
 }
