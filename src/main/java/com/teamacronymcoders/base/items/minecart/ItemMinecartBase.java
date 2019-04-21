@@ -1,11 +1,17 @@
 package com.teamacronymcoders.base.items.minecart;
 
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
 import com.teamacronymcoders.base.client.models.IHasModel;
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
 import com.teamacronymcoders.base.util.ItemStackUtils;
+
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,10 +26,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
 
 public abstract class ItemMinecartBase extends ItemMinecart implements IHasModel, IModAware {
     private IBaseMod mod;
@@ -53,9 +55,8 @@ public abstract class ItemMinecartBase extends ItemMinecart implements IHasModel
             }
 
             if (!world.isRemote) {
-                entityMinecart.posX = (float) blockPos.getX() + 0.5F;
-                entityMinecart.posY = (float) blockPos.getY() + 0.5F;
-                entityMinecart.posZ = (float) blockPos.getZ() + 0.5F;
+            	//For minecarts, this method also sets up the bounding box, because of course.
+            	entityMinecart.setPosition((float) blockPos.getX() + 0.5F, (float) blockPos.getY() + 0.5F, (float) blockPos.getZ() + 0.5F);
                 world.spawnEntity(entityMinecart);
             }
             itemStack.shrink(1);
