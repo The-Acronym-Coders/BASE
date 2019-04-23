@@ -1,5 +1,7 @@
 package com.teamacronymcoders.base.multiblock.rectangular;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
@@ -15,14 +17,14 @@ public enum PartPosition implements IStringSerializable {
     FRAME_CORNER_NORTH_WEST_BOTTOM(null, Type.FRAME, Layer.BOTTOM),
     FRAME_CORNER_SOUTH_EAST_BOTTOM(null, Type.FRAME, Layer.BOTTOM),
     FRAME_CORNER_SOUTH_WEST_BOTTOM(null, Type.FRAME, Layer.BOTTOM),
-    FRAME_NORTH_TOP(null, Type.FRAME, Layer.TOP), 
-    FRAME_EAST_TOP(null, Type.FRAME, Layer.TOP), 
-    FRAME_WEST_TOP(null, Type.FRAME, Layer.TOP),
-    FRAME_SOUTH_TOP(null, Type.FRAME, Layer.TOP), 
-    FRAME_NORTH_BOTTOM(null, Type.FRAME, Layer.BOTTOM), 
-    FRAME_EAST_BOTTOM(null, Type.FRAME, Layer.BOTTOM), 
-    FRAME_WEST_BOTTOM(null, Type.FRAME, Layer.BOTTOM),
-    FRAME_SOUTH_BOTTOM(null, Type.FRAME, Layer.BOTTOM), 
+    FRAME_NORTH_TOP(EnumFacing.NORTH, Type.FRAME, Layer.TOP), 
+    FRAME_EAST_TOP(EnumFacing.EAST, Type.FRAME, Layer.TOP), 
+    FRAME_WEST_TOP(EnumFacing.WEST, Type.FRAME, Layer.TOP),
+    FRAME_SOUTH_TOP(EnumFacing.SOUTH, Type.FRAME, Layer.TOP), 
+    FRAME_NORTH_BOTTOM(EnumFacing.NORTH, Type.FRAME, Layer.BOTTOM), 
+    FRAME_EAST_BOTTOM(EnumFacing.EAST, Type.FRAME, Layer.BOTTOM), 
+    FRAME_WEST_BOTTOM(EnumFacing.WEST, Type.FRAME, Layer.BOTTOM),
+    FRAME_SOUTH_BOTTOM(EnumFacing.SOUTH, Type.FRAME, Layer.BOTTOM), 
     FRAME_VERTICAL_NORTH_EAST(null, Type.FRAME, Layer.MIDDLE),
     FRAME_VERTICAL_SOUTH_EAST(null, Type.FRAME, Layer.MIDDLE),
     FRAME_VERTICAL_NORTH_WEST(null, Type.FRAME, Layer.MIDDLE),
@@ -50,6 +52,7 @@ public enum PartPosition implements IStringSerializable {
         return this._type == Type.FRAME;
     }
 
+    @Nullable
     public EnumFacing getFacing() {
         return this._facing;
     }
@@ -57,6 +60,10 @@ public enum PartPosition implements IStringSerializable {
     public Type getType() {
         return this._type;
     }
+    
+    public Layer getLayer() {
+		return _layer;
+	}
 
     public static PropertyEnum<PartPosition> createProperty(String name) {
         return PropertyEnum.create(name, PartPosition.class);
@@ -67,7 +74,7 @@ public enum PartPosition implements IStringSerializable {
         return this.name().toLowerCase();
     }
 
-    PartPosition(EnumFacing facing, Type type, Layer layer) {
+    PartPosition(@Nullable EnumFacing facing, Type type, Layer layer) {
         this._facing = facing;
         this._type = type;
         this._layer = layer;

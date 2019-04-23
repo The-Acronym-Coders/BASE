@@ -24,6 +24,7 @@ import java.util.Optional;
 
 public class ItemPartType extends PartType {
     public static final String BURN_DATA_NAME = "burn";
+    public static final String STACKSIZE_DATA_NAME = "stacksize";
 
     public final int itemSize;
 
@@ -47,6 +48,7 @@ public class ItemPartType extends PartType {
     private static List<PartDataPiece> setupItemData() {
         List<PartDataPiece> dataPieces = Lists.newArrayList();
         dataPieces.add(new PartDataPiece(BURN_DATA_NAME, false));
+        dataPieces.add(new PartDataPiece(STACKSIZE_DATA_NAME, false));
         return dataPieces;
     }
 
