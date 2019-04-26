@@ -1,16 +1,18 @@
 package com.teamacronymcoders.base.materialsystem.parttype;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
 import com.teamacronymcoders.base.materialsystem.MaterialSystem;
 import com.teamacronymcoders.base.materialsystem.MaterialUser;
 import com.teamacronymcoders.base.materialsystem.blocks.SubBlockPart;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.subblocksystem.blocks.ISubBlock;
-import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.item.ItemStack;
 
 public class BlockPartType extends PartType {
     public BlockPartType() {
@@ -30,6 +32,7 @@ public class BlockPartType extends PartType {
         blockDataPieces.add(new PartDataPiece("resistance", false));
         blockDataPieces.add(new PartDataPiece("harvestLevel", false));
         blockDataPieces.add(new PartDataPiece("harvestTool", false));
+        blockDataPieces.add(new PartDataPiece("transparent", false));
         return blockDataPieces;
     }
 

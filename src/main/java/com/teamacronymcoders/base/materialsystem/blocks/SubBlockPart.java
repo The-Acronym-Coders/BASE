@@ -1,9 +1,12 @@
 package com.teamacronymcoders.base.materialsystem.blocks;
 
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.google.common.collect.Maps;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
-import com.teamacronymcoders.base.client.models.generator.generatedmodel.ModelType;
+import com.teamacronymcoders.base.client.models.generator.generatedmodel.*;
 import com.teamacronymcoders.base.materialsystem.materialparts.MaterialPart;
 import com.teamacronymcoders.base.materialsystem.partdata.DataPartParsers;
 import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
@@ -11,6 +14,7 @@ import com.teamacronymcoders.base.materialsystem.parts.Part;
 import com.teamacronymcoders.base.subblocksystem.blocks.SubBlockBase;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.creativetab.CreativeTabs;
@@ -21,10 +25,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-
 public class SubBlockPart extends SubBlockBase {
     private MaterialPart materialPart;
     private CreativeTabs creativeTabs;
@@ -33,6 +33,7 @@ public class SubBlockPart extends SubBlockBase {
     private int resistance = 30;
     private int harvestLevel = 1;
     private String harvestTool = "pickaxe";
+    private boolean transparent = false;
 
     public SubBlockPart(MaterialPart materialPart, CreativeTabs creativeTab) {
         super(materialPart.getUnlocalizedName());
@@ -43,6 +44,7 @@ public class SubBlockPart extends SubBlockBase {
         resistance = data.getValue("resistance", resistance, DataPartParsers::getInt);
         harvestLevel = data.getValue("harvestLevel", harvestLevel, DataPartParsers::getInt);
         harvestTool = data.getValue("harvestTool", harvestTool, DataPartParsers::getString);
+        transparent = data.getValue("transparent", transparent, DataPartParsers::getBool);
 
         this.creativeTabs = creativeTab;
     }
@@ -139,12 +141,12 @@ public class SubBlockPart extends SubBlockBase {
 
     @Override
     public boolean isSideSolid(EnumFacing side) {
-        return true;
+        return transparent;
     }
 
     @Override
     public boolean isTopSolid() {
-        return true;
+        return transparent;
     }
 
     @Override
@@ -159,14 +161,14 @@ public class SubBlockPart extends SubBlockBase {
 
     @Override
     public boolean isFullCube() {
-        return true;
+        return !transparent;
     }
 
     @Override
     public boolean isOpaqueCube() {
-        return true;
+        return !transparent;
     }
-
+    
     @Override
     public boolean isPassable() {
         return false;
@@ -174,12 +176,12 @@ public class SubBlockPart extends SubBlockBase {
 
     @Override
     public boolean isFullBlock() {
-        return true;
+        return !transparent;
     }
 
     @Override
     public int getLightOpacity() {
-        return 255;
+        return transparent ? 255 : 0;
     }
 
     @Override
