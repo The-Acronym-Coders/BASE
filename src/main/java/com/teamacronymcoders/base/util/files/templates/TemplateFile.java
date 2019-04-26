@@ -1,9 +1,9 @@
 package com.teamacronymcoders.base.util.files.templates;
 
-import net.minecraft.util.ResourceLocation;
-
 import java.util.Locale;
 import java.util.Map;
+
+import net.minecraft.util.ResourceLocation;
 
 public class TemplateFile {
     private ResourceLocation name;
