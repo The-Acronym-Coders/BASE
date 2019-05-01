@@ -1,19 +1,19 @@
 package com.teamacronymcoders.base.items;
 
-import net.minecraft.item.ItemStack;
-
 import java.util.Collections;
 import java.util.List;
 
+import net.minecraft.item.ItemStack;
+
 public class ItemStackDropTable implements IDropTable {
-    private List<ItemStack> itemStack;
+    private ItemStack itemStack;
     
     public ItemStackDropTable(ItemStack itemStack) {
-        this.itemStack = Collections.singletonList(itemStack);
+        this.itemStack = itemStack;
     }
     
     @Override
     public List<ItemStack> getDrops(int fortune) {
-        return itemStack;
+        return Collections.singletonList(itemStack.copy());
     }
 }
