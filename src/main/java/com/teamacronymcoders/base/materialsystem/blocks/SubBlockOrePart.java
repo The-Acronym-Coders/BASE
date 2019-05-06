@@ -1,5 +1,10 @@
 package com.teamacronymcoders.base.materialsystem.blocks;
 
+import static com.teamacronymcoders.base.materialsystem.parttype.OrePartType.DROP_DATA_NAME;
+
+import java.util.List;
+import java.util.Map;
+
 import com.google.common.collect.Maps;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.GeneratedModel;
@@ -14,13 +19,10 @@ import com.teamacronymcoders.base.materialsystem.partdata.MaterialPartData;
 import com.teamacronymcoders.base.util.DropUtils;
 import com.teamacronymcoders.base.util.files.templates.TemplateFile;
 import com.teamacronymcoders.base.util.files.templates.TemplateManager;
+
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
-
-import java.util.List;
-import java.util.Map;
-
-import static com.teamacronymcoders.base.materialsystem.parttype.OrePartType.DROP_DATA_NAME;
 
 public class SubBlockOrePart extends SubBlockPart {
     private String itemDrop;
@@ -73,6 +75,10 @@ public class SubBlockOrePart extends SubBlockPart {
 
         return new GeneratedModel("materials/" + this.getMaterialPart().getUnlocalizedName(), ModelType.BLOCKSTATE, templateFile.getFileContents());
     }
-
+    
+    @Override
+    public BlockRenderLayer getRenderLayer() {
+    	return BlockRenderLayer.TRANSLUCENT;
+    }
 
 }

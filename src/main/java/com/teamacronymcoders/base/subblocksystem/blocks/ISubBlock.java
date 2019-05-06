@@ -9,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -92,4 +93,8 @@ public interface ISubBlock {
     boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos);
 
     boolean onBlockActivated(World world, BlockPos pos, EntityPlayer player);
+
+	default BlockRenderLayer getRenderLayer() {
+		return isOpaqueCube() ? BlockRenderLayer.SOLID : BlockRenderLayer.CUTOUT;
+	}
 }

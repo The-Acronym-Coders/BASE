@@ -1,30 +1,47 @@
 package com.teamacronymcoders.base.subblocksystem.blocks;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
-import com.teamacronymcoders.base.blocks.*;
+import com.teamacronymcoders.base.blocks.BlockBaseNoModel;
+import com.teamacronymcoders.base.blocks.IHasBlockColor;
+import com.teamacronymcoders.base.blocks.IHasBlockStateMapper;
 import com.teamacronymcoders.base.client.models.generator.IHasGeneratedModel;
 import com.teamacronymcoders.base.client.models.generator.generatedmodel.IGeneratedModel;
-import com.teamacronymcoders.base.items.*;
+import com.teamacronymcoders.base.items.IHasOreDict;
+import com.teamacronymcoders.base.items.IHasRecipe;
 import com.teamacronymcoders.base.subblocksystem.SubBlockSystem;
 import com.teamacronymcoders.base.subblocksystem.items.ItemBlockSubBlockHolder;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.*;
+import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.*;
-
-import javax.annotation.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockStateMapper, IHasBlockColor, IHasOreDict, IHasRecipe, IHasGeneratedModel {
     public static final PropertyInteger SUB_BLOCK_NUMBER = PropertyInteger.create("sub_block_number", 0, 15);
@@ -102,8 +119,9 @@ public class BlockSubBlockHolder extends BlockBaseNoModel implements IHasBlockSt
 
     @Override
     @Nonnull
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
+    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
+    {
+        return this.getSubBlock(state).getRenderLayer() == layer;
     }
 
     public ISubBlock getSubBlock(IBlockState blockState) {
