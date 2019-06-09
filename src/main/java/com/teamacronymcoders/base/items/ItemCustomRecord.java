@@ -71,7 +71,7 @@ public class ItemCustomRecord extends ItemRecord implements IHasGeneratedModel, 
 
 
         templateFile.replaceContents(replacements);
-        models.add(new GeneratedModel(this.getMod().getID() + ":" + this.recordName, ModelType.ITEM_MODEL,
+        models.add(new GeneratedModel(this.recordName, ModelType.ITEM_MODEL,
                 templateFile.getFileContents()));
 
         return models;
