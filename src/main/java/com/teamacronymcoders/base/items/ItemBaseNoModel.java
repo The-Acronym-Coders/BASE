@@ -1,13 +1,8 @@
 package com.teamacronymcoders.base.items;
 
-import java.util.List;
-
-import javax.annotation.*;
-
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.IModAware;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -15,6 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 
 public class ItemBaseNoModel extends Item implements IModAware, IHasSubItems {
     protected String texturePath;
@@ -76,10 +76,12 @@ public class ItemBaseNoModel extends Item implements IModAware, IHasSubItems {
         itemStacks.add(new ItemStack(this, 1));
         return itemStacks;
     }
-    
-    // Elevate to public
- 	@Override
- 	public RayTraceResult rayTrace(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, boolean useLiquids) {
- 		return super.rayTrace(worldIn, playerIn, useLiquids);
- 	}
+
+    //It's Nullable. The world method it calls can return null, but the item lies due to package-info
+    @SuppressWarnings("NullableProblems")
+    @Override
+    @Nullable
+    public RayTraceResult rayTrace(@Nonnull World world, @Nonnull EntityPlayer player, boolean useLiquids) {
+        return super.rayTrace(world, player, useLiquids);
+    }
 }
