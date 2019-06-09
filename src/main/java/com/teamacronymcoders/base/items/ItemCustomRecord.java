@@ -53,6 +53,12 @@ public class ItemCustomRecord extends ItemRecord implements IHasGeneratedModel, 
     }
 
     @Override
+    public List<String> getModelNames(List<String> modelNames) {
+        modelNames.add(this.recordName);
+        return modelNames;
+    }
+
+    @Override
     public List<IGeneratedModel> getGeneratedModels() {
         List<IGeneratedModel> models = Lists.newArrayList();
 

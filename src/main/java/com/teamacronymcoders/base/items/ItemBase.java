@@ -14,8 +14,6 @@ import com.teamacronymcoders.base.util.files.templates.TemplateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class ItemBase extends ItemBaseNoModel implements IHasModel, IHasGeneratedModel {
-
-
     public ItemBase(String name) {
         this("", name);
     }
