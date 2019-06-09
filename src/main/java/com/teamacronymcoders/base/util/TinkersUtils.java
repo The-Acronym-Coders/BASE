@@ -158,14 +158,6 @@ public class TinkersUtils {
     }
 
     /* Harvesting */
-
-	public static ImmutableList<BlockPos> calcAOEBlocks(ItemStack stack, World world, EntityPlayer player,
-			BlockPos origin, int width, int height, int depth, int distance) {
-		// FIXME
-		if(stack.isEmpty() || !(stack.getItem() instanceof IAreaBreakingTool)) {
-			return ImmutableList.of();
-		}
-
     public static ImmutableList<BlockPos> calcAOEBlocks(ItemStack stack, World world, EntityPlayer player,
                                                         BlockPos origin, int width, int height, int depth, int distance) {
         // only works with toolcore because we need the raytrace call
@@ -179,15 +171,6 @@ public class TinkersUtils {
         if (!isToolEffective(stack, state)) {
             return ImmutableList.of();
         }
-
-		// raytrace to get the side, but has to result in the same block
-		RayTraceResult mop = ((IAreaBreakingTool) stack.getItem()).rayTrace(world, player, true);
-		if(mop == null || !origin.equals(mop.getBlockPos())) {
-			mop = ((ItemBaseNoModel) stack.getItem()).rayTrace(world, player, false);
-			if(mop == null || !origin.equals(mop.getBlockPos())) {
-				return ImmutableList.of();
-			}
-		}
 
         // raytrace to get the side, but has to result in the same block
         RayTraceResult mop = ((ItemBaseNoModel) stack.getItem()).rayTrace(world, player, true);
