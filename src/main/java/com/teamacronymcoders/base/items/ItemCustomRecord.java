@@ -53,6 +53,12 @@ public class ItemCustomRecord extends ItemRecord implements IHasGeneratedModel, 
     }
 
     @Override
+    public List<String> getModelNames(List<String> modelNames) {
+        modelNames.add(this.recordName);
+        return modelNames;
+    }
+
+    @Override
     public List<IGeneratedModel> getGeneratedModels() {
         List<IGeneratedModel> models = Lists.newArrayList();
 
@@ -65,7 +71,7 @@ public class ItemCustomRecord extends ItemRecord implements IHasGeneratedModel, 
 
 
         templateFile.replaceContents(replacements);
-        models.add(new GeneratedModel(this.getMod().getID() + ":" + this.recordName, ModelType.ITEM_MODEL,
+        models.add(new GeneratedModel(this.recordName, ModelType.ITEM_MODEL,
                 templateFile.getFileContents()));
 
         return models;

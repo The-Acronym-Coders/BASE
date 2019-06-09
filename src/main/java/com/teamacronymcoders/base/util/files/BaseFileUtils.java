@@ -1,8 +1,5 @@
 package com.teamacronymcoders.base.util.files;
 
-import com.teamacronymcoders.base.util.Platform;
-import org.apache.commons.io.FileUtils;
-
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
@@ -11,6 +8,10 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import org.apache.commons.io.FileUtils;
+
+import com.teamacronymcoders.base.util.Platform;
 
 /*
  * Borrowed From EnderCore
@@ -142,7 +143,7 @@ public class BaseFileUtils {
         }
         if (exists) {
             try {
-                FileUtils.writeStringToFile(file, string, Charset.defaultCharset());
+                FileUtils.writeStringToFile(file, string, java.nio.charset.StandardCharsets.UTF_8);
             } catch (IOException e) {
                 Platform.attemptLogExceptionToCurrentMod(e);
             }

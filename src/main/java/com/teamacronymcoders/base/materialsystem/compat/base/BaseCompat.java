@@ -52,6 +52,11 @@ public class BaseCompat implements IMaterialCompat {
 
         registerPart(new PartBuilder().setName("Cluster").setPartType(item).setOverlay(true));
 
+        registerPart(new PartBuilder().setName("Rock").setOreDictName("rock")
+                .setPartType(item));
+        registerPart(new PartBuilder().setName("Ore Rock").setOreDictName("rock")
+                .setPartType(item).setOverlay(true));
+
         registerPart("Block", block);
 
         registerPart("Ore", ore);
@@ -65,10 +70,27 @@ public class BaseCompat implements IMaterialCompat {
         registerPart("Armor", armor);
 
         registerPart("Minecart", minecart);
+
+        registerPart("Centrifuged Ore", item, "oreCentrifuged");
+        registerPart("Chipped Gem", item, "gemChipped");
+        registerPart("Flawed Gem", item, "gemFlawed");
+        registerPart("Flawless Gem", item, "gemFlawless");
+        registerPart("Large Spring", item, "springLarge");
+        registerPart("Long Rod", item, "rodLong");
+        registerPart("Purified Ore", item, "orePurified");
+        registerPart("Ring", item);
+        registerPart("Round", item);
+        registerPart("Small Dust", item, "dustSmall");
+        registerPart("Small Spring", item, "springSmall");
+        registerPart("Tiny Dust", item, "dustTiny");
     }
 
     private void registerPart(String name, PartType partType) {
         registerPart(new PartBuilder().setName(name).setPartType(partType));
+    }
+
+    private void registerPart(String name, PartType partType, String properOreDict) {
+        registerPart(new PartBuilder().setName(name).setOreDictName(properOreDict).setPartType(partType));
     }
 
     private void registerPart(PartBuilder partBuilder) {
