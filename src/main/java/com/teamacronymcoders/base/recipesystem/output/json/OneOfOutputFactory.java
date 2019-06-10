@@ -12,6 +12,6 @@ public class OneOfOutputFactory implements IObjectFactory<OneOfOutput> {
     @Override
     public OneOfOutput parse(JsonContext jsonContext, JsonElement jsonElement) {
         JsonArray options = JsonUtils.getJsonArray(jsonElement.getAsJsonObject(), "options");
-        return new OneOfOutput(JsonRecipeLoader.getInstance().processOutputs(options, jsonContext));
+        return new OneOfOutput(JsonRecipeLoader.processOutputs(options, jsonContext));
     }
 }
