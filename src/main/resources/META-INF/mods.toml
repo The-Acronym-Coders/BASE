@@ -3,9 +3,9 @@ loaderVersion="[25,)"
 issueTrackerURL="https://github.com/The-Acronym-Coders/BASE/issues"
 
 [[mods]]
-    modId="base" #mandatory
-    version="${file.jarVersion}" #mandatory
-    displayName="BASE" #mandatory
+    modId="base"
+    version="${file.jarVersion}"
+    displayName="BASE"
     authors="Jared, Lanse, SkySom, warlordjones"
     description='''
         Library for Handling all the Internals of  Brass Goggled Coders, Miner Arcana, and Team Acronym Coders

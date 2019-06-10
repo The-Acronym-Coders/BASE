@@ -22,6 +22,7 @@ public class Base extends BaseModFoundation<Base> {
 
     public Base() {
         super(ID, ItemGroup.MISC);
+        instance = this;
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
     }
 

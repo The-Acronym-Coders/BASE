@@ -20,8 +20,9 @@ public class TemplateManager {
     public static TemplateFile getTemplateFile(ResourceLocation resourceLocation) {
         TemplateFile file = null;
         try {
+            //TODO
             file = templates.get(resourceLocation.toString(), () ->
-                    new TemplateFile(resourceLocation, Base.instance.getLibProxy().getFileContents(resourceLocation)));
+                    new TemplateFile(resourceLocation, ""));
         } catch (ExecutionException e) {
             Base.instance.getLogger().error(e);
         } finally {

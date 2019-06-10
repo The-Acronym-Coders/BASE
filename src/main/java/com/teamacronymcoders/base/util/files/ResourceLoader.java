@@ -1,26 +1,11 @@
 package com.teamacronymcoders.base.util.files;
 
-import com.google.common.collect.Maps;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.teamacronymcoders.base.IBaseMod;
-import com.teamacronymcoders.base.registrysystem.SoundEventRegistry;
-import com.teamacronymcoders.base.sound.IHasSoundGroup;
-import com.teamacronymcoders.base.sound.SoundGroup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.FolderPackFinder;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public class ResourceLoader {

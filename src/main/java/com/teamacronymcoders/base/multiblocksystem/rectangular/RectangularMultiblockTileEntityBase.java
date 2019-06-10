@@ -4,6 +4,7 @@ import com.teamacronymcoders.base.multiblocksystem.BlockFacings;
 import com.teamacronymcoders.base.multiblocksystem.MultiblockControllerBase;
 import com.teamacronymcoders.base.multiblocksystem.MultiblockTileEntityBase;
 import com.teamacronymcoders.base.multiblocksystem.validation.IMultiblockValidator;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
@@ -16,8 +17,8 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
     private PartPosition position;
     private BlockFacings outwardFacings;
 
-    public RectangularMultiblockTileEntityBase() {
-
+    public RectangularMultiblockTileEntityBase(TileEntityType tileEntityType) {
+        super(tileEntityType);
         position = PartPosition.UNKNOWN;
         outwardFacings = BlockFacings.NONE;
     }

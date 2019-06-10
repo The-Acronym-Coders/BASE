@@ -72,12 +72,12 @@ public abstract class QueueFoundation<T> implements INBTSerializable<NBTTagCompo
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        nbtTagCompound.setInt("queueSize", this.getQueueSize());
+        nbtTagCompound.putInt("queueSize", this.getQueueSize());
         NBTTagList tagList = new NBTTagList();
         for (T value : this.getBackingList()) {
             tagList.add(serializeValue(value));
         }
-        nbtTagCompound.setTag("queueValues", tagList);
+        nbtTagCompound.put("queueValues", tagList);
         return nbtTagCompound;
     }
 

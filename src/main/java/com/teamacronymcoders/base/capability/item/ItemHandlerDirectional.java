@@ -42,4 +42,9 @@ public class ItemHandlerDirectional implements IItemHandler {
     public int getSlotLimit(int slot) {
         return itemHandler.getSlotLimit(slot);
     }
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return true;
+    }
 }

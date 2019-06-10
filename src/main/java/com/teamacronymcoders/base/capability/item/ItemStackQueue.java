@@ -95,6 +95,11 @@ public class ItemStackQueue extends QueueFoundation<ItemStack> implements IItemH
         return getItemStack(slot).getMaxStackSize();
     }
 
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return slot == 1;
+    }
+
     @Nonnull
     private ItemStack getItemStack(int slot) {
         if (slot < 0 || slot > 1) {

@@ -6,6 +6,7 @@ import net.minecraftforge.forgespi.language.ModFileScanData;
 import org.objectweb.asm.Type;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -57,7 +58,7 @@ public class ClassLoading {
                                     Function<Map<String, Object>, Boolean> createInstance) {
         return ModList.get().getAllScanData().parallelStream()
                 .map(ModFileScanData::getAnnotations)
-                .flatMap(List::stream)
+                .flatMap(Collection::stream)
                 .filter(checkType(annotationClass))
                 .filter(checkLoad(createInstance))
                 .map(loadInstances(instanceClass))

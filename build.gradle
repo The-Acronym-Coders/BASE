@@ -8,13 +8,13 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
     }
 }
 
 apply plugin: "maven"
 apply plugin: "java"
-apply plugin: 'net.minecraftforge.gradle'
+apply plugin: "net.minecraftforge.gradle"
 
 repositories {
     mavenLocal()
@@ -24,12 +24,12 @@ repositories {
         url = "http://files.minecraftforge.net/maven"
     }
     maven {
-        name 'JEI'
-        url 'http://dvs1.progwml6.com/files/maven'
+        name "JEI"
+        url "http://dvs1.progwml6.com/files/maven"
     }
     maven {
-        name 'TAC'
-        url 'http://maven.blamejared.com'
+        name "TAC"
+        url "http://maven.blamejared.com"
     }
 }
 
@@ -38,14 +38,14 @@ group = "com.teamacronymcoders.base"
 archivesBaseName = "base"
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190215-1.13.1'
+    mappings channel: "snapshot", version: "${mappings_version}"
 
     runs {
         client {
-            workingDirectory project.file('run')
+            workingDirectory project.file("run")
 
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
+            property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
+            property "forge.logging.console.level", "debug"
 
             mods {
                 base {
@@ -55,11 +55,11 @@ minecraft {
         }
 
         server {
-            workingDirectory project.file('run')
+            workingDirectory project.file("run")
 
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
 
-            property 'forge.logging.console.level', 'debug'
+            property "forge.logging.console.level", "debug"
 
             mods {
                 base {
@@ -71,14 +71,12 @@ minecraft {
 }
 
 dependencies {
-    //deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    //compile "info.journeymap:journeymap-api:${journeymap_api_version}"
-    minecraft 'net.minecraftforge:forge:1.13.2-25.0.55'
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 
 task srcJar(type: Jar) {
     from sourceSets.main.allSource
-    classifier = 'sources'
+    classifier = "sources"
 }
 
 jar {
@@ -129,7 +127,7 @@ String getVersion() {
 static String getBuildNumber() {
     String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
     if(buildNumber == "") {
-        buildNumber = System.getenv("bamboo_buildNumber") != null ? "." + System.getenv("bamboo_buildNumber") : ""
+        buildNumber = System.getenv("bamboo_buildNumber") != null ? System.getenv("bamboo_buildNumber") : ""
     }
     return buildNumber
 }

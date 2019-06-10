@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
+import net.minecraft.util.IItemProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -13,10 +14,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class Colors {
     public static void registerItemColor(Object object, IHasItemColor itemColor) {
         ItemColors itemColors = Minecraft.getInstance().getItemColors();
-        if (object instanceof Item) {
-            itemColors.register(itemColor::getColorFromItemStack, (Item) object);
-        } else if (object instanceof Block) {
-            itemColors.register(itemColor::getColorFromItemStack, (Block) object);
+        if (object instanceof IItemProvider) {
+            itemColors.register(itemColor::getColorFromItemStack, (IItemProvider) object);
         }
     }
 

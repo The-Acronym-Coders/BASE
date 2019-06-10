@@ -1,0 +1,35 @@
+{
+  "replace": true,
+  "color": "434b4d",
+  "parts": [
+    "ingot",
+    "gear",
+    "bolt",
+    {
+      "part_name": "ore",
+      "variants": [
+        "minecraft:endstone"
+      ],
+      "properties": {
+        "hardness": 3.0,
+        "resistance": 3,
+        "harvestLevel": 2,
+        "harvestTool": "pickaxe"
+      }
+    },
+    {
+      "group_name": "armor",
+      "properties": {
+        "enchantability": 10,
+        "toughness": 0.5,
+        "durability": 15,
+        "damage_reduction": [
+          2,
+          5,
+          6,
+          2
+        ]
+      }
+    }
+  ]
+}

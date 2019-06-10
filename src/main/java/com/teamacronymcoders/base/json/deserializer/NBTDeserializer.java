@@ -25,7 +25,7 @@ public class NBTDeserializer implements JsonDeserializer<NBTTagCompound> {
             String name = property.getKey();
             JsonElement jsonElement = property.getValue();
             if (jsonElement.isJsonObject()) {
-                tagCompound.setTag(name, parseObject(json));
+                tagCompound.put(name, parseObject(json));
             } else if (json.isJsonArray()) {
                 handleJsonArray(tagCompound, name, jsonElement.getAsJsonArray());
             } else if (json.isJsonPrimitive()) {
@@ -37,23 +37,23 @@ public class NBTDeserializer implements JsonDeserializer<NBTTagCompound> {
 
     private void handleJsonPrimitive(NBTTagCompound tagCompound, String propertyName, JsonPrimitive jsonPrimitive) {
         if (jsonPrimitive.isBoolean()) {
-            tagCompound.setBoolean(propertyName, jsonPrimitive.getAsBoolean());
+            tagCompound.putBoolean(propertyName, jsonPrimitive.getAsBoolean());
         } else if (jsonPrimitive.isString()) {
-            tagCompound.setString(propertyName, jsonPrimitive.getAsString());
+            tagCompound.putString(propertyName, jsonPrimitive.getAsString());
         } else if (jsonPrimitive.isNumber()) {
             Number number = jsonPrimitive.getAsNumber();
             if (number instanceof Long) {
-                tagCompound.setLong(propertyName, number.longValue());
+                tagCompound.putLong(propertyName, number.longValue());
             } else if (number instanceof Integer) {
-                tagCompound.setInt(propertyName, number.intValue());
+                tagCompound.putInt(propertyName, number.intValue());
             } else if (number instanceof Short) {
-                tagCompound.setShort(propertyName, number.shortValue());
+                tagCompound.putShort(propertyName, number.shortValue());
             } else if (number instanceof Double) {
-                tagCompound.setDouble(propertyName, number.doubleValue());
+                tagCompound.putDouble(propertyName, number.doubleValue());
             } else if (number instanceof Byte) {
-                tagCompound.setByte(propertyName, number.byteValue());
+                tagCompound.putByte(propertyName, number.byteValue());
             } else if (number instanceof Float) {
-                tagCompound.setFloat(propertyName, number.floatValue());
+                tagCompound.putFloat(propertyName, number.floatValue());
             }
         }
     }
@@ -104,7 +104,7 @@ public class NBTDeserializer implements JsonDeserializer<NBTTagCompound> {
         for (int i = 0; i < jsonArray.size(); i++) {
             byteArray[i] = jsonArray.get(i).getAsJsonPrimitive().getAsByte();
         }
-        tagCompound.setByteArray(propertyName, byteArray);
+        tagCompound.putByteArray(propertyName, byteArray);
     }
 
     private void handleJsonIntArray(NBTTagCompound tagCompound, String propertyName, JsonArray jsonArray) {
@@ -112,7 +112,7 @@ public class NBTDeserializer implements JsonDeserializer<NBTTagCompound> {
         for (int i = 0; i < jsonArray.size(); i++) {
             intArray[i] = jsonArray.get(i).getAsJsonPrimitive().getAsInt();
         }
-        tagCompound.setIntArray(propertyName, intArray);
+        tagCompound.putIntArray(propertyName, intArray);
     }
 
     private void handleJsonLongArray(NBTTagCompound tagCompound, String propertyName, JsonArray jsonArray) {
@@ -120,6 +120,6 @@ public class NBTDeserializer implements JsonDeserializer<NBTTagCompound> {
         for (int i = 0; i < jsonArray.size(); i++) {
             longArray[i] = jsonArray.get(i).getAsJsonPrimitive().getAsLong();
         }
-        tagCompound.setTag(propertyName, new NBTTagLongArray(longArray));
+        tagCompound.put(propertyName, new NBTTagLongArray(longArray));
     }
 }

@@ -25,7 +25,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
     private boolean saveMultiblockData;
     private NBTTagCompound cachedMultiblockData;
 
-    public MultiblockTileEntityBase(TileEntityType<TileEntity> tileEntityType) {
+    public MultiblockTileEntityBase(TileEntityType tileEntityType) {
         super(tileEntityType);
         controller = null;
         visited = false;
@@ -87,9 +87,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
     public void read(NBTTagCompound data) {
         // We can't directly initialize a multiblock controller yet, so we cache the data here until
         // we receive a validate() call, which creates the controller and hands off the cached data.
-        if (data.hasKey("multiblockData")) {
-            this.cachedMultiblockData = data.getCompound("multiblockData");
-        }
+        this.cachedMultiblockData = data.getCompound("multiblockData");
     }
 
     @Override
@@ -98,7 +96,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
         if (isMultiblockSaveDelegate() && isConnected()) {
             NBTTagCompound multiblockData = new NBTTagCompound();
             this.getMultiblockController().writeToDisk(multiblockData);
-            data.setTag("multiblockData", multiblockData);
+            data.put("multiblockData", multiblockData);
         }
         return data;
     }
