@@ -7,7 +7,7 @@ import com.teamacronymcoders.base.blocks.BlockStateMatcher;
 import net.minecraft.block.Block;
 import net.minecraft.state.IProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -20,7 +20,7 @@ public class BlockStateMatcherDeserializer implements JsonDeserializer<BlockStat
     public BlockStateMatcher deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         if (json != null && json.isJsonObject()) {
             JsonObject jsonObject = json.getAsJsonObject();
-            String blockName = JsonUtils.getString(jsonObject, "block");
+            String blockName = JSONUtils.getString(jsonObject, "block");
             Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName));
             if (block != null) {
                 if (jsonObject.has("properties")) {

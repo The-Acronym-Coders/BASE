@@ -2,7 +2,7 @@ package com.teamacronymcoders.base.blocks;
 
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.state.IProperty;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class BlockStateMatcher {
         this(block, Maps.newHashMap());
     }
 
-    public boolean matches(IBlockState blockState) {
+    public boolean matches(BlockState blockState) {
         if (block == blockState.getBlock()) {
             for (IProperty<?> property: blockState.getProperties()) {
                 List<?> allowedValue = allowedValues.get(property);

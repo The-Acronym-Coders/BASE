@@ -43,24 +43,24 @@ public class TextUtils {
         return rl;
     }
 
-	public static TextComponentBase representFluidStack(FluidStack stack) {
+	public static TextComponent representFluidStack(FluidStack stack) {
 		if(stack != null) {
-			return new TextComponentString(stack.getLocalizedName() + ": " + stack.amount + "mB");
+			return new StringTextComponent(stack.getLocalizedName() + ": " + stack.amount + "mB");
 	
 		}
-		return new TextComponentTranslation("base.info.nofluid");
+		return new TranslationTextComponent("base.info.nofluid");
 	}
 
-	public static TextComponentBase representTankContents(IFluidTank tank) {
+	public static TextComponent representTankContents(IFluidTank tank) {
 		if(tank.getFluid() != null && tank.getFluidAmount() > 0) {
-			return new TextComponentString(tank.getFluid().getLocalizedName() + ": " + tank.getFluidAmount() + "mB/"
+			return new StringTextComponent(tank.getFluid().getLocalizedName() + ": " + tank.getFluidAmount() + "mB/"
 					+ tank.getCapacity() + "mB");
 		}
-		return new TextComponentTranslation("base.info.empty");
+		return new TranslationTextComponent("base.info.empty");
 	}
 
-	public static TextComponentBase representInventoryContents(ItemStackHandler handler) {
-		TextComponentTranslation start = new TextComponentTranslation("Inventory: ");
+	public static TextComponent representInventoryContents(ItemStackHandler handler) {
+		TranslationTextComponent start = new TranslationTextComponent("Inventory: ");
 		for(int i = 0; i < handler.getSlots(); i++) {
 			ItemStack current = handler.getStackInSlot(i);
 			if(current != ItemStack.EMPTY) {

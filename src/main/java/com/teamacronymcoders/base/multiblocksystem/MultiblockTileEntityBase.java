@@ -1,10 +1,10 @@
 package com.teamacronymcoders.base.multiblocksystem;
 
 import com.teamacronymcoders.base.Base;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -23,7 +23,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
     private boolean visited;
     // private boolean paused;
     private boolean saveMultiblockData;
-    private NBTTagCompound cachedMultiblockData;
+    private CompoundNBT cachedMultiblockData;
 
     public MultiblockTileEntityBase(TileEntityType tileEntityType) {
         super(tileEntityType);
@@ -84,7 +84,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
     }
 
     @Override
-    public void read(NBTTagCompound data) {
+    public void read(CompoundNBT data) {
         // We can't directly initialize a multiblock controller yet, so we cache the data here until
         // we receive a validate() call, which creates the controller and hands off the cached data.
         this.cachedMultiblockData = data.getCompound("multiblockData");
@@ -92,9 +92,9 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 
     @Override
     @Nonnull
-    public NBTTagCompound write(NBTTagCompound data) {
+    public CompoundNBT write(CompoundNBT data) {
         if (isMultiblockSaveDelegate() && isConnected()) {
-            NBTTagCompound multiblockData = new NBTTagCompound();
+            CompoundNBT multiblockData = new CompoundNBT();
             this.getMultiblockController().writeToDisk(multiblockData);
             data.put("multiblockData", multiblockData);
         }
@@ -135,7 +135,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
     }
 
     @Override
-    public NBTTagCompound getMultiblockSaveData() {
+    public CompoundNBT getMultiblockSaveData() {
         return this.cachedMultiblockData;
     }
 
@@ -221,7 +221,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
         List<IMultiblockPart> neighborParts = new ArrayList<>();
         BlockPos neighborPosition, partPosition = this.getWorldPosition();
 
-        for (EnumFacing facing : EnumFacing.values()) {
+        for (Direction facing : Direction.values()) {
 
             neighborPosition = partPosition.offset(facing);
 

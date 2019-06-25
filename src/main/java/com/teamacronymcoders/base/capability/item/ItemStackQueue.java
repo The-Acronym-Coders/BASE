@@ -3,7 +3,7 @@ package com.teamacronymcoders.base.capability.item;
 import com.teamacronymcoders.base.capability.QueueFoundation;
 import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -35,12 +35,12 @@ public class ItemStackQueue extends QueueFoundation<ItemStack> implements IItemH
     }
 
     @Override
-    public NBTTagCompound serializeValue(ItemStack value) {
+    public CompoundNBT serializeValue(ItemStack value) {
         return value.serializeNBT();
     }
 
     @Override
-    public ItemStack deserializeValue(NBTTagCompound nbtTagCompound) {
+    public ItemStack deserializeValue(CompoundNBT nbtTagCompound) {
         return ItemStack.read(nbtTagCompound);
     }
 

@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.multiblocksystem.validation;
 
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class ValidationError {
 
@@ -16,6 +16,6 @@ public class ValidationError {
     }
 
     public ITextComponent getChatMessage() {
-        return new TextComponentTranslation(this._resourceKey, _parameters);
+        return new TranslationTextComponent(this._resourceKey, _parameters);
     }
 }

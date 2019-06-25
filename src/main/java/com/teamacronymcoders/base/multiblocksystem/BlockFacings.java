@@ -1,8 +1,8 @@
 package com.teamacronymcoders.base.multiblocksystem;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.HashMap;
@@ -110,22 +110,22 @@ public final class BlockFacings {
         byte hash = 0;
 
         if (down)
-            hash |= (1 << EnumFacing.DOWN.getIndex());
+            hash |= (1 << Direction.DOWN.getIndex());
 
         if (up)
-            hash |= (1 << EnumFacing.UP.getIndex());
+            hash |= (1 << Direction.UP.getIndex());
 
         if (north)
-            hash |= (1 << EnumFacing.NORTH.getIndex());
+            hash |= (1 << Direction.NORTH.getIndex());
 
         if (south)
-            hash |= (1 << EnumFacing.SOUTH.getIndex());
+            hash |= (1 << Direction.SOUTH.getIndex());
 
         if (west)
-            hash |= (1 << EnumFacing.WEST.getIndex());
+            hash |= (1 << Direction.WEST.getIndex());
 
         if (east)
-            hash |= (1 << EnumFacing.EAST.getIndex());
+            hash |= (1 << Direction.EAST.getIndex());
 
         return hash;
     }
@@ -134,13 +134,13 @@ public final class BlockFacings {
         byte hash = 0;
         int len = null == facings ? -1 : facings.length;
 
-        if (len < 0 || len > EnumFacing.values().length)
+        if (len < 0 || len > Direction.values().length)
             throw new IllegalArgumentException("Invalid length of facings array");
 
         for (int i = 0; i < len; ++i) {
 
             if (facings[i])
-                hash |= (1 << EnumFacing.values()[i].getIndex());
+                hash |= (1 << Direction.values()[i].getIndex());
         }
 
         return hash;
@@ -152,7 +152,7 @@ public final class BlockFacings {
      * @param facing the face to check
      * @return true if the face is "set", false otherwise
      */
-    public boolean isSet(EnumFacing facing) {
+    public boolean isSet(Direction facing) {
 
         return 0 != (this._value & (1 << facing.getIndex()));
     }
@@ -166,37 +166,37 @@ public final class BlockFacings {
     }
 
     public boolean down() {
-        return this.isSet(EnumFacing.DOWN);
+        return this.isSet(Direction.DOWN);
     }
 
     public boolean up() {
-        return this.isSet(EnumFacing.UP);
+        return this.isSet(Direction.UP);
     }
 
     public boolean north() {
-        return this.isSet(EnumFacing.NORTH);
+        return this.isSet(Direction.NORTH);
     }
 
     public boolean south() {
-        return this.isSet(EnumFacing.SOUTH);
+        return this.isSet(Direction.SOUTH);
     }
 
     public boolean west() {
-        return this.isSet(EnumFacing.WEST);
+        return this.isSet(Direction.WEST);
     }
 
     public boolean east() {
-        return this.isSet(EnumFacing.EAST);
+        return this.isSet(Direction.EAST);
     }
 
-    public IBlockState toBlockState(IBlockState state) {
+    public BlockState toBlockState(BlockState state) {
 
-        return state.with(FACING_DOWN, this.isSet(EnumFacing.DOWN))
-                .with(FACING_UP, this.isSet(EnumFacing.UP))
-                .with(FACING_WEST, this.isSet(EnumFacing.WEST))
-                .with(FACING_EAST, this.isSet(EnumFacing.EAST))
-                .with(FACING_NORTH, this.isSet(EnumFacing.NORTH))
-                .with(FACING_SOUTH, this.isSet(EnumFacing.SOUTH));
+        return state.with(FACING_DOWN, this.isSet(Direction.DOWN))
+                .with(FACING_UP, this.isSet(Direction.UP))
+                .with(FACING_WEST, this.isSet(Direction.WEST))
+                .with(FACING_EAST, this.isSet(Direction.EAST))
+                .with(FACING_NORTH, this.isSet(Direction.NORTH))
+                .with(FACING_SOUTH, this.isSet(Direction.SOUTH));
     }
 
     /**
@@ -206,7 +206,7 @@ public final class BlockFacings {
      * @param value  the new value for the state of the face
      * @return a BlockFacing object
      */
-    public BlockFacings set(EnumFacing facing, boolean value) {
+    public BlockFacings set(Direction facing, boolean value) {
 
         byte newHash = this._value;
 
@@ -268,7 +268,7 @@ public final class BlockFacings {
 
         int x = 0, y = 0, z = 0;
 
-        for (EnumFacing facing : EnumFacing.values())
+        for (Direction facing : Direction.values())
             if (this.isSet(facing)) {
 
                 x += facing.getXOffset();
@@ -285,9 +285,9 @@ public final class BlockFacings {
      * @param isSet specify if you are looking for "set" faces (true) or not (false)
      * @return the first face that match the required state or null if no face is found
      */
-    public EnumFacing firstIf(boolean isSet) {
+    public Direction firstIf(boolean isSet) {
 
-        for (EnumFacing facing : EnumFacing.values())
+        for (Direction facing : Direction.values())
             if (isSet == this.isSet(facing))
                 return facing;
 
@@ -297,9 +297,9 @@ public final class BlockFacings {
     @Override
     public String toString() {
 
-        return String.format("Facings: %s%s%s%s%s%s", this.isSet(EnumFacing.DOWN) ? "DOWN " : "",
-                this.isSet(EnumFacing.UP) ? "UP " : "", this.isSet(EnumFacing.NORTH) ? "NORTH " : "",
-                this.isSet(EnumFacing.SOUTH) ? "SOUTH " : "", this.isSet(EnumFacing.WEST) ? "WEST " : "",
-                this.isSet(EnumFacing.EAST) ? "EAST " : "");
+        return String.format("Facings: %s%s%s%s%s%s", this.isSet(Direction.DOWN) ? "DOWN " : "",
+                this.isSet(Direction.UP) ? "UP " : "", this.isSet(Direction.NORTH) ? "NORTH " : "",
+                this.isSet(Direction.SOUTH) ? "SOUTH " : "", this.isSet(Direction.WEST) ? "WEST " : "",
+                this.isSet(Direction.EAST) ? "EAST " : "");
     }
 }

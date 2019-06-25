@@ -1,7 +1,7 @@
 package com.teamacronymcoders.base.multiblocksystem.rectangular;
 
 import net.minecraft.state.EnumProperty;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IStringSerializable;
 
 public enum PartPosition implements IStringSerializable {
@@ -27,18 +27,18 @@ public enum PartPosition implements IStringSerializable {
     FRAME_VERTICAL_SOUTH_EAST(null, Type.FRAME, Layer.MIDDLE),
     FRAME_VERTICAL_NORTH_WEST(null, Type.FRAME, Layer.MIDDLE),
     FRAME_VERTICAL_SOUTH_WEST(null, Type.FRAME, Layer.MIDDLE),
-    TOP_FACE(EnumFacing.UP, Type.FACE, Layer.TOP),
-    BOTTOM_FACE(EnumFacing.DOWN, Type.FACE, Layer.BOTTOM),
-    NORTH_FACE(EnumFacing.NORTH, Type.FACE, Layer.MIDDLE),
-    SOUTH_FACE(EnumFacing.SOUTH, Type.FACE, Layer.MIDDLE),
-    EAST_FACE(EnumFacing.EAST, Type.FACE, Layer.MIDDLE),
-    WEST_FACE(EnumFacing.WEST, Type.FACE, Layer.MIDDLE);
+    TOP_FACE(Direction.UP, Type.FACE, Layer.TOP),
+    BOTTOM_FACE(Direction.DOWN, Type.FACE, Layer.BOTTOM),
+    NORTH_FACE(Direction.NORTH, Type.FACE, Layer.MIDDLE),
+    SOUTH_FACE(Direction.SOUTH, Type.FACE, Layer.MIDDLE),
+    EAST_FACE(Direction.EAST, Type.FACE, Layer.MIDDLE),
+    WEST_FACE(Direction.WEST, Type.FACE, Layer.MIDDLE);
 
-    private EnumFacing _facing;
+    private Direction _facing;
     private Type type;
     private Layer layer;
 
-    PartPosition(EnumFacing facing, Type type, Layer layer) {
+    PartPosition(Direction facing, Type type, Layer layer) {
         this._facing = facing;
         this.type = type;
         this.layer = layer;
@@ -56,7 +56,7 @@ public enum PartPosition implements IStringSerializable {
         return this.type == Type.FRAME;
     }
 
-    public EnumFacing getFacing() {
+    public Direction getFacing() {
         return this._facing;
     }
 

@@ -3,8 +3,8 @@ package com.teamacronymcoders.base.multiblocksystem;
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.multiblocksystem.validation.IMultiblockValidator;
 import com.teamacronymcoders.base.multiblocksystem.validation.ValidationError;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -83,7 +83,7 @@ public abstract class MultiblockControllerBase implements IMultiblockValidator {
      *
      * @param part The NBT tag containing this controller's data.
      */
-    public abstract void onAttachedPartWithMultiblockData(IMultiblockPart part, NBTTagCompound data);
+    public abstract void onAttachedPartWithMultiblockData(IMultiblockPart part, CompoundNBT data);
 
     /**
      * Attach a new part to this machine.
@@ -102,7 +102,7 @@ public abstract class MultiblockControllerBase implements IMultiblockValidator {
         this.onBlockAdded(part);
 
         if (part.hasMultiblockSaveData()) {
-            NBTTagCompound savedData = part.getMultiblockSaveData();
+            CompoundNBT savedData = part.getMultiblockSaveData();
             onAttachedPartWithMultiblockData(part, savedData);
             part.onMultiblockDataAssimilated();
         }
@@ -969,7 +969,7 @@ public abstract class MultiblockControllerBase implements IMultiblockValidator {
         BlockPos rc = this.getReferenceCoord();
 
         if ((this.controllerWorld != null) && (rc != null)) {
-            IBlockState state = this.controllerWorld.getBlockState(rc);
+            BlockState state = this.controllerWorld.getBlockState(rc);
             controllerWorld.notifyBlockUpdate(rc, state, state, 3);
         }
     }
@@ -1005,10 +1005,10 @@ public abstract class MultiblockControllerBase implements IMultiblockValidator {
     }
 
     // This is called back like a normal TE
-    public abstract void writeToDisk(NBTTagCompound data);
+    public abstract void writeToDisk(CompoundNBT data);
 
     // This, however, doesn't seem to be. TODO: Investigate further
-    public abstract void readFromDisk(NBTTagCompound data);
+    public abstract void readFromDisk(CompoundNBT data);
 
     // Disassembled -> Assembled; Assembled -> Disassembled OR Paused; Paused -> Assembled
     protected enum AssemblyState {

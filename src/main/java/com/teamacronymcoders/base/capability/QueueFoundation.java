@@ -1,14 +1,14 @@
 package com.teamacronymcoders.base.capability;
 
 import com.google.common.collect.Lists;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.List;
 import java.util.Optional;
 
-public abstract class QueueFoundation<T> implements INBTSerializable<NBTTagCompound> {
+public abstract class QueueFoundation<T> implements INBTSerializable<CompoundNBT> {
     private List<T> queuedList;
     private int queueSize;
 
@@ -70,10 +70,10 @@ public abstract class QueueFoundation<T> implements INBTSerializable<NBTTagCompo
     protected abstract boolean anyRemainingValue(T value);
 
     @Override
-    public NBTTagCompound serializeNBT() {
-        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+    public CompoundNBT serializeNBT() {
+        CompoundNBT nbtTagCompound = new CompoundNBT();
         nbtTagCompound.putInt("queueSize", this.getQueueSize());
-        NBTTagList tagList = new NBTTagList();
+        ListNBT tagList = new ListNBT();
         for (T value : this.getBackingList()) {
             tagList.add(serializeValue(value));
         }
@@ -82,15 +82,15 @@ public abstract class QueueFoundation<T> implements INBTSerializable<NBTTagCompo
     }
 
     @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
+    public void deserializeNBT(CompoundNBT nbt) {
         this.setQueueSize(nbt.getInt("queueSize"));
-        NBTTagList queueValueNBT = nbt.getList("fluidStacks", 9);
+        ListNBT queueValueNBT = nbt.getList("fluidStacks", 9);
         for (int i = 0; i < queueValueNBT.size(); i++) {
             this.getBackingList().add(deserializeValue(queueValueNBT.getCompound(i)));
         }
     }
 
-    public abstract NBTTagCompound serializeValue(T value);
+    public abstract CompoundNBT serializeValue(T value);
 
-    public abstract T deserializeValue(NBTTagCompound nbtTagCompound);
+    public abstract T deserializeValue(CompoundNBT nbtTagCompound);
 }

@@ -1,9 +1,9 @@
 package com.teamacronymcoders.base;
 
 import com.teamacronymcoders.base.api.capabilities.ITool;
-import net.minecraft.nbt.INBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -15,12 +15,12 @@ public class Capabilities {
     public static void register() {
         CapabilityManager.INSTANCE.register(ITool.class, new Capability.IStorage<ITool>() {
             @Override
-            public NBTTagCompound writeNBT(Capability<ITool> capability, ITool instance, EnumFacing side) {
-                return new NBTTagCompound();
+            public CompoundNBT writeNBT(Capability<ITool> capability, ITool instance, Direction side) {
+                return new CompoundNBT();
             }
 
             @Override
-            public void readNBT(Capability<ITool> capability, ITool instance, EnumFacing side, INBTBase nbt) {
+            public void readNBT(Capability<ITool> capability, ITool instance, Direction side, INBT nbt) {
 
             }
         }, () -> new ITool() {});

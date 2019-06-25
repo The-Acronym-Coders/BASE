@@ -1,21 +1,21 @@
 package com.teamacronymcoders.base.capability.fluid;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.FluidTank;
 
-public class FluidTankSerializable extends FluidTank implements INBTSerializable<NBTTagCompound> {
+public class FluidTankSerializable extends FluidTank implements INBTSerializable<CompoundNBT> {
     public FluidTankSerializable(int capacity) {
         super(capacity);
     }
 
     @Override
-    public NBTTagCompound serializeNBT() {
-        return super.writeToNBT(new NBTTagCompound());
+    public CompoundNBT serializeNBT() {
+        return super.writeToNBT(new CompoundNBT());
     }
 
     @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
+    public void deserializeNBT(CompoundNBT nbt) {
         this.readFromNBT(nbt);
     }
 }

@@ -1,6 +1,6 @@
 package com.teamacronymcoders.base.multiblocksystem;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Set;
@@ -192,7 +192,7 @@ public interface IMultiblockPart {
     /**
      * @return The part's saved multiblock game-data in NBT format, or null if there isn't any.
      */
-    NBTTagCompound getMultiblockSaveData();
+    CompoundNBT getMultiblockSaveData();
 
     /**
      * Called after a block is added and the controller has incorporated the part's saved

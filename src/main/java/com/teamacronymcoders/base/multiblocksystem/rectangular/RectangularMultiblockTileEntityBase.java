@@ -5,7 +5,7 @@ import com.teamacronymcoders.base.multiblocksystem.MultiblockControllerBase;
 import com.teamacronymcoders.base.multiblocksystem.MultiblockTileEntityBase;
 import com.teamacronymcoders.base.multiblocksystem.validation.IMultiblockValidator;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
@@ -53,9 +53,9 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
      * @return the direction toward with the part is facing or null if the part is not in one side of the multiblock
      */
     @Nullable
-    public EnumFacing getOutwardFacing() {
+    public Direction getOutwardFacing() {
 
-        EnumFacing facing = null != this.position ? this.position.getFacing() : null;
+        Direction facing = null != this.position ? this.position.getFacing() : null;
 
         if (null == facing) {
 
@@ -74,7 +74,7 @@ public abstract class RectangularMultiblockTileEntityBase<T extends RectangularM
      * @return the direction toward with the part is facing or null if the part is not in one side of the multiblock
      */
     @Nullable
-    public EnumFacing getOutwardFacingFromWorldPosition() {
+    public Direction getOutwardFacingFromWorldPosition() {
 
         BlockFacings facings = null;
         MultiblockControllerBase controller = this.getMultiblockController();
