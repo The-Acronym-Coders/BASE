@@ -78,7 +78,7 @@ public class SubBlockOrePart extends SubBlockPart {
     
     @Override
     public BlockRenderLayer getRenderLayer() {
-    	return BlockRenderLayer.TRANSLUCENT;
+    	return BlockRenderLayer.CUTOUT;
     }
 
 }
