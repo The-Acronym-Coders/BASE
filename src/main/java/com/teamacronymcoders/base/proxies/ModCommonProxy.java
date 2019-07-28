@@ -2,10 +2,9 @@ package com.teamacronymcoders.base.proxies;
 
 import com.teamacronymcoders.base.Reference;
 import com.teamacronymcoders.base.event.BaseRegistryEvent;
-import com.teamacronymcoders.base.multiblock.IMultiblockRegistry;
-import com.teamacronymcoders.base.multiblock.MultiblockEventHandler;
-import com.teamacronymcoders.base.multiblock.MultiblockRegistry;
+import com.teamacronymcoders.base.multiblocksystem.*;
 import com.teamacronymcoders.base.recipesystem.loader.ILoader;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
