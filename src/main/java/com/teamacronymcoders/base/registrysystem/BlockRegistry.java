@@ -17,12 +17,7 @@ public class BlockRegistry extends ModularRegistry<Block> {
     }
 
     public void register(Block block) {
-        String namespace = new String();
-        if (altNamespace == null) {
-            namespace = mod.getID();
-        } else {
-            namespace = altNamespace;   
-        }
+        String namespace = (altNamespace != null) ? altNamespace : mod.getID();
         String unlocalizedName = block.getTranslationKey();
         if (unlocalizedName.startsWith("tile.")) {
             unlocalizedName = unlocalizedName.substring(5);
