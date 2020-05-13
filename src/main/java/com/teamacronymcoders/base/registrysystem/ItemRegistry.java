@@ -18,12 +18,7 @@ public class ItemRegistry extends ModularRegistry<Item> {
     }
     
     public void register(Item item) {
-        String namespace = new String();
-        if altNamespace == null {
-            namespace = mod.getID();
-        } else {
-            namespace = altNamespace;
-        }
+        String namespace = (altNamespace != null) ? altNamespace : mod.getID();
         String unlocalizedName = item.getTranslationKey();
         if (unlocalizedName.startsWith("item.")) {
             unlocalizedName = unlocalizedName.substring(5);
