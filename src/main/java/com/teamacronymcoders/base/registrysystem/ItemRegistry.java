@@ -28,7 +28,6 @@ public class ItemRegistry extends ModularRegistry<Item> {
         }
         if (!unlocalizedName.contains(namespace)) {
             item.setTranslationKey(namespace + "." + unlocalizedName);
-            }
         }
         ResourceLocation name = item.getRegistryName();
         if (name == null) {
