@@ -11,18 +11,28 @@ public class BlockRegistry extends ModularRegistry<Block> {
     public BlockRegistry(IBaseMod mod, List<IRegistryPiece> registryPieces) {
         super("BLOCK", mod, registryPieces);
     }
+    
+    public BlockRegistry(IBaseMod mod, List<IRegistryPiece> registryPieces, String altNamespace) {
+        super("BLOCK", mod, registryPieces);
+    }
 
     public void register(Block block) {
+        String namespace = new String();
+        if (altNamespace == null) {
+            namespace = mod.getID();
+        } else {
+            namespace = altNamespace;   
+        }
         String unlocalizedName = block.getTranslationKey();
         if (unlocalizedName.startsWith("tile.")) {
             unlocalizedName = unlocalizedName.substring(5);
         }
-        if (!unlocalizedName.contains(mod.getID())) {
-            block.setTranslationKey(mod.getID() + "." + unlocalizedName);
+        if (!unlocalizedName.contains(namespace)) {
+            block.setTranslationKey(namespace + "." + unlocalizedName);
         }
         ResourceLocation name = block.getRegistryName();
         if (name == null) {
-            name = new ResourceLocation(this.mod.getID(), unlocalizedName);
+            name = new ResourceLocation(namespace, unlocalizedName);
         }
 
         this.register(name, block);
