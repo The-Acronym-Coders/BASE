@@ -12,8 +12,18 @@ public class ItemRegistry extends ModularRegistry<Item> {
     public ItemRegistry(IBaseMod mod, List<IRegistryPiece> registryPieces) {
         super("ITEM", mod, registryPieces);
     }
-
+    
+    public ItemRegistry(IBaseMod mod, List<IRegistryPiece> registryPieces, String altNamespace) {
+        super("ITEM", mod, registryPieces);
+    }
+    
     public void register(Item item) {
+        String namespace = new String();
+        if altNamespace == null {
+            namespace = mod.getID();
+        } else {
+            namespace = altNamespace;
+        }
         String unlocalizedName = item.getTranslationKey();
         if (unlocalizedName.startsWith("item.")) {
             unlocalizedName = unlocalizedName.substring(5);
@@ -21,12 +31,13 @@ public class ItemRegistry extends ModularRegistry<Item> {
                 throw new RuntimeException("Unlocalized Name cannot be null");
             }
         }
-        if (!unlocalizedName.contains(mod.getID())) {
-            item.setTranslationKey(mod.getID() + "." + unlocalizedName);
+        if (!unlocalizedName.contains(namespace)) {
+            item.setTranslationKey(namespace + "." + unlocalizedName);
+            }
         }
         ResourceLocation name = item.getRegistryName();
         if (name == null) {
-            name = new ResourceLocation(this.mod.getID(), unlocalizedName);
+            name = new ResourceLocation(namespace, unlocalizedName);
         }
 
         this.register(name, item);
