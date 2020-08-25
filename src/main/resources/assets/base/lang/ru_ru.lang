@@ -1,30 +1,49 @@
 itemGroup.materials.base=Материалы B.A.S.E
-error.base.null_part=Нулевая часть
+error.base.null_part=Пустая запчасть
 
-base.part.gear=%s Шестерня
-base.part.plate=%s Пластина
-base.part.dense_plate=Плотная %s пластина
-base.part.dust=%s Пыль
-base.part.ingot=%s Слиток
-base.part.nugget=%s Самородок
-base.part.beam=%s Луч
-base.part.bolt=%s Палка
-base.part.rod=%s Стержень
-base.part.block=Блок %s
-base.part.ore=%s Руда
-base.part.poor_ore=Чистая %s руда
-base.part.dense_ore=Плотная %s руда
-base.part.molten=Сплав %s
-base.part.armor.head=%s Шлем
-base.part.armor.chest=%s Нагрудник
-base.part.armor.legs=%s Поножи
-base.part.armor.feet=%s Ботинки
-base.part.casing=%s Корпус
-base.part.crystal=%s Кристалл
-base.part.crushed_ore=Измельченная %s руда
-base.part.minecart=%s Minecart
+base.part.gear=Запчасть: %s
+base.part.plate=Пластина: %s
+base.part.dense_plate=Плотная пластинка: %s
+base.part.dust=Пыль: %s
+base.part.ingot=Слиток: %s
+base.part.nugget=Самородок: %s
+base.part.beam=Балка: %s
+base.part.bolt=Болт: %s
+base.part.rod=Стержень: %s
+base.part.block=Блок: %s
+base.part.ore_sample=Пример: %s
+base.part.ore=Руда: %s
+base.part.poor_ore=Обеднённая руда: %s
+base.part.dense_ore=Плотная руда: %s
+base.part.molten=Сплав: %s
+base.part.armor.head=Шлем: %s
+base.part.armor.chest=Нагрудник: %s
+base.part.armor.legs=Поножи: %s
+base.part.armor.feet=Ботинки: %s
+base.part.casing=Корпус: %s
+base.part.crystal=Кристалл: %s
+base.part.crushed_ore=Раздробленная руда: %s
+base.part.minecart=Вагонетка: %s
+base.part.cluster=Кластер: %s
+base.part.shard=Осколок: %s
+base.part.clump=Комок: %s
+base.part.dirty_dust=Грязная пыль: %s
+base.part.rock=Камень: %s
+base.part.ore_rock=Камень-руда: %s
+base.part.centrifuged_ore=Центрифугированная руда: %s 
+base.part.chipped_gem=Сколотый самоцвет: %s
+base.part.flawed_gem=Поврёжденный самоцвет: %s
+base.part.flawless_gem=Безупречный самоцвет: %s
+base.part.large_spring=Большая пружина: %s
+base.part.long_rod=Длинный стержень: %s
+base.part.purified_ore=Чистая руда: %s
+base.part.ring=Кольцо: %s
+base.part.round=Круг: %s
+base.part.small_dust=Мелкая пыль: %s
+base.part.small_spring=Мелкая пружина: %s
+base.part.tiny_dust=Маленькая пыль: %s
 
-item.wrench.name=Ключ
+item.base.wrench.name=Ключ
 
 base.api.multiblock.validation.success=Проверка механизма выполнена успешно.
 base.api.multiblock.validation.too_few_parts=Механизм слишком маленький.
@@ -36,3 +55,15 @@ base.api.multiblock.validation.invalid_part_for_bottom=Блок на %1$d, %2$d,
 base.api.multiblock.validation.invalid_part_for_top=Блок на %1$d, %2$d, %3$d не подходит для использования в верхнем слое механизма.
 base.api.multiblock.validation.invalid_part_for_sides=Блок на %1$d, %2$d, %3$d не подходит для использования на сторонах механизма.
 base.api.multiblock.validation.invalid_part_for_interior=Блок на %1$d, %2$d, %3$d не подходит для использования во внутренней части механизма.
+
+base.info.nofluid=Нет жидкостей
+base.info.empty=Пусто
+
+
+# Сторонние типы
+base.block_side.facing=Лицевая сторона
+base.block_side.opposite=Обратная сторона
+
+base.sidetype.input=Вход
+base.sidetype.output=Выход
+base.sidetype.none=Ничего
