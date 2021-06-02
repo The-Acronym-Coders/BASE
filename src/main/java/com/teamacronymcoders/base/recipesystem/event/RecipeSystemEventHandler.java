@@ -1,5 +1,6 @@
 package com.teamacronymcoders.base.recipesystem.event;
 
+import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.event.BaseRegistryEvent;
 import com.teamacronymcoders.base.recipesystem.RecipeSystem;
 import com.teamacronymcoders.base.recipesystem.condition.BiomeCondition;
@@ -9,6 +10,7 @@ import com.teamacronymcoders.base.recipesystem.input.BlockStateInput;
 import com.teamacronymcoders.base.recipesystem.input.EntityInput;
 import com.teamacronymcoders.base.recipesystem.input.ForgeEnergyInput;
 import com.teamacronymcoders.base.recipesystem.input.IInput;
+import com.teamacronymcoders.base.recipesystem.loader.AssetJsonRecipeLoader;
 import com.teamacronymcoders.base.recipesystem.loader.JsonRecipeLoader;
 import com.teamacronymcoders.base.recipesystem.loader.ILoader;
 import com.teamacronymcoders.base.recipesystem.output.*;
@@ -53,6 +55,7 @@ public class RecipeSystemEventHandler {
 
     @SubscribeEvent
     public static void registerLoader(BaseRegistryEvent<ILoader> loaderRegistryEvent) {
-        loaderRegistryEvent.register(new ResourceLocation(MODID, "json"), JsonRecipeLoader.getInstance());
+        loaderRegistryEvent.register(new ResourceLocation(MODID, "asset"), AssetJsonRecipeLoader.getInstance());
+        Base.proxy.registerServerLoader(loaderRegistryEvent);
     }
 }

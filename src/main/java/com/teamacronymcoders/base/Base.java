@@ -31,7 +31,8 @@ public class Base extends BaseModFoundation<Base> {
     @Instance(MODID)
     public static Base instance;
 
-    @SidedProxy(clientSide = "com.teamacronymcoders.base.proxies.ModClientProxy", serverSide = "com.teamacronymcoders.base.proxies.ModCommonProxy")
+    @SidedProxy(clientSide = "com.teamacronymcoders.base.proxies.ModClientProxy",
+            serverSide = "com.teamacronymcoders.base.proxies.ModServerProxy")
     public static ModCommonProxy proxy;
 
     private CommandTreeBase baseCommand = new CommandSubBase(MODID);

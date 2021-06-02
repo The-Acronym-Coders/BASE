@@ -3,7 +3,8 @@ package com.teamacronymcoders.base.items.boats;
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.IBaseMod;
 import com.teamacronymcoders.base.client.models.IHasModel;
-import com.teamacronymcoders.base.multiblock.rectangular.PartPosition;
+import com.teamacronymcoders.base.multiblocksystem.rectangular.PartPosition;
+
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;

@@ -2,7 +2,7 @@ package com.teamacronymcoders.base.guisystem;
 
 import javax.annotation.Nullable;
 
-import com.teamacronymcoders.base.multiblock.MultiblockTileEntityBase;
+import com.teamacronymcoders.base.multiblocksystem.MultiblockTileEntityBase;
 import com.teamacronymcoders.base.util.ItemStackUtils;
 
 import net.minecraft.block.Block;

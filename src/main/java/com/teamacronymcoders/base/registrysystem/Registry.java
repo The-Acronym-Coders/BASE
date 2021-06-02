@@ -5,13 +5,14 @@ import com.teamacronymcoders.base.exceptions.TooLateException;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class Registry<T> {
     protected String name;
     protected IBaseMod mod;
     protected Registry<T> instance;
-    protected Map<ResourceLocation, T> entries = new HashMap<>();
+    protected Map<ResourceLocation, T> entries = new LinkedHashMap<>();
     private LoadingStage loadingStage = LoadingStage.PREINIT;
 
     public Registry(String name, IBaseMod mod) {

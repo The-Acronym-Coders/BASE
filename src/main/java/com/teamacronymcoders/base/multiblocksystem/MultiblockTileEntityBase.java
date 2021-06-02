@@ -1,9 +1,6 @@
-package com.teamacronymcoders.base.multiblock;
+package com.teamacronymcoders.base.multiblocksystem;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import com.teamacronymcoders.base.Base;
 import com.teamacronymcoders.base.tileentities.TileEntityBase;
@@ -14,8 +11,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 /**
- * Base logic class for Multiblock-connected tile entities. Most multiblock machines
- * should derive from this and implement their game logic in certain abstract methods.
+ * Base logic class for Multiblock-connected tile entities. Most multiblock
+ * machines should derive from this and implement their game logic in certain
+ * abstract methods.
  */
 public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBase> extends TileEntityBase
 		implements IMultiblockPart {
@@ -43,19 +41,18 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 
 		// Look for a compatible controller in our neighboring parts.
 		IMultiblockPart[] partsToCheck = getNeighboringParts();
-		for(IMultiblockPart neighborPart : partsToCheck) {
-			if(neighborPart.isConnected()) {
+		for (IMultiblockPart neighborPart : partsToCheck) {
+			if (neighborPart.isConnected()) {
 				MultiblockControllerBase candidate = neighborPart.getMultiblockController();
-				if(!candidate.getClass().equals(this.getMultiblockControllerType())) {
+				if (!candidate.getClass().equals(getMultiblockControllerType())) {
 					// Skip multiblocks with incompatible types
 					continue;
 				}
 
-				if(controllers == null) {
+				if (controllers == null) {
 					controllers = new HashSet<MultiblockControllerBase>();
 					bestController = candidate;
-				}
-				else if(!controllers.contains(candidate) && candidate.shouldConsume(bestController)) {
+				} else if (!controllers.contains(candidate) && candidate.shouldConsume(bestController)) {
 					bestController = candidate;
 				}
 
@@ -64,7 +61,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 		}
 
 		// If we've located a valid neighboring controller, attach to it.
-		if(bestController != null) {
+		if (bestController != null) {
 			// attachBlock will call onAttached, which will set the controller.
 			this.controller = bestController;
 			bestController.attachBlock(this);
@@ -75,7 +72,7 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 
 	@Override
 	public void assertDetached() {
-		if(this.controller != null) {
+		if (this.controller != null) {
 			BlockPos coord = this.getWorldPosition();
 
 			Base.instance.getLogger().info(String.format(
@@ -87,16 +84,18 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 
 	@Override
 	protected void readFromDisk(NBTTagCompound data) {
-		// We can't directly initialize a multiblock controller yet, so we cache the data here until
-		// we receive a validate() call, which creates the controller and hands off the cached data.
-		if(data.hasKey("multiblockData")) {
+		// We can't directly initialize a multiblock controller yet, so we cache the
+		// data here until
+		// we receive a validate() call, which creates the controller and hands off the
+		// cached data.
+		if (data.hasKey("multiblockData")) {
 			this.cachedMultiblockData = data.getCompoundTag("multiblockData");
 		}
 	}
 
 	@Override
 	protected NBTTagCompound writeToDisk(NBTTagCompound data) {
-		if(isMultiblockSaveDelegate() && isConnected()) {
+		if (isMultiblockSaveDelegate() && isConnected()) {
 			NBTTagCompound multiblockData = new NBTTagCompound();
 			this.getMultiblockController().writeToDisk(multiblockData);
 			data.setTag("multiblockData", multiblockData);
@@ -105,8 +104,8 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 	}
 
 	/**
-	 * Called when a block is removed by game actions, such as a player breaking the block
-	 * or the block being changed into another block.
+	 * Called when a block is removed by game actions, such as a player breaking the
+	 * block or the block being changed into another block.
 	 *
 	 * @see net.minecraft.tileentity.TileEntity#invalidate()
 	 */
@@ -117,8 +116,8 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 	}
 
 	/**
-	 * Called from Minecraft's tile entity loop, after all tile entities have been ticked,
-	 * as the chunk in which this tile entity is contained is unloading.
+	 * Called from Minecraft's tile entity loop, after all tile entities have been
+	 * ticked, as the chunk in which this tile entity is contained is unloading.
 	 * Happens before the Forge TickEnd event.
 	 *
 	 * @see net.minecraft.tileentity.TileEntity#onChunkUnload()
@@ -130,19 +129,19 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 	}
 
 	/**
-	 * This is called when a block is being marked as valid by the chunk, but has not yet fully
-	 * been placed into the world's TileEntity cache. this.WORLD, xCoord, yCoord and zCoord have
-	 * been initialized, but any attempts to read data about the world can cause infinite loops -
-	 * if you call getTileEntity on this TileEntity's coordinate from within validate(), you will
-	 * blow your call stack.
-	 * TL;DR: Here there be dragons.
+	 * This is called when a block is being marked as valid by the chunk, but has
+	 * not yet fully been placed into the world's TileEntity cache. this.WORLD,
+	 * xCoord, yCoord and zCoord have been initialized, but any attempts to read
+	 * data about the world can cause infinite loops - if you call getTileEntity on
+	 * this TileEntity's coordinate from within validate(), you will blow your call
+	 * stack. TL;DR: Here there be dragons.
 	 *
 	 * @see net.minecraft.tileentity.TileEntity#validate()
 	 */
 	@Override
 	public void validate() {
 		super.validate();
-		REGISTRY.onPartAdded(this.getWorld(), this);
+		REGISTRY.onPartAdded(getWorld(), this);
 	}
 
 	@Override
@@ -238,13 +237,14 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 		List<IMultiblockPart> neighborParts = new ArrayList<IMultiblockPart>();
 		BlockPos neighborPosition, partPosition = this.getWorldPosition();
 
-		for(EnumFacing facing : EnumFacing.VALUES) {
+		for (EnumFacing facing : EnumFacing.VALUES) {
 
 			neighborPosition = partPosition.offset(facing);
-			te = this.getWorld().getTileEntity(neighborPosition);
+			te = getWorld().getTileEntity(neighborPosition);
 
-			if(te instanceof IMultiblockPart)
+			if (te instanceof IMultiblockPart) {
 				neighborParts.add((IMultiblockPart) te);
+			}
 		}
 
 		return neighborParts.toArray(new IMultiblockPart[neighborParts.size()]);
@@ -252,31 +252,32 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 
 	@Override
 	public void onOrphaned(MultiblockControllerBase controller, int oldSize, int newSize) {
-		this.markDirty();
+		markDirty();
 		getWorld().markChunkDirty(this.getWorldPosition(), this);
 	}
 
 	@Override
 	public BlockPos getWorldPosition() {
-		return this.pos;
+		return pos;
 	}
 
 	@Override
 	public boolean isPartInvalid() {
-		return this.isInvalid();
+		return isInvalid();
 	}
 
 	//// Helper functions for notifying neighboring blocks
 	protected void notifyNeighborsOfBlockChange() {
-		getWorld().notifyNeighborsOfStateChange(this.getWorldPosition(), this.getBlockType(), true);
+		getWorld().notifyNeighborsOfStateChange(this.getWorldPosition(), getBlockType(), true);
 	}
 
 	///// Private/Protected Logic Helpers
 	/*
-	 * Detaches this block from its controller. Calls detachBlock() and clears the controller member.
+	 * Detaches this block from its controller. Calls detachBlock() and clears the
+	 * controller member.
 	 */
 	protected void detachSelf(boolean chunkUnloading) {
-		if(this.controller != null) {
+		if (this.controller != null) {
 			// Clean part out of controller
 			this.controller.detachBlock(this, chunkUnloading);
 
@@ -289,16 +290,17 @@ public abstract class MultiblockTileEntityBase<T extends MultiblockControllerBas
 	}
 
 	/**
-	 * IF the part is connected to a multiblock controller, marks the whole multiblock for a render update on the
-	 * client.
-	 * On the server, this does nothing
+	 * IF the part is connected to a multiblock controller, marks the whole
+	 * multiblock for a render update on the client. On the server, this does
+	 * nothing
 	 */
 	protected void markMultiblockForRenderUpdate() {
 
 		MultiblockControllerBase controller = this.getMultiblockController();
 
-		if(null != controller)
+		if (null != controller) {
 			controller.markMultiblockForRenderUpdate();
+		}
 	}
 
 	private static final IMultiblockRegistry REGISTRY;
